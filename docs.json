@@ -12,6 +12,7 @@
     "tabs": [
       {
         "tab": "Progressify",
+        "icon": "https://daftplug.com/wp-content/themes/daftplug/assets/media/icons/progressify.png",
         "groups": [
           {
             "group": "Getting started",
@@ -66,11 +67,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Blog",
-        "icon": "newspaper",
-        "href": "https://external-link.com/blog"
       }
     ],
     "global": {
