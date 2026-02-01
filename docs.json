@@ -26,7 +26,7 @@
     "tabs": [
       {
         "tab": "Progressify",
-        "icon": "https://daftplug.com/wp-content/themes/daftplug/assets/media/icons/progressify.png",
+        "icon": "images/progressify.png",
         "groups": [
           {
             "group": "Getting started",
@@ -64,6 +64,7 @@
       },
       {
         "tab": "Generatify",
+        "icon": "images/generatify.png",
         "groups": [
           {
             "group": "API documentation",
