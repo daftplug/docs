@@ -7,7 +7,7 @@
     "light": "#dbeafe",
     "dark": "#155dfc"
   },
-  "favicon": "images/daftplug.png",
+  "favicon": "/images/daftplug.png",
   "navigation": {
     "global": {
       "anchors": [
@@ -21,14 +21,14 @@
     "tabs": [
       {
         "tab": "Progressify",
-        "icon": "images/progressify.png",
+        "icon": "/images/progressify.png",
         "groups": [
 
         ]
       },
       {
         "tab": "Generatify",
-        "icon": "images/generatify.png",
+        "icon": "/images/generatify.png",
         "groups": [
           {
             "group": "Getting Started",
@@ -121,8 +121,8 @@
     ]
   },
   "logo": {
-    "light": "images/logo.png",
-    "dark": "images/logo.png"
+    "light": "/images/logo.png",
+    "dark": "/images/logo.png"
   },
   "navbar": {
     "links": [
@@ -161,6 +161,6 @@
     "default": "light"
   },
   "icons": {
-    "library": "lucide"
+    "library": "fontawesome"
   }
 }
