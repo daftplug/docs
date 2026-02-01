@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "DaftPlug Pro Plugins",
+  "name": "DaftPlug Pro Plugins Docs",
   "colors": {
     "primary": "#155dfc",
     "light": "#dbeafe",
@@ -115,5 +115,12 @@
       "github": "https://github.com/daftplug",
       "linkedin": "https://linkedin.com/company/daftplug"
     }
+  },
+  "appearance": {
+    "strict": true,
+    "default": "light"
+  },
+  "icons": {
+    "library": "lucide"
   }
 }
