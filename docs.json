@@ -62,18 +62,89 @@
         "icon": "/images/generatify.png",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "/generatify/getting-started/introduction",
+              "/generatify/getting-started/installation",
+              "/generatify/getting-started/quick-setup",
+              "/generatify/getting-started/ai-providers"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Core Features",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "/generatify/features/overview",
+              "/generatify/features/ai-assistant-chatbot",
+              "/generatify/features/automations",
+              "/generatify/features/helpdesk-agent",
+              "/generatify/features/smart-suggestions",
+              "/generatify/features/content-moderation"
+            ]
+          },
+          {
+            "group": "AI Integrations",
+            "pages": [
+              "/generatify/integrations/overview",
+              "/generatify/integrations/openai-chatgpt",
+              "/generatify/integrations/anthropic-claude",
+              "/generatify/integrations/google-gemini"
+            ]
+          },
+          {
+            "group": "Automations",
+            "pages": [
+              "/generatify/automations/auto-tags",
+              "/generatify/automations/auto-categories",
+              "/generatify/automations/meta-descriptions",
+              "/generatify/automations/image-alt-text"
+            ]
+          },
+          {
+            "group": "Helpdesk Agent",
+            "pages": [
+              "/generatify/helpdesk/setup",
+              "/generatify/helpdesk/customization",
+              "/generatify/helpdesk/chat-mode",
+              "/generatify/helpdesk/contact-form-mode"
+            ]
+          },
+          {
+            "group": "Smart Suggestions",
+            "pages": [
+              "/generatify/smart-suggestions/smart-compose",
+              "/generatify/smart-suggestions/related-posts"
+            ]
+          },
+          {
+            "group": "Content Moderation",
+            "pages": [
+              "/generatify/moderation/toxicity-checker",
+              "/generatify/moderation/configuration"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "/generatify/advanced/settings",
+              "/generatify/advanced/customization",
+              "/generatify/advanced/performance",
+              "/generatify/advanced/troubleshooting"
+            ]
+          },
+          {
+            "group": "Developer",
+            "pages": [
+              "/generatify/developer/hooks-filters",
+              "/generatify/developer/api-reference",
+              "/generatify/developer/extending"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "/generatify/support/faq",
+              "/generatify/support/changelog",
+              "/generatify/support/get-help"
             ]
           }
         ]
