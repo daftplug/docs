@@ -1,0 +1,769 @@
+---
+title: 'Troubleshooting'
+description: 'Solutions to common issues and error messages'
+icon: 'wrench'
+---
+
+## Overview
+
+Quick solutions to common Generatify issues. Find your problem, follow the fix, and get back to using AI features quickly.
+
+<CardGroup cols={3}>
+  <Card title="Installation Issues" icon="download">
+    Activation and setup
+  </Card>
+  <Card title="API Errors" icon="triangle-exclamation">
+    Connection problems
+  </Card>
+  <Card title="Feature Issues" icon="bug">
+    Feature-specific problems
+  </Card>
+</CardGroup>
+
+---
+
+## Common Issues
+
+### Installation & Activation
+
+<AccordionGroup>
+  <Accordion title="Plugin Won't Activate" icon="power-off">
+    **Error:** "The plugin does not have a valid header"
+    
+    **Causes:**
+    - Incorrect installation
+    - Corrupted download
+    - Partial extraction
+    
+    **Solutions:**
+    1. Delete plugin folder via FTP
+    2. Re-download from source
+    3. Upload via WordPress admin (not FTP)
+    4. Ensure folder name is `generatify` (not `generatify-main`)
+    
+    **WP-CLI:**
+    ```bash
+    wp plugin delete generatify
+    wp plugin install generatify.zip --activate
+    ```
+  </Accordion>
+  
+  <Accordion title="White Screen After Activation" icon="file">
+    **Error:** Blank page or 500 error
+    
+    **Causes:**
+    - PHP version incompatibility (requires 7.4+)
+    - Memory limit too low
+    - Conflicting plugin
+    
+    **Solutions:**
+    1. Check PHP version: `php -v` (needs 7.4 or higher)
+    2. Increase memory limit in wp-config.php:
+       ```php
+       define( 'WP_MEMORY_LIMIT', '256M' );
+       ```
+    3. Disable all other plugins, re-enable one by one
+    4. Check error logs: `wp-content/debug.log`
+    
+    **Deactivate via database:**
+    ```sql
+    UPDATE wp_options 
+    SET option_value = '' 
+    WHERE option_name = 'active_plugins';
+    ```
+  </Accordion>
+  
+  <Accordion title="Missing Dependencies" icon="puzzle-piece">
+    **Error:** "Composer autoloader not found"
+    
+    **Cause:** Vendor dependencies not installed
+    
+    **Solution:**
+    ```bash
+    cd wp-content/plugins/generatify
+    composer install --no-dev
+    ```
+    
+    **Alternative:** Download release version (includes vendor folder)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### AI Provider Connection
+
+<AccordionGroup>
+  <Accordion title="Invalid API Key" icon="key">
+    **Error:** "Invalid API key provided"
+    
+    **OpenAI:**
+    - Verify key starts with `sk-`
+    - Check for extra spaces
+    - Confirm key is active at platform.openai.com
+    - Ensure billing set up
+    
+    **Anthropic:**
+    - Key format: `sk-ant-api03-...`
+    - Verify at console.anthropic.com
+    
+    **Google:**
+    - Get key from aistudio.google.com
+    - Enable Generative Language API
+    
+    **Test:**
+    ```
+    Settings → AI Providers → [Provider] → Test Connection
+    ```
+  </Accordion>
+  
+  <Accordion title="API Request Failed" icon="plug-circle-xmark">
+    **Error:** "API request failed" or timeout
+    
+    **Causes:**
+    - Network/firewall blocking
+    - Server timeout
+    - Rate limit exceeded
+    - API service outage
+    
+    **Solutions:**
+    1. Check firewall allows outbound HTTPS
+    2. Increase timeout:
+       ```
+       Settings → Advanced → API Timeout: 60 seconds
+       ```
+    3. Check API status:
+       - OpenAI: status.openai.com
+       - Anthropic: status.anthropic.com
+    4. Verify server can reach API:
+       ```bash
+       curl -I https://api.openai.com/v1/models
+       ```
+    5. Check rate limits on provider dashboard
+  </Accordion>
+  
+  <Accordion title="Rate Limit Exceeded" icon="gauge-max">
+    **Error:** "You exceeded your current quota"
+    
+    **Causes:**
+    - Free tier limits reached
+    - No payment method
+    - Monthly budget exceeded
+    
+    **Solutions:**
+    1. Add payment method to AI provider account
+    2. Increase usage limits on provider dashboard
+    3. Enable caching to reduce API calls:
+       ```
+       Settings → Advanced → Performance → Enable Caching
+       ```
+    4. Switch to cheaper model (GPT-4o Mini)
+    5. Set up fallback provider:
+       ```
+       Settings → AI Providers → Fallback Provider
+       ```
+  </Accordion>
+  
+  <Accordion title="SSL Certificate Error" icon="shield">
+    **Error:** "SSL certificate problem"
+    
+    **Causes:**
+    - Outdated CA certificates
+    - Server SSL misconfiguration
+    
+    **Solutions:**
+    1. Update CA certificates:
+       ```bash
+       sudo apt-get update
+       sudo apt-get install ca-certificates
+       ```
+    2. Contact hosting provider
+    3. Temporary workaround (not recommended):
+       ```php
+       // wp-config.php
+       define( 'GENERATIFY_VERIFY_SSL', false );
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Feature-Specific Issues
+
+#### AI Assistant Chatbot
+
+<AccordionGroup>
+  <Accordion title="Chat Widget Not Appearing" icon="comment-slash">
+    **Causes:**
+    - Feature disabled
+    - Display rules exclude current page
+    - JavaScript error
+    - CSS conflict
+    
+    **Solutions:**
+    1. Verify enabled:
+       ```
+       Settings → Features → AI Assistant → Enable: ON
+       ```
+    2. Check display rules:
+       ```
+       Settings → AI Assistant → Display Rules
+       Ensure current page type is included
+       ```
+    3. Check browser console for errors (F12)
+    4. Test with default theme (Twenty Twenty-Three)
+    5. Disable other plugins temporarily
+    6. Clear browser cache
+  </Accordion>
+  
+  <Accordion title="Chat Not Responding" icon="comment-dots">
+    **Symptoms:** Loading spinner forever
+    
+    **Solutions:**
+    1. Check API key valid
+    2. Check browser console for errors
+    3. Verify AJAX endpoint accessible:
+       ```
+       https://yoursite.com/wp-admin/admin-ajax.php?action=generatify_chat
+       ```
+    4. Disable security plugins temporarily (may block AJAX)
+    5. Check error logs:
+       ```
+       Settings → Advanced → Debug Mode: ON
+       Check wp-content/generatify-debug.log
+       ```
+  </Accordion>
+  
+  <Accordion title="Chat Gives Wrong Answers" icon="triangle-exclamation">
+    **Causes:**
+    - Insufficient knowledge sources
+    - Model not suitable
+    - Poor prompt configuration
+    
+    **Solutions:**
+    1. Add knowledge sources:
+       ```
+       Settings → AI Assistant → Knowledge Sources
+       Add: Posts, Pages, Products, Custom docs
+       ```
+    2. Use better model:
+       ```
+       GPT-4o (better understanding) instead of GPT-3.5
+       ```
+    3. Improve system prompt:
+       ```
+       Settings → AI Assistant → System Prompt
+       Add: "Only answer based on provided knowledge. 
+       If unsure, say 'I don't know'."
+       ```
+    4. Increase context window:
+       ```
+       Settings → AI Assistant → Max Chat History: 20
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Automations
+
+<AccordionGroup>
+  <Accordion title="Auto Tags Not Generating" icon="tags">
+    **Solutions:**
+    1. Verify enabled:
+       ```
+       Settings → Features → Auto Tags: ON
+       ```
+    2. Check trigger setting:
+       ```
+       Settings → Automations → Auto Tags → Trigger
+       Should be: On Publish (not Manual)
+       ```
+    3. Check post type included:
+       ```
+       Settings → Automations → Auto Tags → Post Types
+       Include: Posts (or your custom post type)
+       ```
+    4. Test manually:
+       ```
+       Edit post → Sidebar → Generatify → Generate Tags
+       ```
+    5. Check error logs for API issues
+  </Accordion>
+  
+  <Accordion title="Tags Are Irrelevant" icon="question">
+    **Causes:**
+    - Model not understanding content
+    - Content too short/vague
+    - Wrong language
+    
+    **Solutions:**
+    1. Use better model:
+       ```
+       GPT-4o Mini (better than GPT-3.5)
+       ```
+    2. Increase min confidence:
+       ```
+       Settings → Automations → Auto Tags
+       Min Confidence: 80% (from 70%)
+       ```
+    3. Prefer existing tags:
+       ```
+       Settings → Automations → Auto Tags
+       ✅ Use Existing Tags Over Creating New
+       ```
+    4. Customize prompt:
+       ```php
+       add_filter( 'generatify_tags_prompt', function( $prompt, $content ) {
+           return $prompt . "\n\nFocus on technical keywords only.";
+       }, 10, 2 );
+       ```
+  </Accordion>
+  
+  <Accordion title="Meta Descriptions Not Saving" icon="file-lines">
+    **Causes:**
+    - SEO plugin conflict
+    - No integration enabled
+    - Wrong post type
+    
+    **Solutions:**
+    1. Enable SEO plugin integration:
+       ```
+       Settings → Automations → Meta Descriptions
+       SEO Plugin: Auto-detect (or select yours)
+       ```
+    2. Supported SEO plugins:
+       - Yoast SEO
+       - Rank Math
+       - All in One SEO
+       - SEOPress
+    3. If using custom SEO solution, hook:
+       ```php
+       add_action( 'generatify_meta_description_generated', 
+           function( $description, $post_id ) {
+               update_post_meta( $post_id, 'your_meta_key', $description );
+           }, 10, 2 
+       );
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Smart Suggestions
+
+<AccordionGroup>
+  <Accordion title="Smart Compose Not Suggesting" icon="pen">
+    **Solutions:**
+    1. Verify enabled for your user role:
+       ```
+       Settings → Smart Suggestions → Smart Compose
+       Enabled for: Editor, Author, Contributor
+       ```
+    2. Check trigger setting:
+       ```
+       Settings → Smart Compose → Trigger
+       Try: After 2 seconds pause (not Manual)
+       ```
+    3. Check if you're in classic editor:
+       - Smart Compose only works in Block Editor (Gutenberg)
+       - Consider switching or use manual shortcut
+    4. Test manual trigger:
+       - Press `Ctrl+Space` (or `Cmd+Space` on Mac)
+       - Should show suggestion immediately
+    5. Check browser console for errors
+  </Accordion>
+  
+  <Accordion title="Suggestions Are Off-Topic" icon="ban">
+    **Solutions:**
+    1. Enable context awareness:
+       ```
+       Settings → Smart Compose
+       ✅ Context Awareness: Use post title, category, history
+       ```
+    2. Set appropriate writing style:
+       ```
+       Tone: Match my style (learns from your posts)
+       ```
+    3. Use better model (GPT-4o vs GPT-4o Mini)
+    4. Provide more context in post title
+  </Accordion>
+  
+  <Accordion title="Related Posts Not Showing" icon="link-slash">
+    **Solutions:**
+    1. Check display location:
+       ```
+       Settings → Smart Suggestions → Related Posts
+       Display: After content (default)
+       ```
+    2. Verify sufficient posts:
+       - Needs at least 5 published posts
+       - Posts must have content (not just title)
+    3. Check exclusion rules:
+       ```
+       Settings → Related Posts → Exclusions
+       Ensure current category not excluded
+       ```
+    4. Clear cache:
+       ```
+       Settings → Advanced → Performance → Clear Cache
+       Select: Related Posts
+       ```
+    5. Test shortcode manually:
+       ```
+       [generatify_related_posts]
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Content Moderation
+
+<AccordionGroup>
+  <Accordion title="Toxicity Checker Not Working" icon="shield-slash">
+    **Solutions:**
+    1. Verify enabled:
+       ```
+       Settings → Content Moderation → Toxicity Checker: ON
+       ```
+    2. Check TensorFlow.js loaded:
+       - Open browser console
+       - Look for "TensorFlow.js loaded" message
+       - If not, check JavaScript errors
+    3. Test with known toxic comment:
+       ```
+       "You're an idiot and this is garbage"
+       Should be flagged
+       ```
+    4. Check browser compatibility:
+       - Requires modern browser (Chrome, Firefox, Safari, Edge)
+       - JavaScript must be enabled
+    5. Try clearing browser cache
+  </Accordion>
+  
+  <Accordion title="Too Many False Positives" icon="triangle-exclamation">
+    **Solutions:**
+    1. Adjust sensitivity:
+       ```
+       Settings → Content Moderation → Toxicity Checker
+       Sensitivity: Balanced → Lenient
+       ```
+    2. Increase thresholds:
+       ```
+       Settings → Toxicity Checker → Custom Thresholds
+       Increase each category by 10-20%
+       ```
+    3. Whitelist common false positives:
+       ```
+       Settings → Content Moderation → Allowlist
+       Add words that trigger incorrectly
+       ```
+    4. Exempt trusted users:
+       ```
+       Settings → Content Moderation → Exemptions
+       ✅ Users with 5+ approved comments
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Performance Issues
+
+<AccordionGroup>
+  <Accordion title="Slow Response Times" icon="hourglass">
+    **Causes:**
+    - No caching
+    - Slow AI provider
+    - Large content
+    - Slow server
+    
+    **Solutions:**
+    1. Enable caching:
+       ```
+       Settings → Advanced → Performance
+       ✅ Enable Caching
+       Cache Duration: 24 hours
+       ```
+    2. Use faster model:
+       ```
+       GPT-4o (faster than GPT-4)
+       GPT-4o Mini (fastest, cheapest)
+       ```
+    3. Truncate content:
+       ```
+       Settings → Automations → Advanced
+       Content Length: First 500 words
+       ```
+    4. Install object cache:
+       ```bash
+       # Install Redis
+       wp plugin install redis-cache --activate
+       wp redis enable
+       ```
+    5. Increase timeout:
+       ```
+       Settings → Advanced → API Timeout: 60 seconds
+       ```
+  </Accordion>
+  
+  <Accordion title="High Memory Usage" icon="memory">
+    **Solutions:**
+    1. Increase PHP memory limit:
+       ```php
+       // wp-config.php
+       define( 'WP_MEMORY_LIMIT', '256M' );
+       ```
+    2. Disable debug mode:
+       ```
+       Settings → Advanced → Debug Mode: OFF
+       ```
+    3. Clear old logs:
+       ```
+       Settings → Advanced → Database → Cleanup
+       Delete logs older than: 7 days
+       ```
+    4. Lazy load TensorFlow.js:
+       ```
+       Settings → Content Moderation → Advanced
+       ✅ Lazy load TensorFlow.js
+       ```
+  </Accordion>
+  
+  <Accordion title="Database Growing Large" icon="database">
+    **Solutions:**
+    1. Clean old transients:
+       ```bash
+       wp transient delete --expired
+       ```
+    2. Reduce cache duration:
+       ```
+       Settings → Advanced → Performance
+       Cache Duration: 24 hours (not 7 days)
+       ```
+    3. Clean old logs:
+       ```
+       Settings → Advanced → Database → Cleanup
+       [Run Cleanup Now]
+       ```
+    4. Optimize tables:
+       ```bash
+       wp db optimize
+       ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Error Messages
+
+### API Error Codes
+
+<table>
+  <thead>
+    <tr>
+      <th>Error Code</th>
+      <th>Meaning</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>401</td>
+      <td>Invalid API key</td>
+      <td>Check API key, ensure billing set up</td>
+    </tr>
+    <tr>
+      <td>429</td>
+      <td>Rate limit exceeded</td>
+      <td>Wait, enable caching, upgrade plan</td>
+    </tr>
+    <tr>
+      <td>500</td>
+      <td>AI provider server error</td>
+      <td>Wait and retry, check status page</td>
+    </tr>
+    <tr>
+      <td>503</td>
+      <td>Service unavailable</td>
+      <td>AI provider maintenance, try later</td>
+    </tr>
+    <tr>
+      <td>timeout</td>
+      <td>Request took too long</td>
+      <td>Increase timeout, use faster model</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Debug Mode
+
+Enable detailed logging:
+
+```
+Settings → Advanced → Debug Mode: ON
+Log Level: Debug
+```
+
+**Log locations:**
+
+- **File:** `wp-content/generatify-debug.log`
+- **Database:** Settings → Advanced → View Logs
+
+**What's logged:**
+
+- API requests and responses
+- Errors and warnings
+- Feature activations
+- Cache hits/misses
+- Performance metrics
+
+**Disable after troubleshooting** (impacts performance)
+
+---
+
+## Getting Help
+
+If issue persists:
+
+<Steps>
+  <Step title="Check Documentation">
+    Review relevant documentation pages
+  </Step>
+  
+  <Step title="Enable Debug Mode">
+    Capture detailed error information
+  </Step>
+  
+  <Step title="Export Logs">
+    ```
+    Settings → Advanced → Export Debug Logs
+    ```
+  </Step>
+  
+  <Step title="Gather System Info">
+    ```
+    Settings → System Info → Copy
+    ```
+    Includes: PHP version, WordPress version, active plugins, theme
+  </Step>
+  
+  <Step title="Contact Support">
+    Provide logs, system info, and steps to reproduce
+  </Step>
+</Steps>
+
+---
+
+## Quick Diagnostics
+
+Run automatic diagnostics:
+
+```
+Settings → Advanced → Diagnostics → Run System Check
+
+Checks:
+✅ PHP version (7.4+)
+✅ WordPress version (6.0+)
+✅ API connectivity
+✅ Write permissions
+✅ Memory limit
+✅ Required extensions
+✅ Conflicting plugins
+✅ Theme compatibility
+```
+
+---
+
+## Common Conflicts
+
+### Plugin Conflicts
+
+<table>
+  <thead>
+    <tr>
+      <th>Plugin</th>
+      <th>Issue</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Security plugins**</td>
+      <td>Block AJAX requests</td>
+      <td>Whitelist admin-ajax.php</td>
+    </tr>
+    <tr>
+      <td>**Caching plugins**</td>
+      <td>Serve stale widget</td>
+      <td>Exclude Generatify JS from cache</td>
+    </tr>
+    <tr>
+      <td>**Other AI plugins**</td>
+      <td>JavaScript conflicts</td>
+      <td>Use different global variables</td>
+    </tr>
+    <tr>
+      <td>**Page builders**</td>
+      <td>Widget not showing</td>
+      <td>Use shortcode or widget area</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Theme Conflicts
+
+**Symptoms:**
+- CSS styling issues
+- Widget not positioned correctly
+- JavaScript errors
+
+**Solutions:**
+
+1. **Test with default theme:**
+   ```
+   Appearance → Themes → Twenty Twenty-Three
+   Activate temporarily
+   ```
+
+2. **Add compatibility CSS:**
+   ```css
+   /* Settings → Advanced → Custom CSS */
+   .generatify-chat-widget {
+       z-index: 999999 !important;
+       position: fixed !important;
+   }
+   ```
+
+3. **Ensure jQuery loaded:**
+   ```php
+   // functions.php
+   wp_enqueue_script( 'jquery' );
+   ```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="FAQ" icon="circle-question" href="/support/faq">
+    Frequently asked questions
+  </Card>
+  <Card title="Get Help" icon="life-ring" href="/support/get-help">
+    Support channels
+  </Card>
+  <Card title="Performance" icon="gauge" href="/advanced/performance">
+    Optimization guide
+  </Card>
+  <Card title="Settings" icon="sliders" href="/advanced/settings">
+    Complete settings reference
+  </Card>
+</CardGroup>
+
+<Warning>
+**Still stuck?** Contact support with debug logs and system info for personalized help.
+</Warning>

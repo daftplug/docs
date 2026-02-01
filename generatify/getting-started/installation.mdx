@@ -1,0 +1,310 @@
+---
+title: 'Installation'
+description: 'Install Generatify on your WordPress site in minutes'
+icon: 'download'
+---
+
+## System Requirements
+
+Before installing Generatify, ensure your WordPress site meets these minimum requirements:
+
+<CardGroup cols={2}>
+  <Card title="WordPress Version" icon="wordpress">
+    **5.0 or higher**
+  </Card>
+  <Card title="PHP Version" icon="php">
+    **7.4 or higher** (8.0+ recommended)
+  </Card>
+  <Card title="Server Memory" icon="memory">
+    **128 MB minimum** (256 MB+ recommended)
+  </Card>
+  <Card title="HTTPS" icon="lock">
+    **SSL certificate** (required for AI API calls)
+  </Card>
+</CardGroup>
+
+<Warning>
+  Generatify requires HTTPS to securely communicate with AI providers. Make sure your WordPress site has a valid SSL certificate installed.
+</Warning>
+
+## Installation Methods
+
+Choose the installation method that works best for you:
+
+<Tabs>
+  <Tab title="WordPress Plugin Repository">
+    ### Install from WordPress.org
+
+    The easiest way to install Generatify:
+
+    1. Log in to your WordPress admin dashboard
+    2. Navigate to **Plugins → Add New**
+    3. Search for **"Generatify"**
+    4. Click **Install Now** on the Generatify plugin
+    5. After installation completes, click **Activate**
+
+    <img src="/images/install-wp-repo.png" alt="Install from WordPress Plugin Repository" />
+
+    <Check>
+      The plugin is now active! You'll see a new **Generatify** menu item in your WordPress admin sidebar.
+    </Check>
+  </Tab>
+
+  <Tab title="Upload ZIP File">
+    ### Manual Upload via WordPress Dashboard
+
+    If you have the plugin ZIP file:
+
+    1. Download the Generatify plugin ZIP file
+    2. Log in to your WordPress admin dashboard
+    3. Navigate to **Plugins → Add New → Upload Plugin**
+    4. Click **Choose File** and select the downloaded ZIP
+    5. Click **Install Now**
+    6. After installation, click **Activate Plugin**
+
+    <img src="/images/install-upload.png" alt="Upload Plugin ZIP" />
+  </Tab>
+
+  <Tab title="FTP/SFTP Upload">
+    ### Manual Installation via FTP
+
+    For advanced users with FTP access:
+
+    1. Download and extract the Generatify plugin ZIP file
+    2. Connect to your server via FTP/SFTP
+    3. Upload the extracted `generatify` folder to `/wp-content/plugins/`
+    4. Log in to your WordPress admin dashboard
+    5. Navigate to **Plugins → Installed Plugins**
+    6. Find **Generatify** and click **Activate**
+
+    ```bash
+    # Example using SCP
+    scp -r generatify/ user@yourserver.com:/var/www/html/wp-content/plugins/
+    ```
+  </Tab>
+
+  <Tab title="WP-CLI">
+    ### Install Using WP-CLI
+
+    For developers using WP-CLI:
+
+    ```bash
+    # Install from WordPress.org
+    wp plugin install generatify --activate
+
+    # Or install from ZIP file
+    wp plugin install /path/to/generatify.zip --activate
+
+    # Verify installation
+    wp plugin list | grep generatify
+    ```
+
+    <Tip>
+      WP-CLI is great for automated deployments and managing multiple WordPress sites.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Post-Installation Steps
+
+After activating Generatify, follow these steps:
+
+<Steps>
+  <Step title="Access Generatify Settings">
+    Navigate to **Generatify** in your WordPress admin sidebar to access the plugin dashboard.
+  </Step>
+
+  <Step title="Complete the Setup Wizard">
+    The first time you access Generatify, you'll see a welcome screen guiding you through initial setup.
+  </Step>
+
+  <Step title="Connect an AI Provider">
+    Add your API key from OpenAI, Anthropic, or Google to enable AI features. [Learn more →](/getting-started/ai-providers)
+  </Step>
+
+  <Step title="Enable Features">
+    Choose which Generatify modules you want to activate on your site.
+  </Step>
+</Steps>
+
+## Verify Installation
+
+To confirm Generatify is working correctly:
+
+<AccordionGroup>
+  <Accordion title="Check Plugin Status">
+    1. Go to **Plugins → Installed Plugins**
+    2. Look for **Generatify** in the list
+    3. Verify it shows as **Active** with a blue highlight
+  </Accordion>
+
+  <Accordion title="Check Plugin Version">
+    Current version: **1.0.1**
+
+    Make sure you're running the latest version for optimal performance and security.
+  </Accordion>
+
+  <Accordion title="Test Admin Access">
+    1. Click **Generatify** in the WordPress admin sidebar
+    2. You should see the Generatify dashboard
+    3. Check that all tabs load without errors
+  </Accordion>
+
+  <Accordion title="Review Error Logs">
+    If you encounter issues:
+    1. Enable WordPress debug mode
+    2. Check `/wp-content/debug.log` for errors
+    3. Look for messages related to `Generatify`
+  </Accordion>
+</AccordionGroup>
+
+## Multisite Installation
+
+For WordPress Multisite networks:
+
+<Tabs>
+  <Tab title="Network Activate">
+    ### Activate for All Sites
+
+    1. Log in to your Network Admin dashboard
+    2. Navigate to **Plugins → Installed Plugins**
+    3. Find Generatify and click **Network Activate**
+
+    Each site in your network can now configure Generatify independently.
+  </Tab>
+
+  <Tab title="Individual Sites">
+    ### Activate for Specific Sites
+
+    1. Install Generatify via Network Admin
+    2. Visit individual site dashboards
+    3. Navigate to **Plugins** on each site
+    4. Activate Generatify only where needed
+  </Tab>
+</Tabs>
+
+<Info>
+  On multisite networks, each site maintains its own Generatify settings and API keys. Settings are not shared across sites.
+</Info>
+
+## Updating Generatify
+
+Keep Generatify up to date for new features and security patches:
+
+### Automatic Updates
+
+1. Enable automatic updates in **Plugins → Installed Plugins**
+2. Click **Enable auto-updates** next to Generatify
+
+### Manual Updates
+
+1. WordPress will notify you when updates are available
+2. Go to **Dashboard → Updates**
+3. Select Generatify and click **Update Plugins**
+
+<Warning>
+  **Before updating:** Always backup your WordPress site and database. While updates are tested thoroughly, backups ensure you can roll back if needed.
+</Warning>
+
+## Troubleshooting Installation
+
+<AccordionGroup>
+  <Accordion title="Plugin fails to activate">
+    **Possible causes:**
+    - PHP version too old (requires 7.4+)
+    - Insufficient server memory
+    - Conflicting plugin
+
+    **Solution:** Check your PHP version and increase memory limit to at least 128MB:
+    ```php
+    // Add to wp-config.php
+    define('WP_MEMORY_LIMIT', '256M');
+    ```
+  </Accordion>
+
+  <Accordion title="White screen after activation">
+    **Possible causes:**
+    - PHP fatal error
+    - Memory exhaustion
+    - Theme compatibility issue
+
+    **Solution:** 
+    1. Access your site via FTP
+    2. Rename the `generatify` folder in `/wp-content/plugins/`
+    3. Check error logs
+    4. Contact support with error details
+  </Accordion>
+
+  <Accordion title="Missing admin menu">
+    **Possible causes:**
+    - User role doesn't have required capabilities
+    - JavaScript conflict
+    - Caching issue
+
+    **Solution:**
+    1. Clear your browser cache
+    2. Disable other plugins temporarily
+    3. Check if you have Administrator role
+  </Accordion>
+
+  <Accordion title="Can't upload ZIP file">
+    **Possible causes:**
+    - File size exceeds upload limit
+    - Server restrictions
+
+    **Solution:** Increase upload limit:
+    ```php
+    // Add to wp-config.php
+    @ini_set('upload_max_size', '64M');
+    @ini_set('post_max_size', '64M');
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Uninstalling Generatify
+
+If you need to remove Generatify:
+
+<Warning>
+  **Before uninstalling:** Deactivate all Generatify features to avoid orphaned data or settings.
+</Warning>
+
+<Steps>
+  <Step title="Deactivate the Plugin">
+    Go to **Plugins → Installed Plugins** and click **Deactivate** under Generatify.
+  </Step>
+
+  <Step title="Delete Plugin Data (Optional)">
+    If you want to remove all settings and data:
+    1. Go to **Generatify → Settings**
+    2. Find the **Delete Plugin Data** option
+    3. Enable it before uninstalling
+  </Step>
+
+  <Step title="Uninstall">
+    After deactivation, click **Delete** under Generatify in the plugins list.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Quick Setup"
+    icon="bolt"
+    href="/getting-started/quick-setup"
+  >
+    Configure your first AI feature in minutes
+  </Card>
+  <Card
+    title="Connect AI Providers"
+    icon="plug"
+    href="/getting-started/ai-providers"
+  >
+    Add your OpenAI, Claude, or Gemini API key
+  </Card>
+</CardGroup>
+
+<Note>
+  Need help? Visit our [Support Center](/support/get-help) or check the [FAQ](/support/faq) for common questions.
+</Note>

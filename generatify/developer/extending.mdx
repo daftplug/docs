@@ -1,0 +1,909 @@
+---
+title: 'Extending Generatify'
+description: 'Build custom features and integrations with Generatify'
+icon: 'puzzle-piece'
+---
+
+## Overview
+
+Extend Generatify to meet your specific needs. Build custom AI features, integrate with third-party services, and create unique workflows.
+
+<CardGroup cols={3}>
+  <Card title="Custom Features" icon="wand-magic-sparkles">
+    Build new AI capabilities
+  </Card>
+  <Card title="Integrations" icon="link">
+    Connect to external services
+  </Card>
+  <Card title="Custom Providers" icon="server">
+    Add AI providers
+  </Card>
+</CardGroup>
+
+---
+
+## Custom AI Features
+
+### Creating a Custom Feature
+
+Build your own AI-powered feature using Generatify's infrastructure:
+
+```php
+<?php
+/**
+ * Plugin Name: My Custom AI Feature
+ * Description: Custom AI content summarizer
+ * Requires Plugins: generatify
+ */
+
+class My_Custom_AI_Summarizer {
+    
+    public function __construct() {
+        // Hook into post save
+        add_action( 'save_post', [ $this, 'generate_summary' ], 20, 2 );
+        
+        // Add meta box
+        add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ] );
+        
+        // Register REST API endpoint
+        add_action( 'rest_api_init', [ $this, 'register_api_endpoint' ] );
+    }
+    
+    /**
+     * Generate AI summary for post
+     */
+    public function generate_summary( $post_id, $post ) {
+        // Skip autosaves and revisions
+        if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+            return;
+        }
+        
+        // Only for posts
+        if ( $post->post_type !== 'post' ) {
+            return;
+        }
+        
+        // Get content
+        $content = $post->post_content;
+        $content = wp_strip_all_tags( $content );
+        
+        // Build prompt
+        $prompt = "Summarize the following article in 2-3 sentences:\n\n" . $content;
+        
+        // Use Generatify AI helper
+        $ai = generatify_get_ai_instance();
+        $response = $ai->send_request( $prompt, [
+            'model' => 'gpt-4o-mini',
+            'max_tokens' => 150,
+            'temperature' => 0.5,
+        ] );
+        
+        if ( ! is_wp_error( $response ) ) {
+            // Save summary as post meta
+            update_post_meta( $post_id, '_ai_summary', $response );
+            update_post_meta( $post_id, '_ai_summary_date', current_time( 'mysql' ) );
+        }
+    }
+    
+    /**
+     * Add meta box to post editor
+     */
+    public function add_meta_box() {
+        add_meta_box(
+            'ai_summary',
+            'AI Summary',
+            [ $this, 'render_meta_box' ],
+            'post',
+            'side',
+            'default'
+        );
+    }
+    
+    /**
+     * Render meta box content
+     */
+    public function render_meta_box( $post ) {
+        $summary = get_post_meta( $post->ID, '_ai_summary', true );
+        $date = get_post_meta( $post->ID, '_ai_summary_date', true );
+        
+        if ( $summary ) {
+            echo '<p>' . esc_html( $summary ) . '</p>';
+            echo '<p><small>Generated: ' . esc_html( $date ) . '</small></p>';
+            echo '<button type="button" class="button" id="regenerate-summary">Regenerate</button>';
+        } else {
+            echo '<p>Summary will be generated on publish.</p>';
+        }
+    }
+    
+    /**
+     * Register REST API endpoint
+     */
+    public function register_api_endpoint() {
+        register_rest_route( 'my-plugin/v1', '/generate-summary', [
+            'methods' => 'POST',
+            'callback' => [ $this, 'api_generate_summary' ],
+            'permission_callback' => function() {
+                return current_user_can( 'edit_posts' );
+            },
+            'args' => [
+                'post_id' => [
+                    'required' => true,
+                    'type' => 'integer',
+                ],
+            ],
+        ] );
+    }
+    
+    /**
+     * API callback to generate summary
+     */
+    public function api_generate_summary( $request ) {
+        $post_id = $request['post_id'];
+        $post = get_post( $post_id );
+        
+        if ( ! $post ) {
+            return new WP_Error( 'invalid_post', 'Post not found', [ 'status' => 404 ] );
+        }
+        
+        // Generate summary
+        $this->generate_summary( $post_id, $post );
+        
+        // Return updated summary
+        $summary = get_post_meta( $post_id, '_ai_summary', true );
+        
+        return [
+            'success' => true,
+            'summary' => $summary,
+        ];
+    }
+}
+
+// Initialize
+new My_Custom_AI_Summarizer();
+```
+
+---
+
+### Using Generatify AI Helper
+
+Generatify provides helper functions for AI requests:
+
+```php
+// Get AI instance (configured with user's API keys)
+$ai = generatify_get_ai_instance();
+
+// Send request
+$response = $ai->send_request( 'Your prompt here', [
+    'model' => 'gpt-4o-mini',
+    'max_tokens' => 500,
+    'temperature' => 0.7,
+] );
+
+// Check for errors
+if ( is_wp_error( $response ) ) {
+    error_log( 'AI request failed: ' . $response->get_error_message() );
+    return;
+}
+
+// Use response
+echo $response;
+```
+
+**Available methods:**
+
+```php
+// Basic request
+$ai->send_request( $prompt, $options );
+
+// Chat completion (with history)
+$ai->chat( $messages, $options );
+
+// Stream response (for real-time display)
+$ai->stream_request( $prompt, $callback, $options );
+
+// Get token count estimate
+$tokens = $ai->estimate_tokens( $text );
+
+// Check if API key is valid
+$is_valid = $ai->validate_api_key();
+```
+
+---
+
+## Custom AI Providers
+
+Add support for additional AI providers:
+
+```php
+<?php
+/**
+ * Custom AI Provider: Mistral AI
+ */
+class Mistral_AI_Provider extends Generatify_AI_Provider_Base {
+    
+    protected $provider_id = 'mistral';
+    protected $provider_name = 'Mistral AI';
+    protected $api_endpoint = 'https://api.mistral.ai/v1/chat/completions';
+    
+    /**
+     * Get available models
+     */
+    public function get_models() {
+        return [
+            'mistral-tiny' => [
+                'name' => 'Mistral Tiny',
+                'context' => 32000,
+                'cost_per_1k_tokens' => 0.00025,
+            ],
+            'mistral-small' => [
+                'name' => 'Mistral Small',
+                'context' => 32000,
+                'cost_per_1k_tokens' => 0.001,
+            ],
+            'mistral-medium' => [
+                'name' => 'Mistral Medium',
+                'context' => 32000,
+                'cost_per_1k_tokens' => 0.0027,
+            ],
+        ];
+    }
+    
+    /**
+     * Send API request
+     */
+    public function send_request( $prompt, $options = [] ) {
+        $api_key = $this->get_api_key();
+        
+        if ( empty( $api_key ) ) {
+            return new WP_Error( 'no_api_key', 'Mistral API key not configured' );
+        }
+        
+        // Build request body
+        $body = [
+            'model' => $options['model'] ?? 'mistral-tiny',
+            'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $prompt,
+                ],
+            ],
+            'max_tokens' => $options['max_tokens'] ?? 1000,
+            'temperature' => $options['temperature'] ?? 0.7,
+        ];
+        
+        // Send request
+        $response = wp_remote_post( $this->api_endpoint, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode( $body ),
+            'timeout' => 30,
+        ] );
+        
+        // Handle errors
+        if ( is_wp_error( $response ) ) {
+            return $response;
+        }
+        
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+        
+        if ( empty( $body['choices'][0]['message']['content'] ) ) {
+            return new WP_Error( 'api_error', 'No response from Mistral API' );
+        }
+        
+        return $body['choices'][0]['message']['content'];
+    }
+    
+    /**
+     * Get settings fields
+     */
+    public function get_settings_fields() {
+        return [
+            [
+                'id' => 'mistral_api_key',
+                'label' => 'Mistral API Key',
+                'type' => 'text',
+                'description' => 'Get your API key from console.mistral.ai',
+            ],
+            [
+                'id' => 'mistral_default_model',
+                'label' => 'Default Model',
+                'type' => 'select',
+                'options' => [
+                    'mistral-tiny' => 'Mistral Tiny',
+                    'mistral-small' => 'Mistral Small',
+                    'mistral-medium' => 'Mistral Medium',
+                ],
+                'default' => 'mistral-tiny',
+            ],
+        ];
+    }
+    
+    /**
+     * Test API connection
+     */
+    public function test_connection() {
+        $response = $this->send_request( 'Hello, this is a test.', [
+            'max_tokens' => 10,
+        ] );
+        
+        return ! is_wp_error( $response );
+    }
+}
+
+// Register provider
+add_filter( 'generatify_ai_providers', function( $providers ) {
+    $providers['mistral'] = new Mistral_AI_Provider();
+    return $providers;
+} );
+```
+
+---
+
+## Third-Party Integrations
+
+### CRM Integration Example
+
+Sync chat conversations to your CRM:
+
+```php
+<?php
+/**
+ * Integrate Generatify with HubSpot CRM
+ */
+class Generatify_HubSpot_Integration {
+    
+    private $api_key;
+    private $api_url = 'https://api.hubapi.com';
+    
+    public function __construct() {
+        $this->api_key = get_option( 'hubspot_api_key' );
+        
+        // Hook into chat events
+        add_action( 'generatify_chat_message_sent', [ $this, 'log_chat_message' ], 10, 3 );
+        add_action( 'generatify_chat_escalated', [ $this, 'create_support_ticket' ], 10, 3 );
+    }
+    
+    /**
+     * Log chat message to HubSpot
+     */
+    public function log_chat_message( $message, $user_id, $session_id ) {
+        $user = get_userdata( $user_id );
+        
+        if ( ! $user ) {
+            return;
+        }
+        
+        // Find or create contact
+        $contact_id = $this->get_or_create_contact( $user );
+        
+        // Log engagement
+        $this->create_engagement( $contact_id, [
+            'type' => 'NOTE',
+            'timestamp' => current_time( 'timestamp' ) * 1000,
+            'body' => sprintf(
+                'Chat message: %s (Session: %s)',
+                $message,
+                $session_id
+            ),
+        ] );
+    }
+    
+    /**
+     * Create support ticket when chat escalated
+     */
+    public function create_support_ticket( $conversation, $user_id, $reason ) {
+        $user = get_userdata( $user_id );
+        $contact_id = $this->get_or_create_contact( $user );
+        
+        // Format conversation
+        $conversation_text = '';
+        foreach ( $conversation as $message ) {
+            $conversation_text .= sprintf(
+                "[%s] %s: %s\n",
+                $message['timestamp'],
+                $message['role'],
+                $message['content']
+            );
+        }
+        
+        // Create ticket
+        $this->create_ticket( [
+            'subject' => 'Chat Escalation: ' . $reason,
+            'content' => $conversation_text,
+            'hs_pipeline_stage' => 'new',
+            'hs_ticket_priority' => 'HIGH',
+            'contact_id' => $contact_id,
+        ] );
+    }
+    
+    /**
+     * Get or create HubSpot contact
+     */
+    private function get_or_create_contact( $user ) {
+        // Check if contact exists
+        $response = wp_remote_get( 
+            $this->api_url . '/contacts/v1/contact/email/' . $user->user_email . '/profile',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                ],
+            ]
+        );
+        
+        if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
+            $body = json_decode( wp_remote_retrieve_body( $response ), true );
+            return $body['vid'];
+        }
+        
+        // Create new contact
+        $response = wp_remote_post(
+            $this->api_url . '/contacts/v1/contact',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => json_encode( [
+                    'properties' => [
+                        [
+                            'property' => 'email',
+                            'value' => $user->user_email,
+                        ],
+                        [
+                            'property' => 'firstname',
+                            'value' => $user->first_name,
+                        ],
+                        [
+                            'property' => 'lastname',
+                            'value' => $user->last_name,
+                        ],
+                    ],
+                ] ),
+            ]
+        );
+        
+        if ( ! is_wp_error( $response ) ) {
+            $body = json_decode( wp_remote_retrieve_body( $response ), true );
+            return $body['vid'];
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Create HubSpot engagement
+     */
+    private function create_engagement( $contact_id, $data ) {
+        wp_remote_post(
+            $this->api_url . '/engagements/v1/engagements',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => json_encode( [
+                    'engagement' => [
+                        'active' => true,
+                        'type' => $data['type'],
+                        'timestamp' => $data['timestamp'],
+                    ],
+                    'associations' => [
+                        'contactIds' => [ $contact_id ],
+                    ],
+                    'metadata' => [
+                        'body' => $data['body'],
+                    ],
+                ] ),
+            ]
+        );
+    }
+    
+    /**
+     * Create HubSpot ticket
+     */
+    private function create_ticket( $data ) {
+        wp_remote_post(
+            $this->api_url . '/crm/v3/objects/tickets',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => json_encode( [
+                    'properties' => $data,
+                ] ),
+            ]
+        );
+    }
+}
+
+// Initialize
+new Generatify_HubSpot_Integration();
+```
+
+---
+
+### Analytics Integration Example
+
+Send AI usage data to Google Analytics:
+
+```php
+<?php
+/**
+ * Send Generatify events to Google Analytics
+ */
+add_action( 'generatify_after_ai_request', function( $feature, $response, $data ) {
+    // Skip if no GA tracking
+    if ( ! function_exists( 'gtag' ) ) {
+        return;
+    }
+    
+    // Track AI usage
+    ?>
+    <script>
+    gtag('event', 'ai_request', {
+        'event_category': 'AI Features',
+        'event_label': '<?php echo esc_js( $feature ); ?>',
+        'value': <?php echo absint( $data['tokens_used'] ?? 0 ); ?>,
+        'custom_map': {
+            'dimension1': 'ai_model',
+            'dimension2': 'ai_cost'
+        },
+        'ai_model': '<?php echo esc_js( $data['model'] ?? '' ); ?>',
+        'ai_cost': <?php echo floatval( $data['cost'] ?? 0 ); ?>
+    });
+    </script>
+    <?php
+}, 10, 3 );
+
+// Track chat engagement
+add_action( 'generatify_chat_message_sent', function( $message, $user_id, $session_id ) {
+    if ( ! function_exists( 'gtag' ) ) {
+        return;
+    }
+    ?>
+    <script>
+    gtag('event', 'chat_interaction', {
+        'event_category': 'Engagement',
+        'event_label': 'Chat Message Sent',
+        'session_id': '<?php echo esc_js( $session_id ); ?>'
+    });
+    </script>
+    <?php
+}, 10, 3 );
+
+// Track feature adoption
+add_action( 'generatify_tags_generated', function( $post_id, $tags ) {
+    update_option( 'generatify_tags_usage_count', 
+        get_option( 'generatify_tags_usage_count', 0 ) + 1 
+    );
+}, 10, 2 );
+```
+
+---
+
+## Custom Gutenberg Block
+
+Create a custom block using Generatify AI:
+
+```javascript
+// JavaScript: ai-content-block.js
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, Button, TextControl, SelectControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+
+registerBlockType('my-plugin/ai-content', {
+    title: 'AI Generated Content',
+    icon: 'lightbulb',
+    category: 'common',
+    attributes: {
+        prompt: { type: 'string', default: '' },
+        content: { type: 'string', default: '' },
+        tone: { type: 'string', default: 'professional' }
+    },
+    
+    edit: ({ attributes, setAttributes }) => {
+        const [isLoading, setIsLoading] = useState(false);
+        const blockProps = useBlockProps();
+        
+        const generateContent = async () => {
+            setIsLoading(true);
+            
+            try {
+                const response = await apiFetch({
+                    path: '/generatify/v1/generate-content',
+                    method: 'POST',
+                    data: {
+                        prompt: attributes.prompt,
+                        tone: attributes.tone
+                    }
+                });
+                
+                setAttributes({ content: response.data.content });
+            } catch (error) {
+                alert('Failed to generate content: ' + error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        
+        return (
+            <div {...blockProps}>
+                <InspectorControls>
+                    <PanelBody title="AI Settings">
+                        <TextControl
+                            label="Prompt"
+                            value={attributes.prompt}
+                            onChange={(prompt) => setAttributes({ prompt })}
+                            placeholder="What content to generate?"
+                        />
+                        <SelectControl
+                            label="Tone"
+                            value={attributes.tone}
+                            options={[
+                                { label: 'Professional', value: 'professional' },
+                                { label: 'Casual', value: 'casual' },
+                                { label: 'Creative', value: 'creative' }
+                            ]}
+                            onChange={(tone) => setAttributes({ tone })}
+                        />
+                        <Button
+                            isPrimary
+                            onClick={generateContent}
+                            isBusy={isLoading}
+                        >
+                            Generate Content
+                        </Button>
+                    </PanelBody>
+                </InspectorControls>
+                
+                <div className="ai-content-block">
+                    {attributes.content ? (
+                        <div dangerouslySetInnerHTML={{ __html: attributes.content }} />
+                    ) : (
+                        <p>Configure settings and click Generate Content</p>
+                    )}
+                </div>
+            </div>
+        );
+    },
+    
+    save: ({ attributes }) => {
+        return (
+            <div {...useBlockProps.save()}>
+                <div dangerouslySetInnerHTML={{ __html: attributes.content }} />
+            </div>
+        );
+    }
+});
+```
+
+```php
+// PHP: Register REST endpoint for block
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'generatify/v1', '/generate-content', [
+        'methods' => 'POST',
+        'callback' => function( $request ) {
+            $prompt = $request['prompt'];
+            $tone = $request['tone'];
+            
+            $ai = generatify_get_ai_instance();
+            $content = $ai->send_request(
+                "Write content with a {$tone} tone: {$prompt}",
+                [ 'max_tokens' => 500 ]
+            );
+            
+            return [
+                'success' => true,
+                'data' => [
+                    'content' => $content,
+                ],
+            ];
+        },
+        'permission_callback' => function() {
+            return current_user_can( 'edit_posts' );
+        },
+    ] );
+} );
+```
+
+---
+
+## Example Use Cases
+
+<AccordionGroup>
+  <Accordion title="AI Product Description Generator" icon="shopping-cart">
+    Generate WooCommerce product descriptions from attributes:
+    
+    ```php
+    add_action( 'save_post_product', function( $post_id, $post ) {
+        // Get product attributes
+        $product = wc_get_product( $post_id );
+        $attributes = $product->get_attributes();
+        
+        // Build prompt
+        $prompt = "Generate a compelling product description for:\n";
+        $prompt .= "Product: " . $product->get_name() . "\n";
+        $prompt .= "Category: " . implode( ', ', $product->get_category_ids() ) . "\n";
+        $prompt .= "Attributes:\n";
+        
+        foreach ( $attributes as $attribute ) {
+            $prompt .= "- " . $attribute->get_name() . ": " . 
+                       implode( ', ', $attribute->get_options() ) . "\n";
+        }
+        
+        // Generate description
+        $ai = generatify_get_ai_instance();
+        $description = $ai->send_request( $prompt, [
+            'model' => 'gpt-4o',
+            'max_tokens' => 300,
+        ] );
+        
+        // Save as product short description
+        if ( ! is_wp_error( $description ) ) {
+            wp_update_post( [
+                'ID' => $post_id,
+                'post_excerpt' => $description,
+            ] );
+        }
+    }, 20, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="AI Email Response Generator" icon="envelope">
+    Generate email responses from support tickets:
+    
+    ```php
+    // Hook into your support system
+    add_filter( 'support_ticket_reply', function( $reply, $ticket ) {
+        // Build context from ticket
+        $context = "Support ticket:\n";
+        $context .= "Subject: " . $ticket->subject . "\n";
+        $context .= "Customer message: " . $ticket->message . "\n\n";
+        $context .= "Previous conversation:\n" . $ticket->history . "\n\n";
+        $context .= "Generate a helpful, professional response.";
+        
+        $ai = generatify_get_ai_instance();
+        $suggested_reply = $ai->send_request( $context, [
+            'model' => 'gpt-4o',
+            'temperature' => 0.7,
+        ] );
+        
+        // Return suggestion (human can edit before sending)
+        return [
+            'suggested' => $suggested_reply,
+            'original' => $reply,
+        ];
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="AI Content Translation" icon="language">
+    Translate content to multiple languages:
+    
+    ```php
+    function translate_post_with_ai( $post_id, $target_language ) {
+        $post = get_post( $post_id );
+        
+        $prompt = sprintf(
+            "Translate the following content to %s:\n\nTitle: %s\n\nContent: %s",
+            $target_language,
+            $post->post_title,
+            $post->post_content
+        );
+        
+        $ai = generatify_get_ai_instance();
+        $translation = $ai->send_request( $prompt, [
+            'model' => 'gpt-4o',
+            'max_tokens' => 2000,
+        ] );
+        
+        if ( ! is_wp_error( $translation ) ) {
+            // Create translated post
+            $translated_post_id = wp_insert_post( [
+                'post_title' => 'Translation: ' . $post->post_title,
+                'post_content' => $translation,
+                'post_status' => 'draft',
+                'post_type' => $post->post_type,
+            ] );
+            
+            // Link to original
+            update_post_meta( $translated_post_id, '_translation_of', $post_id );
+            update_post_meta( $translated_post_id, '_translation_language', $target_language );
+            
+            return $translated_post_id;
+        }
+        
+        return false;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Error Handling" icon="shield-check">
+    Always check for errors and provide fallbacks:
+    
+    ```php
+    $response = $ai->send_request( $prompt );
+    
+    if ( is_wp_error( $response ) ) {
+        // Log error
+        error_log( 'AI request failed: ' . $response->get_error_message() );
+        
+        // Fallback behavior
+        return $default_content;
+    }
+    
+    return $response;
+    ```
+  </Accordion>
+  
+  <Accordion title="Caching" icon="database">
+    Cache AI responses to reduce costs:
+    
+    ```php
+    $cache_key = 'ai_summary_' . $post_id;
+    $summary = get_transient( $cache_key );
+    
+    if ( false === $summary ) {
+        $ai = generatify_get_ai_instance();
+        $summary = $ai->send_request( $prompt );
+        
+        // Cache for 24 hours
+        set_transient( $cache_key, $summary, DAY_IN_SECONDS );
+    }
+    
+    return $summary;
+    ```
+  </Accordion>
+  
+  <Accordion title="Rate Limiting" icon="gauge">
+    Implement rate limiting to prevent abuse:
+    
+    ```php
+    function check_ai_rate_limit( $user_id ) {
+        $key = 'ai_requests_' . $user_id;
+        $count = get_transient( $key ) ?: 0;
+        
+        if ( $count >= 20 ) {
+            return new WP_Error( 'rate_limit', 'Too many requests. Try again later.' );
+        }
+        
+        set_transient( $key, $count + 1, HOUR_IN_SECONDS );
+        return true;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="code" href="/developer/api-reference">
+    REST & JavaScript APIs
+  </Card>
+  <Card title="Hooks & Filters" icon="plug" href="/developer/hooks-filters">
+    WordPress hooks
+  </Card>
+  <Card title="Customization" icon="paint-brush" href="/advanced/customization">
+    CSS and JavaScript
+  </Card>
+  <Card title="Get Help" icon="life-ring" href="/support/get-help">
+    Development support
+  </Card>
+</CardGroup>
+
+<Tip>
+**Open Source:** Share your custom Generatify extensions on GitHub! Tag them with `generatify-extension` for discoverability.
+</Tip>

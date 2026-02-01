@@ -1,0 +1,1302 @@
+---
+title: 'Complete Settings Reference'
+description: 'Comprehensive guide to all Generatify plugin settings'
+icon: 'sliders'
+---
+
+## Overview
+
+Complete reference for all Generatify settings across all features. Use this as your configuration handbook for fine-tuning every aspect of the plugin.
+
+<CardGroup cols={4}>
+  <Card title="AI Providers" icon="brain">
+    Model & API settings
+  </Card>
+  <Card title="Features" icon="sparkles">
+    Enable/disable modules
+  </Card>
+  <Card title="Performance" icon="gauge">
+    Caching & optimization
+  </Card>
+  <Card title="Permissions" icon="user-shield">
+    Access control
+  </Card>
+</CardGroup>
+
+---
+
+## Navigation
+
+Settings are organized into sections at **Generatify → Settings**
+
+<Steps>
+  <Step title="General">
+    Global plugin settings
+  </Step>
+  <Step title="AI Providers">
+    OpenAI, Anthropic, Google Gemini configuration
+  </Step>
+  <Step title="Features">
+    Enable/disable individual modules
+  </Step>
+  <Step title="AI Assistant">
+    Chatbot configuration
+  </Step>
+  <Step title="Automations">
+    Auto-tagging, categories, meta descriptions
+  </Step>
+  <Step title="Helpdesk">
+    Chat and contact form settings
+  </Step>
+  <Step title="Smart Suggestions">
+    Smart Compose and Related Posts
+  </Step>
+  <Step title="Content Moderation">
+    Toxicity checking and rules
+  </Step>
+  <Step title="Advanced">
+    Performance, debugging, integrations
+  </Step>
+</Steps>
+
+---
+
+## General Settings
+
+### Basic Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Plugin**</td>
+      <td>On / Off</td>
+      <td>Master switch for entire plugin</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**License Key**</td>
+      <td>Text field</td>
+      <td>Freemius license activation</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>**Default AI Provider**</td>
+      <td>OpenAI, Anthropic, Google</td>
+      <td>Primary AI service</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**Fallback Provider**</td>
+      <td>None, OpenAI, Anthropic, Google</td>
+      <td>Backup if primary fails</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>**Data Collection**</td>
+      <td>On / Off</td>
+      <td>Anonymous usage analytics</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Debug Mode**</td>
+      <td>On / Off</td>
+      <td>Enable logging for troubleshooting</td>
+      <td>Off</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## AI Provider Settings
+
+### OpenAI Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**API Key**</td>
+      <td>Text field</td>
+      <td>Your OpenAI API key</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td>**Organization ID**</td>
+      <td>Text field (optional)</td>
+      <td>For organization accounts</td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td>**Default Model**</td>
+      <td>GPT-4o, GPT-4, GPT-3.5, etc.</td>
+      <td>Model for all features</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Temperature**</td>
+      <td>0.0 - 2.0</td>
+      <td>Creativity (0=deterministic, 2=creative)</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <td>**Max Tokens**</td>
+      <td>1 - 128,000</td>
+      <td>Maximum response length</td>
+      <td>2,000</td>
+    </tr>
+    <tr>
+      <td>**Timeout**</td>
+      <td>10 - 120 seconds</td>
+      <td>API request timeout</td>
+      <td>30s</td>
+    </tr>
+    <tr>
+      <td>**Retry Attempts**</td>
+      <td>0 - 5</td>
+      <td>Retries on failure</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Anthropic Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**API Key**</td>
+      <td>Text field</td>
+      <td>Your Anthropic API key</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td>**Default Model**</td>
+      <td>Claude 3.5 Sonnet, Opus, Haiku</td>
+      <td>Model for all features</td>
+      <td>Claude 3.5 Sonnet</td>
+    </tr>
+    <tr>
+      <td>**Max Tokens**</td>
+      <td>1 - 200,000</td>
+      <td>Maximum response length</td>
+      <td>4,000</td>
+    </tr>
+    <tr>
+      <td>**Temperature**</td>
+      <td>0.0 - 1.0</td>
+      <td>Response randomness</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>**System Prompt**</td>
+      <td>Text area</td>
+      <td>Global instructions for Claude</td>
+      <td>Default</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Google Gemini Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**API Key**</td>
+      <td>Text field</td>
+      <td>Your Google AI Studio key</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td>**Default Model**</td>
+      <td>Gemini 1.5 Pro, Flash, 2.0 Flash</td>
+      <td>Model for all features</td>
+      <td>Gemini 1.5 Flash</td>
+    </tr>
+    <tr>
+      <td>**Safety Settings**</td>
+      <td>Block none, few, some, most</td>
+      <td>Content filtering level</td>
+      <td>Block some</td>
+    </tr>
+    <tr>
+      <td>**Max Output Tokens**</td>
+      <td>1 - 8,192</td>
+      <td>Response length limit</td>
+      <td>2,048</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Feature Toggles
+
+Enable or disable individual features:
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Toggle</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AI Assistant Chatbot**</td>
+      <td>On / Off</td>
+      <td>Site-wide AI chat widget</td>
+    </tr>
+    <tr>
+      <td>**Auto Tags**</td>
+      <td>On / Off</td>
+      <td>Automatic post tagging</td>
+    </tr>
+    <tr>
+      <td>**Auto Categories**</td>
+      <td>On / Off</td>
+      <td>Automatic post categorization</td>
+    </tr>
+    <tr>
+      <td>**Meta Descriptions**</td>
+      <td>On / Off</td>
+      <td>SEO meta description generation</td>
+    </tr>
+    <tr>
+      <td>**Image Alt Text**</td>
+      <td>On / Off</td>
+      <td>AI-generated alt text (planned)</td>
+    </tr>
+    <tr>
+      <td>**Helpdesk Agent**</td>
+      <td>On / Off</td>
+      <td>Support chat/contact form</td>
+    </tr>
+    <tr>
+      <td>**Smart Compose**</td>
+      <td>On / Off</td>
+      <td>Writing suggestions</td>
+    </tr>
+    <tr>
+      <td>**Related Posts**</td>
+      <td>On / Off</td>
+      <td>AI content recommendations</td>
+    </tr>
+    <tr>
+      <td>**Toxicity Checker**</td>
+      <td>On / Off</td>
+      <td>Comment moderation</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## AI Assistant Settings
+
+### Chatbot Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Show chat widget</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Which AI to use</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Position**</td>
+      <td>Bottom Right, Bottom Left, Top Right, Top Left</td>
+      <td>Widget placement</td>
+      <td>Bottom Right</td>
+    </tr>
+    <tr>
+      <td>**Chat Name**</td>
+      <td>Text field</td>
+      <td>Displayed name</td>
+      <td>"AI Assistant"</td>
+    </tr>
+    <tr>
+      <td>**Welcome Message**</td>
+      <td>Text area</td>
+      <td>Initial greeting</td>
+      <td>"Hi! How can I help?"</td>
+    </tr>
+    <tr>
+      <td>**Placeholder**</td>
+      <td>Text field</td>
+      <td>Input box placeholder</td>
+      <td>"Ask me anything..."</td>
+    </tr>
+    <tr>
+      <td>**Max Chat History**</td>
+      <td>1 - 50 messages</td>
+      <td>Context window</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>**Response Time**</td>
+      <td>5 - 60 seconds</td>
+      <td>Timeout for answers</td>
+      <td>30s</td>
+    </tr>
+    <tr>
+      <td>**Rate Limit**</td>
+      <td>1 - 100 per hour</td>
+      <td>Max messages per user/hour</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Knowledge Sources
+
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Configuration</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Site Content**</td>
+      <td>Posts, Pages, Products, Custom types</td>
+      <td>Use published content as knowledge</td>
+    </tr>
+    <tr>
+      <td>**Custom Knowledge Base**</td>
+      <td>Text area or file upload</td>
+      <td>Upload docs/FAQs</td>
+    </tr>
+    <tr>
+      <td>**WooCommerce**</td>
+      <td>Products, Orders, Policies</td>
+      <td>E-commerce data</td>
+    </tr>
+    <tr>
+      <td>**External URLs**</td>
+      <td>URL list</td>
+      <td>Fetch content from external sites</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Display Rules
+
+<table>
+  <thead>
+    <tr>
+      <th>Rule Type</th>
+      <th>Options</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Show On**</td>
+      <td>All pages, Specific pages, Post types</td>
+      <td>Only show on product pages</td>
+    </tr>
+    <tr>
+      <td>**Hide On**</td>
+      <td>Specific pages/URLs</td>
+      <td>Hide on checkout page</td>
+    </tr>
+    <tr>
+      <td>**User Roles**</td>
+      <td>All, Logged in, Guest, Specific roles</td>
+      <td>Show only to customers</td>
+    </tr>
+    <tr>
+      <td>**Device**</td>
+      <td>All, Desktop only, Mobile only</td>
+      <td>Mobile only</td>
+    </tr>
+    <tr>
+      <td>**Time-Based**</td>
+      <td>Business hours, Weekends, Custom</td>
+      <td>9 AM - 5 PM EST</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Automation Settings
+
+### Auto Tags
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Automatic tagging</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for tag generation</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Trigger**</td>
+      <td>On Publish, On Save, Manual</td>
+      <td>When to generate</td>
+      <td>On Publish</td>
+    </tr>
+    <tr>
+      <td>**Number of Tags**</td>
+      <td>1 - 20</td>
+      <td>Max tags per post</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>**Tag Format**</td>
+      <td>lowercase, Title Case, UPPERCASE</td>
+      <td>Tag style</td>
+      <td>lowercase</td>
+    </tr>
+    <tr>
+      <td>**Use Existing Tags**</td>
+      <td>On / Off</td>
+      <td>Prefer existing tags over creating new</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Min Confidence**</td>
+      <td>0 - 100%</td>
+      <td>Only use high-confidence tags</td>
+      <td>70%</td>
+    </tr>
+    <tr>
+      <td>**Post Types**</td>
+      <td>Posts, Pages, Products, Custom</td>
+      <td>Apply to which content</td>
+      <td>Posts only</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Auto Categories
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Automatic categorization</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for categorization</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Strategy**</td>
+      <td>Single, Multiple, Hierarchical</td>
+      <td>Category assignment approach</td>
+      <td>Single</td>
+    </tr>
+    <tr>
+      <td>**Max Categories**</td>
+      <td>1 - 10</td>
+      <td>Categories per post</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>**Create New Categories**</td>
+      <td>On / Off</td>
+      <td>Allow AI to create new categories</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Hierarchical**</td>
+      <td>On / Off</td>
+      <td>Support parent → child categories</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Override Manual**</td>
+      <td>On / Off</td>
+      <td>Replace manually-set categories</td>
+      <td>Off</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Meta Descriptions
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Auto meta descriptions</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for generation</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Length**</td>
+      <td>50 - 320 characters</td>
+      <td>Description length</td>
+      <td>155</td>
+    </tr>
+    <tr>
+      <td>**Tone**</td>
+      <td>Neutral, Friendly, Professional, Persuasive</td>
+      <td>Writing style</td>
+      <td>Neutral</td>
+    </tr>
+    <tr>
+      <td>**Include Keywords**</td>
+      <td>On / Off</td>
+      <td>Include focus keyword from SEO plugin</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**SEO Plugin Integration**</td>
+      <td>Yoast, Rank Math, AIOSEO, SEOPress</td>
+      <td>Which SEO plugin to use</td>
+      <td>Auto-detect</td>
+    </tr>
+    <tr>
+      <td>**Override Existing**</td>
+      <td>On / Off</td>
+      <td>Replace existing descriptions</td>
+      <td>Off</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Helpdesk Settings
+
+### General Helpdesk
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Mode**</td>
+      <td>Chat, Contact Form, Both</td>
+      <td>Helpdesk type</td>
+      <td>Both</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for responses</td>
+      <td>GPT-4o</td>
+    </tr>
+    <tr>
+      <td>**Position**</td>
+      <td>Bottom Right, Bottom Left, etc.</td>
+      <td>Widget placement</td>
+      <td>Bottom Right</td>
+    </tr>
+    <tr>
+      <td>**Title**</td>
+      <td>Text field</td>
+      <td>Widget header</td>
+      <td>"Need Help?"</td>
+    </tr>
+    <tr>
+      <td>**Description**</td>
+      <td>Text area</td>
+      <td>Subtitle/intro</td>
+      <td>"We're here to help!"</td>
+    </tr>
+    <tr>
+      <td>**Business Hours**</td>
+      <td>Schedule</td>
+      <td>Active hours for live support</td>
+      <td>24/7</td>
+    </tr>
+    <tr>
+      <td>**Outside Hours Message**</td>
+      <td>Text area</td>
+      <td>Shown when offline</td>
+      <td>"Leave a message"</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Chat Mode
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable AI Chat**</td>
+      <td>On / Off</td>
+      <td>AI-powered support chat</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Knowledge Sources**</td>
+      <td>Docs, FAQs, Products, Custom</td>
+      <td>Where AI gets info</td>
+      <td>All</td>
+    </tr>
+    <tr>
+      <td>**Escalation**</td>
+      <td>On / Off</td>
+      <td>Allow escalation to human</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Escalation Trigger**</td>
+      <td>Manual, Auto after X messages, Keyword</td>
+      <td>When to escalate</td>
+      <td>Manual</td>
+    </tr>
+    <tr>
+      <td>**Human Handoff Email**</td>
+      <td>Email address</td>
+      <td>Where to send escalations</td>
+      <td>admin@site.com</td>
+    </tr>
+    <tr>
+      <td>**Save Conversations**</td>
+      <td>On / Off</td>
+      <td>Log chats to database</td>
+      <td>On</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Contact Form Mode
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Contact Form**</td>
+      <td>On / Off</td>
+      <td>Traditional form submission</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Required Fields**</td>
+      <td>Name, Email, Subject, Message</td>
+      <td>Which fields mandatory</td>
+      <td>Email, Message</td>
+    </tr>
+    <tr>
+      <td>**Email To**</td>
+      <td>Email address(es)</td>
+      <td>Recipients of form submissions</td>
+      <td>admin@site.com</td>
+    </tr>
+    <tr>
+      <td>**SMTP**</td>
+      <td>On / Off</td>
+      <td>Use SMTP instead of wp_mail()</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Spam Protection**</td>
+      <td>None, Honeypot, reCAPTCHA</td>
+      <td>Anti-spam method</td>
+      <td>Honeypot</td>
+    </tr>
+    <tr>
+      <td>**Auto Reply**</td>
+      <td>On / Off</td>
+      <td>Send confirmation email</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**GDPR Consent**</td>
+      <td>On / Off</td>
+      <td>Require data processing consent</td>
+      <td>Off</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Smart Suggestions Settings
+
+### Smart Compose
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Writing suggestions</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for suggestions</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Trigger**</td>
+      <td>Auto after pause, After X words, Manual (Ctrl+Space)</td>
+      <td>When to suggest</td>
+      <td>Auto after 1.5s</td>
+    </tr>
+    <tr>
+      <td>**Suggestion Length**</td>
+      <td>1 sentence, 1 paragraph, 2-3 sentences</td>
+      <td>How much to suggest</td>
+      <td>1 sentence</td>
+    </tr>
+    <tr>
+      <td>**Tone**</td>
+      <td>Match my style, Professional, Casual, Creative</td>
+      <td>Writing style</td>
+      <td>Match my style</td>
+    </tr>
+    <tr>
+      <td>**Keyboard Shortcuts**</td>
+      <td>On / Off</td>
+      <td>Enable Tab/Ctrl+R shortcuts</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Context Awareness**</td>
+      <td>On / Off</td>
+      <td>Use post title/category for context</td>
+      <td>On</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Related Posts
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>AI-powered recommendations</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Model for matching</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Number of Posts**</td>
+      <td>1 - 12</td>
+      <td>How many recommendations</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>**Display Location**</td>
+      <td>After content, Sidebar, Both, Manual</td>
+      <td>Where to show</td>
+      <td>After content</td>
+    </tr>
+    <tr>
+      <td>**Layout**</td>
+      <td>Grid, List, Carousel</td>
+      <td>Visual style</td>
+      <td>Grid</td>
+    </tr>
+    <tr>
+      <td>**Show Thumbnails**</td>
+      <td>On / Off</td>
+      <td>Include featured images</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Show Excerpt**</td>
+      <td>On / Off</td>
+      <td>Display post excerpt</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Cache Duration**</td>
+      <td>1 - 168 hours</td>
+      <td>How long to cache results</td>
+      <td>24 hours</td>
+    </tr>
+    <tr>
+      <td>**Exclude Categories**</td>
+      <td>Category selector</td>
+      <td>Never recommend from these</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Content Moderation Settings
+
+### Toxicity Checker
+
+See [Moderation Configuration](/moderation/configuration) for complete toxicity checker settings.
+
+**Quick Reference:**
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Sensitivity**</td>
+      <td>Lenient, Balanced, Strict</td>
+      <td>Balanced</td>
+    </tr>
+    <tr>
+      <td>**Action**</td>
+      <td>Hold, Block, Warn, Tag</td>
+      <td>Hold</td>
+    </tr>
+    <tr>
+      <td>**Exempt Roles**</td>
+      <td>Admin, Editor, Author</td>
+      <td>Admin, Editor</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Advanced Settings
+
+### Performance
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Caching**</td>
+      <td>On / Off</td>
+      <td>Cache AI responses</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Cache Duration**</td>
+      <td>1 - 168 hours</td>
+      <td>How long to cache</td>
+      <td>24 hours</td>
+    </tr>
+    <tr>
+      <td>**Cache Method**</td>
+      <td>Database, File, Redis, Memcached</td>
+      <td>Where to store cache</td>
+      <td>Database</td>
+    </tr>
+    <tr>
+      <td>**Load CSS**</td>
+      <td>On / Off</td>
+      <td>Load plugin styles</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Load JS**</td>
+      <td>On / Off</td>
+      <td>Load plugin scripts</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Minify Assets**</td>
+      <td>On / Off</td>
+      <td>Use minified CSS/JS</td>
+      <td>On</td>
+    </tr>
+    <tr>
+      <td>**Lazy Load TensorFlow.js**</td>
+      <td>On / Off</td>
+      <td>Load TF.js only when needed</td>
+      <td>On</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Debugging
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Debug Mode**</td>
+      <td>On / Off</td>
+      <td>Enable debug logging</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Log Level**</td>
+      <td>Error, Warning, Info, Debug</td>
+      <td>Logging verbosity</td>
+      <td>Error</td>
+    </tr>
+    <tr>
+      <td>**Log API Requests**</td>
+      <td>On / Off</td>
+      <td>Log all AI API calls</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Log Location**</td>
+      <td>Database, File</td>
+      <td>Where to store logs</td>
+      <td>File</td>
+    </tr>
+    <tr>
+      <td>**Keep Logs For**</td>
+      <td>1 - 90 days</td>
+      <td>Log retention period</td>
+      <td>7 days</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Permissions
+
+<table>
+  <thead>
+    <tr>
+      <th>Capability</th>
+      <th>Description</th>
+      <th>Default Roles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**manage_generatify**</td>
+      <td>Access plugin settings</td>
+      <td>Administrator</td>
+    </tr>
+    <tr>
+      <td>**use_ai_assistant**</td>
+      <td>Use AI chatbot</td>
+      <td>All users</td>
+    </tr>
+    <tr>
+      <td>**use_smart_compose**</td>
+      <td>Get writing suggestions</td>
+      <td>Editor, Author, Contributor</td>
+    </tr>
+    <tr>
+      <td>**manage_automations**</td>
+      <td>Configure automations</td>
+      <td>Administrator, Editor</td>
+    </tr>
+    <tr>
+      <td>**moderate_toxicity**</td>
+      <td>Review flagged comments</td>
+      <td>Administrator, Editor</td>
+    </tr>
+    <tr>
+      <td>**view_analytics**</td>
+      <td>See usage analytics</td>
+      <td>Administrator</td>
+    </tr>
+  </tbody>
+</table>
+
+**Customize:**
+```
+Settings → Advanced → Permissions → Role Capabilities
+Select role → Toggle capabilities
+```
+
+---
+
+## Integrations
+
+### Third-Party Plugin Compatibility
+
+<table>
+  <thead>
+    <tr>
+      <th>Plugin</th>
+      <th>Integration</th>
+      <th>Configuration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Yoast SEO**</td>
+      <td>Meta description sync</td>
+      <td>Auto-enabled if installed</td>
+    </tr>
+    <tr>
+      <td>**Rank Math**</td>
+      <td>Meta description sync</td>
+      <td>Auto-enabled if installed</td>
+    </tr>
+    <tr>
+      <td>**WooCommerce**</td>
+      <td>Product support, Helpdesk integration</td>
+      <td>Settings → Integrations → WooCommerce</td>
+    </tr>
+    <tr>
+      <td>**Akismet**</td>
+      <td>Combined spam + toxicity detection</td>
+      <td>Settings → Moderation → Akismet</td>
+    </tr>
+    <tr>
+      <td>**WPML**</td>
+      <td>Multi-language support</td>
+      <td>Coming soon</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Import/Export Settings
+
+### Backup Configuration
+
+<Steps>
+  <Step title="Go to Settings">
+    Navigate to **Generatify → Settings → Advanced**
+  </Step>
+  
+  <Step title="Export Settings">
+    Click **Export Settings** button
+  </Step>
+  
+  <Step title="Download JSON">
+    Save `generatify-settings.json` file
+  </Step>
+</Steps>
+
+---
+
+### Restore Configuration
+
+<Steps>
+  <Step title="Go to Settings">
+    Navigate to **Generatify → Settings → Advanced**
+  </Step>
+  
+  <Step title="Import Settings">
+    Click **Import Settings** button
+  </Step>
+  
+  <Step title="Upload JSON">
+    Select your `generatify-settings.json` file
+  </Step>
+  
+  <Step title="Confirm">
+    Review changes and click **Apply Settings**
+  </Step>
+</Steps>
+
+<Warning>
+**Note:** Importing settings will overwrite all current configuration. API keys are not included in exports for security.
+</Warning>
+
+---
+
+## Default Reset
+
+Reset all settings to defaults:
+
+```
+Settings → Advanced → Reset
+
+⚠️ Reset Options:
+- Reset all settings
+- Reset specific feature (e.g., just AI Assistant)
+- Keep API keys
+
+Action: [Reset to Defaults]
+```
+
+<Warning>
+**Irreversible:** Always export settings before resetting.
+</Warning>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Customization Guide" icon="paint-brush" href="/advanced/customization">
+    CSS and hooks
+  </Card>
+  <Card title="Performance Optimization" icon="gauge" href="/advanced/performance">
+    Speed and caching
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Common issues
+  </Card>
+  <Card title="API Reference" icon="code" href="/developer/api-reference">
+    REST API docs
+  </Card>
+</CardGroup>
+
+<Tip>
+**Pro Tip:** Export your settings after configuring to keep a backup. This makes it easy to replicate configuration across sites or restore after issues.
+</Tip>

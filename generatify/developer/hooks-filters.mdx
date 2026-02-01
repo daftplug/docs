@@ -1,0 +1,961 @@
+---
+title: 'Hooks & Filters'
+description: 'WordPress hooks and filters reference for extending Generatify'
+icon: 'plug'
+---
+
+## Overview
+
+Extend Generatify functionality using WordPress hooks and filters. Customize behavior, modify data, and integrate with other plugins without editing core files.
+
+<CardGroup cols={2}>
+  <Card title="Filters" icon="filter">
+    Modify data before use
+  </Card>
+  <Card title="Actions" icon="bolt">
+    Execute code at specific points
+  </Card>
+</CardGroup>
+
+---
+
+## Filters
+
+Filters allow you to modify data before it's processed or displayed.
+
+### AI Prompts & Responses
+
+<AccordionGroup>
+  <Accordion title="generatify_ai_prompt" icon="message">
+    **Modify AI prompts before sending to API**
+    
+    ```php
+    apply_filters( 'generatify_ai_prompt', string $prompt, string $feature, array $context )
+    ```
+    
+    **Parameters:**
+    - `$prompt` (string): The prompt text
+    - `$feature` (string): Feature name (chat, tags, categories, meta_description, etc.)
+    - `$context` (array): Additional context data
+    
+    **Returns:** Modified prompt string
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_ai_prompt', function( $prompt, $feature, $context ) {
+        // Add custom instructions for chat
+        if ( $feature === 'chat' ) {
+            $prompt .= "\n\nAlways end responses with a friendly emoji.";
+        }
+        
+        // Add brand voice for all features
+        $prompt .= "\n\nUse professional, friendly tone.";
+        
+        return $prompt;
+    }, 10, 3 );
+    ```
+    
+    **Use Cases:**
+    - Add brand voice guidelines
+    - Include custom instructions per feature
+    - Add context-specific requirements
+  </Accordion>
+  
+  <Accordion title="generatify_ai_response" icon="reply">
+    **Filter AI responses after receiving from API**
+    
+    ```php
+    apply_filters( 'generatify_ai_response', string $response, string $feature, array $context )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_ai_response', function( $response, $feature ) {
+        // Remove unwanted phrases
+        $remove = [
+            'As an AI',
+            'As a language model',
+            'I don\'t have personal opinions',
+        ];
+        $response = str_replace( $remove, '', $response );
+        
+        // Add custom suffix for chat
+        if ( $feature === 'chat' ) {
+            $response .= "\n\n_Need more help? [Contact us](/contact)_";
+        }
+        
+        return $response;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_ai_model" icon="brain">
+    **Change AI model dynamically**
+    
+    ```php
+    apply_filters( 'generatify_ai_model', string $model, string $feature, array $context )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_ai_model', function( $model, $feature, $context ) {
+        // Use GPT-4 for important pages
+        if ( $feature === 'meta_description' && $context['post_id'] === 123 ) {
+            return 'gpt-4';
+        }
+        
+        // Use Claude for chat on product pages
+        if ( $feature === 'chat' && is_singular( 'product' ) ) {
+            return 'claude-3-5-sonnet-20241022';
+        }
+        
+        return $model;
+    }, 10, 3 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_ai_parameters" icon="sliders">
+    **Modify API request parameters**
+    
+    ```php
+    apply_filters( 'generatify_ai_parameters', array $params, string $feature )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_ai_parameters', function( $params, $feature ) {
+        // Increase creativity for marketing content
+        if ( $feature === 'meta_description' ) {
+            $params['temperature'] = 0.9;
+        }
+        
+        // More deterministic for categorization
+        if ( $feature === 'categories' ) {
+            $params['temperature'] = 0.3;
+        }
+        
+        // Limit response length
+        $params['max_tokens'] = 500;
+        
+        return $params;
+    }, 10, 2 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Automations
+
+<AccordionGroup>
+  <Accordion title="generatify_generated_tags" icon="tags">
+    **Modify auto-generated tags**
+    
+    ```php
+    apply_filters( 'generatify_generated_tags', array $tags, int $post_id, array $context )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_generated_tags', function( $tags, $post_id ) {
+        // Always add specific tag
+        if ( ! in_array( 'Featured', $tags ) ) {
+            $tags[] = 'Featured';
+        }
+        
+        // Remove unwanted tags
+        $blacklist = [ 'spam', 'test', 'draft' ];
+        $tags = array_diff( $tags, $blacklist );
+        
+        // Limit to 5 tags
+        $tags = array_slice( $tags, 0, 5 );
+        
+        // Convert to lowercase
+        $tags = array_map( 'strtolower', $tags );
+        
+        return $tags;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_generated_categories" icon="folder">
+    **Modify auto-generated categories**
+    
+    ```php
+    apply_filters( 'generatify_generated_categories', array $categories, int $post_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_generated_categories', function( $categories, $post_id ) {
+        // Map AI categories to your taxonomy
+        $mapping = [
+            'Tech' => 'Technology',
+            'Business' => 'Business & Finance',
+            'Marketing' => 'Digital Marketing',
+        ];
+        
+        $mapped_categories = [];
+        foreach ( $categories as $category ) {
+            $mapped_categories[] = $mapping[ $category ] ?? $category;
+        }
+        
+        // Always assign "Uncategorized" if no categories
+        if ( empty( $mapped_categories ) ) {
+            $mapped_categories[] = 'Uncategorized';
+        }
+        
+        return $mapped_categories;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_meta_description" icon="file-lines">
+    **Customize generated meta descriptions**
+    
+    ```php
+    apply_filters( 'generatify_meta_description', string $description, int $post_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_meta_description', function( $description, $post_id ) {
+        // Add brand name
+        $description .= ' | Acme Corp';
+        
+        // Ensure length limit (160 chars)
+        if ( strlen( $description ) > 160 ) {
+            $description = substr( $description, 0, 157 ) . '...';
+        }
+        
+        // Add emoji for specific categories
+        $categories = get_the_category( $post_id );
+        foreach ( $categories as $category ) {
+            if ( $category->slug === 'tutorials' ) {
+                $description = '📚 ' . $description;
+                break;
+            }
+        }
+        
+        return $description;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_automation_content" icon="file">
+    **Modify content before AI processing**
+    
+    ```php
+    apply_filters( 'generatify_automation_content', string $content, int $post_id, string $feature )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_automation_content', function( $content, $post_id, $feature ) {
+        // Strip shortcodes
+        $content = strip_shortcodes( $content );
+        
+        // Remove images
+        $content = preg_replace( '/<img[^>]+>/i', '', $content );
+        
+        // For tagging, only send first 500 words
+        if ( $feature === 'tags' ) {
+            $content = wp_trim_words( $content, 500, '' );
+        }
+        
+        return $content;
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Chat & Helpdesk
+
+<AccordionGroup>
+  <Accordion title="generatify_chat_context" icon="message-lines">
+    **Add context to chat conversations**
+    
+    ```php
+    apply_filters( 'generatify_chat_context', array $context, int $user_id, string $session_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_chat_context', function( $context, $user_id ) {
+        // Add user information
+        $user = get_userdata( $user_id );
+        $context['user_info'] = [
+            'name' => $user->display_name,
+            'email' => $user->user_email,
+            'registration_date' => $user->user_registered,
+        ];
+        
+        // Add recent orders (WooCommerce)
+        if ( function_exists( 'wc_get_orders' ) ) {
+            $orders = wc_get_orders( [
+                'customer_id' => $user_id,
+                'limit' => 5,
+            ] );
+            $context['recent_orders'] = array_map( function( $order ) {
+                return [
+                    'id' => $order->get_id(),
+                    'total' => $order->get_total(),
+                    'status' => $order->get_status(),
+                ];
+            }, $orders );
+        }
+        
+        return $context;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_knowledge_sources" icon="book">
+    **Add custom knowledge sources**
+    
+    ```php
+    apply_filters( 'generatify_knowledge_sources', array $sources, array $context )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_knowledge_sources', function( $sources, $context ) {
+        // Add external API data
+        if ( $context['page_type'] === 'product' ) {
+            $product_id = $context['product_id'];
+            $api_data = fetch_product_specs_from_api( $product_id );
+            
+            $sources[] = [
+                'type' => 'external_api',
+                'content' => $api_data,
+                'weight' => 1.5, // Prioritize this source
+            ];
+        }
+        
+        // Add custom post type
+        $faqs = get_posts( [
+            'post_type' => 'faq',
+            'posts_per_page' => 20,
+        ] );
+        
+        foreach ( $faqs as $faq ) {
+            $sources[] = [
+                'type' => 'faq',
+                'title' => $faq->post_title,
+                'content' => $faq->post_content,
+                'url' => get_permalink( $faq->ID ),
+            ];
+        }
+        
+        return $sources;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_chat_display_rules" icon="eye">
+    **Control when chat widget appears**
+    
+    ```php
+    apply_filters( 'generatify_chat_display_rules', bool $should_display, array $context )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_chat_display_rules', function( $should_display, $context ) {
+        // Hide on checkout page
+        if ( is_checkout() ) {
+            return false;
+        }
+        
+        // Only show to logged-in users
+        if ( ! is_user_logged_in() ) {
+            return false;
+        }
+        
+        // Show only during business hours (9 AM - 5 PM EST)
+        $hour = (int) current_time( 'H' );
+        if ( $hour < 9 || $hour > 17 ) {
+            return false;
+        }
+        
+        return $should_display;
+    }, 10, 2 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Related Posts
+
+<AccordionGroup>
+  <Accordion title="generatify_related_posts_query" icon="magnifying-glass">
+    **Modify related posts query**
+    
+    ```php
+    apply_filters( 'generatify_related_posts_query', array $args, int $post_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_related_posts_query', function( $args, $post_id ) {
+        // Only posts from last 6 months
+        $args['date_query'] = [
+            'after' => '6 months ago',
+        ];
+        
+        // Exclude specific categories
+        $args['category__not_in'] = [ 5, 12, 18 ];
+        
+        // Require featured image
+        $args['meta_query'] = [
+            [
+                'key' => '_thumbnail_id',
+                'compare' => 'EXISTS',
+            ],
+        ];
+        
+        // Limit to same author
+        $args['author'] = get_post_field( 'post_author', $post_id );
+        
+        return $args;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_related_posts_output" icon="code">
+    **Customize related posts HTML output**
+    
+    ```php
+    apply_filters( 'generatify_related_posts_output', string $html, array $posts, int $post_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_related_posts_output', function( $html, $posts, $post_id ) {
+        // Add custom wrapper
+        $html = '<div class="my-custom-related-posts">' . $html . '</div>';
+        
+        // Add tracking attributes
+        $html = str_replace( 
+            '<a href=',
+            '<a data-tracking="related-post" href=',
+            $html
+        );
+        
+        return $html;
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Content Moderation
+
+<AccordionGroup>
+  <Accordion title="generatify_toxicity_threshold" icon="shield-check">
+    **Dynamically adjust toxicity thresholds**
+    
+    ```php
+    apply_filters( 'generatify_toxicity_threshold', int $threshold, string $category, int $user_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_toxicity_threshold', function( $threshold, $category, $user_id ) {
+        // More strict for new users
+        $comment_count = get_comments( [
+            'user_id' => $user_id,
+            'status' => 'approve',
+            'count' => true,
+        ] );
+        
+        if ( $comment_count < 3 ) {
+            $threshold -= 20; // Lower threshold = more strict
+        }
+        
+        // More lenient outside business hours
+        $hour = (int) current_time( 'H' );
+        if ( $hour < 8 || $hour > 18 ) {
+            $threshold += 10;
+        }
+        
+        // Zero tolerance for threats
+        if ( $category === 'threat' ) {
+            $threshold = 50; // Very strict
+        }
+        
+        return $threshold;
+    }, 10, 3 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_moderation_action" icon="gavel">
+    **Change moderation action based on context**
+    
+    ```php
+    apply_filters( 'generatify_moderation_action', string $action, array $toxicity_scores, array $comment_data )
+    ```
+    
+    **Possible actions:** `hold`, `block`, `warn`, `approve`
+    
+    **Example:**
+    ```php
+    add_filter( 'generatify_moderation_action', function( $action, $toxicity_scores, $comment_data ) {
+        // Block if multiple categories triggered
+        $triggered_count = count( array_filter( $toxicity_scores, function( $score ) {
+            return $score > 60;
+        } ) );
+        
+        if ( $triggered_count >= 3 ) {
+            return 'block';
+        }
+        
+        // Always approve for admins
+        $user = get_user_by( 'email', $comment_data['comment_author_email'] );
+        if ( $user && user_can( $user, 'manage_options' ) ) {
+            return 'approve';
+        }
+        
+        return $action;
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Actions
+
+Actions allow you to execute code at specific points in the plugin's lifecycle.
+
+### AI Requests
+
+<AccordionGroup>
+  <Accordion title="generatify_before_ai_request" icon="arrow-right">
+    **Before sending request to AI API**
+    
+    ```php
+    do_action( 'generatify_before_ai_request', string $feature, array $data )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_before_ai_request', function( $feature, $data ) {
+        // Log API usage
+        error_log( sprintf( 
+            '[Generatify] AI request: %s for post %d',
+            $feature,
+            $data['post_id'] ?? 0
+        ) );
+        
+        // Track analytics
+        if ( function_exists( 'gtag' ) ) {
+            ?>
+            <script>
+            gtag('event', 'ai_request', {
+                'feature': '<?php echo esc_js( $feature ); ?>'
+            });
+            </script>
+            <?php
+        }
+        
+        // Update usage counter
+        $usage = get_option( 'generatify_usage_count', [] );
+        $usage[ $feature ] = ( $usage[ $feature ] ?? 0 ) + 1;
+        update_option( 'generatify_usage_count', $usage );
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_after_ai_request" icon="check">
+    **After receiving response from AI API**
+    
+    ```php
+    do_action( 'generatify_after_ai_request', string $feature, mixed $response, array $data )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_after_ai_request', function( $feature, $response, $data ) {
+        // Log response
+        error_log( sprintf(
+            '[Generatify] AI response received for %s: %d tokens',
+            $feature,
+            $data['tokens_used'] ?? 0
+        ) );
+        
+        // Update cost tracking
+        $cost = calculate_ai_cost( $feature, $data['tokens_used'] );
+        $total_cost = get_option( 'generatify_total_cost', 0 );
+        update_option( 'generatify_total_cost', $total_cost + $cost );
+        
+        // Send to analytics
+        wp_remote_post( 'https://analytics.example.com/track', [
+            'body' => json_encode( [
+                'event' => 'ai_response',
+                'feature' => $feature,
+                'tokens' => $data['tokens_used'],
+            ] ),
+        ] );
+    }, 10, 3 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_ai_request_error" icon="triangle-exclamation">
+    **When AI API request fails**
+    
+    ```php
+    do_action( 'generatify_ai_request_error', string $feature, WP_Error $error, array $data )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_ai_request_error', function( $feature, $error, $data ) {
+        // Send alert email
+        wp_mail(
+            'admin@example.com',
+            'Generatify API Error',
+            sprintf(
+                "Feature: %s\nError: %s\nPost ID: %d",
+                $feature,
+                $error->get_error_message(),
+                $data['post_id'] ?? 0
+            )
+        );
+        
+        // Log to custom error table
+        global $wpdb;
+        $wpdb->insert( 'generatify_errors', [
+            'feature' => $feature,
+            'error' => $error->get_error_message(),
+            'data' => json_encode( $data ),
+            'created_at' => current_time( 'mysql' ),
+        ] );
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Automations
+
+<AccordionGroup>
+  <Accordion title="generatify_tags_generated" icon="tags">
+    **After tags are generated and saved**
+    
+    ```php
+    do_action( 'generatify_tags_generated', int $post_id, array $tags )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_tags_generated', function( $post_id, $tags ) {
+        // Send notification
+        wp_mail(
+            'editor@example.com',
+            'Tags Generated',
+            sprintf(
+                'Post #%d has been tagged with: %s',
+                $post_id,
+                implode( ', ', $tags )
+            )
+        );
+        
+        // Update post meta
+        update_post_meta( $post_id, '_ai_tagged', true );
+        update_post_meta( $post_id, '_ai_tagged_date', current_time( 'mysql' ) );
+        update_post_meta( $post_id, '_ai_tags_count', count( $tags ) );
+        
+        // Trigger custom action
+        do_action( 'my_custom_post_tagged', $post_id, $tags );
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_categories_assigned" icon="folder">
+    **After categories are assigned**
+    
+    ```php
+    do_action( 'generatify_categories_assigned', int $post_id, array $categories )
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_meta_description_saved" icon="file-lines">
+    **After meta description is saved**
+    
+    ```php
+    do_action( 'generatify_meta_description_saved', int $post_id, string $description )
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Chat & Helpdesk
+
+<AccordionGroup>
+  <Accordion title="generatify_chat_message_sent" icon="paper-plane">
+    **When user sends chat message**
+    
+    ```php
+    do_action( 'generatify_chat_message_sent', string $message, int $user_id, string $session_id )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_chat_message_sent', function( $message, $user_id, $session_id ) {
+        // Track engagement
+        update_user_meta( $user_id, 'last_chat_time', current_time( 'timestamp' ) );
+        
+        // Increment message count
+        $count = get_user_meta( $user_id, 'chat_message_count', true ) ?: 0;
+        update_user_meta( $user_id, 'chat_message_count', $count + 1 );
+        
+        // Log to CRM
+        if ( class_exists( 'MyCRM' ) ) {
+            MyCRM::log_activity( $user_id, 'chat_message', [
+                'message' => $message,
+                'session' => $session_id,
+            ] );
+        }
+    }, 10, 3 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_chat_escalated" icon="arrow-up">
+    **When chat is escalated to human**
+    
+    ```php
+    do_action( 'generatify_chat_escalated', array $conversation, int $user_id, string $reason )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_chat_escalated', function( $conversation, $user_id, $reason ) {
+        // Create support ticket
+        $ticket_id = create_support_ticket( [
+            'user_id' => $user_id,
+            'subject' => 'Chat escalation: ' . $reason,
+            'message' => format_conversation( $conversation ),
+        ] );
+        
+        // Notify support team
+        wp_mail(
+            'support@example.com',
+            'Chat Escalation',
+            sprintf(
+                "User %d needs help.\nReason: %s\nTicket: #%d",
+                $user_id,
+                $reason,
+                $ticket_id
+            )
+        );
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Content Moderation
+
+<AccordionGroup>
+  <Accordion title="generatify_toxic_comment_detected" icon="shield-exclamation">
+    **When toxic comment is detected**
+    
+    ```php
+    do_action( 'generatify_toxic_comment_detected', array $comment_data, array $toxicity_scores )
+    ```
+    
+    **Example:**
+    ```php
+    add_action( 'generatify_toxic_comment_detected', function( $comment_data, $toxicity_scores ) {
+        // Alert moderators
+        $message = sprintf(
+            "Toxic comment detected!\n\nAuthor: %s\nEmail: %s\nContent: %s\n\nScores:\n",
+            $comment_data['comment_author'],
+            $comment_data['comment_author_email'],
+            $comment_data['comment_content']
+        );
+        
+        foreach ( $toxicity_scores as $category => $score ) {
+            if ( $score > 50 ) {
+                $message .= sprintf( "- %s: %.2f%%\n", $category, $score );
+            }
+        }
+        
+        wp_mail( 'moderators@example.com', 'Toxic Comment Alert', $message );
+        
+        // Log to moderation system
+        log_moderation_event( 'toxic_comment', $comment_data, $toxicity_scores );
+    }, 10, 2 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Complete Hooks Reference
+
+### All Available Filters
+
+<table>
+  <thead>
+    <tr>
+      <th>Filter</th>
+      <th>Parameters</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`generatify_ai_prompt`</td>
+      <td>$prompt, $feature, $context</td>
+      <td>Modify AI prompts</td>
+    </tr>
+    <tr>
+      <td>`generatify_ai_response`</td>
+      <td>$response, $feature, $context</td>
+      <td>Filter AI responses</td>
+    </tr>
+    <tr>
+      <td>`generatify_ai_model`</td>
+      <td>$model, $feature, $context</td>
+      <td>Change AI model</td>
+    </tr>
+    <tr>
+      <td>`generatify_ai_parameters`</td>
+      <td>$params, $feature</td>
+      <td>Modify API parameters</td>
+    </tr>
+    <tr>
+      <td>`generatify_generated_tags`</td>
+      <td>$tags, $post_id, $context</td>
+      <td>Modify generated tags</td>
+    </tr>
+    <tr>
+      <td>`generatify_generated_categories`</td>
+      <td>$categories, $post_id</td>
+      <td>Modify generated categories</td>
+    </tr>
+    <tr>
+      <td>`generatify_meta_description`</td>
+      <td>$description, $post_id</td>
+      <td>Customize meta descriptions</td>
+    </tr>
+    <tr>
+      <td>`generatify_chat_context`</td>
+      <td>$context, $user_id, $session_id</td>
+      <td>Add chat context</td>
+    </tr>
+    <tr>
+      <td>`generatify_knowledge_sources`</td>
+      <td>$sources, $context</td>
+      <td>Add knowledge sources</td>
+    </tr>
+    <tr>
+      <td>`generatify_related_posts_query`</td>
+      <td>$args, $post_id</td>
+      <td>Modify related posts query</td>
+    </tr>
+    <tr>
+      <td>`generatify_toxicity_threshold`</td>
+      <td>$threshold, $category, $user_id</td>
+      <td>Adjust toxicity thresholds</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### All Available Actions
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Parameters</th>
+      <th>When Fired</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`generatify_before_ai_request`</td>
+      <td>$feature, $data</td>
+      <td>Before API request</td>
+    </tr>
+    <tr>
+      <td>`generatify_after_ai_request`</td>
+      <td>$feature, $response, $data</td>
+      <td>After API response</td>
+    </tr>
+    <tr>
+      <td>`generatify_ai_request_error`</td>
+      <td>$feature, $error, $data</td>
+      <td>On API error</td>
+    </tr>
+    <tr>
+      <td>`generatify_tags_generated`</td>
+      <td>$post_id, $tags</td>
+      <td>After tags saved</td>
+    </tr>
+    <tr>
+      <td>`generatify_categories_assigned`</td>
+      <td>$post_id, $categories</td>
+      <td>After categories assigned</td>
+    </tr>
+    <tr>
+      <td>`generatify_meta_description_saved`</td>
+      <td>$post_id, $description</td>
+      <td>After meta saved</td>
+    </tr>
+    <tr>
+      <td>`generatify_chat_message_sent`</td>
+      <td>$message, $user_id, $session_id</td>
+      <td>User sends message</td>
+    </tr>
+    <tr>
+      <td>`generatify_chat_escalated`</td>
+      <td>$conversation, $user_id, $reason</td>
+      <td>Chat escalated</td>
+    </tr>
+    <tr>
+      <td>`generatify_toxic_comment_detected`</td>
+      <td>$comment_data, $toxicity_scores</td>
+      <td>Toxic comment found</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="code" href="/developer/api-reference">
+    REST API documentation
+  </Card>
+  <Card title="Extending Generatify" icon="puzzle-piece" href="/developer/extending">
+    Build custom features
+  </Card>
+  <Card title="Customization" icon="paint-brush" href="/advanced/customization">
+    CSS and JavaScript
+  </Card>
+  <Card title="Examples" icon="lightbulb" href="/developer/extending">
+    Code examples
+  </Card>
+</CardGroup>
+
+<Tip>
+**Best Practice:** Always check if filter/action exists before using:
+```php
+if ( has_filter( 'generatify_ai_prompt' ) ) {
+    // Filter exists
+}
+```
+</Tip>

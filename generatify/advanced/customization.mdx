@@ -1,0 +1,1013 @@
+---
+title: 'Customization'
+description: 'Customize Generatify with CSS, JavaScript, hooks, and filters'
+icon: 'paint-brush'
+---
+
+## Overview
+
+Extend and customize Generatify to match your brand and workflow. Use CSS for visual customization, WordPress hooks/filters for functionality, and JavaScript for advanced behavior.
+
+<CardGroup cols={3}>
+  <Card title="Visual Styling" icon="palette">
+    CSS customization
+  </Card>
+  <Card title="WordPress Hooks" icon="plug">
+    Filters and actions
+  </Card>
+  <Card title="JavaScript API" icon="code">
+    Frontend customization
+  </Card>
+</CardGroup>
+
+---
+
+## CSS Customization
+
+### Custom CSS Location
+
+Add custom CSS in one of these locations:
+
+<Tabs>
+  <Tab title="Plugin Settings">
+    **Recommended for simple styles:**
+    
+    ```
+    Generatify → Settings → Advanced → Custom CSS
+    
+    Paste your CSS here (no <style> tags needed)
+    ```
+    
+    **Pros:**
+    - Easy to manage
+    - Survives plugin updates
+    - No theme editing required
+    
+    **Cons:**
+    - Limited to CSS only
+  </Tab>
+  
+  <Tab title="Theme style.css">
+    **For theme-specific styles:**
+    
+    ```css
+    /* In your theme's style.css or custom CSS file */
+    
+    /* Generatify Custom Styles */
+    .generatify-chat-widget {
+        /* Your styles here */
+    }
+    ```
+    
+    **Pros:**
+    - Integrated with theme
+    - Can use theme variables
+    
+    **Cons:**
+    - Lost on theme change
+  </Tab>
+  
+  <Tab title="Child Theme">
+    **Best practice for permanence:**
+    
+    ```css
+    /* In child theme's style.css */
+    
+    /* Generatify Overrides */
+    @import url('../generatify/assets/css/admin.min.css');
+    
+    .generatify-chat-widget {
+        /* Your custom styles */
+    }
+    ```
+    
+    **Pros:**
+    - Survives theme updates
+    - Professional approach
+    
+    **Cons:**
+    - Requires child theme setup
+  </Tab>
+</Tabs>
+
+---
+
+### CSS Class Reference
+
+#### Chat Widget
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Element</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>``.generatify-chat-widget``</td>
+      <td>Main container</td>
+      <td>Entire chat widget</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-trigger``</td>
+      <td>Button</td>
+      <td>Floating button to open chat</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-header``</td>
+      <td>Header</td>
+      <td>Chat widget header</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-title``</td>
+      <td>Title</td>
+      <td>Chat name/heading</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-messages``</td>
+      <td>Container</td>
+      <td>Message history area</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-message``</td>
+      <td>Message</td>
+      <td>Individual message</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-message--user``</td>
+      <td>Message</td>
+      <td>User message</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-message--ai``</td>
+      <td>Message</td>
+      <td>AI response</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-input``</td>
+      <td>Input</td>
+      <td>Message input field</td>
+    </tr>
+    <tr>
+      <td>``.generatify-chat-send``</td>
+      <td>Button</td>
+      <td>Send message button</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+#### Helpdesk Widget
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Element</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>``.generatify-helpdesk``</td>
+      <td>Main container</td>
+      <td>Entire helpdesk widget</td>
+    </tr>
+    <tr>
+      <td>``.generatify-helpdesk-trigger``</td>
+      <td>Button</td>
+      <td>Floating helpdesk button</td>
+    </tr>
+    <tr>
+      <td>``.generatify-contact-form``</td>
+      <td>Form</td>
+      <td>Contact form container</td>
+    </tr>
+    <tr>
+      <td>``.generatify-form-field``</td>
+      <td>Field</td>
+      <td>Form input field</td>
+    </tr>
+    <tr>
+      <td>``.generatify-form-submit``</td>
+      <td>Button</td>
+      <td>Form submit button</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+#### Related Posts
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Element</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>``.generatify-related-posts``</td>
+      <td>Container</td>
+      <td>Related posts section</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-posts-title``</td>
+      <td>Heading</td>
+      <td>Section title</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-posts-grid``</td>
+      <td>Container</td>
+      <td>Grid layout</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-post``</td>
+      <td>Post card</td>
+      <td>Individual post</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-post-thumbnail``</td>
+      <td>Image</td>
+      <td>Featured image</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-post-title``</td>
+      <td>Title</td>
+      <td>Post title</td>
+    </tr>
+    <tr>
+      <td>``.generatify-related-post-excerpt``</td>
+      <td>Text</td>
+      <td>Post excerpt</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Common Customizations
+
+#### Change Chat Widget Colors
+
+```css
+/* Change primary color */
+.generatify-chat-widget {
+    --generatify-primary-color: #6366f1; /* Your brand color */
+    --generatify-secondary-color: #f3f4f6;
+}
+
+/* Chat header background */
+.generatify-chat-header {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+/* AI message bubbles */
+.generatify-chat-message--ai {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* User message bubbles */
+.generatify-chat-message--user {
+    background-color: #6366f1;
+    color: #fff;
+}
+
+/* Send button */
+.generatify-chat-send {
+    background-color: #6366f1;
+    color: #fff;
+}
+.generatify-chat-send:hover {
+    background-color: #4f46e5;
+}
+```
+
+---
+
+#### Customize Widget Position
+
+```css
+/* Move chat trigger to left side */
+.generatify-chat-trigger {
+    right: auto !important;
+    left: 20px;
+}
+
+/* Increase trigger button size */
+.generatify-chat-trigger {
+    width: 70px !important;
+    height: 70px !important;
+    font-size: 32px;
+}
+
+/* Adjust widget dimensions */
+.generatify-chat-widget {
+    width: 400px !important;
+    height: 600px !important;
+    max-height: 90vh;
+}
+```
+
+---
+
+#### Style Related Posts
+
+```css
+/* Grid spacing */
+.generatify-related-posts-grid {
+    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Post card styling */
+.generatify-related-post {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.generatify-related-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Thumbnail effects */
+.generatify-related-post-thumbnail img {
+    transition: transform 0.3s ease;
+}
+
+.generatify-related-post:hover .generatify-related-post-thumbnail img {
+    transform: scale(1.05);
+}
+
+/* Typography */
+.generatify-related-post-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1f2937;
+}
+
+.generatify-related-post-excerpt {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+```
+
+---
+
+#### Dark Mode Support
+
+```css
+/* Auto dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+    .generatify-chat-widget {
+        background-color: #1f2937;
+        color: #f9fafb;
+        border: 1px solid #374151;
+    }
+    
+    .generatify-chat-header {
+        background-color: #111827;
+        border-bottom: 1px solid #374151;
+    }
+    
+    .generatify-chat-message--ai {
+        background-color: #374151;
+        color: #f9fafb;
+    }
+    
+    .generatify-chat-input {
+        background-color: #374151;
+        color: #f9fafb;
+        border-color: #4b5563;
+    }
+    
+    .generatify-related-post {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+    
+    .generatify-related-post-title {
+        color: #f9fafb;
+    }
+    
+    .generatify-related-post-excerpt {
+        color: #9ca3af;
+    }
+}
+```
+
+---
+
+#### Mobile Responsiveness
+
+```css
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    /* Full-screen chat on mobile */
+    .generatify-chat-widget {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100vw;
+        max-height: 100vh;
+        border-radius: 0 !important;
+    }
+    
+    /* Larger trigger button on mobile */
+    .generatify-chat-trigger {
+        width: 60px !important;
+        height: 60px !important;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    /* Single column related posts */
+    .generatify-related-posts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+---
+
+## WordPress Hooks & Filters
+
+### Filters
+
+Modify data before it's used:
+
+<AccordionGroup>
+  <Accordion title="generatify_ai_prompt" icon="message">
+    **Modify AI prompts before sending:**
+    
+    ```php
+    add_filter( 'generatify_ai_prompt', function( $prompt, $feature, $context ) {
+        // Add custom instructions
+        if ( $feature === 'chat' ) {
+            $prompt .= "\nAlways be friendly and helpful.";
+        }
+        
+        return $prompt;
+    }, 10, 3 );
+    ```
+    
+    **Parameters:**
+    - `$prompt` (string): The prompt text
+    - `$feature` (string): Feature name (chat, tags, categories, etc.)
+    - `$context` (array): Additional context data
+    
+    **Return:** Modified prompt string
+  </Accordion>
+  
+  <Accordion title="generatify_ai_response" icon="reply">
+    **Filter AI responses:**
+    
+    ```php
+    add_filter( 'generatify_ai_response', function( $response, $feature ) {
+        // Remove certain phrases
+        $response = str_replace( 'As an AI', '', $response );
+        
+        // Add custom suffix
+        if ( $feature === 'chat' ) {
+            $response .= "\n\nNeed more help? Contact us!";
+        }
+        
+        return $response;
+    }, 10, 2 );
+    ```
+    
+    **Parameters:**
+    - `$response` (string): AI response text
+    - `$feature` (string): Feature name
+    
+    **Return:** Modified response string
+  </Accordion>
+  
+  <Accordion title="generatify_generated_tags" icon="tags">
+    **Modify auto-generated tags:**
+    
+    ```php
+    add_filter( 'generatify_generated_tags', function( $tags, $post_id ) {
+        // Always add a specific tag
+        $tags[] = 'AI Generated';
+        
+        // Remove unwanted tags
+        $tags = array_filter( $tags, function( $tag ) {
+            return $tag !== 'unwanted';
+        });
+        
+        // Limit to 5 tags
+        return array_slice( $tags, 0, 5 );
+    }, 10, 2 );
+    ```
+    
+    **Parameters:**
+    - `$tags` (array): Generated tag names
+    - `$post_id` (int): Post ID
+    
+    **Return:** Modified tags array
+  </Accordion>
+  
+  <Accordion title="generatify_generated_categories" icon="folder">
+    **Modify auto-generated categories:**
+    
+    ```php
+    add_filter( 'generatify_generated_categories', function( $categories, $post_id ) {
+        // Map AI categories to your structure
+        $mapping = [
+            'Tech' => 'Technology',
+            'Marketing' => 'Digital Marketing',
+        ];
+        
+        foreach ( $categories as &$category ) {
+            if ( isset( $mapping[$category] ) ) {
+                $category = $mapping[$category];
+            }
+        }
+        
+        return $categories;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_meta_description" icon="file-lines">
+    **Customize meta descriptions:**
+    
+    ```php
+    add_filter( 'generatify_meta_description', function( $description, $post_id ) {
+        // Add brand name
+        $description .= ' | Your Brand Name';
+        
+        // Ensure length limit
+        if ( strlen( $description ) > 160 ) {
+            $description = substr( $description, 0, 157 ) . '...';
+        }
+        
+        return $description;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_related_posts_query" icon="link">
+    **Modify related posts query:**
+    
+    ```php
+    add_filter( 'generatify_related_posts_query', function( $args, $post_id ) {
+        // Only show posts from last 6 months
+        $args['date_query'] = [
+            'after' => '6 months ago',
+        ];
+        
+        // Exclude specific categories
+        $args['category__not_in'] = [5, 12];
+        
+        // Require featured image
+        $args['meta_query'] = [
+            [
+                'key' => '_thumbnail_id',
+                'compare' => 'EXISTS',
+            ],
+        ];
+        
+        return $args;
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_toxicity_threshold" icon="shield-check">
+    **Dynamic toxicity thresholds:**
+    
+    ```php
+    add_filter( 'generatify_toxicity_threshold', function( $threshold, $category, $user_id ) {
+        // Lower threshold for new users
+        $user = get_userdata( $user_id );
+        if ( get_comments( ['user_id' => $user_id, 'count' => true] ) < 3 ) {
+            $threshold -= 20; // More strict for new users
+        }
+        
+        // Adjust by time of day
+        $hour = (int) current_time( 'H' );
+        if ( $hour < 6 || $hour > 22 ) {
+            $threshold -= 10; // More strict outside business hours
+        }
+        
+        return $threshold;
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Actions
+
+Execute code at specific points:
+
+<AccordionGroup>
+  <Accordion title="generatify_before_ai_request" icon="bolt">
+    **Before API request:**
+    
+    ```php
+    add_action( 'generatify_before_ai_request', function( $feature, $data ) {
+        // Log API usage
+        error_log( "AI request: $feature" );
+        
+        // Track analytics
+        do_action( 'track_event', 'ai_usage', $feature );
+        
+        // Check rate limits
+        if ( ! current_user_can( 'use_ai_features' ) ) {
+            wp_die( 'Insufficient permissions' );
+        }
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_after_ai_request" icon="check">
+    **After API request:**
+    
+    ```php
+    add_action( 'generatify_after_ai_request', function( $feature, $response, $data ) {
+        // Log response
+        error_log( "AI response received for: $feature" );
+        
+        // Update usage stats
+        $usage = get_option( 'generatify_usage_stats', [] );
+        $usage[$feature] = ( $usage[$feature] ?? 0 ) + 1;
+        update_option( 'generatify_usage_stats', $usage );
+        
+        // Send to analytics
+        // ... your analytics code ...
+    }, 10, 3 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_tags_generated" icon="tags">
+    **After tags generated:**
+    
+    ```php
+    add_action( 'generatify_tags_generated', function( $post_id, $tags ) {
+        // Send notification
+        wp_mail( 
+            'admin@example.com',
+            'Tags Generated',
+            "Post $post_id tagged with: " . implode( ', ', $tags )
+        );
+        
+        // Update post meta
+        update_post_meta( $post_id, '_ai_tagged', true );
+        update_post_meta( $post_id, '_ai_tagged_date', current_time( 'mysql' ) );
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_toxic_comment_detected" icon="shield-exclamation">
+    **When toxic comment detected:**
+    
+    ```php
+    add_action( 'generatify_toxic_comment_detected', function( $comment_data, $toxicity_scores ) {
+        // Alert moderators
+        $message = "Toxic comment detected!\n\n";
+        $message .= "Author: {$comment_data['comment_author']}\n";
+        $message .= "Content: {$comment_data['comment_content']}\n\n";
+        $message .= "Scores:\n";
+        foreach ( $toxicity_scores as $category => $score ) {
+            if ( $score > 50 ) {
+                $message .= "- $category: " . round( $score, 2 ) . "%\n";
+            }
+        }
+        
+        wp_mail( 'moderators@example.com', 'Toxic Comment Alert', $message );
+        
+        // Log to custom table
+        // ... your logging code ...
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="generatify_chat_message_sent" icon="comment">
+    **When chat message sent:**
+    
+    ```php
+    add_action( 'generatify_chat_message_sent', function( $message, $user_id, $session_id ) {
+        // Track chat engagement
+        update_user_meta( $user_id, 'last_chat_time', current_time( 'timestamp' ) );
+        
+        // Increment message count
+        $count = get_user_meta( $user_id, 'chat_message_count', true ) ?: 0;
+        update_user_meta( $user_id, 'chat_message_count', $count + 1 );
+        
+        // Custom analytics
+        // ... your analytics code ...
+    }, 10, 3 );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## JavaScript Customization
+
+### JavaScript API
+
+Access Generatify features via JavaScript:
+
+<Tabs>
+  <Tab title="Chat Widget API">
+    ```javascript
+    // Get chat widget instance
+    const chatWidget = window.GeneratifyChat;
+    
+    // Open chat programmatically
+    chatWidget.open();
+    
+    // Close chat
+    chatWidget.close();
+    
+    // Send message programmatically
+    chatWidget.sendMessage('Hello, AI!');
+    
+    // Listen to events
+    chatWidget.on('messageReceived', function(response) {
+        console.log('AI responded:', response);
+    });
+    
+    chatWidget.on('chatOpened', function() {
+        console.log('Chat opened');
+        // Track analytics
+        gtag('event', 'chat_opened');
+    });
+    
+    chatWidget.on('chatClosed', function() {
+        console.log('Chat closed');
+    });
+    
+    // Set custom data
+    chatWidget.setContext({
+        user_id: 123,
+        page: 'product',
+        product_id: 456
+    });
+    
+    // Clear chat history
+    chatWidget.clearHistory();
+    ```
+  </Tab>
+  
+  <Tab title="Smart Compose API">
+    ```javascript
+    // Get Smart Compose instance
+    const smartCompose = window.GeneratifySmartCompose;
+    
+    // Trigger suggestion manually
+    smartCompose.getSuggestion();
+    
+    // Accept suggestion
+    smartCompose.acceptSuggestion();
+    
+    // Reject suggestion
+    smartCompose.rejectSuggestion();
+    
+    // Get new suggestion
+    smartCompose.regenerateSuggestion();
+    
+    // Listen to events
+    smartCompose.on('suggestionReceived', function(suggestion) {
+        console.log('New suggestion:', suggestion);
+    });
+    
+    smartCompose.on('suggestionAccepted', function() {
+        console.log('User accepted suggestion');
+        // Track conversion
+        gtag('event', 'suggestion_accepted');
+    });
+    
+    // Configure
+    smartCompose.setConfig({
+        trigger: 'manual', // or 'auto'
+        length: 'paragraph',
+        tone: 'professional'
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Related Posts API">
+    ```javascript
+    // Get Related Posts instance
+    const relatedPosts = window.GeneratifyRelatedPosts;
+    
+    // Refresh recommendations
+    relatedPosts.refresh();
+    
+    // Change layout
+    relatedPosts.setLayout('carousel');
+    
+    // Filter by category
+    relatedPosts.filterByCategory([5, 12]);
+    
+    // Listen to clicks
+    relatedPosts.on('postClicked', function(postId) {
+        console.log('User clicked post:', postId);
+        // Track analytics
+        gtag('event', 'related_post_click', {
+            'post_id': postId
+        });
+    });
+    
+    // Get current recommendations
+    const posts = relatedPosts.getCurrentPosts();
+    console.log('Current recommendations:', posts);
+    ```
+  </Tab>
+  
+  <Tab title="Toxicity Checker API">
+    ```javascript
+    // Get Toxicity Checker instance
+    const toxicityChecker = window.GeneratifyToxicity;
+    
+    // Check text manually
+    toxicityChecker.checkText('Test comment text').then(function(results) {
+        console.log('Toxicity scores:', results);
+        
+        if (results.toxicity > 70) {
+            alert('This comment may be toxic');
+        }
+    });
+    
+    // Listen to checks
+    toxicityChecker.on('commentChecked', function(result) {
+        console.log('Comment checked:', result);
+        
+        // Display warning to user
+        if (result.isToxic) {
+            showWarning(result.categories);
+        }
+    });
+    
+    // Configure thresholds
+    toxicityChecker.setThresholds({
+        toxicity: 60,
+        severe_toxicity: 70,
+        profanity: 80
+    });
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Custom JavaScript
+
+Add custom JavaScript via hook:
+
+```php
+add_action( 'wp_footer', function() {
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        // Open chat when clicking custom button
+        $('#my-custom-chat-button').on('click', function() {
+            window.GeneratifyChat.open();
+        });
+        
+        // Track Smart Compose usage
+        if (window.GeneratifySmartCompose) {
+            window.GeneratifySmartCompose.on('suggestionAccepted', function() {
+                // Send to Google Analytics
+                gtag('event', 'ai_suggestion_accepted', {
+                    'event_category': 'AI Features',
+                    'event_label': 'Smart Compose'
+                });
+            });
+        }
+        
+        // Auto-open chat for first-time visitors
+        if (!localStorage.getItem('chat_seen')) {
+            setTimeout(function() {
+                window.GeneratifyChat.open();
+                localStorage.setItem('chat_seen', 'true');
+            }, 5000);
+        }
+    });
+    </script>
+    <?php
+});
+```
+
+---
+
+## Advanced Customization
+
+### Custom AI Provider
+
+Add your own AI provider:
+
+```php
+add_filter( 'generatify_ai_providers', function( $providers ) {
+    $providers['custom'] = [
+        'name' => 'Custom AI',
+        'class' => 'My_Custom_AI_Provider',
+        'settings' => [
+            'api_key' => [
+                'type' => 'text',
+                'label' => 'API Key',
+            ],
+            'endpoint' => [
+                'type' => 'text',
+                'label' => 'API Endpoint',
+            ],
+        ],
+    ];
+    
+    return $providers;
+});
+
+// Implement provider class
+class My_Custom_AI_Provider {
+    public function send_request( $prompt, $options = [] ) {
+        // Your API integration code
+        $response = wp_remote_post( $this->endpoint, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->api_key,
+            ],
+            'body' => json_encode([
+                'prompt' => $prompt,
+                'max_tokens' => $options['max_tokens'] ?? 1000,
+            ]),
+        ]);
+        
+        return json_decode( wp_remote_retrieve_body( $response ) );
+    }
+}
+```
+
+---
+
+### Custom Knowledge Source
+
+Add custom knowledge sources for chatbot:
+
+```php
+add_filter( 'generatify_knowledge_sources', function( $sources, $context ) {
+    // Add external API data
+    if ( $context['page_type'] === 'product' ) {
+        $product_id = $context['product_id'];
+        $product_data = fetch_external_product_data( $product_id );
+        $sources[] = [
+            'type' => 'external_api',
+            'content' => $product_data,
+        ];
+    }
+    
+    // Add custom post type
+    $custom_posts = get_posts([
+        'post_type' => 'documentation',
+        'posts_per_page' => 10,
+    ]);
+    
+    foreach ( $custom_posts as $post ) {
+        $sources[] = [
+            'type' => 'custom_post',
+            'title' => $post->post_title,
+            'content' => $post->post_content,
+            'url' => get_permalink( $post->ID ),
+        ];
+    }
+    
+    return $sources;
+}, 10, 2 );
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Performance" icon="gauge" href="/advanced/performance">
+    Optimization techniques
+  </Card>
+  <Card title="Developer Hooks" icon="plug" href="/developer/hooks-filters">
+    Complete hooks reference
+  </Card>
+  <Card title="API Reference" icon="code" href="/developer/api-reference">
+    REST API docs
+  </Card>
+  <Card title="Extending Generatify" icon="puzzle-piece" href="/developer/extending">
+    Build custom features
+  </Card>
+</CardGroup>
+
+<Tip>
+**Best Practice:** Always use child themes for CSS customization and WordPress hooks for functionality changes. This ensures your customizations survive plugin and theme updates.
+</Tip>

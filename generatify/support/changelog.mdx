@@ -1,0 +1,510 @@
+---
+title: 'Changelog'
+description: 'Version history and release notes for Generatify'
+icon: 'clock-rotate-left'
+---
+
+## Version 1.0.1 (Current)
+**Released:** January 15, 2024
+
+### 🐛 Bug Fixes
+- Fixed chat widget not appearing on some themes
+- Resolved conflict with certain security plugins blocking AJAX requests
+- Fixed Smart Compose suggestions not appearing in Gutenberg editor for non-admin users
+- Corrected toxicity checker false positives on certain benign phrases
+- Fixed meta description generation cutting off at 150 characters instead of 160
+- Resolved memory leak in TensorFlow.js toxicity checker on long sessions
+
+### 🔧 Improvements
+- Improved chat widget mobile responsiveness
+- Enhanced Smart Compose trigger detection (now pauses for 1-2 seconds of inactivity)
+- Optimized Related Posts caching (reduced database queries by 60%)
+- Added better error messages for API connection issues
+- Improved admin UI loading speed
+- Enhanced debug logging with more detailed API request information
+
+### 📚 Documentation
+- Added troubleshooting guide for common issues
+- Expanded FAQ with billing and privacy questions
+- Added code examples for WordPress hooks and filters
+
+---
+
+## Version 1.0.0
+**Released:** December 1, 2023
+
+### 🎉 Initial Release
+
+**Core Features:**
+- ✨ AI Assistant Chatbot with knowledge base integration
+- 🏷️ Auto Tags generation from post content
+- 📁 Auto Categories assignment with multiple strategies
+- 📝 SEO Meta Descriptions with plugin integration (Yoast, Rank Math, AIOSEO, SEOPress)
+- 🖼️ Image Alt Text generation (planned, UI ready)
+- 💬 Helpdesk Agent with chat and contact form modes
+- ✍️ Smart Compose writing suggestions
+- 🔗 Related Posts with AI-powered semantic matching
+- 🛡️ Toxicity Checker with TensorFlow.js
+
+**AI Provider Integrations:**
+- OpenAI (GPT-4, GPT-4o, GPT-4o Mini, GPT-3.5 Turbo)
+- Anthropic (Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus, Claude 3 Haiku)
+- Google (Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash)
+
+**Advanced Features:**
+- Comprehensive settings interface
+- Debug mode with detailed logging
+- Performance optimization with Redis/Memcached support
+- Caching system for API responses
+- Rate limiting and budget management
+- Export/import settings
+- System diagnostics
+
+**Developer Tools:**
+- WordPress hooks and filters
+- REST API endpoints
+- JavaScript APIs
+- Custom AI provider framework
+- Extensible knowledge source system
+
+**Documentation:**
+- Complete Mintlify documentation
+- Getting started guides
+- Feature tutorials
+- API reference
+- Troubleshooting guides
+
+---
+
+## Upcoming Features
+
+### Version 1.1.0 (Planned - Q1 2024)
+<Note>Release date is tentative and subject to change.</Note>
+
+**New Features:**
+- 🖼️ **Image Alt Text Generation** (full implementation)
+  - Automatic alt text for uploaded images
+  - Batch processing for existing images
+  - Multiple AI providers for image analysis
+  - Accessibility score tracking
+
+- 🌍 **WPML Integration**
+  - Automatic translation of AI-generated content
+  - Multi-language chat support
+  - Language-specific knowledge sources
+  - SEO meta descriptions in all languages
+
+- 📊 **Enhanced Analytics Dashboard**
+  - Usage tracking by feature
+  - Cost analysis and forecasting
+  - Performance metrics
+  - User engagement statistics
+
+- 🎨 **Visual Customization Builder**
+  - Drag-and-drop chat widget customization
+  - Live preview
+  - Pre-built themes
+  - Export/import custom themes
+
+**Improvements:**
+- Better mobile experience for all features
+- Improved Smart Compose accuracy with context awareness
+- Enhanced Related Posts algorithm with recency weighting
+- Faster API response times with request batching
+
+---
+
+### Version 1.2.0 (Planned - Q2 2024)
+
+**New Features:**
+- 🤖 **Ollama Integration** (local LLM support)
+  - Self-hosted AI models
+  - Complete data privacy
+  - Zero API costs
+  - Compatible with Llama 2, Mistral, and other open-source models
+
+- 📧 **Email Response Suggestions**
+  - AI-powered email reply suggestions
+  - Integration with WordPress email logs
+  - Support ticket response templates
+  - Tone and style customization
+
+- 🛒 **WooCommerce Product Description Generator**
+  - Automatic product descriptions from attributes
+  - Bulk generation for existing products
+  - SEO-optimized content
+  - Multiple writing styles
+
+- 🔍 **Advanced Search Integration**
+  - AI-powered search suggestions
+  - Semantic search across site content
+  - Natural language queries
+  - Search analytics
+
+**Improvements:**
+- Multi-language toxicity detection
+- Improved chat widget animations
+- Better WordPress 6.5 compatibility
+- Enhanced security features
+
+---
+
+### Version 1.3.0 (Planned - Q3 2024)
+
+**New Features:**
+- 🎤 **Voice Interaction**
+  - Voice input for chat
+  - Text-to-speech responses
+  - Multiple language support
+  - Accessibility improvements
+
+- 📱 **Mobile App (iOS/Android)**
+  - Manage Generatify on the go
+  - Push notifications for important events
+  - Real-time chat monitoring
+  - Quick settings adjustments
+
+- 🔗 **Third-Party Integrations**
+  - Zapier integration
+  - Make (Integromat) integration
+  - Slack notifications
+  - Google Analytics events
+
+**Improvements:**
+- AI model fine-tuning with your content
+- Custom AI training with uploaded documents
+- Improved caching with intelligent cache warming
+- Better error recovery and retry mechanisms
+
+---
+
+## Version History Summary
+
+<CardGroup cols={2}>
+  <Card title="v1.0.1 (Current)" icon="check">
+    Bug fixes and improvements
+    
+    **Release:** Jan 15, 2024
+  </Card>
+  <Card title="v1.0.0" icon="rocket">
+    Initial public release
+    
+    **Release:** Dec 1, 2023
+  </Card>
+  <Card title="v1.1.0 (Planned)" icon="calendar">
+    Image alt text, WPML, analytics
+    
+    **ETA:** Q1 2024
+  </Card>
+  <Card title="v1.2.0 (Planned)" icon="calendar">
+    Ollama, email, WooCommerce
+    
+    **ETA:** Q2 2024
+  </Card>
+</CardGroup>
+
+---
+
+## Release Schedule
+
+<Steps>
+  <Step title="Monthly Minor Updates">
+    Bug fixes and small improvements released monthly
+    
+    - Security patches
+    - Performance optimizations
+    - Bug fixes
+    - Minor feature enhancements
+  </Step>
+  
+  <Step title="Quarterly Major Updates">
+    New features and significant improvements every 3 months
+    
+    - New AI features
+    - Major integrations
+    - UI/UX overhauls
+    - Breaking changes (rare, with migration guide)
+  </Step>
+  
+  <Step title="Continuous Development">
+    Features released when ready, not tied to schedule
+    
+    - User-requested features
+    - Experimental features (beta)
+    - API updates
+    - Documentation updates
+  </Step>
+</Steps>
+
+---
+
+## Update Notifications
+
+Stay informed about new releases:
+
+<Tabs>
+  <Tab title="In-Dashboard">
+    **WordPress Admin Notifications:**
+    
+    - Update banner in Plugins page
+    - Admin notice for major releases
+    - Changelog popup after update
+    - Feature highlights
+    
+    **Enable notifications:**
+    ```
+    Settings → Advanced → Notifications
+    ✅ Update notifications
+    ✅ Feature announcements
+    ```
+  </Tab>
+  
+  <Tab title="Email">
+    **Email Updates:**
+    
+    - Major release announcements
+    - Security updates (urgent)
+    - Feature previews (beta)
+    - Monthly newsletter
+    
+    **Subscribe:**
+    - Account settings on Generatify website
+    - Or in plugin: Settings → Advanced → Email Notifications
+  </Tab>
+  
+  <Tab title="RSS Feed">
+    **Changelog RSS:**
+    
+    ```
+    https://generatify.com/changelog.xml
+    ```
+    
+    Subscribe in your favorite RSS reader for instant changelog updates.
+  </Tab>
+</Tabs>
+
+---
+
+## Updating Generatify
+
+### Automatic Updates (Recommended)
+
+<Steps>
+  <Step title="Enable Auto-Updates">
+    Navigate to: `Plugins → Installed Plugins`
+    
+    Find Generatify, click **Enable auto-updates**
+  </Step>
+  
+  <Step title="WordPress Handles It">
+    WordPress will automatically update Generatify in the background
+    
+    - Checks for updates daily
+    - Installs updates during off-peak hours
+    - Sends email notification after update
+  </Step>
+  
+  <Step title="Review Changelog">
+    After update, review changelog:
+    
+    - Admin notice with "What's New" button
+    - Or visit: Settings → About → Changelog
+  </Step>
+</Steps>
+
+### Manual Updates
+
+<Steps>
+  <Step title="Backup First">
+    **Always backup before updating:**
+    
+    - Database backup (phpMyAdmin, plugin, hosting control panel)
+    - Files backup (FTP, hosting control panel)
+    - Or use backup plugin (UpdraftPlus, BackWPup)
+  </Step>
+  
+  <Step title="Check for Updates">
+    Navigate to: `Dashboard → Updates`
+    
+    Look for Generatify in plugin updates list
+  </Step>
+  
+  <Step title="Update Plugin">
+    Click **Update Now** next to Generatify
+    
+    - WordPress downloads new version
+    - Installs over old version
+    - Activates automatically
+  </Step>
+  
+  <Step title="Verify">
+    Check that everything works:
+    
+    - Visit Settings → About → Version (should show new version)
+    - Test key features (chat, automations)
+    - Check for any error notices
+  </Step>
+</Steps>
+
+<Warning>
+**Important:** Always backup your site before updating plugins. While we test extensively, conflicts with your specific setup are possible.
+</Warning>
+
+---
+
+## Breaking Changes & Migration
+
+We strive to maintain backwards compatibility, but occasionally breaking changes are necessary.
+
+### v1.0.0 → v1.0.1
+**No breaking changes.** Update safely.
+
+### Future Breaking Changes
+
+When breaking changes occur, we provide:
+- **3 months advance notice** (in changelog and email)
+- **Migration guide** with step-by-step instructions
+- **Compatibility mode** to continue using old behavior temporarily
+- **Support** to help with migration
+
+<Info>
+**Semantic Versioning:** Generatify follows [semantic versioning](https://semver.org/):
+- **Major** (2.0.0): Breaking changes
+- **Minor** (1.1.0): New features, backwards-compatible
+- **Patch** (1.0.1): Bug fixes, backwards-compatible
+</Info>
+
+---
+
+## Beta Program
+
+Get early access to new features:
+
+<CardGroup cols={2}>
+  <Card title="Join Beta Program" icon="flask">
+    Test unreleased features and provide feedback
+    
+    **Benefits:**
+    - Early feature access
+    - Influence development
+    - Beta-only features
+    - Direct line to developers
+    
+    **Requirements:**
+    - Active license
+    - Staging site for testing
+    - Willingness to report bugs
+  </Card>
+  
+  <Card title="Install Beta Releases" icon="download">
+    **How to enable beta updates:**
+    
+    ```
+    Settings → Advanced → Beta Program
+    ✅ Enable beta updates
+    ```
+    
+    **Caution:** Beta versions may have bugs. Use on staging sites only.
+  </Card>
+</CardGroup>
+
+---
+
+## Request a Feature
+
+Have an idea for Generatify?
+
+<Steps>
+  <Step title="Search Existing Requests">
+    Check our [feature request board](https://generatify.com/feature-requests) to see if someone already suggested it
+    
+    - Upvote existing requests
+    - Add your use case in comments
+  </Step>
+  
+  <Step title="Submit New Request">
+    Create a new feature request with:
+    
+    - **What:** Clear description of feature
+    - **Why:** Use case and benefits
+    - **How:** Suggested implementation (optional)
+    - **Priority:** How important to you (1-5)
+  </Step>
+  
+  <Step title="Community Votes">
+    Community votes determine development priority
+    
+    - Most-requested features built first
+    - You'll receive updates on progress
+    - Notified when feature ships
+  </Step>
+</Steps>
+
+<Tip>
+**Pro tip:** Feature requests with detailed use cases and examples are more likely to be implemented quickly!
+</Tip>
+
+---
+
+## Support for Older Versions
+
+### Support Policy
+
+<Tabs>
+  <Tab title="Latest Version">
+    **Full support:**
+    - Bug fixes
+    - Security updates
+    - Feature updates
+    - Priority support
+    
+    **Always recommended** to stay on latest version.
+  </Tab>
+  
+  <Tab title="Previous Minor Version">
+    **Limited support:**
+    - Critical security fixes only
+    - No feature updates
+    - Standard support
+    
+    **Supported for 3 months** after new minor release.
+    
+    Example: v1.0.x supported for 3 months after v1.1.0 release
+  </Tab>
+  
+  <Tab title="Older Versions">
+    **No support:**
+    - No security updates
+    - No bug fixes
+    - Best-effort community support only
+    
+    **Strongly recommended to update** for security and compatibility.
+  </Tab>
+</Tabs>
+
+<Warning>
+**Security risk:** Running old versions exposes your site to known vulnerabilities. Always update to the latest version.
+</Warning>
+
+---
+
+## Get Help with Updates
+
+<CardGroup cols={2}>
+  <Card title="Update Guide" icon="book" href="/getting-started/installation">
+    Step-by-step update instructions
+  </Card>
+  <Card title="Support" icon="life-ring" href="/support/get-help">
+    Need help updating? Contact us
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Fix update issues
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/support/faq">
+    Common update questions
+  </Card>
+</CardGroup>
+
+<Info>
+**Stay updated:** Subscribe to our [newsletter](#) or follow [@generatify](https://twitter.com/generatify) for release announcements!
+</Info>

@@ -1,0 +1,368 @@
+---
+title: 'Integrations Overview'
+description: 'Compare AI providers and choose the best for your needs'
+icon: 'plug'
+---
+
+## Supported AI Providers
+
+Generatify integrates with three leading AI providers, giving you flexibility in choosing the best models for your needs and budget.
+
+<CardGroup cols={3}>
+  <Card title="OpenAI" icon="openai" href="/integrations/openai-chatgpt">
+    GPT-4, GPT-3.5 Turbo models
+  </Card>
+  <Card title="Anthropic" icon="a" href="/integrations/anthropic-claude">
+    Claude 3.5, Claude 3 models
+  </Card>
+  <Card title="Google" icon="google" href="/integrations/google-gemini">
+    Gemini Pro, Flash models
+  </Card>
+</CardGroup>
+
+---
+
+## Quick Comparison
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Best For</th>
+      <th>Cost</th>
+      <th>Speed</th>
+      <th>Quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>General use, content creation</td>
+      <td>💰💰💰</td>
+      <td>⚡⚡⚡</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Conversations, helpdesk</td>
+      <td>💰💰</td>
+      <td>⚡⚡⚡</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Google**</td>
+      <td>High volume, budget-conscious</td>
+      <td>💰 Free tier</td>
+      <td>⚡⚡⚡⚡</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Feature Support Matrix
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>OpenAI</th>
+      <th>Anthropic</th>
+      <th>Google</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI Assistant Chatbot</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Auto Post Tags</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Auto Categories</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Meta Descriptions</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Helpdesk Agent</td>
+      <td>✅</td>
+      <td>✅ (Best)</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Long Context (100K+ tokens)</td>
+      <td>✅ GPT-4 Turbo</td>
+      <td>✅ Claude 3.5</td>
+      <td>✅ Gemini Pro (1M)</td>
+    </tr>
+    <tr>
+      <td>Vision/Image Analysis</td>
+      <td>✅ GPT-4 Vision</td>
+      <td>✅ Claude 3</td>
+      <td>✅ Gemini Pro</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Cost Comparison
+
+### Estimated Monthly Costs by Use Case
+
+<Tabs>
+  <Tab title="Small Blog">
+    **Usage:** 50 posts/month, 200 chatbot queries, helpdesk on 1K pageviews
+
+    | Provider | Configuration | Est. Cost |
+    |----------|--------------|-----------|
+    | Google | Gemini 1.5 Flash for all | **$0-5** (free tier) |
+    | OpenAI | GPT-3.5 for automation, GPT-4 for chatbot | **$10-15** |
+    | Anthropic | Claude Haiku for automation, Sonnet for chatbot | **$8-12** |
+    | Mixed | Gemini (automation) + Claude (chatbot) | **$5-8** |
+  </Tab>
+
+  <Tab title="Medium Site">
+    **Usage:** 200 posts/month, 1K chatbot queries, helpdesk on 10K pageviews
+
+    | Provider | Configuration | Est. Cost |
+    |----------|--------------|-----------|
+    | Google | Gemini 1.5 Flash for all | **$10-20** |
+    | OpenAI | GPT-3.5 for automation, GPT-4 for chatbot | **$40-60** |
+    | Anthropic | Claude Haiku for automation, Sonnet for chatbot | **$30-45** |
+    | Mixed | Gemini (automation) + GPT-4 (chatbot) | **$25-35** |
+  </Tab>
+
+  <Tab title="Large Site">
+    **Usage:** 1000 posts/month, 10K chatbot queries, helpdesk on 100K pageviews
+
+    | Provider | Configuration | Est. Cost |
+    |----------|--------------|-----------|
+    | Google | Gemini 1.5 Flash for all | **$50-100** |
+    | OpenAI | GPT-3.5 for automation, GPT-4 for chatbot | **$200-300** |
+    | Anthropic | Claude Haiku for automation, Sonnet for chatbot | **$150-200** |
+    | Mixed | Gemini (automation) + Claude (chatbot) | **$100-150** |
+  </Tab>
+</Tabs>
+
+<Info>
+  **Note:** Costs are estimates based on average token usage. Your actual costs may vary based on content length, model selection, and usage patterns.
+</Info>
+
+---
+
+## Choosing the Right Provider
+
+<AccordionGroup>
+  <Accordion title="Choose OpenAI if..." icon="openai">
+    - You need the most powerful models available
+    - Content quality is your top priority
+    - You're familiar with ChatGPT
+    - Budget allows for premium pricing
+    - You need GPT-4's advanced reasoning
+    - Vision capabilities are important
+  </Accordion>
+
+  <Accordion title="Choose Anthropic if..." icon="a">
+    - You're building a helpdesk or chatbot
+    - Natural conversation is critical
+    - Safety and content filtering matter
+    - You want competitive pricing
+    - Long context windows are needed
+    - You value ethical AI development
+  </Accordion>
+
+  <Accordion title="Choose Google if..." icon="google">
+    - You want to start with free tier
+    - Budget is a primary concern
+    - You need fast responses
+    - High volume usage expected
+    - Multimodal features interest you
+    - You prefer Google ecosystem
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Multi-Provider Strategy
+
+You can use different providers for different features:
+
+### Recommended Configurations
+
+<Tabs>
+  <Tab title="Cost-Optimized">
+    ```
+    AI Assistant Chatbot: Google Gemini 1.5 Pro
+    Auto Tags: Google Gemini 1.5 Flash
+    Auto Categories: Google Gemini 1.5 Flash
+    Meta Descriptions: Google Gemini 1.5 Flash
+    Helpdesk Agent: Google Gemini 1.5 Pro
+    
+    Monthly Cost: $0-10 (mostly free tier)
+    ```
+  </Tab>
+
+  <Tab title="Balanced">
+    ```
+    AI Assistant Chatbot: GPT-4 Turbo
+    Auto Tags: Claude 3.5 Haiku
+    Auto Categories: Claude 3.5 Haiku
+    Meta Descriptions: GPT-3.5 Turbo
+    Helpdesk Agent: Claude 3.5 Sonnet
+    
+    Monthly Cost: $20-50
+    ```
+  </Tab>
+
+  <Tab title="Premium">
+    ```
+    AI Assistant Chatbot: GPT-4 Turbo
+    Auto Tags: GPT-4 Turbo
+    Auto Categories: GPT-4 Turbo
+    Meta Descriptions: GPT-4 Turbo
+    Helpdesk Agent: Claude 3.5 Sonnet
+    
+    Monthly Cost: $60-150
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Process
+
+<Steps>
+  <Step title="Choose Provider(s)">
+    Decide which AI provider(s) to use based on your needs and budget
+  </Step>
+
+  <Step title="Create Account">
+    Sign up with your chosen provider(s) and add payment method
+  </Step>
+
+  <Step title="Generate API Key">
+    Create an API key in the provider's dashboard
+  </Step>
+
+  <Step title="Add to Generatify">
+    Enter API key in **Generatify → Settings → Integrations**
+  </Step>
+
+  <Step title="Assign to Features">
+    Choose which model to use for each feature
+  </Step>
+
+  <Step title="Test & Monitor">
+    Test features and monitor usage in provider dashboard
+  </Step>
+</Steps>
+
+---
+
+## Provider Documentation
+
+<CardGroup cols={3}>
+  <Card title="OpenAI Setup" icon="openai" href="/integrations/openai-chatgpt">
+    Complete OpenAI integration guide
+  </Card>
+  <Card title="Anthropic Setup" icon="a" href="/integrations/anthropic-claude">
+    Complete Anthropic integration guide
+  </Card>
+  <Card title="Google Setup" icon="google" href="/integrations/google-gemini">
+    Complete Google integration guide
+  </Card>
+</CardGroup>
+
+---
+
+## Security & Privacy
+
+<Warning>
+  API keys are sensitive credentials. Never share them publicly or commit them to version control.
+</Warning>
+
+### Best Practices
+
+- Store API keys in WordPress database (encrypted)
+- Use environment variables for additional security
+- Rotate keys every 3-6 months
+- Set spending limits in provider dashboards
+- Monitor usage for unusual activity
+- Revoke compromised keys immediately
+
+### Data Privacy
+
+When you use Generatify:
+- Content is sent to your chosen AI provider for processing
+- Data transmission uses HTTPS encryption
+- Providers may temporarily cache requests for processing
+- Review each provider's privacy policy for data retention
+
+**Provider Privacy Policies:**
+- [OpenAI Privacy Policy](https://openai.com/privacy)
+- [Anthropic Privacy Policy](https://www.anthropic.com/privacy)
+- [Google AI Privacy](https://support.google.com/gemini/answer/13594961)
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="API key not working">
+    1. Verify key is copied correctly (no extra spaces)
+    2. Check key is active in provider dashboard
+    3. Ensure billing is set up
+    4. Verify API access is enabled
+    5. Try generating a new key
+  </Accordion>
+
+  <Accordion title="Rate limit errors">
+    1. Check your tier limits in provider dashboard
+    2. Reduce feature usage temporarily
+    3. Upgrade to higher tier if needed
+    4. Spread requests over time
+    5. Consider using multiple providers
+  </Accordion>
+
+  <Accordion title="High unexpected costs">
+    1. Check usage dashboard for spike
+    2. Review which features are active
+    3. Look for loops or repeated calls
+    4. Set budget alerts
+    5. Switch to cheaper models
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Guide" icon="openai" href="/integrations/openai-chatgpt">
+    Setup OpenAI with Generatify
+  </Card>
+  <Card title="Anthropic Guide" icon="a" href="/integrations/anthropic-claude">
+    Setup Anthropic with Generatify
+  </Card>
+  <Card title="Google Guide" icon="google" href="/integrations/google-gemini">
+    Setup Google with Generatify
+  </Card>
+  <Card title="Quick Setup" icon="bolt" href="/getting-started/quick-setup">
+    Complete setup walkthrough
+  </Card>
+</CardGroup>

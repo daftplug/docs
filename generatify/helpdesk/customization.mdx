@@ -1,0 +1,876 @@
+---
+title: 'Helpdesk Customization'
+description: 'Customize the appearance and branding of your helpdesk widget'
+icon: 'palette'
+---
+
+## Overview
+
+Make the helpdesk widget match your brand perfectly. Customize colors, fonts, positioning, icons, and messaging to create a seamless user experience.
+
+<CardGroup cols={3}>
+  <Card title="Visual Editor" icon="paintbrush">
+    No code customization
+  </Card>
+  <Card title="Brand Matching" icon="copyright">
+    Perfect brand alignment
+  </Card>
+  <Card title="CSS Control" icon="code">
+    Full styling power
+  </Card>
+</CardGroup>
+
+---
+
+## Color Customization
+
+### Primary Colors
+
+<table>
+  <thead>
+    <tr>
+      <th>Element</th>
+      <th>Setting</th>
+      <th>Default</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Primary Color**</td>
+      <td>Hex color picker</td>
+      <td>#2563EB (Blue)</td>
+      <td>Widget button, header, AI messages</td>
+    </tr>
+    <tr>
+      <td>**Secondary Color**</td>
+      <td>Hex color picker</td>
+      <td>#1E40AF (Dark Blue)</td>
+      <td>Hover states, accents</td>
+    </tr>
+    <tr>
+      <td>**User Message Color**</td>
+      <td>Hex color picker</td>
+      <td>#F3F4F6 (Light Gray)</td>
+      <td>User's message bubbles</td>
+    </tr>
+    <tr>
+      <td>**Background Color**</td>
+      <td>Hex color picker</td>
+      <td>#FFFFFF (White)</td>
+      <td>Widget background</td>
+    </tr>
+    <tr>
+      <td>**Text Color**</td>
+      <td>Hex color picker</td>
+      <td>#111827 (Dark Gray)</td>
+      <td>All text content</td>
+    </tr>
+  </tbody>
+</table>
+
+### Color Presets
+
+<Tabs>
+  <Tab title="Default (Blue)">
+    ```
+    Primary: #2563EB
+    Secondary: #1E40AF
+    User Messages: #F3F4F6
+    Background: #FFFFFF
+    Text: #111827
+    ```
+    **Best For:** Professional, trustworthy feel
+  </Tab>
+  
+  <Tab title="Modern Purple">
+    ```
+    Primary: #8B5CF6
+    Secondary: #7C3AED
+    User Messages: #F5F3FF
+    Background: #FFFFFF
+    Text: #1F2937
+    ```
+    **Best For:** Creative, tech companies
+  </Tab>
+  
+  <Tab title="Warm Orange">
+    ```
+    Primary: #F97316
+    Secondary: #EA580C
+    User Messages: #FFF7ED
+    Background: #FFFFFF
+    Text: #1C1917
+    ```
+    **Best For:** Friendly, approachable brands
+  </Tab>
+  
+  <Tab title="Professional Green">
+    ```
+    Primary: #10B981
+    Secondary: #059669
+    User Messages: #F0FDF4
+    Background: #FFFFFF
+    Text: #1F2937
+    ```
+    **Best For:** Finance, health, eco brands
+  </Tab>
+  
+  <Tab title="Dark Mode">
+    ```
+    Primary: #3B82F6
+    Secondary: #2563EB
+    User Messages: #1F2937
+    Background: #111827
+    Text: #F9FAFB
+    ```
+    **Best For:** Modern, tech-savvy audience
+  </Tab>
+</Tabs>
+
+---
+
+## Widget Appearance
+
+### Button Customization
+
+<AccordionGroup>
+  <Accordion title="Launcher Button" icon="circle-play">
+    The floating button that opens the widget.
+    
+    **Options:**
+    - **Icon:** Chat bubble, Question mark, Headset, Custom image
+    - **Size:** Small (48px), Medium (60px), Large (72px)
+    - **Shape:** Circle, Square, Rounded square
+    - **Shadow:** None, Small, Medium, Large
+    - **Animation:** None, Pulse, Bounce, Shake
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Customization → Launcher Button
+    
+    Icon: Chat bubble
+    Size: Medium (60px)
+    Shape: Circle
+    Shadow: Medium
+    Animation: Pulse (subtle)
+    ```
+  </Accordion>
+  
+  <Accordion title="Badge Notifications" icon="bell">
+    Show unread message count or notification dot.
+    
+    **Options:**
+    - **Style:** Dot, Number count, None
+    - **Position:** Top right, Top left
+    - **Color:** Red (default), Custom
+    - **Animation:** None, Fade in, Bounce
+    
+    **Use Cases:**
+    - Proactive messages ("We noticed you're on checkout")
+    - Unread AI responses
+    - Special announcements
+  </Accordion>
+  
+  <Accordion title="Widget Size" icon="expand">
+    Configure open widget dimensions.
+    
+    **Desktop:**
+    - Width: 350px - 500px (default: 400px)
+    - Height: 500px - 700px (default: 600px)
+    - Max height: 80% of viewport
+    
+    **Mobile:**
+    - Full screen (recommended)
+    - Or: Bottom sheet (partial screen)
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Customization → Widget Size
+    
+    Desktop Width: 400px
+    Desktop Height: 600px
+    Mobile: Full screen
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Header Customization
+
+<table>
+  <thead>
+    <tr>
+      <th>Element</th>
+      <th>Options</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Logo**</td>
+      <td>Upload image (PNG, SVG)</td>
+      <td>Generatify icon</td>
+    </tr>
+    <tr>
+      <td>**Title**</td>
+      <td>Custom text (e.g., "Support Chat")</td>
+      <td>"How can we help?"</td>
+    </tr>
+    <tr>
+      <td>**Subtitle**</td>
+      <td>Secondary text (e.g., "Usually replies in 5 minutes")</td>
+      <td>"Ask us anything"</td>
+    </tr>
+    <tr>
+      <td>**Avatar**</td>
+      <td>Upload agent photo/logo</td>
+      <td>AI assistant icon</td>
+    </tr>
+    <tr>
+      <td>**Status Indicator**</td>
+      <td>Online/Offline dot</td>
+      <td>Online (green)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Header Examples
+
+<Tabs>
+  <Tab title="Professional Support">
+    ```
+    Logo: Company logo
+    Title: "Customer Support"
+    Subtitle: "We're here to help!"
+    Avatar: Support team photo
+    Status: Online
+    ```
+  </Tab>
+  
+  <Tab title="AI Assistant">
+    ```
+    Logo: None
+    Title: "AI Assistant"
+    Subtitle: "Powered by GPT-4"
+    Avatar: Robot icon
+    Status: Always online
+    ```
+  </Tab>
+  
+  <Tab title="Personal Brand">
+    ```
+    Logo: Personal brand mark
+    Title: "Chat with Sarah"
+    Subtitle: "I usually respond within an hour"
+    Avatar: Personal photo
+    Status: Online/Away/Offline (real-time)
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Message Styling
+
+### Message Bubbles
+
+<AccordionGroup>
+  <Accordion title="AI/Agent Messages" icon="robot">
+    **Styling Options:**
+    - Background color (primary color default)
+    - Text color (white default)
+    - Border radius (0-20px)
+    - Padding
+    - Max width (60-80% of widget)
+    - Alignment (left default)
+    - Tail/no tail
+    
+    **Example:**
+    ```css
+    Background: #2563EB
+    Text: #FFFFFF
+    Border Radius: 16px
+    Padding: 12px 16px
+    Max Width: 70%
+    Alignment: Left
+    Tail: Yes
+    ```
+  </Accordion>
+  
+  <Accordion title="User Messages" icon="user">
+    **Styling Options:**
+    - Background color (light gray default)
+    - Text color (dark gray default)
+    - Border radius
+    - Padding
+    - Max width
+    - Alignment (right default)
+    
+    **Example:**
+    ```css
+    Background: #F3F4F6
+    Text: #111827
+    Border Radius: 16px
+    Padding: 12px 16px
+    Max Width: 70%
+    Alignment: Right
+    ```
+  </Accordion>
+  
+  <Accordion title="System Messages" icon="circle-info">
+    Timestamps, status updates, etc.
+    
+    **Styling:**
+    ```css
+    Text: #6B7280 (muted gray)
+    Font Size: 12px
+    Alignment: Center
+    Style: Italic
+    ```
+    
+    **Example Messages:**
+    - "Today at 3:45 PM"
+    - "AI is typing..."
+    - "Conversation started"
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Typography
+
+<table>
+  <thead>
+    <tr>
+      <th>Element</th>
+      <th>Setting</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Font Family**</td>
+      <td>Google Fonts, System fonts, Custom</td>
+      <td>Inter (system fallback)</td>
+    </tr>
+    <tr>
+      <td>**Header Font Size**</td>
+      <td>14-24px</td>
+      <td>16px</td>
+    </tr>
+    <tr>
+      <td>**Message Font Size**</td>
+      <td>12-18px</td>
+      <td>14px</td>
+    </tr>
+    <tr>
+      <td>**Font Weight**</td>
+      <td>Light (300), Regular (400), Medium (500), Bold (700)</td>
+      <td>Regular (400)</td>
+    </tr>
+    <tr>
+      <td>**Line Height**</td>
+      <td>1.2-2.0</td>
+      <td>1.5</td>
+    </tr>
+  </tbody>
+</table>
+
+### Font Recommendations
+
+<Tabs>
+  <Tab title="Modern & Clean">
+    ```
+    Font Family: Inter, -apple-system, system-ui
+    Message Size: 14px
+    Weight: 400 (Regular)
+    Line Height: 1.5
+    ```
+    **Best For:** SaaS, tech companies
+  </Tab>
+  
+  <Tab title="Professional">
+    ```
+    Font Family: Roboto, Arial, sans-serif
+    Message Size: 15px
+    Weight: 400
+    Line Height: 1.6
+    ```
+    **Best For:** Corporate, professional services
+  </Tab>
+  
+  <Tab title="Friendly & Approachable">
+    ```
+    Font Family: Nunito, Quicksand, sans-serif
+    Message Size: 14px
+    Weight: 400
+    Line Height: 1.6
+    ```
+    **Best For:** Consumer brands, lifestyle
+  </Tab>
+  
+  <Tab title="Elegant & Serif">
+    ```
+    Font Family: Merriweather, Georgia, serif
+    Message Size: 15px
+    Weight: 400
+    Line Height: 1.7
+    ```
+    **Best For:** Publishing, editorial, luxury
+  </Tab>
+</Tabs>
+
+---
+
+## Input Field Customization
+
+<table>
+  <thead>
+    <tr>
+      <th>Element</th>
+      <th>Options</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Placeholder Text**</td>
+      <td>Custom message</td>
+      <td>"Type your message..."</td>
+    </tr>
+    <tr>
+      <td>**Border Style**</td>
+      <td>None, Line, Box</td>
+      <td>Box</td>
+    </tr>
+    <tr>
+      <td>**Border Radius**</td>
+      <td>0-20px</td>
+      <td>8px</td>
+    </tr>
+    <tr>
+      <td>**Send Button Icon**</td>
+      <td>Arrow, Paper plane, Custom</td>
+      <td>Paper plane</td>
+    </tr>
+    <tr>
+      <td>**Send Button Color**</td>
+      <td>Primary, Custom</td>
+      <td>Primary color</td>
+    </tr>
+    <tr>
+      <td>**Attachment Option**</td>
+      <td>Enable/Disable file uploads</td>
+      <td>Disabled</td>
+    </tr>
+    <tr>
+      <td>**Emoji Picker**</td>
+      <td>Enable/Disable</td>
+      <td>Enabled</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Branding Elements
+
+### Logo & Avatar
+
+<AccordionGroup>
+  <Accordion title="Company Logo" icon="building">
+    **Where It Appears:**
+    - Widget header
+    - Launcher button (optional)
+    - Powered by footer (optional)
+    
+    **Specifications:**
+    - Format: PNG, SVG (SVG recommended)
+    - Size: 120x40px recommended
+    - Max file size: 200KB
+    - Background: Transparent recommended
+    
+    **Upload:**
+    ```
+    Settings → Helpdesk → Customization → Branding → Logo
+    
+    Upload image → Preview → Save
+    ```
+  </Accordion>
+  
+  <Accordion title="Agent Avatar" icon="user-circle">
+    **Options:**
+    - Photo of support agent/team
+    - AI assistant icon
+    - Brand mascot
+    - Company logo
+    - Abstract icon
+    
+    **Specifications:**
+    - Format: JPG, PNG
+    - Size: 40x40px (circular crop)
+    - Max file size: 100KB
+    
+    **Tip:** Use real person photo for higher trust, AI icon for setting expectations.
+  </Accordion>
+  
+  <Accordion title="Powered By Footer" icon="link">
+    **Options:**
+    - Show "Powered by Generatify" (free version)
+    - Hide powered by (premium)
+    - Custom "Powered by [Your Brand]"
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Customization → Footer
+    
+    ⬜ Show "Powered by Generatify"
+    ✅ Custom footer text: "Need help? Call us: 1-800-123-4567"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Animation & Effects
+
+<table>
+  <thead>
+    <tr>
+      <th>Effect</th>
+      <th>Options</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Widget Open/Close**</td>
+      <td>Fade, Slide, Scale, None</td>
+      <td>Scale (smooth)</td>
+    </tr>
+    <tr>
+      <td>**Message Appearance**</td>
+      <td>Fade in, Slide up, Instant</td>
+      <td>Fade in</td>
+    </tr>
+    <tr>
+      <td>**Typing Indicator**</td>
+      <td>Dots, Pulse, Wave, None</td>
+      <td>Dots (3-dot animation)</td>
+    </tr>
+    <tr>
+      <td>**Button Hover**</td>
+      <td>Scale, Lift, Glow, None</td>
+      <td>Scale (1.05)</td>
+    </tr>
+    <tr>
+      <td>**Launcher Attention**</td>
+      <td>Pulse, Bounce, Shake, None</td>
+      <td>Subtle pulse</td>
+    </tr>
+  </tbody>
+</table>
+
+<Info>
+**Performance Tip:** Disable animations on low-end devices or for accessibility (reduce motion settings).
+</Info>
+
+---
+
+## Mobile Responsiveness
+
+### Mobile-Specific Customization
+
+<AccordionGroup>
+  <Accordion title="Mobile Layout" icon="mobile">
+    **Options:**
+    - Full screen (recommended)
+    - Bottom sheet (partial screen)
+    - Floating (like desktop)
+    
+    **Recommended:**
+    ```
+    Mobile Layout: Full screen
+    
+    Why:
+    - Better UX on small screens
+    - No obstruction of content
+    - Native app feel
+    - Easier typing
+    ```
+  </Accordion>
+  
+  <Accordion title="Font Size Adjustments" icon="text-size">
+    **Automatic Scaling:**
+    ```
+    Desktop: 14px
+    Tablet: 14px
+    Mobile: 16px (larger for readability)
+    ```
+    
+    **Override:**
+    ```
+    Settings → Helpdesk → Customization → Mobile
+    
+    Mobile Font Size: 16px
+    Mobile Line Height: 1.6
+    ```
+  </Accordion>
+  
+  <Accordion title="Touch Targets" icon="hand-pointer">
+    **Minimum Sizes for Mobile:**
+    - Buttons: 44x44px minimum
+    - Links: 44px height
+    - Input field: 48px height
+    
+    **Generatify Auto-Adjusts:** Touch targets automatically sized for mobile.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced CSS Customization
+
+For developers who want full control:
+
+### Custom CSS
+
+```css
+/* Access via Settings → Helpdesk → Customization → Custom CSS */
+
+/* Override widget colors */
+.generatify-widget {
+  --primary-color: #8B5CF6;
+  --background-color: #FFFFFF;
+  --text-color: #1F2937;
+}
+
+/* Customize message bubbles */
+.generatify-message-ai {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.generatify-message-user {
+  background: #F3F4F6;
+  border-radius: 18px 18px 4px 18px;
+}
+
+/* Customize header */
+.generatify-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+/* Customize launcher button */
+.generatify-launcher {
+  width: 64px;
+  height: 64px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.generatify-launcher:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Add custom animations */
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.generatify-message {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .generatify-widget {
+    --background-color: #1F2937;
+    --text-color: #F9FAFB;
+  }
+}
+```
+
+### CSS Classes Reference
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Element</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`.generatify-widget`</td>
+      <td>Main widget container</td>
+    </tr>
+    <tr>
+      <td>`.generatify-launcher`</td>
+      <td>Floating button</td>
+    </tr>
+    <tr>
+      <td>`.generatify-header`</td>
+      <td>Widget header</td>
+    </tr>
+    <tr>
+      <td>`.generatify-messages`</td>
+      <td>Messages container</td>
+    </tr>
+    <tr>
+      <td>`.generatify-message-ai`</td>
+      <td>AI message bubble</td>
+    </tr>
+    <tr>
+      <td>`.generatify-message-user`</td>
+      <td>User message bubble</td>
+    </tr>
+    <tr>
+      <td>`.generatify-input`</td>
+      <td>Input field</td>
+    </tr>
+    <tr>
+      <td>`.generatify-send-button`</td>
+      <td>Send button</td>
+    </tr>
+    <tr>
+      <td>`.generatify-typing`</td>
+      <td>Typing indicator</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Customization Examples
+
+### Example 1: E-commerce Store
+
+```
+Colors:
+- Primary: #10B981 (green - trust, buy)
+- Background: #FFFFFF
+- User messages: #F0FDF4
+
+Header:
+- Logo: Store logo
+- Title: "Shopping Assistant"
+- Subtitle: "Need help finding something?"
+
+Button:
+- Icon: Shopping bag
+- Shape: Rounded square
+- Animation: Subtle pulse
+
+Style: Clean, modern, trustworthy
+```
+
+---
+
+### Example 2: SaaS Platform
+
+```
+Colors:
+- Primary: #6366F1 (indigo - tech)
+- Background: #FFFFFF
+- User messages: #EEF2FF
+
+Header:
+- Logo: Product logo
+- Title: "Product Support"
+- Subtitle: "Get help with [Product Name]"
+
+Button:
+- Icon: Question mark in circle
+- Shape: Circle
+- Animation: None (minimal)
+
+Style: Professional, modern, clean
+```
+
+---
+
+### Example 3: Personal Brand
+
+```
+Colors:
+- Primary: #F59E0B (warm amber)
+- Background: #FFFBEB (warm off-white)
+- User messages: #FEF3C7
+
+Header:
+- Logo: Personal photo
+- Title: "Chat with John"
+- Subtitle: "I'll respond within 24 hours"
+
+Button:
+- Icon: Custom personal logo
+- Shape: Circle
+- Animation: Friendly bounce
+
+Style: Personal, warm, approachable
+```
+
+---
+
+## Preview & Testing
+
+<Steps>
+  <Step title="Use Live Preview">
+    Settings → Helpdesk → Customization → Preview mode shows changes in real-time
+  </Step>
+  
+  <Step title="Test on Multiple Devices">
+    Check on:
+    - Desktop (Chrome, Firefox, Safari)
+    - Mobile (iOS, Android)
+    - Tablet
+  </Step>
+  
+  <Step title="Test Color Contrast">
+    Ensure text is readable:
+    - Use contrast checker tools
+    - Minimum 4.5:1 ratio for text
+    - Minimum 3:1 for large text
+  </Step>
+  
+  <Step title="Test Accessibility">
+    - Screen reader compatibility
+    - Keyboard navigation
+    - Reduced motion mode
+  </Step>
+</Steps>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Helpdesk Setup" icon="circle-play" href="/helpdesk/setup">
+    Initial configuration guide
+  </Card>
+  <Card title="AI Chat Mode" icon="comments" href="/helpdesk/chat-mode">
+    Configure AI conversations
+  </Card>
+  <Card title="Contact Form Mode" icon="envelope" href="/helpdesk/contact-form-mode">
+    Set up contact forms
+  </Card>
+  <Card title="Custom CSS Examples" icon="code" href="/developer/extending">
+    More CSS customization
+  </Card>
+</CardGroup>
+
+<Tip>
+**Design Principle:** Match your site's design closely. The widget should feel like a natural part of your website, not a third-party plugin.
+</Tip>

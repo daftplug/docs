@@ -1,0 +1,840 @@
+---
+title: 'AI Chat Mode'
+description: 'Configure AI-powered real-time chat support for your website'
+icon: 'comments'
+---
+
+## Overview
+
+AI Chat Mode provides instant, intelligent responses to visitor questions using your site content, products, and custom knowledge base. It's like having a support agent available 24/7.
+
+<CardGroup cols={3}>
+  <Card title="24/7 Availability" icon="clock">
+    Never miss a customer question
+  </Card>
+  <Card title="Instant Responses" icon="bolt">
+    Answer in 1-2 seconds
+  </Card>
+  <Card title="Scales Infinitely" icon="arrows-maximize">
+    Handle unlimited conversations
+  </Card>
+</CardGroup>
+
+---
+
+## How AI Chat Works
+
+<Steps>
+  <Step title="Visitor Asks Question">
+    User types message: "What's your return policy?"
+  </Step>
+  
+  <Step title="Context Gathering">
+    AI retrieves relevant information from:
+    - Your website pages
+    - Product descriptions
+    - FAQ content
+    - Custom instructions
+  </Step>
+  
+  <Step title="Answer Generation">
+    AI formulates accurate, helpful response based on context
+  </Step>
+  
+  <Step title="Response Delivery">
+    Answer appears in chat within 1-2 seconds
+  </Step>
+  
+  <Step title="Conversation Continuation">
+    AI maintains context for follow-up questions
+  </Step>
+</Steps>
+
+<Info>
+**Smart Context:** AI automatically references previous messages in the conversation, allowing natural back-and-forth dialogue.
+</Info>
+
+---
+
+## Configuration
+
+### Enable AI Chat
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Generatify → Settings → Helpdesk**
+  </Step>
+  
+  <Step title="Enable AI Chat Mode">
+    Toggle **AI Chat Mode** to ON
+  </Step>
+  
+  <Step title="Select AI Provider">
+    Choose OpenAI, Anthropic, or Google
+  </Step>
+  
+  <Step title="Select AI Model">
+    Choose model (GPT-4o, Claude 3.5, Gemini 1.5, etc.)
+  </Step>
+  
+  <Step title="Configure Knowledge Sources">
+    Enable what AI can reference (posts, products, etc.)
+  </Step>
+  
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+</Steps>
+
+---
+
+## AI Model Selection
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Model</th>
+      <th>Conversation Quality</th>
+      <th>Speed</th>
+      <th>Cost per Chat</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⚡⚡</td>
+      <td>~$0.01</td>
+      <td>Best conversations</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⚡⚡</td>
+      <td>~$0.008</td>
+      <td>Balanced quality/cost</td>
+    </tr>
+    <tr>
+      <td>**Google**</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.003</td>
+      <td>Budget-friendly</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o Mini</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.002</td>
+      <td>High volume, speed</td>
+    </tr>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.001</td>
+      <td>Budget + quality</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Recommended:** **Claude 3.5 Sonnet** for most natural conversations. If budget-conscious, **Claude 3.5 Haiku** or **GPT-4o Mini** offer excellent quality at lower cost.
+</Tip>
+
+---
+
+## Knowledge Sources
+
+Configure what information AI can access:
+
+<Tabs>
+  <Tab title="WordPress Content">
+    ### Posts & Pages
+    
+    **What's Included:**
+    - Published posts (titles, content, excerpts)
+    - Published pages (About, FAQ, etc.)
+    - Post categories and tags
+    - Post meta descriptions
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Knowledge Sources → WordPress Content
+    
+    ✅ Include posts
+    ✅ Include pages
+    ⬜ Include drafts
+    
+    Limit: Latest 100 posts (performance)
+    Categories: All (or select specific)
+    ```
+    
+    **Use Cases:**
+    - Blog content reference
+    - Company information (About page)
+    - Service descriptions
+    - Policy explanations
+    
+    **Example Conversation:**
+    ```
+    User: "Do you offer web design services?"
+    AI: "Yes! Based on our Services page, we offer custom 
+         web design including responsive design, UX optimization, 
+         and WordPress development. Would you like to know more 
+         about our packages?"
+    ```
+  </Tab>
+  
+  <Tab title="WooCommerce Products">
+    ### Product Catalog
+    
+    **What's Included:**
+    - Product titles and descriptions
+    - Short descriptions
+    - SKUs and categories
+    - Pricing information
+    - Stock status
+    - Product variations (size, color, etc.)
+    - Product attributes
+    - Product tags
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Knowledge Sources → WooCommerce
+    
+    ✅ Product info
+    ✅ Stock status
+    ✅ Pricing
+    ✅ Variations
+    ✅ Shipping info
+    ⬜ Reviews (can be noisy)
+    ```
+    
+    **Use Cases:**
+    - Product recommendations
+    - Availability questions
+    - Specification queries
+    - Comparison questions
+    
+    **Example Conversation:**
+    ```
+    User: "Do you have the blue t-shirt in large?"
+    AI: "Yes! The Classic Blue T-Shirt is available in Large. 
+         It's currently in stock for $29.99. The product features 
+         100% cotton, relaxed fit, and free shipping on orders over $50. 
+         Would you like the link to purchase?"
+    ```
+  </Tab>
+  
+  <Tab title="FAQs & Docs">
+    ### Knowledge Base
+    
+    **What's Included:**
+    - FAQ pages/posts
+    - Help documentation
+    - Troubleshooting guides
+    - How-to articles
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Knowledge Sources → FAQs
+    
+    FAQ Category: "FAQ" (posts in this category)
+    Custom Post Types: "Knowledge Base", "Documentation"
+    
+    ✅ Include all FAQ posts
+    ✅ Include KB articles
+    ✅ Include tutorials
+    ```
+    
+    **Use Cases:**
+    - Common questions
+    - Troubleshooting
+    - How-to guides
+    - Policy clarifications
+    
+    **Example Conversation:**
+    ```
+    User: "How do I reset my password?"
+    AI: "To reset your password: 1) Click 'Login' in the top right, 
+         2) Click 'Forgot Password', 3) Enter your email address, 
+         4) Check your email for the reset link. If you don't receive 
+         the email within 5 minutes, check your spam folder or contact 
+         us for help."
+    ```
+  </Tab>
+  
+  <Tab title="Custom Instructions">
+    ### Site-Specific Context
+    
+    **What It Is:**
+    Manual context you provide to AI about your business.
+    
+    **What to Include:**
+    - Return/refund policies
+    - Shipping information
+    - Business hours
+    - Contact information
+    - Brand voice guidelines
+    - Special promotions
+    - Important announcements
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Knowledge Sources → Custom Instructions
+    
+    Add custom context (plain text):
+    ```
+    
+    **Example Instructions:**
+    ```
+    Company: TechGear Pro - Premium Tech Accessories
+    
+    Policies:
+    - 30-day money-back guarantee on all products
+    - Free shipping on orders $50+, otherwise $5.99 flat rate
+    - We ship to US, Canada, and UK only
+    - Processing time: 1-2 business days
+    - Shipping time: 3-5 business days
+    
+    Business Hours:
+    - Support: Mon-Fri 9am-6pm EST
+    - Closed weekends and major holidays
+    
+    Response Tone:
+    - Friendly but professional
+    - Use casual language, avoid jargon
+    - Always offer to escalate to human if needed
+    - Never make promises about specific dates/times
+    
+    Current Promotions:
+    - 15% off sitewide with code SPRING15 (ends March 31)
+    - Free screen protector with any phone case purchase
+    
+    Contact:
+    - Email: support@techgearpro.com
+    - Phone: 1-800-555-TECH
+    - Live chat available during business hours
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Conversation Settings
+
+### Tone & Personality
+
+<AccordionGroup>
+  <Accordion title="Response Tone" icon="face-smile">
+    Configure AI's communication style.
+    
+    **Options:**
+    - **Professional:** Formal, business-appropriate
+    - **Friendly:** Warm, approachable, casual
+    - **Enthusiastic:** Energetic, excited, exclamation points
+    - **Concise:** Brief, to-the-point
+    - **Detailed:** Thorough explanations
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Tone
+    
+    Select: Friendly (default)
+    
+    Custom Instructions:
+    "Respond in a warm, friendly tone. Use casual language 
+    but remain professional. Add personality with phrases like 
+    'Great question!' or 'I'd be happy to help!'"
+    ```
+  </Accordion>
+  
+  <Accordion title="Response Length" icon="align-left">
+    Control answer verbosity.
+    
+    **Options:**
+    - **Concise:** 1-2 sentences (mobile-friendly)
+    - **Balanced:** 2-4 sentences (default)
+    - **Detailed:** Comprehensive explanations
+    
+    **Recommendation:**
+    ```
+    Mobile users: Concise
+    Desktop users: Balanced
+    Complex products: Detailed
+    ```
+  </Accordion>
+  
+  <Accordion title="Follow-Up Questions" icon="question">
+    AI proactively asks clarifying questions.
+    
+    **Enable for:**
+    - Ambiguous queries
+    - Multiple product options
+    - Complex scenarios
+    
+    **Example:**
+    ```
+    User: "Tell me about your t-shirts"
+    AI: "We have several t-shirt options! Are you looking for:
+         - Men's or Women's styles?
+         - Casual or performance fabrics?
+         - A specific color?
+         This will help me recommend the perfect fit!"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Suggested Questions
+
+Pre-configured quick questions visitors can click:
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Example Questions</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**E-commerce**</td>
+      <td>
+        - What's your return policy?<br/>
+        - Do you offer free shipping?<br/>
+        - When will my order arrive?<br/>
+        - How do I track my order?
+      </td>
+      <td>Online stores</td>
+    </tr>
+    <tr>
+      <td>**SaaS/Product**</td>
+      <td>
+        - How does [feature] work?<br/>
+        - What's included in [plan]?<br/>
+        - Can I try it for free?<br/>
+        - How do I upgrade?
+      </td>
+      <td>Software products</td>
+    </tr>
+    <tr>
+      <td>**Services**</td>
+      <td>
+        - What services do you offer?<br/>
+        - How much does it cost?<br/>
+        - How long does it take?<br/>
+        - Can I get a quote?
+      </td>
+      <td>Service businesses</td>
+    </tr>
+    <tr>
+      <td>**General**</td>
+      <td>
+        - How can I contact you?<br/>
+        - Where are you located?<br/>
+        - Do you have a physical store?<br/>
+        - What are your hours?
+      </td>
+      <td>All sites</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+```
+Settings → Helpdesk → AI Chat → Suggested Questions
+
+Add up to 6 questions:
+1. "What's your return policy?"
+2. "Do you ship internationally?"
+3. "How can I contact support?"
+4. "What payment methods do you accept?"
+5. "Do you offer wholesale pricing?"
+6. "How do I track my order?"
+```
+
+---
+
+## Escalation to Human
+
+Allow AI to transfer to human support:
+
+<AccordionGroup>
+  <Accordion title="Automatic Escalation Triggers" icon="user-plus">
+    AI automatically offers human support when:
+    
+    **Trigger Conditions:**
+    - AI confidence < 70% (uncertain answer)
+    - User expresses frustration
+    - Complex order issues
+    - Refund requests
+    - Technical problems AI can't solve
+    - User explicitly asks for human
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Escalation
+    
+    ✅ Auto-escalate on low confidence
+    ✅ Escalate on user frustration
+    ✅ Escalate on refund requests
+    
+    Confidence Threshold: 70%
+    ```
+    
+    **Example:**
+    ```
+    User: "I need a refund for order #1234"
+    AI: "I understand you need a refund. To process this quickly, 
+         I'd like to connect you with our support team who can handle 
+         refunds. Would you like to submit a contact form or would 
+         you prefer to email support@yoursite.com directly?"
+    ```
+  </Accordion>
+  
+  <Accordion title="Manual Escalation Button" icon="hand-pointer">
+    Always available option for users.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Escalation Button
+    
+    ✅ Show "Talk to Human" button in footer
+    
+    Button Text: "Speak to a person"
+    Action: Open contact form / Email link / Phone number
+    ```
+    
+    **Button Placement:**
+    - Widget footer (always visible)
+    - After AI response (contextual)
+    - After X messages (e.g., 3 messages)
+  </Accordion>
+  
+  <Accordion title="Business Hours Integration" icon="clock">
+    Show availability status.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Business Hours
+    
+    Mon-Fri: 9:00 AM - 6:00 PM EST
+    Sat-Sun: Closed
+    
+    During hours: "Talk to human support (available now)"
+    After hours: "Leave a message (we'll reply tomorrow)"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Conversation Flow
+
+### Multi-Turn Conversations
+
+AI maintains context across messages:
+
+**Example Flow:**
+```
+User: "Do you have running shoes?"
+AI: "Yes! We have several running shoe options. Are you looking 
+     for men's or women's?"
+
+User: "Women's"
+AI: "Great! We have 5 women's running shoe models ranging from $79 
+     to $149. Are you looking for neutral cushioning or stability 
+     support?"
+
+User: "What's the difference?"
+AI: "Neutral cushioning shoes are best for runners with normal gait, 
+     while stability shoes provide extra support for overpronation. 
+     If you're unsure, our neutral models like the CloudRunner are 
+     popular choices. Would you like to see them?"
+
+User: "Yes please"
+AI: "Perfect! Here's the CloudRunner Women's: [product link]. 
+     It features lightweight foam, breathable mesh, and is $89. 
+     Available in 6 colors. Need help with sizing?"
+```
+
+**Context Retention:** AI remembers:
+- Previous questions
+- User preferences mentioned
+- Products discussed
+- Issues being troubleshot
+
+---
+
+## Proactive Messages
+
+Send messages before user asks:
+
+<AccordionGroup>
+  <Accordion title="Welcome Messages" icon="hand-wave">
+    Greet visitors when they arrive.
+    
+    **Trigger:** Page load, after X seconds
+    
+    **Examples:**
+    ```
+    "Hi! 👋 Looking for something specific? I'm here to help!"
+    
+    "Welcome back! Any questions about your recent order?"
+    
+    "First time here? Ask me anything about our products!"
+    ```
+  </Accordion>
+  
+  <Accordion title="Exit Intent" icon="door-open">
+    Message when user about to leave.
+    
+    **Trigger:** Mouse moves to close tab/navigate away
+    
+    **Examples:**
+    ```
+    "Wait! Have a question before you go?"
+    
+    "Still deciding? Let me help you find what you need!"
+    
+    "Need help? I'm here if you have questions!"
+    ```
+  </Accordion>
+  
+  <Accordion title="Page-Specific" icon="file">
+    Contextual messages based on page.
+    
+    **Triggers:**
+    - Product page: "Questions about this product?"
+    - Cart page: "Need help checking out?"
+    - Checkout: "Having trouble? I can help!"
+    - FAQ page: "Can't find what you need? Ask me!"
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Proactive Messages
+    
+    Product Pages: "Questions about [product name]? I'm here to help!"
+    Cart: "Need assistance with your order?"
+    Checkout: "Stuck? Let me know how I can help!"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Response Quality
+
+### Improving Answer Accuracy
+
+<AccordionGroup>
+  <Accordion title="Add More Context" icon="book">
+    More information = better answers.
+    
+    **Actions:**
+    1. Write detailed product descriptions
+    2. Create comprehensive FAQ pages
+    3. Add custom instructions with key info
+    4. Include policies on website pages
+    5. Document common issues
+    
+    **Result:** AI has more accurate information to reference.
+  </Accordion>
+  
+  <Accordion title="Use Better AI Model" icon="brain">
+    Quality varies by model:
+    
+    **Accuracy Ranking:**
+    1. Claude 3.5 Sonnet (best)
+    2. GPT-4o (excellent)
+    3. GPT-4o Mini (very good)
+    4. Gemini 1.5 Pro (good)
+    5. Claude 3.5 Haiku (good)
+    
+    **Recommendation:** Use Claude 3.5 Sonnet for best results.
+  </Accordion>
+  
+  <Accordion title="Review & Refine" icon="magnifying-glass">
+    Monitor and improve over time.
+    
+    **Steps:**
+    1. Review conversation logs
+    2. Identify incorrect/poor answers
+    3. Add missing info to knowledge base
+    4. Refine custom instructions
+    5. Test improvements
+    
+    **Iterate:** Continuous improvement cycle.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Cost Management
+
+### Estimating Costs
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Per Conversation</th>
+      <th>100 Chats</th>
+      <th>1,000 Chats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Claude 3.5 Sonnet</td>
+      <td>$0.01</td>
+      <td>$1.00</td>
+      <td>$10.00</td>
+    </tr>
+    <tr>
+      <td>GPT-4o</td>
+      <td>$0.008</td>
+      <td>$0.80</td>
+      <td>$8.00</td>
+    </tr>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>$0.002</td>
+      <td>$0.20</td>
+      <td>$2.00</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Pro</td>
+      <td>$0.003</td>
+      <td>$0.30</td>
+      <td>$3.00</td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Haiku</td>
+      <td>$0.001</td>
+      <td>$0.10</td>
+      <td>$1.00</td>
+    </tr>
+  </tbody>
+</table>
+
+**Average Conversation:** 5-8 messages (back-and-forth)
+
+### Cost Reduction Strategies
+
+<AccordionGroup>
+  <Accordion title="Use Cheaper Models" icon="dollar-sign">
+    Switch to lower-cost options:
+    - Claude 3.5 Haiku (cheapest, still good)
+    - GPT-4o Mini (fast + cheap)
+    - Gemini 1.5 Pro (budget-friendly)
+    
+    **Savings:** 80-90% vs. premium models
+  </Accordion>
+  
+  <Accordion title="Limit Conversation Length" icon="messages">
+    Set maximum messages per conversation:
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Chat → Limits
+    
+    Max messages per conversation: 10
+    After limit: Offer contact form
+    ```
+    
+    **Prevents:** Endless back-and-forth costing money
+  </Accordion>
+  
+  <Accordion title="Smart Knowledge Indexing" icon="database">
+    Only index most relevant content:
+    
+    **Actions:**
+    - Limit to 50 most recent posts (not all 1,000)
+    - Only active products (not archived)
+    - Key FAQ pages only
+    
+    **Result:** Faster responses, lower token usage
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Analytics & Insights
+
+Track helpdesk performance:
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>What It Measures</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Total Conversations**</td>
+      <td>How many chats initiated</td>
+      <td>Increasing over time</td>
+    </tr>
+    <tr>
+      <td>**Avg Messages per Chat**</td>
+      <td>Conversation depth</td>
+      <td>4-8 messages</td>
+    </tr>
+    <tr>
+      <td>**Resolution Rate**</td>
+      <td>% resolved without escalation</td>
+      <td>70-85%</td>
+    </tr>
+    <tr>
+      <td>**Avg Response Time**</td>
+      <td>AI response speed</td>
+      <td><2 seconds</td>
+    </tr>
+    <tr>
+      <td>**Common Questions**</td>
+      <td>Most frequent queries</td>
+      <td>Use to improve content</td>
+    </tr>
+    <tr>
+      <td>**Escalation Rate**</td>
+      <td>% transferred to human</td>
+      <td>15-30%</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Helpdesk Setup" icon="circle-play" href="/helpdesk/setup">
+    Initial configuration guide
+  </Card>
+  <Card title="Customization" icon="palette" href="/helpdesk/customization">
+    Brand colors, styling
+  </Card>
+  <Card title="Contact Form Mode" icon="envelope" href="/helpdesk/contact-form-mode">
+    Alternative to AI chat
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/advanced/settings">
+    Track performance metrics
+  </Card>
+</CardGroup>
+
+<Tip>
+**Best Practice:** Start with Claude 3.5 Sonnet for quality, then optimize to cheaper models if volume increases. Most small-medium sites spend $10-50/month on AI chat.
+</Tip>

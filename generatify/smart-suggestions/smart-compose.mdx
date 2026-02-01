@@ -1,0 +1,618 @@
+---
+title: 'Smart Compose'
+description: 'AI-powered writing suggestions and auto-completion for WordPress editor'
+icon: 'wand-magic-sparkles'
+---
+
+## Overview
+
+Smart Compose provides real-time AI writing suggestions as you type in the WordPress editor. Like Gmail's Smart Compose, it helps you write faster, overcome writer's block, and maintain consistent quality.
+
+<CardGroup cols={3}>
+  <Card title="Write Faster" icon="gauge-high">
+    Auto-complete sentences and paragraphs
+  </Card>
+  <Card title="Beat Writer's Block" icon="lightbulb">
+    AI suggests next sentences
+  </Card>
+  <Card title="Consistent Quality" icon="star">
+    Maintain professional tone
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="Start Writing">
+    Begin typing your post in WordPress editor
+  </Step>
+  
+  <Step title="AI Analyzes Context">
+    Smart Compose reads your content, title, and category
+  </Step>
+  
+  <Step title="Suggestions Appear">
+    Gray text shows AI-suggested continuation
+  </Step>
+  
+  <Step title="Accept or Ignore">
+    Press Tab to accept, or keep typing to ignore
+  </Step>
+  
+  <Step title="Keep Writing">
+    AI continuously suggests as you type
+  </Step>
+</Steps>
+
+<Info>
+**Privacy:** Your content is only sent to AI when generating suggestions. Nothing is stored or shared.
+</Info>
+
+---
+
+## Setup Guide
+
+<Steps>
+  <Step title="Enable Smart Compose">
+    Navigate to **Generatify → Settings → Features** and toggle **Smart Compose** to ON
+  </Step>
+  
+  <Step title="Connect AI Provider">
+    Ensure OpenAI, Anthropic, or Google is connected
+  </Step>
+  
+  <Step title="Select AI Model">
+    Choose model in **Settings → Smart Suggestions → Smart Compose**
+  </Step>
+  
+  <Step title="Configure Trigger">
+    Set when suggestions appear (after pause, word count, etc.)
+  </Step>
+  
+  <Step title="Test in Editor">
+    Open post editor and start typing
+  </Step>
+</Steps>
+
+---
+
+## Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AI Provider**</td>
+      <td>OpenAI, Anthropic, Google</td>
+      <td>Which AI to use</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Specific model</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Trigger**</td>
+      <td>After pause, After X words, Manual</td>
+      <td>When to suggest</td>
+      <td>After 1s pause</td>
+    </tr>
+    <tr>
+      <td>**Suggestion Length**</td>
+      <td>One sentence, Paragraph, Short/Long</td>
+      <td>How much to suggest</td>
+      <td>One sentence</td>
+    </tr>
+    <tr>
+      <td>**Writing Style**</td>
+      <td>Match my style, Professional, Casual</td>
+      <td>AI tone</td>
+      <td>Match my style</td>
+    </tr>
+    <tr>
+      <td>**Accept Shortcut**</td>
+      <td>Tab, Ctrl+→, Custom</td>
+      <td>Keyboard shortcut</td>
+      <td>Tab</td>
+    </tr>
+    <tr>
+      <td>**Show in**</td>
+      <td>Classic Editor, Block Editor, Both</td>
+      <td>Which editors</td>
+      <td>Both</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## AI Model Selection
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Quality</th>
+      <th>Speed</th>
+      <th>Cost per Suggestion</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.0001</td>
+      <td>Balanced (recommended)</td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Haiku</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.0001</td>
+      <td>Natural writing</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.00003</td>
+      <td>Budget option</td>
+    </tr>
+    <tr>
+      <td>GPT-4o</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⚡⚡</td>
+      <td>~$0.0003</td>
+      <td>Highest quality</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Recommended:** **GPT-4o Mini** for best balance of speed, quality, and cost. Fast enough for real-time suggestions without breaking the bank.
+</Tip>
+
+---
+
+## Usage Examples
+
+### Example 1: Blog Post Intro
+
+**You type:**
+```
+In this tutorial, I'll show you how to
+```
+
+**AI suggests:**
+```
+build a REST API using Node.js and Express, covering 
+authentication, database integration, and deployment.
+```
+
+**Press Tab to accept** ✅
+
+---
+
+### Example 2: Product Description
+
+**You type:**
+```
+This premium leather bag features
+```
+
+**AI suggests:**
+```
+genuine Italian leather, durable brass hardware, and 
+multiple compartments for organized storage.
+```
+
+---
+
+### Example 3: Email Newsletter
+
+**You type:**
+```
+We're excited to announce
+```
+
+**AI suggests:**
+```
+the launch of our new product line, available exclusively 
+to our email subscribers for the next 48 hours.
+```
+
+---
+
+## Trigger Settings
+
+<Tabs>
+  <Tab title="Auto (After Pause)">
+    ### Automatic Suggestions
+    
+    **How It Works:**
+    - You stop typing for 1-2 seconds
+    - AI generates suggestion automatically
+    - Appears as gray text
+    
+    **Configuration:**
+    ```
+    Trigger: After pause
+    Delay: 1 second (1-5 seconds)
+    ```
+    
+    **Best For:** Fast writers, continuous flow
+    
+    **Pros:**
+    - ✅ Seamless experience
+    - ✅ No manual action needed
+    - ✅ Natural writing flow
+    
+    **Cons:**
+    - ⚠️ May interrupt thinking
+    - ⚠️ Higher AI costs (more suggestions)
+  </Tab>
+  
+  <Tab title="After X Words">
+    ### Word Count Trigger
+    
+    **How It Works:**
+    - AI suggests every 20-50 words
+    - Helps maintain consistent pacing
+    - Less frequent than auto-pause
+    
+    **Configuration:**
+    ```
+    Trigger: After word count
+    Words: 30 words
+    ```
+    
+    **Best For:** Long-form content, thoughtful writing
+    
+    **Pros:**
+    - ✅ Less intrusive
+    - ✅ Lower AI costs
+    - ✅ Predictable timing
+    
+    **Cons:**
+    - ⚠️ May miss natural pause points
+  </Tab>
+  
+  <Tab title="Manual (Keyboard Shortcut)">
+    ### On-Demand Suggestions
+    
+    **How It Works:**
+    - Press Ctrl+Space (or custom shortcut)
+    - AI generates suggestion only when asked
+    - Full control over when to use AI
+    
+    **Configuration:**
+    ```
+    Trigger: Manual
+    Shortcut: Ctrl+Space
+    ```
+    
+    **Best For:** Cost-conscious, selective use
+    
+    **Pros:**
+    - ✅ Complete control
+    - ✅ Lowest AI costs
+    - ✅ Use only when stuck
+    
+    **Cons:**
+    - ⚠️ Breaks flow to trigger manually
+    - ⚠️ Easy to forget to use
+  </Tab>
+</Tabs>
+
+---
+
+## Writing Style Adaptation
+
+<AccordionGroup>
+  <Accordion title="Match My Style (Recommended)" icon="fingerprint">
+    AI learns from your existing content.
+    
+    **How It Works:**
+    - Analyzes your last 10-20 posts
+    - Learns vocabulary, sentence structure, tone
+    - Mimics your writing patterns
+    
+    **Result:** Suggestions sound like you wrote them
+    
+    **Example:**
+    If you write casually with contractions and shorter sentences, AI will too.
+  </Accordion>
+  
+  <Accordion title="Professional" icon="briefcase">
+    Formal, business-appropriate tone.
+    
+    **Characteristics:**
+    - Formal language
+    - Complete sentences
+    - No contractions
+    - Technical vocabulary
+    
+    **Best For:** Corporate blogs, B2B content, whitepapers
+  </Accordion>
+  
+  <Accordion title="Casual" icon="comments">
+    Conversational, friendly tone.
+    
+    **Characteristics:**
+    - Contractions (you'll, we're)
+    - Shorter sentences
+    - Relatable language
+    - Personal pronouns (you, we)
+    
+    **Best For:** Lifestyle blogs, social content, newsletters
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Features
+
+### Context-Aware Suggestions
+
+Smart Compose considers:
+
+<table>
+  <thead>
+    <tr>
+      <th>Context Source</th>
+      <th>How It Helps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Post Title**</td>
+      <td>Stays on topic with title theme</td>
+    </tr>
+    <tr>
+      <td>**Category**</td>
+      <td>Uses appropriate industry terminology</td>
+    </tr>
+    <tr>
+      <td>**Previous Paragraphs**</td>
+      <td>Maintains narrative flow and coherence</td>
+    </tr>
+    <tr>
+      <td>**Your Writing History**</td>
+      <td>Matches your unique voice and style</td>
+    </tr>
+    <tr>
+      <td>**SEO Keywords**</td>
+      <td>Naturally incorporates focus keywords (if using SEO plugin)</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Keyboard Shortcuts
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Shortcut</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Accept Suggestion**</td>
+      <td>Tab</td>
+      <td>Insert suggested text</td>
+    </tr>
+    <tr>
+      <td>**Accept Word**</td>
+      <td>Ctrl+→</td>
+      <td>Accept one word at a time</td>
+    </tr>
+    <tr>
+      <td>**Reject Suggestion**</td>
+      <td>Esc</td>
+      <td>Dismiss current suggestion</td>
+    </tr>
+    <tr>
+      <td>**Regenerate**</td>
+      <td>Ctrl+R</td>
+      <td>Get different suggestion</td>
+    </tr>
+    <tr>
+      <td>**Manual Trigger**</td>
+      <td>Ctrl+Space</td>
+      <td>Request suggestion on-demand</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Cost Estimation
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Per Suggestion</th>
+      <th>Per 1,000-word Post</th>
+      <th>Monthly (20 posts)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>$0.0001</td>
+      <td>~$0.005</td>
+      <td>~$0.10</td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Haiku</td>
+      <td>$0.0001</td>
+      <td>~$0.005</td>
+      <td>~$0.10</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>$0.00003</td>
+      <td>~$0.0015</td>
+      <td>~$0.03</td>
+    </tr>
+    <tr>
+      <td>GPT-4o</td>
+      <td>$0.0003</td>
+      <td>~$0.015</td>
+      <td>~$0.30</td>
+    </tr>
+  </tbody>
+</table>
+
+**Assumptions:** ~50 suggestions per 1,000-word post
+
+<Check>
+**Value:** Save 15-30 minutes per post = $15-30 in time value for ~$0.10 in AI costs!
+</Check>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Don't Over-Rely on AI" icon="balance-scale">
+    **Guideline:** Use suggestions as inspiration, not replacement
+    
+    **Tips:**
+    - Accept ~50% of suggestions
+    - Edit accepted text to match your voice
+    - Use for overcoming blocks, not entire posts
+    - Maintain your unique perspective
+    
+    **Why:** Your authentic voice is your competitive advantage
+  </Accordion>
+  
+  <Accordion title="Review Before Publishing" icon="eye">
+    **Always:** Read through AI-suggested content
+    
+    **Check For:**
+    - Factual accuracy
+    - Logical flow
+    - Tone consistency
+    - Your authentic voice
+    - Grammatical errors (AI isn't perfect)
+    
+    **Never:** Blindly accept all suggestions
+  </Accordion>
+  
+  <Accordion title="Use for First Drafts" icon="file-pen">
+    **Strategy:** Let AI help draft, then refine
+    
+    **Workflow:**
+    1. Write outline manually
+    2. Use Smart Compose to flesh out sections
+    3. Edit and refine AI-suggested content
+    4. Add personal insights and examples
+    5. Proofread final version
+    
+    **Result:** Faster drafting, quality output
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Suggestions Not Appearing">
+    **Possible Causes:**
+    1. Feature not enabled
+    2. AI provider not connected
+    3. JavaScript disabled/error
+    4. Incompatible browser
+    5. Editor plugin conflict
+    
+    **Solutions:**
+    1. Verify enabled in Settings → Features
+    2. Connect AI provider
+    3. Check browser console for errors
+    4. Use Chrome, Firefox, or Edge (latest versions)
+    5. Disable other AI writing plugins temporarily
+  </Accordion>
+  
+  <Accordion title="Suggestions Are Off-Topic">
+    **Causes:**
+    - Not enough context
+    - Generic post title
+    - Wrong writing style setting
+    
+    **Solutions:**
+    1. Write clear, descriptive post title first
+    2. Write 2-3 paragraphs before using suggestions
+    3. Set category/tags to provide context
+    4. Switch to "Match My Style" mode
+    5. Use better AI model (GPT-4o, Claude Sonnet)
+  </Accordion>
+  
+  <Accordion title="Slow Suggestions">
+    **Causes:**
+    - Slow AI model
+    - Poor internet connection
+    - AI provider rate limits
+    
+    **Solutions:**
+    1. Switch to faster model (GPT-4o Mini, Gemini Flash, Haiku)
+    2. Check internet connection
+    3. Increase trigger delay (2-3 seconds)
+    4. Use manual trigger instead of auto
+  </Accordion>
+  
+  <Accordion title="Repetitive Suggestions">
+    **Causes:**
+    - AI stuck in pattern
+    - Too little variety in context
+    
+    **Solutions:**
+    1. Click "Regenerate" for new suggestion
+    2. Manually write next few sentences
+    3. Change writing style setting
+    4. Switch AI model
+    5. Add more context/variety to content
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Related Posts" icon="link" href="/smart-suggestions/related-posts">
+    AI-powered content recommendations
+  </Card>
+  <Card title="Smart Suggestions Overview" icon="lightbulb" href="/features/smart-suggestions">
+    All smart suggestion features
+  </Card>
+  <Card title="AI Providers" icon="plug" href="/integrations/overview">
+    Compare AI providers for suggestions
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Fine-tune all options
+  </Card>
+</CardGroup>
+
+<Tip>
+**Pro Tip:** Combine Smart Compose with manual editing for best results. Let AI help with structure and flow, then add your unique insights and personality.
+</Tip>

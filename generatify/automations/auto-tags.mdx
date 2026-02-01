@@ -1,0 +1,690 @@
+---
+title: 'Automatic Post Tags'
+description: 'Let AI automatically assign relevant tags to your posts'
+icon: 'tags'
+---
+
+## Overview
+
+Automatic Post Tags uses AI to analyze your content and assign relevant, contextual tags automatically. Say goodbye to manual tagging and hello to consistent, comprehensive taxonomy.
+
+<CardGroup cols={3}>
+  <Card title="Time Saved" icon="clock">
+    2-5 minutes per post
+  </Card>
+  <Card title="Consistency" icon="check">
+    AI follows your patterns
+  </Card>
+  <Card title="Coverage" icon="expand">
+    Never miss relevant tags
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="Content Analysis">
+    AI analyzes post title, content, and excerpt
+  </Step>
+  
+  <Step title="Context Understanding">
+    Identifies key topics, themes, and concepts
+  </Step>
+  
+  <Step title="Existing Tag Review">
+    Checks your existing WordPress tags for consistency
+  </Step>
+  
+  <Step title="Tag Generation">
+    Generates 3-10 relevant tags (configurable)
+  </Step>
+  
+  <Step title="Automatic Assignment">
+    Assigns tags to the post
+  </Step>
+</Steps>
+
+<Info>
+**Smart Detection:** AI can create new tags or use existing ones from your WordPress tag library.
+</Info>
+
+---
+
+## Setup Guide
+
+### Enable Auto Tags
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **WordPress Admin → Generatify → Settings → Automations**
+  </Step>
+  
+  <Step title="Find Auto Tags Section">
+    Scroll to **Automatic Post Tags**
+  </Step>
+  
+  <Step title="Enable Feature">
+    Toggle **Enable Auto Tags** to ON
+  </Step>
+  
+  <Step title="Configure Settings">
+    Set your preferred options (see Configuration below)
+  </Step>
+  
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+</Steps>
+
+---
+
+## Configuration Options
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AI Provider**</td>
+      <td>OpenAI, Anthropic, Google</td>
+      <td>Which AI provider to use</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider-specific models</td>
+      <td>Which model to use</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Number of Tags**</td>
+      <td>1-20</td>
+      <td>How many tags to generate</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>**Use Existing Tags**</td>
+      <td>Yes / No</td>
+      <td>Prioritize existing tags over new</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Allow New Tags**</td>
+      <td>Yes / No</td>
+      <td>Create new tags if needed</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Auto-Run on Publish**</td>
+      <td>Yes / No</td>
+      <td>Run when post is published</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Auto-Run on Save**</td>
+      <td>Yes / No</td>
+      <td>Run when post is saved as draft</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Post Types**</td>
+      <td>Multiple selection</td>
+      <td>Which post types to apply to</td>
+      <td>Posts only</td>
+    </tr>
+    <tr>
+      <td>**Exclude Categories**</td>
+      <td>Multiple selection</td>
+      <td>Skip posts in these categories</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Trigger Options
+
+Choose when tags are automatically generated:
+
+<Tabs>
+  <Tab title="On Publish">
+    ### Automatic on Publish
+    
+    Tags are generated when you click **Publish** on a new post.
+    
+    **Pros:**
+    - Most common workflow
+    - Tags ready immediately
+    - No manual action needed
+    
+    **Cons:**
+    - Slight delay before post is live
+    - Uses AI credit on every publish
+    
+    **Best For:** Standard blogging workflow
+  </Tab>
+  
+  <Tab title="On Save Draft">
+    ### Automatic on Save
+    
+    Tags generated whenever you save a draft.
+    
+    **Pros:**
+    - Tags ready before publishing
+    - Can review/edit before going live
+    - Preview how tags will look
+    
+    **Cons:**
+    - Uses AI credit on every save
+    - Tags may regenerate multiple times
+    
+    **Best For:** Perfectionist workflow
+  </Tab>
+  
+  <Tab title="Manual Trigger">
+    ### Manual Button Click
+    
+    Generate tags on-demand with a button in post editor.
+    
+    **Pros:**
+    - Full control over when to generate
+    - No unexpected AI usage
+    - Can regenerate if needed
+    
+    **Cons:**
+    - Requires manual action
+    - Easy to forget
+    
+    **Best For:** Cost-conscious users
+  </Tab>
+  
+  <Tab title="Bulk Action">
+    ### Bulk Generate
+    
+    Tag multiple posts at once from Posts list.
+    
+    **Pros:**
+    - Process many posts quickly
+    - Great for existing content
+    - One-time AI usage
+    
+    **Cons:**
+    - Not automatic
+    - Must select posts manually
+    
+    **Best For:** Retroactive tagging
+  </Tab>
+</Tabs>
+
+---
+
+## AI Model Recommendations
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Model</th>
+      <th>Speed</th>
+      <th>Quality</th>
+      <th>Cost per Tag</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Google**</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>⚡⚡⚡</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>~$0.00003</td>
+      <td>High volume, budget</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o Mini</td>
+      <td>⚡⚡</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>~$0.0001</td>
+      <td>Best accuracy</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>⚡⚡⚡</td>
+      <td>⭐⭐⭐</td>
+      <td>~$0.00005</td>
+      <td>Balanced option</td>
+    </tr>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>⚡⚡⚡</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>~$0.00008</td>
+      <td>Speed + quality</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Recommended:** Start with **Gemini 1.5 Flash** for the best value. It's fast, accurate, and can run on the free tier for thousands of posts.
+</Tip>
+
+---
+
+## Usage Examples
+
+### Example 1: Tech Blog Post
+
+**Post Title:** "10 Best VS Code Extensions for Web Developers"
+
+**AI-Generated Tags:**
+- VS Code
+- Web Development
+- Code Editor
+- Developer Tools
+- Extensions
+- Productivity
+
+**Time Saved:** 3 minutes
+
+---
+
+### Example 2: Recipe Post
+
+**Post Title:** "Easy Vegan Chocolate Chip Cookies"
+
+**AI-Generated Tags:**
+- Vegan Recipes
+- Cookies
+- Baking
+- Desserts
+- Plant-Based
+- Quick Recipes
+
+**Time Saved:** 2 minutes
+
+---
+
+### Example 3: Travel Blog
+
+**Post Title:** "A Weekend Guide to Tokyo: Hidden Gems"
+
+**AI-Generated Tags:**
+- Tokyo
+- Japan
+- Travel Guide
+- Weekend Trips
+- Asia Travel
+- City Breaks
+- Hidden Gems
+
+**Time Saved:** 4 minutes
+
+---
+
+## Tag Strategy Options
+
+<AccordionGroup>
+  <Accordion title="Reuse Existing Tags Only" icon="recycle">
+    **Configuration:**
+    - Use Existing Tags: **Yes**
+    - Allow New Tags: **No**
+    
+    **Behavior:**
+    AI only selects from your current WordPress tags.
+    
+    **Best For:**
+    - Mature blogs with established taxonomy
+    - Preventing tag proliferation
+    - Maintaining strict tag control
+    
+    **Example:** Site has 50 predefined tags; AI picks 5 most relevant.
+  </Accordion>
+  
+  <Accordion title="Hybrid Approach (Recommended)" icon="balance-scale">
+    **Configuration:**
+    - Use Existing Tags: **Yes**
+    - Allow New Tags: **Yes**
+    
+    **Behavior:**
+    AI prefers existing tags but creates new ones when needed.
+    
+    **Best For:**
+    - Growing blogs
+    - Evolving topics
+    - Balanced taxonomy management
+    
+    **Example:** AI uses 4 existing tags + creates 1 new relevant tag.
+  </Accordion>
+  
+  <Accordion title="Always Create New" icon="sparkles">
+    **Configuration:**
+    - Use Existing Tags: **No**
+    - Allow New Tags: **Yes**
+    
+    **Behavior:**
+    AI creates fresh tags for every post.
+    
+    **Best For:**
+    - New blogs starting from scratch
+    - Highly diverse content
+    - Maximum coverage
+    
+    **Example:** Every post gets 5 unique, content-specific tags.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Manual Tag Generation
+
+Even with auto-tagging enabled, you can manually generate tags:
+
+### In Post Editor
+
+<Steps>
+  <Step title="Open Post">
+    Edit any post in WordPress editor
+  </Step>
+  
+  <Step title="Find Generatify Panel">
+    Look for **Generatify** meta box in sidebar
+  </Step>
+  
+  <Step title="Click Generate Tags">
+    Click **Generate Tags with AI** button
+  </Step>
+  
+  <Step title="Review Tags">
+    AI-generated tags appear in the Tags field
+  </Step>
+  
+  <Step title="Edit if Needed">
+    Modify or remove tags before saving
+  </Step>
+</Steps>
+
+### Bulk Tag Generation
+
+<Steps>
+  <Step title="Go to Posts List">
+    Navigate to **Posts → All Posts**
+  </Step>
+  
+  <Step title="Select Posts">
+    Check the posts you want to tag
+  </Step>
+  
+  <Step title="Choose Bulk Action">
+    Select **Generate AI Tags** from Bulk Actions dropdown
+  </Step>
+  
+  <Step title="Click Apply">
+    Click **Apply** to start generation
+  </Step>
+  
+  <Step title="Wait for Completion">
+    Progress bar shows tagging status
+  </Step>
+</Steps>
+
+<Info>
+**Bulk Limits:** Process up to 100 posts at once. For larger batches, repeat the process.
+</Info>
+
+---
+
+## Advanced Customization
+
+### Custom Tag Prompts
+
+Customize the AI prompt to match your tagging style:
+
+```
+Navigate to: Generatify → Settings → Automations → Auto Tags → Advanced
+
+Default Prompt:
+"Analyze this blog post and generate 5 relevant tags. 
+Use existing tags when possible: {existing_tags}."
+
+Custom Example:
+"Generate 5 SEO-optimized tags for this tech blog post. 
+Focus on programming languages, frameworks, and developer tools. 
+Prefer existing tags: {existing_tags}."
+```
+
+### Hook for Developers
+
+Modify tags before they're saved:
+
+```php
+add_filter('generatify_auto_tags', function($tags, $post_id) {
+    // Remove tags longer than 20 characters
+    $tags = array_filter($tags, function($tag) {
+        return strlen($tag) <= 20;
+    });
+    
+    // Always add site-specific tag
+    $tags[] = 'DevBlog';
+    
+    return $tags;
+}, 10, 2);
+```
+
+<Note>
+See [Developer Hooks](/developer/hooks-filters) for more customization options.
+</Note>
+
+---
+
+## Tag Quality Tips
+
+<AccordionGroup>
+  <Accordion title="Provide Context" icon="book">
+    Better content analysis = better tags:
+    - Write clear, descriptive titles
+    - Include key terms in first paragraph
+    - Use structured headings
+    - Add excerpt with topic summary
+    
+    AI uses all this context for tagging.
+  </Accordion>
+  
+  <Accordion title="Seed with Existing Tags" icon="seedling">
+    Give AI examples to follow:
+    - Manually tag first 10-20 posts
+    - Establish your tagging patterns
+    - Define key topic tags
+    - Create tag descriptions
+    
+    AI learns from your existing taxonomy.
+  </Accordion>
+  
+  <Accordion title="Review and Refine" icon="edit">
+    AI is smart, but not perfect:
+    - Review auto-generated tags initially
+    - Remove irrelevant tags
+    - Add missing important tags
+    - Merge similar tags
+    
+    AI improves with feedback over time.
+  </Accordion>
+  
+  <Accordion title="Set Realistic Limits" icon="sliders">
+    Don't over-tag:
+    - 3-7 tags is optimal for most posts
+    - More tags ≠ better SEO
+    - Focus on quality over quantity
+    - Avoid tag clutter
+    
+    Too many tags dilutes their value.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tags Not Generating">
+    **Symptoms:** No tags appear after publish/save
+    
+    **Solutions:**
+    1. Check that Auto Tags is enabled
+    2. Verify AI provider is connected
+    3. Ensure post type is included in settings
+    4. Check post isn't in excluded category
+    5. Look for JavaScript errors in console
+    6. Test with manual generation button
+  </Accordion>
+  
+  <Accordion title="Irrelevant Tags">
+    **Symptoms:** AI generates off-topic tags
+    
+    **Solutions:**
+    1. Improve post content clarity
+    2. Add excerpt with topic focus
+    3. Adjust number of tags (fewer = more focused)
+    4. Switch to better AI model (GPT-4o Mini)
+    5. Customize AI prompt for your niche
+    6. Seed with more existing relevant tags
+  </Accordion>
+  
+  <Accordion title="Too Many New Tags Created">
+    **Symptoms:** Tag library growing uncontrollably
+    
+    **Solutions:**
+    1. Enable "Use Existing Tags" preference
+    2. Disable "Allow New Tags"
+    3. Regularly merge similar tags
+    4. Review and clean up tag library
+    5. Set up custom prompt limiting new tags
+  </Accordion>
+  
+  <Accordion title="Slow Tag Generation">
+    **Symptoms:** Takes 10+ seconds to generate
+    
+    **Solutions:**
+    1. Switch to faster model (Gemini Flash, Claude Haiku)
+    2. Check AI provider status
+    3. Reduce post content length analyzed
+    4. Check server performance
+    5. Disable on-save trigger (use on-publish only)
+  </Accordion>
+  
+  <Accordion title="API Quota Exceeded">
+    **Symptoms:** Error message about limits
+    
+    **Solutions:**
+    1. Switch to Google Gemini (higher free tier)
+    2. Disable auto-run, use manual trigger
+    3. Exclude less important post types
+    4. Upgrade AI provider plan
+    5. Use bulk generation less frequently
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Cost Estimation
+
+### Google Gemini (Recommended)
+
+**Free Tier:** 1,500 requests/day on Flash
+- **Small blog:** (5 posts/day) → FREE forever
+- **Medium blog:** (20 posts/day) → FREE forever  
+- **Large blog:** (100 posts/day) → ~$0.30/month
+
+### OpenAI GPT-4o Mini
+
+**No free tier**
+- **Small blog:** (5 posts/day) → ~$1.50/month
+- **Medium blog:** (20 posts/day) → ~$6/month
+- **Large blog:** (100 posts/day) → ~$30/month
+
+### Cost Per Post
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Per Post</th>
+      <th>100 Posts</th>
+      <th>1,000 Posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>$0.00003</td>
+      <td>$0.003</td>
+      <td>$0.03</td>
+    </tr>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>$0.0001</td>
+      <td>$0.01</td>
+      <td>$0.10</td>
+    </tr>
+    <tr>
+      <td>GPT-3.5 Turbo</td>
+      <td>$0.00005</td>
+      <td>$0.005</td>
+      <td>$0.05</td>
+    </tr>
+  </tbody>
+</table>
+
+<Check>
+**Value Proposition:** Even at $0.10 per 1,000 posts, you save 2-5 minutes per post = 33-83 hours saved. That's $330-$830 in time value for $0.10!
+</Check>
+
+---
+
+## SEO Benefits
+
+Proper tagging improves SEO:
+
+1. **Better Content Organization:** Search engines understand topic clusters
+2. **Enhanced Internal Linking:** Related posts connect via tags
+3. **Long-Tail Keywords:** Tags target niche search terms
+4. **Topic Authority:** Comprehensive tagging shows expertise
+5. **User Experience:** Visitors find related content easily
+
+<Warning>
+**Avoid Tag Spam:** Don't over-optimize with 20+ tags per post. Google may penalize thin tag pages.
+</Warning>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Auto Categories" icon="folder" href="/automations/auto-categories">
+    Automatically categorize posts
+  </Card>
+  <Card title="Meta Descriptions" icon="file-lines" href="/automations/meta-descriptions">
+    Generate SEO descriptions
+  </Card>
+  <Card title="Smart Suggestions" icon="lightbulb" href="/features/smart-suggestions">
+    Get AI writing suggestions
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Customize all automation settings
+  </Card>
+</CardGroup>
+
+<Tip>
+**Pro Workflow:** Combine Auto Tags + Auto Categories + Meta Descriptions for complete automated content metadata. Set up once, save hours every week!
+</Tip>

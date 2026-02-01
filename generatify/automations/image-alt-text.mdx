@@ -1,0 +1,798 @@
+---
+title: 'Image Alt Text Generation'
+description: 'Automatically generate descriptive alt text for images using AI'
+icon: 'image'
+---
+
+## Overview
+
+Generate descriptive, SEO-friendly alt text for images automatically. Improve accessibility, boost image search rankings, and save hours of manual work.
+
+<CardGroup cols={3}>
+  <Card title="Accessibility" icon="universal-access">
+    Make your site accessible to everyone
+  </Card>
+  <Card title="Image SEO" icon="image">
+    Rank in Google Image Search
+  </Card>
+  <Card title="Compliance" icon="scale-balanced">
+    Meet ADA/WCAG requirements
+  </Card>
+</CardGroup>
+
+---
+
+## Why Alt Text Matters
+
+<AccordionGroup>
+  <Accordion title="Accessibility (Most Important)" icon="universal-access">
+    Alt text describes images for:
+    - Screen readers for visually impaired users
+    - Users with images disabled
+    - Slow connections where images don't load
+    
+    **Legal Requirement:** ADA and WCAG guidelines require alt text for accessibility compliance.
+    
+    **Impact:** Makes your content accessible to 2.2 billion people worldwide with vision impairment.
+  </Accordion>
+  
+  <Accordion title="SEO Benefits" icon="chart-line">
+    Google uses alt text to:
+    - Understand image content
+    - Rank images in Google Images
+    - Understand page context
+    - Generate rich snippets
+    
+    **Result:** Better rankings in both web and image search results.
+  </Accordion>
+  
+  <Accordion title="Better UX" icon="face-smile">
+    Alt text appears when:
+    - Images fail to load
+    - Broken image links
+    - Slow connections
+    - Browser extensions block images
+    
+    **Benefit:** Users still understand your content.
+  </Accordion>
+  
+  <Accordion title="It's Time-Consuming" icon="clock">
+    Writing alt text manually:
+    - 30-60 seconds per image
+    - Easy to forget
+    - Requires attention to detail
+    - Boring and repetitive
+    
+    **Solution:** Automate it with AI!
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## How It Works
+
+<Note>
+**Coming Soon:** This feature uses TensorFlow.js to analyze images directly in your browser. Currently in development.
+</Note>
+
+<Steps>
+  <Step title="Image Detection">
+    Generatify detects when images are uploaded
+  </Step>
+  
+  <Step title="Image Analysis">
+    TensorFlow.js model analyzes image content locally
+  </Step>
+  
+  <Step title="Object Recognition">
+    Identifies objects, people, scenes, colors, and context
+  </Step>
+  
+  <Step title="Description Generation">
+    AI generates descriptive, concise alt text
+  </Step>
+  
+  <Step title="SEO Optimization">
+    Adds relevant keywords naturally
+  </Step>
+  
+  <Step title="Automatic Assignment">
+    Saves alt text to image metadata
+  </Step>
+</Steps>
+
+<Info>
+**Privacy First:** Image analysis happens in your browser using TensorFlow.js. Images never leave your server.
+</Info>
+
+---
+
+## Setup Guide (When Available)
+
+### Enable Image Alt Text
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **WordPress Admin → Generatify → Settings → Automations**
+  </Step>
+  
+  <Step title="Find Image Alt Text Section">
+    Scroll to **Automatic Image Alt Text**
+  </Step>
+  
+  <Step title="Enable Feature">
+    Toggle **Enable Auto Alt Text** to ON
+  </Step>
+  
+  <Step title="Configure Settings">
+    Set your preferred options
+  </Step>
+  
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+</Steps>
+
+---
+
+## Planned Configuration Options
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Detection Method**</td>
+      <td>Local (TensorFlow.js), Cloud AI</td>
+      <td>Where analysis happens</td>
+      <td>Local</td>
+    </tr>
+    <tr>
+      <td>**AI Provider (Cloud)**</td>
+      <td>OpenAI (GPT-4 Vision), Google (Gemini)</td>
+      <td>Cloud AI for complex images</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**Description Style**</td>
+      <td>Concise, Detailed, SEO-focused</td>
+      <td>Alt text writing style</td>
+      <td>Concise</td>
+    </tr>
+    <tr>
+      <td>**Max Length**</td>
+      <td>50-125 characters</td>
+      <td>Maximum alt text length</td>
+      <td>125</td>
+    </tr>
+    <tr>
+      <td>**Include Context**</td>
+      <td>Yes / No</td>
+      <td>Use post content for context</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Auto-Run on Upload**</td>
+      <td>Yes / No</td>
+      <td>Generate when image uploaded</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Overwrite Existing**</td>
+      <td>Yes / No</td>
+      <td>Replace existing alt text</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Decorative Images**</td>
+      <td>Empty alt, "Decorative", Skip</td>
+      <td>How to handle decorative images</td>
+      <td>Empty alt</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Local vs. Cloud AI
+
+<Tabs>
+  <Tab title="Local (TensorFlow.js)">
+    ### Browser-Based Analysis
+    
+    **How It Works:**
+    - TensorFlow.js runs in user's browser
+    - Uses pre-trained image recognition model
+    - Identifies common objects, scenes, colors
+    
+    **Pros:**
+    - ✅ Completely free (no API costs)
+    - ✅ Privacy-friendly (images never uploaded)
+    - ✅ Fast processing
+    - ✅ Works offline
+    - ✅ No API quotas
+    
+    **Cons:**
+    - ⚠️ Limited to common objects/scenes
+    - ⚠️ Less detailed descriptions
+    - ⚠️ Requires modern browser
+    
+    **Best For:**
+    - Standard blog images
+    - Product photos
+    - Stock photography
+    - Budget-conscious users
+    
+    **Example Output:**
+    ```
+    "Person sitting at desk with laptop computer"
+    "Red sports car on mountain road"
+    "Chocolate cake with strawberries on white plate"
+    ```
+  </Tab>
+  
+  <Tab title="Cloud AI (GPT-4 Vision)">
+    ### Advanced Image Understanding
+    
+    **How It Works:**
+    - Images sent to OpenAI GPT-4 Vision
+    - Deep learning analyzes complex scenes
+    - Understands context, emotions, relationships
+    
+    **Pros:**
+    - ✅ Highly detailed descriptions
+    - ✅ Understands complex scenes
+    - ✅ Contextual awareness
+    - ✅ Better for unique images
+    - ✅ Recognizes brand logos, text in images
+    
+    **Cons:**
+    - ⚠️ Costs ~$0.01-0.02 per image
+    - ⚠️ Requires internet connection
+    - ⚠️ Slower than local
+    - ⚠️ Images uploaded to AI provider
+    
+    **Best For:**
+    - Complex photography
+    - Infographics
+    - Screenshots with text
+    - Unique/artistic images
+    
+    **Example Output:**
+    ```
+    "Professional woman in business attire presenting data 
+    visualization on large screen to team of colleagues in 
+    modern office conference room"
+    ```
+  </Tab>
+  
+  <Tab title="Hybrid Approach (Recommended)">
+    ### Best of Both Worlds
+    
+    **Strategy:**
+    - Use TensorFlow.js by default (free)
+    - Fallback to Cloud AI for:
+      - Featured images (most important)
+      - Images with text (infographics)
+      - Complex scenes
+      - User-specified important images
+    
+    **Configuration:**
+    ```
+    Default: Local TensorFlow.js
+    Featured Images: GPT-4 Vision
+    Confidence < 70%: Fallback to GPT-4 Vision
+    ```
+    
+    **Cost:**
+    - 95% of images: FREE (local)
+    - 5% of images: $0.01 (cloud)
+    - Average: ~$0.0005 per image
+    
+    **Result:** Best quality where it matters, minimal cost overall.
+  </Tab>
+</Tabs>
+
+---
+
+## Alt Text Best Practices
+
+<AccordionGroup>
+  <Accordion title="Be Descriptive but Concise" icon="align-left">
+    **Goal:** Describe the image in 1-2 sentences
+    
+    **Good Examples:**
+    ```
+    ✅ "Golden retriever puppy playing with tennis ball in green grass"
+    ✅ "Bar chart showing website traffic growth from January to June"
+    ✅ "Woman typing on MacBook at coffee shop"
+    ```
+    
+    **Bad Examples:**
+    ```
+    ❌ "Image"
+    ❌ "photo.jpg"
+    ❌ "This is an image of a really cute golden retriever puppy 
+       that looks to be about 3 months old playing with a yellow 
+       tennis ball in some very green grass on what appears to be 
+       a sunny summer day..."
+    ```
+    
+    **Guideline:** 50-125 characters is ideal.
+  </Accordion>
+  
+  <Accordion title="Don't Say 'Image of' or 'Picture of'" icon="times">
+    Screen readers already announce "image," so don't repeat it.
+    
+    **Examples:**
+    ```
+    ❌ "Image of sunset over ocean"
+    ✅ "Sunset over ocean with orange and pink clouds"
+    
+    ❌ "Picture showing laptop on desk"
+    ✅ "MacBook Pro on wooden desk with coffee mug"
+    ```
+  </Accordion>
+  
+  <Accordion title="Include Context When Relevant" icon="context">
+    Consider what the image is meant to convey in context.
+    
+    **Example: Blog Post About Remote Work**
+    
+    Generic alt text:
+    ```
+    ❌ "Person using laptop"
+    ```
+    
+    Contextual alt text:
+    ```
+    ✅ "Remote worker on video call from home office"
+    ```
+    
+    **How Generatify Helps:** AI analyzes post content to understand context.
+  </Accordion>
+  
+  <Accordion title="Decorative Images Should Have Empty Alt" icon="wand-sparkles">
+    Purely decorative images (dividers, backgrounds) should have empty alt text:
+    
+    ```html
+    <img src="divider.png" alt="">
+    ```
+    
+    **Why:** Screen readers will skip them, avoiding clutter.
+    
+    **Generatify Auto-Detects:**
+    - Small images (< 50x50px)
+    - Images named "divider," "separator," "decoration"
+    - Images in decorative CSS classes
+  </Accordion>
+  
+  <Accordion title="Don't Keyword Stuff" icon="warning">
+    Alt text is for accessibility, not SEO manipulation.
+    
+    **Bad Example:**
+    ```
+    ❌ "Best running shoes 2024 running shoes for men women kids 
+       buy running shoes cheap running shoes Nike Adidas running shoes"
+    ```
+    
+    **Good Example:**
+    ```
+    ✅ "Nike Air Zoom Pegasus 40 running shoes in black and white"
+    ```
+    
+    **Guideline:** Include relevant keywords naturally, but prioritize description.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Description Styles
+
+<Tabs>
+  <Tab title="Concise (Default)">
+    ### Brief and Direct
+    
+    **Characteristics:**
+    - 50-80 characters
+    - Main subject only
+    - No extra details
+    
+    **Examples:**
+    ```
+    "Woman working on laptop at desk"
+    "Red Toyota Camry in parking lot"
+    "Chocolate chip cookies on cooling rack"
+    ```
+    
+    **Best For:**
+    - Standard blog images
+    - Simple product photos
+    - Most use cases
+  </Tab>
+  
+  <Tab title="Detailed">
+    ### Comprehensive Description
+    
+    **Characteristics:**
+    - 80-125 characters
+    - Includes context and details
+    - Scene description
+    
+    **Examples:**
+    ```
+    "Professional woman in blue suit working on laptop at modern 
+    white desk with plants and coffee"
+    
+    "Red 2024 Toyota Camry sedan parked in office building parking 
+    lot on sunny day"
+    
+    "Freshly baked chocolate chip cookies cooling on wire rack with 
+    glass of milk nearby"
+    ```
+    
+    **Best For:**
+    - Featured images
+    - Hero images
+    - Photography showcases
+  </Tab>
+  
+  <Tab title="SEO-Focused">
+    ### Keyword-Optimized
+    
+    **Characteristics:**
+    - 80-125 characters
+    - Includes relevant keywords
+    - Natural language
+    - Balances SEO and accessibility
+    
+    **Examples:**
+    ```
+    "MacBook Pro 16-inch laptop for web development on wooden desk 
+    with external monitor"
+    
+    "Vegan chocolate chip cookie recipe results on cooling rack"
+    
+    "SEO optimization concept shown on laptop screen with analytics 
+    dashboard"
+    ```
+    
+    **Best For:**
+    - E-commerce product images
+    - Tutorial screenshots
+    - SEO-focused content
+  </Tab>
+</Tabs>
+
+---
+
+## Manual Generation
+
+Generate alt text for existing images:
+
+### Media Library
+
+<Steps>
+  <Step title="Open Media Library">
+    Navigate to **Media → Library**
+  </Step>
+  
+  <Step title="Select Image">
+    Click on image to open details
+  </Step>
+  
+  <Step title="Find Generatify Button">
+    Look for **Generate Alt Text with AI** button
+  </Step>
+  
+  <Step title="Click Generate">
+    AI analyzes image and generates alt text
+  </Step>
+  
+  <Step title="Review and Save">
+    Edit if needed, then click **Update**
+  </Step>
+</Steps>
+
+### Bulk Generation
+
+<Steps>
+  <Step title="Open Media Library">
+    Navigate to **Media → Library**
+  </Step>
+  
+  <Step title="Switch to List View">
+    Click **List View** button
+  </Step>
+  
+  <Step title="Select Images">
+    Check images missing alt text
+  </Step>
+  
+  <Step title="Choose Bulk Action">
+    Select **Generate AI Alt Text** from dropdown
+  </Step>
+  
+  <Step title="Click Apply">
+    Start bulk generation
+  </Step>
+  
+  <Step title="Monitor Progress">
+    Progress bar shows completion
+  </Step>
+</Steps>
+
+<Info>
+**Filter:** Use "Missing Alt Text" filter to find images needing descriptions.
+</Info>
+
+---
+
+## Real-World Examples
+
+### Product Photography (E-commerce)
+
+**Image:** Red handbag on white background
+
+**Local AI (TensorFlow.js):**
+```
+"Red leather handbag"
+```
+
+**Cloud AI (GPT-4 Vision):**
+```
+"Designer red leather tote bag with gold hardware and adjustable straps"
+```
+
+---
+
+### Blog Post Featured Image
+
+**Image:** Person working at coffee shop
+
+**Local AI:**
+```
+"Person using laptop at cafe"
+```
+
+**Cloud AI:**
+```
+"Young professional working remotely on laptop at modern coffee shop 
+with latte and notebook"
+```
+
+---
+
+### Infographic
+
+**Image:** SEO statistics chart
+
+**Local AI:**
+```
+"Chart with bars and text"
+```
+
+**Cloud AI (Reads Text!):**
+```
+"SEO statistics infographic showing 68% of online experiences begin 
+with search engine, 53% of traffic comes from organic search"
+```
+
+<Tip>
+**For infographics:** Use Cloud AI (GPT-4 Vision) to read and describe text within images.
+</Tip>
+
+---
+
+## Cost Estimation (Cloud AI)
+
+If using GPT-4 Vision for image analysis:
+
+<table>
+  <thead>
+    <tr>
+      <th>Image Size</th>
+      <th>Cost per Image</th>
+      <th>100 Images</th>
+      <th>1,000 Images</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Low detail</td>
+      <td>$0.01</td>
+      <td>$1.00</td>
+      <td>$10.00</td>
+    </tr>
+    <tr>
+      <td>High detail</td>
+      <td>$0.02</td>
+      <td>$2.00</td>
+      <td>$20.00</td>
+    </tr>
+  </tbody>
+</table>
+
+### Cost Comparison
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Cost</th>
+      <th>Quality</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Manual writing</td>
+      <td>$0 (but 30-60 sec/image)</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>Critical images only</td>
+    </tr>
+    <tr>
+      <td>Local AI (TensorFlow.js)</td>
+      <td>$0</td>
+      <td>⭐⭐⭐</td>
+      <td>Standard images</td>
+    </tr>
+    <tr>
+      <td>Cloud AI (GPT-4 Vision)</td>
+      <td>$0.01-0.02</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>Complex/important images</td>
+    </tr>
+  </tbody>
+</table>
+
+<Check>
+**Recommended Strategy:** TensorFlow.js for 95% of images (FREE) + Cloud AI for featured images = $0.50-2/month for most sites.
+</Check>
+
+---
+
+## Accessibility Compliance
+
+Proper alt text helps meet legal requirements:
+
+<AccordionGroup>
+  <Accordion title="WCAG 2.1 (Level AA)" icon="check">
+    **Requirement:** All non-decorative images must have descriptive alt text
+    
+    **Guideline 1.1.1:** Non-text Content
+    
+    **What Generatify Does:**
+    - Automatically generates alt text for all images
+    - Ensures 100% coverage
+    - Follows WCAG length guidelines
+    - Identifies decorative images
+    
+    **Result:** Full WCAG 2.1 Level AA compliance for images
+  </Accordion>
+  
+  <Accordion title="ADA (Americans with Disabilities Act)" icon="scale-balanced">
+    **Requirement:** Websites must be accessible to people with disabilities
+    
+    **What Generatify Does:**
+    - Makes all images screen-reader friendly
+    - Provides context for visually impaired users
+    - Ensures no information is lost without images
+    
+    **Result:** Reduces ADA lawsuit risk
+  </Accordion>
+  
+  <Accordion title="Section 508" icon="landmark">
+    **Requirement:** Federal agencies must provide accessible digital content
+    
+    **Compliance:** Alt text is mandatory
+    
+    **What Generatify Does:**
+    - Auto-generates compliant alt text
+    - Maintains consistent quality
+    - Logs alt text generation for audits
+    
+    **Result:** Section 508 compliance for government sites
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="TensorFlow.js Not Loading">
+    **Symptoms:** Alt text generation fails or shows errors
+    
+    **Solutions:**
+    1. Clear browser cache
+    2. Check browser compatibility (Chrome, Firefox, Edge recommended)
+    3. Disable browser extensions blocking scripts
+    4. Check console for JavaScript errors
+    5. Try Cloud AI as fallback
+  </Accordion>
+  
+  <Accordion title="Generic Descriptions">
+    **Symptoms:** Alt text too vague ("object," "scene")
+    
+    **Solutions:**
+    1. Switch to Cloud AI (GPT-4 Vision)
+    2. Ensure images are high quality
+    3. Enable "Include Context" to use post content
+    4. Switch to "Detailed" or "SEO-Focused" style
+  </Accordion>
+  
+  <Accordion title="Cloud AI Costs Too High">
+    **Symptoms:** Unexpected API charges
+    
+    **Solutions:**
+    1. Switch to Local (TensorFlow.js) as default
+    2. Only use Cloud AI for featured images
+    3. Set confidence threshold (use cloud only if local < 70%)
+    4. Process images in batches less frequently
+  </Accordion>
+  
+  <Accordion title="Alt Text Too Long">
+    **Symptoms:** Descriptions exceed 125 characters
+    
+    **Solutions:**
+    1. Reduce "Max Length" setting to 100
+    2. Switch to "Concise" style
+    3. Regenerate if much too long
+    4. Use custom prompt emphasizing brevity
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Roadmap & Future Features
+
+<Note>
+**Status:** Image Alt Text feature is currently in development. Expected release: Q2 2024.
+</Note>
+
+### Planned Features
+
+<CardGroup cols={2}>
+  <Card title="Batch Processing" icon="layer-group">
+    Analyze entire media library at once
+  </Card>
+  <Card title="Smart Detection" icon="brain">
+    Auto-detect decorative vs. content images
+  </Card>
+  <Card title="Multi-Language" icon="language">
+    Generate alt text in multiple languages
+  </Card>
+  <Card title="OCR Support" icon="text">
+    Read text in images for infographics
+  </Card>
+</CardGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Auto Tags" icon="tags" href="/automations/auto-tags">
+    Automatically tag posts
+  </Card>
+  <Card title="Meta Descriptions" icon="file-lines" href="/automations/meta-descriptions">
+    Generate SEO descriptions
+  </Card>
+  <Card title="All Automations" icon="robot" href="/features/automations">
+    View all automation features
+  </Card>
+  <Card title="Accessibility Guide" icon="universal-access" href="/advanced/settings">
+    Learn more about accessibility
+  </Card>
+</CardGroup>
+
+<Tip>
+**Stay Updated:** Follow Generatify development to be notified when Image Alt Text launches. Sign up at [generatify.com](https://generatify.com)
+</Tip>

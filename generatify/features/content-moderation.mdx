@@ -1,0 +1,642 @@
+---
+title: 'Content Moderation'
+description: 'Keep your community healthy with AI-powered toxicity detection'
+icon: 'shield-check'
+---
+
+## Overview
+
+The Content Moderation module uses AI to detect and block toxic, hateful, or abusive comments before they're submitted—protecting your community and reducing moderation workload.
+
+<img src="/images/toxicity-checker-demo.png" alt="Toxicity Checker in Action" />
+
+<Check>
+  **Free Feature:** Content Moderation uses TensorFlow.js and runs entirely in the browser. No API key or external service required!
+</Check>
+
+---
+
+## How It Works
+
+### Real-time Analysis
+
+<Steps>
+  <Step title="User Writes Comment">
+    Visitor types a comment in your comment form
+  </Step>
+
+  <Step title="Client-Side Analysis">
+    TensorFlow.js analyzes the text in the browser (no server request)
+  </Step>
+
+  <Step title="Toxicity Detection">
+    AI model scores text across multiple categories:
+    - Toxicity
+    - Severe Toxicity
+    - Identity Attack
+    - Insult
+    - Profanity
+    - Threat
+    - Sexual Content (explicit)
+  </Step>
+
+  <Step title="Threshold Check">
+    If any score exceeds your threshold, submission is blocked
+  </Step>
+
+  <Step title="User Feedback">
+    Warning message explains why comment was blocked
+  </Step>
+</Steps>
+
+### Privacy-First Design
+
+- ✅ **No data sent to servers** - everything runs in browser
+- ✅ **No API calls** - completely free
+- ✅ **No external dependencies** - works offline
+- ✅ **GDPR compliant** - no data collection
+
+---
+
+## Setup
+
+### Quick Setup (2 minutes)
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Generatify → Settings → Content Moderation**
+  </Step>
+
+  <Step title="Enable Feature">
+    Toggle **Enable AI Toxicity Checker** to ON
+  </Step>
+
+  <Step title="Set Threshold">
+    Adjust toxicity threshold (0.1 to 1.0):
+    - **0.7** (default) - Balanced
+    - **0.5** - More strict
+    - **0.9** - More lenient
+  </Step>
+
+  <Step title="Customize Message">
+    Edit the warning message shown to users
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings** to activate
+  </Step>
+</Steps>
+
+<img src="/images/moderation-settings.png" alt="Content Moderation Settings" />
+
+---
+
+## Configuration Options
+
+Access settings at **Generatify → Settings → Content Moderation**:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Toxicity Checker**</td>
+      <td>Turn feature on/off</td>
+      <td>OFF</td>
+    </tr>
+    <tr>
+      <td>**Toxicity Threshold**</td>
+      <td>Sensitivity level (0.1-1.0)</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <td>**Severe Toxicity Threshold**</td>
+      <td>For extremely toxic content</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <td>**Block Identity Attacks**</td>
+      <td>Detect attacks on identity/demographics</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Block Insults**</td>
+      <td>Detect insulting language</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Block Profanity**</td>
+      <td>Detect swear words and profanity</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Block Threats**</td>
+      <td>Detect threatening language</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Warning Message**</td>
+      <td>Text shown when comment is blocked</td>
+      <td>Custom message</td>
+    </tr>
+    <tr>
+      <td>**Enable on Forms**</td>
+      <td>Which forms to protect</td>
+      <td>Comments only</td>
+    </tr>
+    <tr>
+      <td>**Bypass for Logged-in Users**</td>
+      <td>Allow certain users to bypass</td>
+      <td>OFF</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Understanding Thresholds
+
+The toxicity model returns a confidence score between 0.0 and 1.0 for each category:
+
+- **0.0 - 0.3:** Low confidence (likely not toxic)
+- **0.3 - 0.7:** Medium confidence (possibly toxic)
+- **0.7 - 1.0:** High confidence (very likely toxic)
+
+### Recommended Thresholds
+
+<Tabs>
+  <Tab title="Lenient (0.9)">
+    **Best for:** Adult communities, casual forums
+
+    Only blocks extremely obvious toxicity. May allow some borderline content through.
+
+    **Use when:**
+    - Community is self-moderating
+    - You want minimal false positives
+    - Content guidelines are relaxed
+  </Tab>
+
+  <Tab title="Balanced (0.7)">
+    **Best for:** Most websites (recommended default)
+
+    Blocks clearly toxic content while minimizing false positives.
+
+    **Use when:**
+    - You want good protection without being overly strict
+    - Standard community guidelines apply
+    - Balancing safety and free expression
+  </Tab>
+
+  <Tab title="Strict (0.5)">
+    **Best for:** Family-friendly sites, children's content
+
+    Aggressively blocks anything remotely toxic. May have more false positives.
+
+    **Use when:**
+    - Audience includes children
+    - Zero tolerance for negativity
+    - High moderation standards required
+  </Tab>
+
+  <Tab title="Very Strict (0.3)">
+    **Best for:** Educational sites, sensitive topics
+
+    Maximum protection. Will block many borderline cases.
+
+    **Use when:**
+    - Content is highly sensitive
+    - Community has strict conduct rules
+    - You prefer manual review of blocked comments
+  </Tab>
+</Tabs>
+
+---
+
+## Detection Categories
+
+The AI analyzes text across seven dimensions:
+
+<AccordionGroup>
+  <Accordion title="Toxicity" icon="flask-poison">
+    **General toxic, rude, or disrespectful language**
+
+    Examples:
+    - "You're an idiot"
+    - "This is garbage"
+    - "Nobody cares what you think"
+  </Accordion>
+
+  <Accordion title="Severe Toxicity" icon="skull">
+    **Extremely harmful, hateful, or aggressive language**
+
+    Examples:
+    - Extreme insults
+    - Violent threats
+    - Extremely hateful speech
+  </Accordion>
+
+  <Accordion title="Identity Attack" icon="user-slash">
+    **Negative comments about identity or demographics**
+
+    Examples:
+    - Racism
+    - Sexism
+    - Religious intolerance
+    - LGBTQ+ discrimination
+  </Accordion>
+
+  <Accordion title="Insult" icon="comment-slash">
+    **Direct insults or name-calling**
+
+    Examples:
+    - "You're stupid"
+    - "What a loser"
+    - "Pathetic"
+  </Accordion>
+
+  <Accordion title="Profanity" icon="ban">
+    **Swear words and crude language**
+
+    Examples:
+    - Common swear words
+    - Vulgar terms
+    - Crude slang
+  </Accordion>
+
+  <Accordion title="Threat" icon="exclamation-triangle">
+    **Threatening or violent language**
+
+    Examples:
+    - Physical threats
+    - Intimidation
+    - Calls for violence
+  </Accordion>
+
+  <Accordion title="Sexual Content" icon="venus-mars">
+    **Sexually explicit language**
+
+    Examples:
+    - Explicit sexual references
+    - Graphic content
+    - Sexual harassment
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  You can enable/disable individual categories based on your community guidelines.
+</Note>
+
+---
+
+## Customizing Warning Messages
+
+When a comment is blocked, users see a warning message. Customize it to match your tone:
+
+### Default Message
+
+```
+Your comment contains language that may be harmful or offensive. 
+Please revise your comment to be more respectful and constructive.
+```
+
+### Custom Message Examples
+
+<CodeGroup>
+```text Professional
+Thank you for your feedback. However, your comment doesn't meet our community guidelines. Please rephrase your message to be more constructive and respectful.
+```
+
+```text Friendly
+Hey there! 👋 We noticed your comment might contain language that could be hurtful to others. Mind rephrasing it in a friendlier way? Thanks for keeping our community positive!
+```
+
+```text Educational
+Our community values respectful dialogue. The language in your comment may be harmful. Consider rephrasing to contribute constructively to the discussion. Check our Community Guidelines for more info.
+```
+
+```text Strict
+Comment blocked. This content violates our zero-tolerance policy on toxic language. Repeated violations may result in restricted access.
+```
+</CodeGroup>
+
+### Message Variables
+
+Use these variables in your message:
+
+- `{category}` - Which category triggered the block (e.g., "Toxicity", "Insult")
+- `{score}` - The confidence score (e.g., "0.85")
+- `{guidelines_url}` - Link to your community guidelines
+
+Example:
+```
+Your comment was flagged for {category} (confidence: {score}). 
+Please review our [Community Guidelines]({guidelines_url}) and try again.
+```
+
+---
+
+## Advanced Configuration
+
+### Per-Category Thresholds
+
+Set different thresholds for each category:
+
+<img src="/images/moderation-advanced.png" alt="Advanced Threshold Settings" />
+
+```
+Toxicity: 0.7
+Severe Toxicity: 0.5 (more strict)
+Identity Attack: 0.6
+Insult: 0.75
+Profanity: 0.8 (more lenient)
+Threat: 0.5 (more strict)
+Sexual Content: 0.7
+```
+
+### Bypass Rules
+
+Allow certain users or roles to bypass moderation:
+
+- **Administrators:** Always bypass
+- **Editors:** Optional bypass
+- **Authors:** Optional bypass
+- **Logged-in users:** Optional bypass
+
+<Warning>
+  Be cautious with bypass rules. Even trusted users can occasionally post toxic content accidentally.
+</Warning>
+
+### Form Targeting
+
+Apply toxicity checking to specific forms:
+
+- ✅ **Comment forms** (default)
+- ✅ **Contact forms** (optional)
+- ✅ **Review forms** (WooCommerce, etc.)
+- ✅ **Forum posts** (bbPress, BuddyPress)
+- ✅ **Custom forms** (via CSS selector)
+
+---
+
+## Use Cases
+
+<Tabs>
+  <Tab title="Blog Comments">
+    **Challenge:** Hate speech and trolling in comment sections
+
+    **Solution:** Enable toxicity checker to automatically block harmful comments, reducing manual moderation time by 70%+
+
+    **Settings:**
+    - Threshold: 0.7 (balanced)
+    - All categories enabled
+    - Friendly warning message
+  </Tab>
+
+  <Tab title="Product Reviews">
+    **Challenge:** Competitors posting negative fake reviews
+
+    **Solution:** Detect extreme negativity and insults while allowing constructive criticism
+
+    **Settings:**
+    - Threshold: 0.8 (lenient for genuine issues)
+    - Enable: Toxicity, Insults, Profanity
+    - Disable: Identity Attack (less relevant)
+  </Tab>
+
+  <Tab title="Community Forum">
+    **Challenge:** Heated political discussions turning toxic
+
+    **Solution:** Strictly moderate identity attacks and threats while allowing robust debate
+
+    **Settings:**
+    - General toxicity: 0.7
+    - Identity attacks: 0.5 (strict)
+    - Threats: 0.4 (very strict)
+    - Profanity: 0.9 (lenient)
+  </Tab>
+
+  <Tab title="Children's Content">
+    **Challenge:** Protecting young audiences from any inappropriate content
+
+    **Solution:** Maximum protection across all categories
+
+    **Settings:**
+    - All thresholds: 0.4-0.5 (very strict)
+    - All categories enabled
+    - Educational warning message
+    - No bypass rules
+  </Tab>
+</Tabs>
+
+---
+
+## Performance & Compatibility
+
+### Browser Support
+
+TensorFlow.js works in all modern browsers:
+
+- ✅ Chrome 57+
+- ✅ Firefox 52+
+- ✅ Safari 11+
+- ✅ Edge 79+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+<Info>
+  For older browsers, the feature gracefully degrades—comments submit normally without toxicity checking.
+</Info>
+
+### Performance Impact
+
+- **Model size:** ~4MB (loaded once, cached)
+- **Analysis time:** 100-500ms per comment
+- **CPU usage:** Minimal (runs on user's device)
+- **No server load:** Everything is client-side
+
+### Compatibility
+
+Works with:
+- ✅ Default WordPress comments
+- ✅ Jetpack comments
+- ✅ Disqus (limited)
+- ✅ WooCommerce reviews
+- ✅ bbPress forums
+- ✅ BuddyPress activity
+- ✅ Custom comment systems (with CSS selector)
+
+---
+
+## Limitations & Considerations
+
+<AccordionGroup>
+  <Accordion title="False Positives" icon="triangle-exclamation">
+    AI isn't perfect. Occasionally, innocent comments may be flagged:
+
+    **Example false positives:**
+    - Quoting toxic content to discuss it
+    - Satire or sarcasm
+    - Medical/scientific terms
+    - Reclaimed language within communities
+
+    **Solutions:**
+    - Adjust thresholds
+    - Add bypass rules for trusted users
+    - Provide clear appeal process
+  </Accordion>
+
+  <Accordion title="False Negatives" icon="eye-slash">
+    Sophisticated toxic content may slip through:
+
+    **Examples:**
+    - Coded language
+    - Implicit bias
+    - Context-dependent toxicity
+    - Misspelled slurs (intentional)
+
+    **Solutions:**
+    - Use stricter thresholds
+    - Combine with manual moderation
+    - Implement reporting system
+    - Regular review of flagged content
+  </Accordion>
+
+  <Accordion title="Language Support" icon="language">
+    The toxicity model is trained primarily on **English**. Support for other languages is limited and less accurate.
+
+    **Well-supported:** English
+
+    **Partial support:** Spanish, French, German, Portuguese
+
+    **Limited support:** Other languages
+
+    For non-English sites, consider:
+    - Testing thoroughly before deploying
+    - Using more lenient thresholds
+    - Combining with language-specific tools
+  </Accordion>
+
+  <Accordion title="Context Awareness" icon="brain">
+    The model analyzes text in isolation, without full context:
+
+    - Can't detect sarcasm reliably
+    - Doesn't understand relationships between commenters
+    - May miss context-dependent toxicity
+    - Can't assess tone or intent accurately
+
+    AI moderation should complement, not replace, human judgment.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start Lenient, Then Tighten" icon="sliders">
+    1. Begin with threshold at 0.8-0.9
+    2. Monitor for blocked comments
+    3. Review false positives/negatives
+    4. Gradually lower threshold as needed
+    5. Find the sweet spot for your community
+  </Accordion>
+
+  <Accordion title="Provide Clear Guidelines" icon="book">
+    - Post community guidelines prominently
+    - Link to guidelines in warning message
+    - Explain what's not allowed and why
+    - Give examples of acceptable discourse
+    - Update guidelines based on common issues
+  </Accordion>
+
+  <Accordion title="Enable Reporting" icon="flag">
+    AI can't catch everything:
+    - Add "Report" buttons to comments
+    - Review reported content manually
+    - Update settings based on reports
+    - Thank community for helping moderate
+  </Accordion>
+
+  <Accordion title="Monitor & Adjust" icon="chart-line">
+    Regularly review moderation effectiveness:
+    - Check blocked comments log
+    - Identify patterns in toxic content
+    - Adjust category-specific thresholds
+    - Test changes with sample comments
+  </Accordion>
+
+  <Accordion title="Be Transparent" icon="eye">
+    Let users know about AI moderation:
+    - Add note to comment form
+    - Explain in community guidelines
+    - Provide appeal process
+    - Be open about limitations
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Toxicity checker not working">
+    **Solutions:**
+    1. Feature enabled in settings?
+    2. Test in modern browser (Chrome, Firefox)
+    3. Check browser console for errors
+    4. Verify comments are enabled on post
+    5. Clear browser cache
+  </Accordion>
+
+  <Accordion title="Too many false positives">
+    **Solutions:**
+    1. Increase threshold (0.8 or 0.9)
+    2. Disable overly-sensitive categories
+    3. Add bypass rules for regular users
+    4. Review blocked comments to find patterns
+  </Accordion>
+
+  <Accordion title="Toxic comments getting through">
+    **Solutions:**
+    1. Lower threshold (0.5 or 0.6)
+    2. Enable more categories
+    3. Use stricter severe toxicity threshold
+    4. Combine with manual moderation
+    5. Implement user reporting
+  </Accordion>
+
+  <Accordion title="Slow comment submission">
+    **Solutions:**
+    1. Model may be loading for first time (cached after)
+    2. Check user's internet connection
+    3. Test on different device/browser
+    4. Consider disabling on mobile (optional)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration Guide" icon="sliders" href="/moderation/configuration">
+    Advanced configuration options
+  </Card>
+  <Card title="Community Guidelines" icon="book" href="/advanced/customization">
+    Create effective guidelines
+  </Card>
+  <Card title="Performance Tips" icon="gauge-high" href="/advanced/performance">
+    Optimize moderation
+  </Card>
+  <Card title="Developer Hooks" icon="code" href="/developer/hooks-filters">
+    Extend moderation system
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Pro Tip:** Test your toxicity threshold by creating test comments with varying levels of negativity. Find the balance that protects your community without being overly restrictive.
+</Tip>

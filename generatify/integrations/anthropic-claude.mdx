@@ -1,0 +1,616 @@
+---
+title: 'Anthropic (Claude)'
+description: 'Setup and configure Anthropic Claude integration with Generatify'
+icon: 'a'
+---
+
+## Overview
+
+Anthropic's Claude models are known for natural conversation, strong safety features, and excellent instruction following. Created by former OpenAI researchers, Claude excels at helpdesk and customer-facing interactions.
+
+<CardGroup cols={2}>
+  <Card title="Best For" icon="star">
+    Conversations, helpdesk, natural dialogue
+  </Card>
+  <Card title="Pricing" icon="dollar-sign">
+    Competitive - Often cheaper than OpenAI
+  </Card>
+</CardGroup>
+
+---
+
+## Available Models
+
+<Tabs>
+  <Tab title="Claude 3.5 Sonnet">
+    ### Best Balance of Speed & Intelligence
+
+    **Model:** `claude-3-5-sonnet-20241022`
+
+    **Strengths:**
+    - Excellent conversational abilities
+    - Strong reasoning and analysis
+    - 200K token context window
+    - Natural, human-like responses
+    - Built-in safety features
+
+    **Best For:**
+    - Helpdesk Agent (top choice)
+    - AI Assistant Chatbot
+    - Customer service scenarios
+
+    **Pricing:**
+    - Input: $3.00 / 1M tokens
+    - Output: $15.00 / 1M tokens
+
+    **Example Usage:**
+    - 1,000 helpdesk responses: ~$5-15
+    - 1,000 chatbot queries: ~$3-10
+  </Tab>
+
+  <Tab title="Claude 3.5 Haiku">
+    ### Fast & Affordable
+
+    **Model:** `claude-3-5-haiku-20241022`
+
+    **Strengths:**
+    - Fastest Claude model
+    - Very cost-effective
+    - Still maintains good quality
+    - Great for high-volume tasks
+
+    **Best For:**
+    - Auto post tags
+    - Auto categories
+    - Quick responses
+    - High-volume automations
+
+    **Pricing:**
+    - Input: $0.25 / 1M tokens
+    - Output: $1.25 / 1M tokens
+
+    **Example Usage:**
+    - 1,000 auto-tags: ~$0.25-0.50
+    - 1,000 auto-categories: ~$0.30-0.60
+  </Tab>
+
+  <Tab title="Claude 3 Opus">
+    ### Most Capable (Premium)
+
+    **Model:** `claude-3-opus-20240229`
+
+    **Strengths:**
+    - Highest intelligence
+    - Best for complex tasks
+    - Superior analysis
+    - Excellent nuance handling
+
+    **Best For:**
+    - Critical content creation
+    - Complex problem-solving
+    - High-stakes scenarios
+
+    **Pricing:**
+    - Input: $15.00 / 1M tokens
+    - Output: $75.00 / 1M tokens
+
+    **Note:** Expensive—use sparingly for premium tasks
+  </Tab>
+
+  <Tab title="Claude 3 Haiku">
+    ### Legacy Fast Model
+
+    **Model:** `claude-3-haiku-20240307`
+
+    **Strengths:**
+    - Ultra-fast responses
+    - Most affordable option
+    - Good for simple tasks
+
+    **Best For:**
+    - Budget-conscious automations
+    - Simple queries
+
+    **Pricing:**
+    - Input: $0.25 / 1M tokens
+    - Output: $1.25 / 1M tokens
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Guide
+
+### Step 1: Create Anthropic Account
+
+<Steps>
+  <Step title="Visit Anthropic Console">
+    Go to [console.anthropic.com](https://console.anthropic.com)
+  </Step>
+
+  <Step title="Sign Up">
+    Create an account with email
+  </Step>
+
+  <Step title="Verify Email">
+    Check inbox and verify your email address
+  </Step>
+
+  <Step title="Add Payment Method">
+    Navigate to **Settings → Billing** and add payment details
+  </Step>
+</Steps>
+
+<Info>
+  **New Account Credit:** Anthropic often provides $5 free credit for new accounts to get started.
+</Info>
+
+### Step 2: Generate API Key
+
+<Steps>
+  <Step title="Navigate to API Keys">
+    In Anthropic Console, go to **Settings → API Keys**
+  </Step>
+
+  <Step title="Create New Key">
+    Click **Create Key**
+  </Step>
+
+  <Step title="Name Your Key">
+    Give it a descriptive name (e.g., "Generatify WordPress")
+  </Step>
+
+  <Step title="Copy Key">
+    Copy the API key immediately
+  </Step>
+</Steps>
+
+<img src="/images/anthropic-api-key.png" alt="Creating Anthropic API Key" />
+
+### Step 3: Add to Generatify
+
+<Steps>
+  <Step title="Open WordPress Admin">
+    Navigate to **Generatify → Settings → Integrations**
+  </Step>
+
+  <Step title="Find Anthropic Section">
+    Scroll to the **Anthropic** integration block
+  </Step>
+
+  <Step title="Enable Anthropic">
+    Toggle **Enable Anthropic** to ON
+  </Step>
+
+  <Step title="Paste API Key">
+    Paste your Anthropic API key
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Look for green checkmark confirming connection
+  </Step>
+</Steps>
+
+---
+
+## Model Selection by Feature
+
+Optimize costs and quality with the right model for each task:
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Recommended</th>
+      <th>Budget Option</th>
+      <th>Premium Option</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI Assistant</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>Claude 3 Opus</td>
+    </tr>
+    <tr>
+      <td>Auto Tags</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>Claude 3 Haiku</td>
+      <td>Claude 3.5 Sonnet</td>
+    </tr>
+    <tr>
+      <td>Auto Categories</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>Claude 3 Haiku</td>
+      <td>Claude 3.5 Sonnet</td>
+    </tr>
+    <tr>
+      <td>Meta Descriptions</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>Claude 3 Opus</td>
+    </tr>
+    <tr>
+      <td>Helpdesk Agent</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>Claude 3 Opus</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+  **Pro Tip:** Claude 3.5 Sonnet is the sweet spot for most use cases—excellent quality at competitive pricing, especially for conversational features.
+</Tip>
+
+---
+
+## Why Choose Claude?
+
+<AccordionGroup>
+  <Accordion title="Natural Conversation" icon="comments">
+    Claude excels at human-like dialogue:
+    - Remembers context throughout conversations
+    - Asks clarifying questions when needed
+    - Maintains consistent personality
+    - Handles ambiguity gracefully
+
+    **Perfect for:** Helpdesk Agent, AI Assistant
+  </Accordion>
+
+  <Accordion title="Strong Safety Features" icon="shield-check">
+    Built-in content filtering and safety:
+    - Refuses harmful requests
+    - Avoids bias and discrimination
+    - Transparent about limitations
+    - Ethical AI principles
+
+    **Perfect for:** Customer-facing applications
+  </Accordion>
+
+  <Accordion title="Long Context Windows" icon="arrows-left-right">
+    200K token context for Claude 3.5:
+    - Analyze entire blog posts
+    - Reference multiple documents
+    - Maintain long conversations
+    - Process large datasets
+
+    **Perfect for:** Content analysis, chatbot with history
+  </Accordion>
+
+  <Accordion title="Instruction Following" icon="list-check">
+    Excellent at following complex instructions:
+    - Adheres to style guidelines
+    - Follows formatting rules
+    - Respects constraints
+    - Consistent output quality
+
+    **Perfect for:** Structured content generation
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Cost Management
+
+### Understanding Pricing
+
+**Token Basics:**
+- Input tokens: What you send to Claude
+- Output tokens: What Claude generates
+- Both count toward costs
+- ~750 words = 1,000 tokens
+
+**Example Calculation:**
+```
+Task: Helpdesk response
+Input tokens: ~500 (user question + knowledge base context)
+Output tokens: ~150 (Claude's response)
+
+Cost with Claude 3.5 Sonnet:
+Input: 500 × $3.00 / 1M = $0.0015
+Output: 150 × $15.00 / 1M = $0.00225
+Total: ~$0.00375 per response
+```
+
+### Setting Budget Alerts
+
+<Steps>
+  <Step title="Go to Billing Settings">
+    Navigate to **Settings → Billing** in Anthropic Console
+  </Step>
+
+  <Step title="Set Monthly Budget">
+    Define your maximum monthly spend
+  </Step>
+
+  <Step title="Configure Alerts">
+    Get emails at 50%, 75%, and 90% of budget
+  </Step>
+
+  <Step title="Enable Auto-cutoff">
+    Optionally stop usage at budget limit
+  </Step>
+</Steps>
+
+### Monitoring Usage
+
+Track spending at [console.anthropic.com/settings/usage](https://console.anthropic.com/settings/usage):
+
+- Daily and monthly usage
+- Cost breakdown by model
+- Token usage statistics
+- Historical trends
+
+<img src="/images/anthropic-usage-dashboard.png" alt="Anthropic Usage Dashboard" />
+
+---
+
+## Rate Limits
+
+Anthropic rate limits based on account tier:
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>RPM</th>
+      <th>TPM</th>
+      <th>Qualification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tier 1</td>
+      <td>50</td>
+      <td>40,000</td>
+      <td>Default for new accounts</td>
+    </tr>
+    <tr>
+      <td>Tier 2</td>
+      <td>1,000</td>
+      <td>80,000</td>
+      <td>$5+ spend</td>
+    </tr>
+    <tr>
+      <td>Tier 3</td>
+      <td>2,000</td>
+      <td>160,000</td>
+      <td>$40+ spend</td>
+    </tr>
+    <tr>
+      <td>Tier 4</td>
+      <td>4,000</td>
+      <td>320,000</td>
+      <td>$200+ spend</td>
+    </tr>
+  </tbody>
+</table>
+
+<Info>
+  RPM = Requests per minute  
+  TPM = Tokens per minute
+</Info>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use Sonnet for Conversations" icon="comments">
+    Claude 3.5 Sonnet is optimized for dialogue:
+    - Best for Helpdesk Agent
+    - Natural chat experiences
+    - Maintains conversation flow
+    - Handles follow-ups well
+
+    Worth the premium over Haiku for customer interactions.
+  </Accordion>
+
+  <Accordion title="Use Haiku for Automations" icon="robot">
+    Claude 3.5 Haiku excels at high-volume tasks:
+    - Auto-tagging posts
+    - Categorization
+    - Simple queries
+    - Batch processing
+
+    5x cheaper than Sonnet for similar simple tasks.
+  </Accordion>
+
+  <Accordion title="Leverage Long Context" icon="file">
+    Make use of 200K context window:
+    - Send full post content for better tags
+    - Include multiple reference documents
+    - Provide comprehensive site context
+    - Maintain longer conversation history
+
+    Claude handles long inputs efficiently.
+  </Accordion>
+
+  <Accordion title="Clear System Instructions" icon="message">
+    Claude follows instructions exceptionally well:
+    - Define response style and tone
+    - Set formatting requirements
+    - Specify constraints
+    - Provide examples
+
+    Well-crafted instructions = consistent quality.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Comparing Claude to GPT
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Claude 3.5 Sonnet</th>
+      <th>GPT-4 Turbo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Conversation Quality**</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Content Creation**</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Code Understanding**</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Safety & Ethics**</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Cost Efficiency**</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Context Window**</td>
+      <td>200K tokens</td>
+      <td>128K tokens</td>
+    </tr>
+    <tr>
+      <td>**Speed**</td>
+      <td>⚡⚡⚡⚡</td>
+      <td>⚡⚡⚡</td>
+    </tr>
+  </tbody>
+</table>
+
+**Recommendation:** Use Claude for helpdesk/chat, GPT-4 for content creation.
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Authentication Error">
+    **Error:** "Invalid API key"
+
+    **Solutions:**
+    1. Verify key copied correctly
+    2. Check key is active in console
+    3. Ensure billing is configured
+    4. Generate new key if needed
+  </Accordion>
+
+  <Accordion title="Rate Limit Exceeded">
+    **Error:** "Rate limit reached"
+
+    **Solutions:**
+    1. Wait 60 seconds and retry
+    2. Check your tier limits
+    3. Implement request queuing
+    4. Upgrade tier with more spend
+  </Accordion>
+
+  <Accordion title="Overloaded Error">
+    **Error:** "Overloaded"
+
+    **Solutions:**
+    1. This is temporary—retry in a few seconds
+    2. Implement exponential backoff
+    3. Try different model temporarily
+    4. Check [status.anthropic.com](https://status.anthropic.com)
+  </Accordion>
+
+  <Accordion title="Response Refused">
+    **Issue:** Claude refuses to answer
+
+    **Reasons:**
+    - Question involves harmful content
+    - Request violates usage policies
+    - Prompt is ambiguous or unclear
+
+    **Solutions:**
+    1. Rephrase question more clearly
+    2. Remove potentially harmful elements
+    3. Review Anthropic usage policies
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Features
+
+### Streaming Responses
+
+For real-time chat experiences:
+
+```php
+// Generatify automatically handles streaming for:
+// - AI Assistant Chatbot
+// - Helpdesk Agent responses
+
+// Enable streaming in settings for faster perceived response times
+```
+
+### Vision Capabilities
+
+Claude 3 models support image analysis:
+
+```php
+// Coming soon to Generatify:
+// - Image-based queries in chatbot
+// - Product image descriptions
+// - Visual content analysis
+```
+
+---
+
+## Support Resources
+
+<CardGroup cols={2}>
+  <Card title="Anthropic Docs" icon="book" href="https://docs.anthropic.com">
+    Official API documentation
+  </Card>
+  <Card title="Support Portal" icon="headset" href="https://support.anthropic.com">
+    Get help from Anthropic team
+  </Card>
+  <Card title="Status Page" icon="signal" href="https://status.anthropic.com">
+    Check API status
+  </Card>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/anthropic">
+    Join the community
+  </Card>
+</CardGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Integration" icon="openai" href="/integrations/openai-chatgpt">
+    Add OpenAI for comparison
+  </Card>
+  <Card title="Google Integration" icon="google" href="/integrations/google-gemini">
+    Setup Google Gemini
+  </Card>
+  <Card title="Helpdesk Setup" icon="headset" href="/helpdesk/setup">
+    Configure helpdesk with Claude
+  </Card>
+  <Card title="Chatbot Setup" icon="comments" href="/features/ai-assistant-chatbot">
+    Setup AI Assistant
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Why Choose Claude for Helpdesk:** Claude's conversational abilities and built-in safety features make it the top choice for customer-facing chat widgets. Users consistently prefer Claude's natural, helpful responses.
+</Tip>

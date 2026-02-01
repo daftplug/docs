@@ -1,0 +1,676 @@
+---
+title: 'FAQ'
+description: 'Frequently asked questions about Generatify'
+icon: 'circle-question'
+---
+
+## General Questions
+
+<AccordionGroup>
+  <Accordion title="What is Generatify?" icon="circle-info">
+    Generatify is a comprehensive AI suite for WordPress that adds intelligent features to your website, including:
+    
+    - AI-powered chatbot assistant
+    - Automatic content tagging and categorization
+    - SEO meta description generation
+    - Helpdesk chat and contact form
+    - Smart writing suggestions
+    - AI-powered related posts recommendations
+    - Comment toxicity detection
+    
+    It integrates with multiple AI providers (OpenAI, Anthropic, Google Gemini) to deliver powerful automation and engagement features.
+  </Accordion>
+  
+  <Accordion title="Do I need coding skills to use Generatify?" icon="code">
+    **No!** Generatify is designed for non-technical users. All features are configured through an intuitive WordPress admin interface.
+    
+    However, developers can extend Generatify using:
+    - WordPress hooks and filters
+    - REST API endpoints
+    - JavaScript APIs
+    - Custom AI providers
+  </Accordion>
+  
+  <Accordion title="What WordPress version is required?" icon="wordpress">
+    **Requirements:**
+    - WordPress 6.0 or higher
+    - PHP 7.4 or higher
+    - MySQL 5.7 or higher
+    
+    **Recommended:**
+    - WordPress 6.4+
+    - PHP 8.1+
+    - MySQL 8.0+
+  </Accordion>
+  
+  <Accordion title="Is Generatify compatible with my theme/plugins?" icon="puzzle-piece">
+    Yes! Generatify is built to work with any well-coded WordPress theme and plugin.
+    
+    **Confirmed compatible with:**
+    - All WordPress default themes
+    - Popular page builders (Elementor, Beaver Builder, Divi)
+    - WooCommerce
+    - SEO plugins (Yoast, Rank Math, AIOSEO, SEOPress)
+    - Akismet
+    - WPML (coming soon)
+    
+    If you experience conflicts, see our [Troubleshooting](/advanced/troubleshooting) guide or [contact support](/support/get-help).
+  </Accordion>
+  
+  <Accordion title="Does Generatify work on multisite?" icon="network-wired">
+    **Yes!** Generatify is multisite-compatible.
+    
+    - Network activate for all sites
+    - Or activate per-site
+    - Separate settings per site
+    - Centralized license management
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## AI Providers & Costs
+
+<AccordionGroup>
+  <Accordion title="Which AI providers are supported?" icon="brain">
+    Generatify supports three major AI providers:
+    
+    **1. OpenAI (ChatGPT)**
+    - Models: GPT-4, GPT-4o, GPT-4o Mini, GPT-3.5 Turbo
+    - Best for: General-purpose, well-documented
+    - Cost: $0.15 - $30 per 1M tokens
+    
+    **2. Anthropic (Claude)**
+    - Models: Claude 3.5 Sonnet/Haiku, Claude 3 Opus/Haiku
+    - Best for: Long context, nuanced understanding
+    - Cost: $0.25 - $15 per 1M tokens
+    
+    **3. Google (Gemini)**
+    - Models: Gemini 1.5 Pro/Flash, Gemini 2.0 Flash
+    - Best for: Cost-effectiveness, multimodal (future)
+    - Cost: Free tier available, then $0.075 - $7 per 1M tokens
+    
+    You can switch providers or use multiple providers with automatic fallback.
+  </Accordion>
+  
+  <Accordion title="How much does AI usage cost?" icon="dollar-sign">
+    **Typical monthly costs for a small-medium blog (20 posts/month):**
+    
+    - **Automations (tags, categories, meta):** $1-3/month
+    - **Chat widget (200 conversations):** $5-15/month
+    - **Smart Compose (500 suggestions):** $2-5/month
+    - **Related Posts (with caching):** <$1/month
+    - **Toxicity Checker:** $0 (uses TensorFlow.js)
+    
+    **Total estimated:** $8-25/month
+    
+    **For larger sites (100 posts/month, 1,000 chats):**
+    - $40-100/month
+    
+    **Cost optimization tips:**
+    - Use GPT-4o Mini (97% cheaper than GPT-4)
+    - Enable caching (99% cost reduction for repeated content)
+    - Set rate limits per user
+    - Use Gemini Flash (free tier: 15 requests/minute)
+  </Accordion>
+  
+  <Accordion title="Do I need to pay for Generatify AND the AI provider?" icon="money-bill">
+    **Yes, two separate costs:**
+    
+    1. **Generatify Plugin License** (one-time or subscription)
+       - Access to plugin updates and support
+       
+    2. **AI Provider API Costs** (pay-as-you-go)
+       - You pay the AI provider directly based on usage
+       - No markup from Generatify
+       - You keep full control of your AI spending
+    
+    This gives you:
+    - Transparent pricing
+    - No vendor lock-in
+    - Direct access to AI providers
+    - Ability to switch providers anytime
+  </Accordion>
+  
+  <Accordion title="Can I use Generatify without an AI API key?" icon="key">
+    **Partially:**
+    
+    **Features that work without AI:**
+    - Toxicity Checker (uses TensorFlow.js locally)
+    - Manual controls and UI
+    
+    **Features that require AI API:**
+    - Chat assistant
+    - Automations (tags, categories, meta descriptions)
+    - Helpdesk agent
+    - Smart Compose
+    - Related Posts recommendations
+    
+    **Recommendation:** Get at least one AI provider API key to unlock full potential.
+  </Accordion>
+  
+  <Accordion title="What happens if I run out of API credits?" icon="gauge">
+    **If your AI provider API limit is reached:**
+    
+    1. AI features stop working temporarily
+    2. Users see friendly error message
+    3. You receive email notification (if configured)
+    4. Cached responses still work
+    
+    **Solutions:**
+    - Add payment method to AI provider account
+    - Increase spending limits
+    - Enable fallback provider
+    - Optimize usage (caching, rate limits)
+    
+    **Prevention:**
+    - Set budget alerts at 80%
+    - Enable caching
+    - Use GPT-4o Mini for most features
+    - Set per-user rate limits
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Features & Functionality
+
+<AccordionGroup>
+  <Accordion title="Can the AI chat access my site's content?" icon="book">
+    **Yes!** The chat assistant can use your site content as knowledge sources:
+    
+    **Supported knowledge sources:**
+    - Posts and pages
+    - Products (WooCommerce)
+    - Custom post types
+    - Custom documents (upload text/PDF)
+    - External URLs
+    - Custom knowledge base
+    
+    **Configuration:**
+    ```
+    Settings → AI Assistant → Knowledge Sources
+    Select which content types to include
+    ```
+    
+    The AI uses this to give accurate, site-specific answers.
+  </Accordion>
+  
+  <Accordion title="Will auto-tagging replace my existing tags?" icon="tags">
+    **Configurable behavior:**
+    
+    **Default (additive):**
+    - Adds AI-generated tags
+    - Keeps existing manual tags
+    
+    **Override mode:**
+    - Replaces all tags with AI suggestions
+    - Enable at: Settings → Automations → Auto Tags → Override Manual
+    
+    **Merge mode:**
+    - Combines manual + AI tags
+    - Removes duplicates
+    
+    **Best practice:** Start with additive, review for a week, then decide on strategy.
+  </Accordion>
+  
+  <Accordion title="Can I review AI-generated content before it's published?" icon="eye">
+    **Yes!** Multiple review options:
+    
+    **1. Manual trigger (recommended initially):**
+    - Generate on-demand from post editor
+    - Review and edit before accepting
+    
+    **2. Hold for approval:**
+    - Auto-generate on save (draft status)
+    - You approve before publish
+    
+    **3. Automatic (after testing):**
+    - Auto-generate and apply on publish
+    - Most efficient for established workflows
+    
+    **Settings:**
+    ```
+    Settings → Automations → [Feature] → Trigger
+    Options: Manual, On Save, On Publish
+    ```
+  </Accordion>
+  
+  <Accordion title="How accurate is the toxicity checker?" icon="shield-check">
+    **Accuracy:** ~85-90% for English content
+    
+    **Strengths:**
+    - Excellent at detecting clear toxicity
+    - Fast (runs in browser)
+    - Zero cost
+    - Privacy-friendly (no data sent to external servers)
+    
+    **Limitations:**
+    - May miss sophisticated trolling
+    - Context-dependent (sarcasm, humor)
+    - English only (currently)
+    - False positives ~10-20% (adjustable with thresholds)
+    
+    **Recommendation:** Use as first line of defense, combine with human moderation for borderline cases.
+  </Accordion>
+  
+  <Accordion title="Can I customize the AI's personality/tone?" icon="user-astronaut">
+    **Yes!** Multiple customization options:
+    
+    **1. System Prompt:**
+    ```
+    Settings → AI Assistant → System Prompt
+    Example: "You are a friendly, helpful assistant for a tech blog. 
+    Use casual language and include helpful links."
+    ```
+    
+    **2. Per-feature tone:**
+    ```
+    Settings → Automations → Meta Descriptions → Tone: Professional
+    Settings → Smart Compose → Tone: Match my style
+    ```
+    
+    **3. Via hooks (developers):**
+    ```php
+    add_filter( 'generatify_ai_prompt', function( $prompt, $feature ) {
+        return $prompt . "\n\nAlways be enthusiastic and use emojis!";
+    }, 10, 2 );
+    ```
+  </Accordion>
+  
+  <Accordion title="Does Smart Compose work in Gutenberg and Classic Editor?" icon="pen">
+    **Gutenberg (Block Editor):** ✅ Full support
+    - Real-time suggestions
+    - Keyboard shortcuts (Tab, Ctrl+R)
+    - Inline suggestions
+    
+    **Classic Editor:** ⚠️ Limited support
+    - Manual trigger only (Ctrl+Space)
+    - Suggestions in separate box
+    - No inline preview
+    
+    **Other Editors:**
+    - **Elementor:** Via textarea widgets (limited)
+    - **Divi:** Via text modules (limited)
+    - **Page builders:** Generally limited support
+    
+    **Recommendation:** Use Gutenberg for best Smart Compose experience.
+  </Accordion>
+  
+  <Accordion title="Can I use Generatify features via code/API?" icon="code">
+    **Yes!** Full API access:
+    
+    **REST API endpoints:**
+    ```bash
+    POST /wp-json/generatify/v1/chat
+    POST /wp-json/generatify/v1/generate-tags
+    POST /wp-json/generatify/v1/generate-categories
+    # ... and more
+    ```
+    
+    **JavaScript API:**
+    ```javascript
+    window.GeneratifyChat.sendMessage('Hello');
+    window.GeneratifySmartCompose.getSuggestion();
+    ```
+    
+    **PHP functions:**
+    ```php
+    $ai = generatify_get_ai_instance();
+    $response = $ai->send_request( $prompt );
+    ```
+    
+    See [API Reference](/developer/api-reference) for complete documentation.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Privacy & Security
+
+<AccordionGroup>
+  <Accordion title="Is my site's data sent to AI providers?" icon="shield">
+    **What's sent to AI providers:**
+    - Content you explicitly ask to process (posts, prompts)
+    - Chat messages
+    - Context needed for AI responses
+    
+    **NOT sent:**
+    - User passwords
+    - Payment information
+    - Personal data (unless in content)
+    - Analytics data
+    
+    **Toxicity Checker exception:**
+    - Runs entirely in browser (TensorFlow.js)
+    - Zero data sent to external servers
+    - Complete privacy
+    
+    **Data retention:**
+    - OpenAI: 30 days, then deleted
+    - Anthropic: Not stored beyond processing
+    - Google: Per their data policy
+    
+    See each provider's privacy policy for details.
+  </Accordion>
+  
+  <Accordion title="Is Generatify GDPR compliant?" icon="scale-balanced">
+    **Yes, with proper configuration:**
+    
+    **GDPR-friendly features:**
+    - Toxicity Checker (local processing, no data transfer)
+    - Option to disable data collection
+    - Clear privacy notices
+    - User consent for chat data storage
+    
+    **Your responsibilities:**
+    1. Add privacy policy mentioning AI usage
+    2. Get user consent for chat data storage
+    3. Provide opt-out options
+    4. Handle data deletion requests
+    
+    **Recommended privacy notice:**
+    ```
+    "This site uses AI-powered features. Chat conversations may be processed 
+    by third-party AI providers (OpenAI/Anthropic/Google). No personal data 
+    is permanently stored. See our Privacy Policy for details."
+    ```
+    
+    **Settings:**
+    ```
+    Settings → Advanced → Privacy
+    ✅ Show privacy notice in chat
+    ✅ Require consent checkbox
+    ✅ Auto-delete chat logs after 30 days
+    ```
+  </Accordion>
+  
+  <Accordion title="Can I self-host the AI models?" icon="server">
+    **Toxicity Checker only:**
+    - Uses TensorFlow.js (runs in browser)
+    - Already "self-hosted" (client-side)
+    
+    **Other features:**
+    - Require cloud AI providers (OpenAI, Anthropic, Google)
+    - Self-hosting LLMs not currently supported
+    
+    **Future possibility:**
+    - Support for local LLMs (Ollama, LM Studio) is on the roadmap
+    - Would enable complete data privacy
+    - Requires significant server resources
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Technical Questions
+
+<AccordionGroup>
+  <Accordion title="Does Generatify slow down my website?" icon="gauge">
+    **No, when properly configured:**
+    
+    **Frontend impact:**
+    - Widgets load asynchronously
+    - JavaScript is deferred
+    - CSS is minified
+    - TensorFlow.js lazy-loads
+    
+    **Backend impact:**
+    - AI requests are async (don't block page loads)
+    - Caching prevents redundant API calls
+    - Background processing for automations
+    
+    **Performance tips:**
+    - Enable caching (99% faster for cached content)
+    - Use Redis/Memcached for object caching
+    - Lazy load TensorFlow.js
+    - Minify assets
+    
+    **Benchmark (with caching enabled):**
+    - Page load time impact: <50ms
+    - Chat widget: <100ms to display
+    - API requests: 1-3 seconds (async, non-blocking)
+  </Accordion>
+  
+  <Accordion title="What are the server requirements?" icon="server">
+    **Minimum:**
+    - PHP 7.4+
+    - MySQL 5.7+
+    - 128MB PHP memory limit
+    - HTTPS (required for AI APIs)
+    
+    **Recommended:**
+    - PHP 8.1+
+    - MySQL 8.0+
+    - 256MB PHP memory limit
+    - Redis or Memcached
+    - 1GB+ RAM
+    - SSD storage
+    
+    **Hosting compatibility:**
+    - ✅ Shared hosting (most)
+    - ✅ VPS
+    - ✅ Dedicated servers
+    - ✅ Managed WordPress (most)
+    - ✅ WP Engine, Kinsta, Flywheel, etc.
+    
+    **Firewall requirements:**
+    - Allow outbound HTTPS (port 443) to:
+      - api.openai.com
+      - api.anthropic.com
+      - generativelanguage.googleapis.com
+  </Accordion>
+  
+  <Accordion title="Can I use Generatify on localhost/staging?" icon="laptop-code">
+    **Yes!** Works on local development environments:
+    
+    - Localhost (XAMPP, Local, MAMP, etc.)
+    - Staging sites
+    - Development domains
+    
+    **Requirements:**
+    - Internet connection (for AI API calls)
+    - Valid AI API keys
+    - HTTPS recommended (but not required for local testing)
+    
+    **License activation:**
+    - Development sites don't count against license limit
+    - Or use separate development license
+  </Accordion>
+  
+  <Accordion title="How do I migrate Generatify to a new site?" icon="arrows-turn-right">
+    **Steps:**
+    
+    1. **Export settings:**
+       ```
+       Old Site: Settings → Advanced → Export Settings
+       Download: generatify-settings.json
+       ```
+    
+    2. **Install on new site:**
+       ```
+       New Site: Plugins → Add New → Upload generatify.zip
+       Activate plugin
+       ```
+    
+    3. **Import settings:**
+       ```
+       New Site: Settings → Advanced → Import Settings
+       Upload: generatify-settings.json
+       ```
+    
+    4. **Re-enter API keys:**
+       - API keys are not exported (security)
+       - Settings → AI Providers → Add keys
+    
+    5. **Deactivate license on old site:**
+       ```
+       Old Site: Generatify → License → Deactivate
+       New Site: Generatify → License → Activate
+       ```
+    
+    **Note:** Chat history and analytics don't transfer. Knowledge sources (posts/pages) move with WordPress export/import.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="AI features aren't working. What should I check?" icon="wrench">
+    **Quick checklist:**
+    
+    1. ✅ Plugin activated
+    2. ✅ Feature enabled (Settings → Features)
+    3. ✅ AI API key added and valid
+    4. ✅ Internet connection working
+    5. ✅ No JavaScript errors (check browser console: F12)
+    6. ✅ No plugin conflicts (disable other plugins temporarily)
+    
+    **Test API connection:**
+    ```
+    Settings → AI Providers → [Provider] → Test Connection
+    ```
+    
+    If test fails, see [Troubleshooting](/advanced/troubleshooting) guide.
+  </Accordion>
+  
+  <Accordion title="Where can I find error logs?" icon="file-lines">
+    **Enable debug mode:**
+    ```
+    Settings → Advanced → Debug Mode: ON
+    Settings → Advanced → Log Level: Debug
+    ```
+    
+    **View logs:**
+    - **In dashboard:** Settings → Advanced → View Logs
+    - **File:** `wp-content/generatify-debug.log`
+    - **WordPress debug.log:** `wp-content/debug.log`
+    
+    **Export logs:**
+    ```
+    Settings → Advanced → Export Debug Logs
+    ```
+    
+    **Remember:** Disable debug mode after troubleshooting (impacts performance).
+  </Accordion>
+  
+  <Accordion title="How do I report a bug?" icon="bug">
+    **Steps:**
+    
+    1. **Gather information:**
+       - Error message
+       - Steps to reproduce
+       - Expected vs actual behavior
+       - WordPress version, theme, active plugins
+       - Browser and OS
+    
+    2. **Enable debug mode and export logs:**
+       ```
+       Settings → Advanced → Debug Mode: ON
+       Reproduce issue
+       Settings → Advanced → Export Debug Logs
+       ```
+    
+    3. **Submit bug report:**
+       - [Support portal](/support/get-help)
+       - Include logs and system info
+       - Screenshots/video if applicable
+    
+    4. **Temporary workaround:**
+       - Check [Troubleshooting](/advanced/troubleshooting)
+       - Check [FAQ](/support/faq)
+       - Search support forum
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Licensing & Support
+
+<AccordionGroup>
+  <Accordion title="What's included in my license?" icon="certificate">
+    **All licenses include:**
+    - Plugin access and updates
+    - Priority support
+    - Documentation
+    - Security updates
+    
+    **License tiers:**
+    
+    **Personal ($XX/year):**
+    - 1 site
+    - All features
+    - Email support
+    
+    **Business ($XX/year):**
+    - 5 sites
+    - All features
+    - Priority support
+    
+    **Agency ($XX/year):**
+    - Unlimited sites
+    - All features
+    - Premium support
+    - White-label option
+  </Accordion>
+  
+  <Accordion title="Can I use Generatify on client sites?" icon="briefcase">
+    **Yes, depending on your license:**
+    
+    - **Personal:** No (your sites only)
+    - **Business:** Yes (up to 5 client sites)
+    - **Agency:** Yes (unlimited client sites)
+    
+    **Client site setup:**
+    - Each client site uses one license activation
+    - You manage licenses from your account
+    - Clients don't need their own license
+    - Updates work automatically
+    
+    **White-label (Agency only):**
+    - Remove Generatify branding
+    - Custom plugin name/logo
+    - Your support contact info
+  </Accordion>
+  
+  <Accordion title="What happens when my license expires?" icon="calendar-xmark">
+    **After expiration:**
+    
+    **Still works:**
+    - All features continue functioning
+    - Existing configuration preserved
+    
+    **Stops working:**
+    - Plugin updates (security fixes, new features)
+    - Support access
+    
+    **Recommendation:** Renew before expiration to maintain security updates and support.
+    
+    **Grace period:** 7 days to renew without losing access.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Still Have Questions?
+
+<CardGroup cols={2}>
+  <Card title="Get Help" icon="life-ring" href="/support/get-help">
+    Contact support
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Common issues and fixes
+  </Card>
+  <Card title="Documentation" icon="book" href="/getting-started/introduction">
+    Complete documentation
+  </Card>
+  <Card title="Changelog" icon="clock-rotate-left" href="/support/changelog">
+    What's new
+  </Card>
+</CardGroup>
+
+<Tip>
+**Can't find your answer?** Use the search bar at the top of this page or [contact support](/support/get-help) for personalized assistance.
+</Tip>

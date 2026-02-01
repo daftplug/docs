@@ -1,0 +1,825 @@
+---
+title: 'Automatic Post Categories'
+description: 'Let AI automatically assign appropriate categories to your posts'
+icon: 'folder-tree'
+---
+
+## Overview
+
+Automatic Post Categories uses AI to analyze your content and assign the most appropriate categories automatically. Maintain consistent, logical content organization without manual effort.
+
+<CardGroup cols={3}>
+  <Card title="Organized" icon="sitemap">
+    Perfect categorization every time
+  </Card>
+  <Card title="Consistent" icon="check-double">
+    No human error or oversight
+  </Card>
+  <Card title="Effortless" icon="wand-magic-sparkles">
+    Set it and forget it
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="Content Analysis">
+    AI reads post title, content, excerpt, and existing tags
+  </Step>
+  
+  <Step title="Category Review">
+    Analyzes your existing WordPress category structure
+  </Step>
+  
+  <Step title="Best Match Selection">
+    Identifies 1-3 most relevant categories
+  </Step>
+  
+  <Step title="Automatic Assignment">
+    Assigns categories to the post
+  </Step>
+  
+  <Step title="Fallback Handling">
+    Uses "Uncategorized" if no good match (optional)
+  </Step>
+</Steps>
+
+<Info>
+**Smart Hierarchy:** AI understands parent-child category relationships and can assign both (e.g., "Technology → Web Development").
+</Info>
+
+---
+
+## Setup Guide
+
+### Enable Auto Categories
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **WordPress Admin → Generatify → Settings → Automations**
+  </Step>
+  
+  <Step title="Find Auto Categories Section">
+    Scroll to **Automatic Post Categories**
+  </Step>
+  
+  <Step title="Enable Feature">
+    Toggle **Enable Auto Categories** to ON
+  </Step>
+  
+  <Step title="Configure Settings">
+    Set your preferred options (see Configuration below)
+  </Step>
+  
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+</Steps>
+
+---
+
+## Configuration Options
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AI Provider**</td>
+      <td>OpenAI, Anthropic, Google</td>
+      <td>Which AI provider to use</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider-specific models</td>
+      <td>Which model to use</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Number of Categories**</td>
+      <td>1-5</td>
+      <td>Max categories to assign</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>**Use Existing Only**</td>
+      <td>Yes / No</td>
+      <td>Only use current categories</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Create New Categories**</td>
+      <td>Yes / No</td>
+      <td>Allow AI to create new ones</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Include Descriptions**</td>
+      <td>Yes / No</td>
+      <td>Use category descriptions for context</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Fallback Category**</td>
+      <td>Category selection</td>
+      <td>Use if no match found</td>
+      <td>Uncategorized</td>
+    </tr>
+    <tr>
+      <td>**Auto-Run on Publish**</td>
+      <td>Yes / No</td>
+      <td>Run when post is published</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Auto-Run on Save**</td>
+      <td>Yes / No</td>
+      <td>Run when post is saved as draft</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Post Types**</td>
+      <td>Multiple selection</td>
+      <td>Which post types to apply to</td>
+      <td>Posts only</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Category Selection Strategy
+
+<Tabs>
+  <Tab title="Single Category (Default)">
+    ### One Category Per Post
+    
+    **Configuration:** Number of Categories = 1
+    
+    **Best For:**
+    - Simple site structure
+    - Clear-cut topics
+    - Traditional blogs
+    - Portfolio sites
+    
+    **Pros:**
+    - Clean organization
+    - No overlap confusion
+    - Easy navigation
+    
+    **Cons:**
+    - Less granular
+    - Might miss subtopics
+    
+    **Example:** 
+    Post about "React Hooks Tutorial" → **Web Development**
+  </Tab>
+  
+  <Tab title="Multiple Categories">
+    ### 2-3 Categories Per Post
+    
+    **Configuration:** Number of Categories = 2-3
+    
+    **Best For:**
+    - Complex topics
+    - Cross-disciplinary content
+    - Magazine-style sites
+    - Multi-topic blogs
+    
+    **Pros:**
+    - Better topic coverage
+    - More discovery paths
+    - Richer taxonomy
+    
+    **Cons:**
+    - Can get cluttered
+    - Risk of over-categorization
+    
+    **Example:**
+    Post about "React Hooks Tutorial" → **Web Development**, **JavaScript**, **Tutorials**
+  </Tab>
+  
+  <Tab title="Hierarchical Categories">
+    ### Parent + Child Categories
+    
+    **Configuration:** 
+    - Number of Categories = 2
+    - Use category hierarchy
+    
+    **Best For:**
+    - Large sites
+    - Deep taxonomy
+    - Knowledge bases
+    - Documentation sites
+    
+    **Pros:**
+    - Precise categorization
+    - Maintains hierarchy
+    - Scalable structure
+    
+    **Cons:**
+    - Requires well-planned structure
+    - More complex setup
+    
+    **Example:**
+    Post about "React Hooks Tutorial" → **Programming → Web Development**
+  </Tab>
+</Tabs>
+
+---
+
+## AI Model Recommendations
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Speed</th>
+      <th>Cost per Post</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o Mini</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⚡⚡</td>
+      <td>~$0.0001</td>
+      <td>Best accuracy</td>
+    </tr>
+    <tr>
+      <td>**Google**</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.00003</td>
+      <td>High volume, free tier</td>
+    </tr>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Claude 3.5 Haiku</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.00008</td>
+      <td>Nuanced understanding</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>⭐⭐⭐</td>
+      <td>⚡⚡⚡</td>
+      <td>~$0.00005</td>
+      <td>Budget option</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Recommended:** Use **GPT-4o Mini** or **Claude 3.5 Haiku** for best categorization accuracy. Categories are more critical than tags, so quality matters.
+</Tip>
+
+---
+
+## Usage Examples
+
+### Example 1: Tech Blog
+
+**Existing Categories:**
+- Programming
+  - Web Development
+  - Mobile Development
+  - Backend
+- Tutorials
+- News
+- Reviews
+
+**Post Title:** "Building a REST API with Node.js and Express"
+
+**AI Assignment:** **Programming → Backend**, **Tutorials**
+
+---
+
+### Example 2: Lifestyle Blog
+
+**Existing Categories:**
+- Food
+  - Recipes
+  - Restaurant Reviews
+- Travel
+- Fashion
+- Wellness
+
+**Post Title:** "10 Healthy Breakfast Recipes Under 300 Calories"
+
+**AI Assignment:** **Food → Recipes**, **Wellness**
+
+---
+
+### Example 3: Business Blog
+
+**Existing Categories:**
+- Marketing
+- Sales
+- Leadership
+- Remote Work
+- Productivity
+
+**Post Title:** "How to Manage a Distributed Team Effectively"
+
+**AI Assignment:** **Leadership**, **Remote Work**
+
+---
+
+## Trigger Options
+
+<Tabs>
+  <Tab title="On Publish (Recommended)">
+    ### Automatic on Publish
+    
+    Categories assigned when you hit **Publish**.
+    
+    **Pros:**
+    - Zero manual work
+    - Consistent application
+    - Nothing to remember
+    
+    **Cons:**
+    - Small delay before live
+    - Can't preview before publish
+    
+    **Best For:** Standard workflow, trust AI choices
+  </Tab>
+  
+  <Tab title="On Save Draft">
+    ### Automatic on Save
+    
+    Categories assigned when saving drafts.
+    
+    **Pros:**
+    - Preview categories early
+    - Edit before publishing
+    - Test different content
+    
+    **Cons:**
+    - May regenerate multiple times
+    - Uses more AI credits
+    
+    **Best For:** Review-heavy workflows
+  </Tab>
+  
+  <Tab title="Manual Button">
+    ### Manual Trigger
+    
+    Click button to generate categories.
+    
+    **Pros:**
+    - Full control
+    - Cost-conscious
+    - On-demand generation
+    
+    **Cons:**
+    - Easy to forget
+    - Extra step
+    
+    **Best For:** Cost-conscious users, irregular posting
+  </Tab>
+  
+  <Tab title="Bulk Action">
+    ### Bulk Generate
+    
+    Categorize multiple posts at once.
+    
+    **Pros:**
+    - Great for old content
+    - Batch processing
+    - One-time effort
+    
+    **Cons:**
+    - Not automatic
+    - Manual selection
+    
+    **Best For:** Retroactive categorization, site migrations
+  </Tab>
+</Tabs>
+
+---
+
+## Category Structure Best Practices
+
+<AccordionGroup>
+  <Accordion title="Keep It Simple" icon="lightbulb">
+    **Guideline:** 5-15 top-level categories maximum
+    
+    **Why:**
+    - Easier for AI to choose correctly
+    - Better user navigation
+    - Clearer site structure
+    - Less overlap confusion
+    
+    **Example:**
+    ```
+    ✅ Good Structure (8 categories):
+    - Web Development
+    - Mobile Development
+    - DevOps
+    - Tutorials
+    - News
+    - Reviews
+    - Career
+    - Tools
+    
+    ❌ Too Complex (30+ categories):
+    - React, Vue, Angular, Svelte, Next.js, Nuxt.js...
+    (Use tags for specific frameworks instead!)
+    ```
+  </Accordion>
+  
+  <Accordion title="Add Category Descriptions" icon="align-left">
+    **Guideline:** Write 1-2 sentence descriptions for each category
+    
+    **Why:**
+    AI uses descriptions to understand category purpose and scope.
+    
+    **Example:**
+    ```
+    Category: Web Development
+    Description: "Articles about front-end and back-end web development, 
+    including HTML, CSS, JavaScript, and web frameworks."
+    
+    Category: Tutorials
+    Description: "Step-by-step guides and how-to articles teaching 
+    specific skills or techniques."
+    ```
+    
+    **Result:** AI makes more accurate category assignments.
+  </Accordion>
+  
+  <Accordion title="Use Hierarchies Wisely" icon="sitemap">
+    **Guideline:** 1-2 levels of hierarchy maximum
+    
+    **Why:**
+    - Easier to manage
+    - Less confusion
+    - Better AI accuracy
+    
+    **Example:**
+    ```
+    ✅ Good Hierarchy:
+    Programming
+      ├── Web Development
+      ├── Mobile Development
+      └── Backend Development
+    
+    ❌ Too Deep:
+    Programming
+      └── Web Development
+          └── JavaScript
+              └── Frameworks
+                  └── React
+                      └── Hooks
+    ```
+    
+    **Tip:** Use deep hierarchies for tags, not categories.
+  </Accordion>
+  
+  <Accordion title="Avoid Overlap" icon="circle-xmark">
+    **Guideline:** Make categories mutually distinct
+    
+    **Why:**
+    AI struggles with ambiguous boundaries.
+    
+    **Example:**
+    ```
+    ❌ Overlapping:
+    - Web Development
+    - JavaScript
+    - Front-End
+    (All could apply to same post!)
+    
+    ✅ Distinct:
+    - Web Development
+    - Mobile Development
+    - DevOps
+    (Clear boundaries)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Manual Category Assignment
+
+Even with auto-categorization, you can manually assign:
+
+### In Post Editor
+
+<Steps>
+  <Step title="Open Post">
+    Edit any post in WordPress editor
+  </Step>
+  
+  <Step title="Find Generatify Panel">
+    Look for **Generatify** meta box in sidebar
+  </Step>
+  
+  <Step title="Click Generate Categories">
+    Click **Assign Categories with AI** button
+  </Step>
+  
+  <Step title="Review Assignment">
+    AI-selected categories appear in Categories panel
+  </Step>
+  
+  <Step title="Edit if Needed">
+    Change or add categories before saving
+  </Step>
+</Steps>
+
+### Bulk Categorization
+
+<Steps>
+  <Step title="Go to Posts List">
+    Navigate to **Posts → All Posts**
+  </Step>
+  
+  <Step title="Select Posts">
+    Check posts needing categorization
+  </Step>
+  
+  <Step title="Choose Bulk Action">
+    Select **Assign AI Categories** from dropdown
+  </Step>
+  
+  <Step title="Click Apply">
+    Start bulk categorization
+  </Step>
+  
+  <Step title="Monitor Progress">
+    Progress bar shows completion status
+  </Step>
+</Steps>
+
+---
+
+## Advanced Customization
+
+### Custom Category Prompts
+
+Tailor AI categorization to your site:
+
+```
+Navigate to: Generatify → Settings → Automations → Auto Categories → Advanced
+
+Default Prompt:
+"Analyze this post and assign it to the most appropriate 
+category from: {categories}. Choose only 1 category."
+
+Custom Example (Tech Blog):
+"Analyze this technical blog post and assign it to 1-2 most relevant 
+categories from: {categories}. Consider the primary programming language, 
+development domain (web/mobile/backend), and content type (tutorial/news/review). 
+If it's about a specific framework, use the parent technology category."
+```
+
+### Developer Hook
+
+Modify category assignments programmatically:
+
+```php
+add_filter('generatify_auto_categories', function($categories, $post_id) {
+    $post = get_post($post_id);
+    
+    // Always add "Featured" category for posts with featured image
+    if (has_post_thumbnail($post_id)) {
+        $featured_cat = get_category_by_slug('featured');
+        if ($featured_cat) {
+            $categories[] = $featured_cat->term_id;
+        }
+    }
+    
+    // Remove "Uncategorized" if other categories exist
+    if (count($categories) > 1) {
+        $uncategorized = get_category_by_slug('uncategorized');
+        $categories = array_diff($categories, [$uncategorized->term_id]);
+    }
+    
+    return array_unique($categories);
+}, 10, 2);
+```
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Wrong Category Assigned">
+    **Symptoms:** AI consistently chooses incorrect category
+    
+    **Solutions:**
+    1. Add detailed category descriptions
+    2. Review content clarity and focus
+    3. Check for category overlap/ambiguity
+    4. Switch to better model (GPT-4o Mini, Claude Haiku)
+    5. Customize AI prompt with specific guidelines
+    6. Merge similar/overlapping categories
+  </Accordion>
+  
+  <Accordion title="Always Uses Fallback Category">
+    **Symptoms:** Most posts assigned to "Uncategorized"
+    
+    **Solutions:**
+    1. Ensure "Use Existing Only" is enabled
+    2. Check that categories exist and are not empty
+    3. Add category descriptions for better context
+    4. Reduce number of categories (simplify structure)
+    5. Test with more explicit content
+    6. Review AI provider connection
+  </Accordion>
+  
+  <Accordion title="Too Many Categories Assigned">
+    **Symptoms:** Posts get 3-5+ categories
+    
+    **Solutions:**
+    1. Reduce "Number of Categories" setting
+    2. Set to 1-2 maximum
+    3. Simplify category structure
+    4. Customize prompt to emphasize single category
+    5. Use hierarchical categories properly
+  </Accordion>
+  
+  <Accordion title="No Categories Generated">
+    **Symptoms:** Posts publish without any category
+    
+    **Solutions:**
+    1. Check Auto Categories is enabled
+    2. Verify AI provider connection
+    3. Ensure post type is included in settings
+    4. Look for errors in browser console
+    5. Test manual generation button
+    6. Check fallback category is set
+  </Accordion>
+  
+  <Accordion title="Inconsistent Categorization">
+    **Symptoms:** Similar posts get different categories
+    
+    **Solutions:**
+    1. Add detailed category descriptions
+    2. Clarify category boundaries
+    3. Merge overlapping categories
+    4. Use more specific category names
+    5. Switch to GPT-4o Mini for better consistency
+    6. Review first paragraphs of posts (AI weighs these heavily)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Cost Estimation
+
+Auto-categorization costs are nearly identical to auto-tagging:
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Per Post</th>
+      <th>100 Posts</th>
+      <th>1,000 Posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>$0.00003</td>
+      <td>$0.003</td>
+      <td>$0.03</td>
+    </tr>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>$0.0001</td>
+      <td>$0.01</td>
+      <td>$0.10</td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Haiku</td>
+      <td>$0.00008</td>
+      <td>$0.008</td>
+      <td>$0.08</td>
+    </tr>
+  </tbody>
+</table>
+
+### Combined with Auto Tags
+
+Running both features together:
+
+- **Small blog (5 posts/day):** ~$0.15-$0.60/month
+- **Medium blog (20 posts/day):** ~$0.60-$2.40/month
+- **Large blog (100 posts/day):** ~$3-$12/month
+
+<Check>
+**ROI:** Saving 2-3 minutes per post on categorization = 33-50 hours/1,000 posts = $330-$500 in time value for ~$0.20 in AI costs.
+</Check>
+
+---
+
+## SEO Benefits
+
+Proper categorization improves SEO:
+
+1. **Better Site Architecture:** Clear content hierarchy for search engines
+2. **Category Pages Rank:** Well-organized categories can rank for broad keywords
+3. **Topic Clusters:** Related content groups boost topical authority
+4. **Breadcrumbs:** Categories improve navigation and schema markup
+5. **Internal Linking:** Category archives automatically link related content
+
+<Info>
+**Pro Tip:** Write 150-300 word descriptions for main category pages. Google can rank these pages for broad keywords!
+</Info>
+
+---
+
+## Categories vs. Tags
+
+Understanding the difference:
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Categories</th>
+      <th>Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Purpose**</td>
+      <td>Broad grouping</td>
+      <td>Specific details</td>
+    </tr>
+    <tr>
+      <td>**Quantity**</td>
+      <td>1-3 per post</td>
+      <td>5-10 per post</td>
+    </tr>
+    <tr>
+      <td>**Hierarchy**</td>
+      <td>Yes (parent/child)</td>
+      <td>No (flat)</td>
+    </tr>
+    <tr>
+      <td>**Permanence**</td>
+      <td>Long-term, stable</td>
+      <td>Can evolve over time</td>
+    </tr>
+    <tr>
+      <td>**SEO Weight**</td>
+      <td>Higher (category pages)</td>
+      <td>Lower (tag pages)</td>
+    </tr>
+    <tr>
+      <td>**Example**</td>
+      <td>Web Development</td>
+      <td>React, Hooks, Tutorial</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Strategy:** Use both! Categories for table of contents, tags for index. AI handles both automatically.
+</Tip>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Auto Tags" icon="tags" href="/automations/auto-tags">
+    Automatically tag your posts
+  </Card>
+  <Card title="Meta Descriptions" icon="file-lines" href="/automations/meta-descriptions">
+    Generate SEO meta descriptions
+  </Card>
+  <Card title="All Automations" icon="robot" href="/features/automations">
+    View all automation features
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Customize automation behavior
+  </Card>
+</CardGroup>
+
+<Tip>
+**Pro Workflow:** Enable Auto Categories + Auto Tags together. AI handles both in one pass for maximum efficiency!
+</Tip>

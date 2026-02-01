@@ -1,0 +1,575 @@
+---
+title: 'Helpdesk Agent'
+description: 'Add a 24/7 AI-powered customer support chat widget to your website'
+icon: 'headset'
+---
+
+## What is the Helpdesk Agent?
+
+The Helpdesk Agent is a front-end chat widget that provides instant support to your website visitors 24/7. It can answer questions based on your site's content, display helpful article links, and collect contact messages—all in a beautifully customizable interface.
+
+<img src="/images/helpdesk-agent-widget.png" alt="Helpdesk Agent Widget" />
+
+---
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="AI-Powered Responses" icon="robot">
+    Answers based on your site's knowledge base (Premium)
+  </Card>
+  <Card title="Contact Form Mode" icon="envelope">
+    Collect messages when AI mode is unavailable (Free)
+  </Card>
+  <Card title="Help Articles" icon="book">
+    Display popular articles and FAQs
+  </Card>
+  <Card title="Full Customization" icon="palette">
+    Match your brand with colors, icons, and positioning
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+### Two Operating Modes
+
+<Tabs>
+  <Tab title="AI Chat Mode (Premium)">
+    **Requires:** Premium license + AI provider API key
+
+    The agent uses AI to:
+    - Understand visitor questions
+    - Search your site's content
+    - Provide accurate, contextual answers
+    - Reference specific posts/pages
+    - Handle follow-up questions
+
+    **Best for:** Reducing support tickets, providing instant answers, scaling support
+
+    <img src="/images/helpdesk-ai-mode.png" alt="AI Chat Mode" />
+  </Tab>
+
+  <Tab title="Contact Form Mode (Free)">
+    **Requires:** No API key needed
+
+    The agent provides:
+    - Contact form for visitors
+    - Message collection
+    - Email notifications
+    - Help article display
+    - Customizable UI
+
+    **Best for:** Simple contact collection, lead generation, basic support
+
+    <img src="/images/helpdesk-contact-mode.png" alt="Contact Form Mode" />
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Guide
+
+### Quick Setup (5 minutes)
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Generatify → Helpdesk Agent** in WordPress admin
+  </Step>
+
+  <Step title="Enable the Feature">
+    Toggle **Enable Helpdesk Agent** to ON
+  </Step>
+
+  <Step title="Choose Mode">
+    - **AI Mode:** Requires Premium + API key  
+    - **Contact Mode:** Works immediately (free)
+  </Step>
+
+  <Step title="Customize Appearance">
+    - Upload brand icon and cover image
+    - Choose primary color
+    - Set widget position (bottom-right, bottom-left, etc.)
+    - Customize welcome text
+  </Step>
+
+  <Step title="Save & Test">
+    Click **Save Settings** and visit your site to see the widget
+  </Step>
+</Steps>
+
+<Check>
+  **Done!** Your helpdesk agent is now live on your website.
+</Check>
+
+---
+
+## Customization Options
+
+### Branding & Design
+
+<img src="/images/helpdesk-customization.png" alt="Customization Options" />
+
+Configure at **Generatify → Helpdesk Agent → Customization**:
+
+<AccordionGroup>
+  <Accordion title="Widget Position" icon="location-dot">
+    - Bottom Right (default)
+    - Bottom Left
+    - Top Right
+    - Top Left
+    - Custom positioning (CSS)
+  </Accordion>
+
+  <Accordion title="Colors" icon="palette">
+    - **Primary Color:** Main brand color for buttons, headers
+    - **Text Color:** Automatically adjusted for contrast
+    - **Background:** Light or dark mode support
+  </Accordion>
+
+  <Accordion title="Icons & Images" icon="image">
+    - **Widget Icon:** The chat bubble icon (recommended: 64x64px PNG)
+    - **Cover Image:** Header image (recommended: 400x200px)
+    - **Avatar:** AI assistant avatar (optional)
+  </Accordion>
+
+  <Accordion title="Text Content" icon="text">
+    - **Home Title:** Welcome heading
+    - **Home Tagline:** Subheading/description
+    - **Button Text:** CTA button label
+    - **Popular Topics:** Quick access links
+  </Accordion>
+</AccordionGroup>
+
+### Advanced Settings
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Message Mode**</td>
+      <td>AI Chat or Contact Form</td>
+      <td>Contact Form</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Which AI to use for responses</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>**Help Articles**</td>
+      <td>Show article links in chat</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Article Sources**</td>
+      <td>Which post types to include</td>
+      <td>Posts, Pages</td>
+    </tr>
+    <tr>
+      <td>**Contact Email**</td>
+      <td>Where to send form submissions</td>
+      <td>Admin email</td>
+    </tr>
+    <tr>
+      <td>**Show on Pages**</td>
+      <td>Where widget appears</td>
+      <td>All pages</td>
+    </tr>
+    <tr>
+      <td>**Hide for Logged-in Users**</td>
+      <td>Show only to visitors</td>
+      <td>OFF</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## AI Chat Mode (Premium)
+
+### How AI Responses Work
+
+When a visitor asks a question:
+
+1. **Question Analysis:** AI understands the intent
+2. **Content Search:** Searches your site's knowledge base
+3. **Answer Generation:** Creates a helpful response
+4. **Source Citations:** References specific pages/posts
+5. **Follow-ups:** Maintains conversation context
+
+### Knowledge Base
+
+The AI agent searches these content types:
+
+- ✅ Published posts and pages
+- ✅ Custom post types (configurable)
+- ✅ FAQs and documentation
+- ✅ Product descriptions (WooCommerce)
+- ✅ Category and tag descriptions
+
+<Note>
+  **Content Privacy:** Only **published** content is searchable. Drafts, private posts, and password-protected content are excluded.
+</Note>
+
+### Example Conversations
+
+<CodeGroup>
+```conversation Product Question
+Visitor: "Do you offer free shipping?"
+Agent: "Yes! We offer free shipping on orders over $50 within the continental US. For international orders, shipping costs are calculated at checkout. You can learn more on our Shipping Policy page."
+```
+
+```conversation Troubleshooting
+Visitor: "How do I reset my password?"
+Agent: "To reset your password:
+1. Visit the login page
+2. Click 'Forgot Password?'
+3. Enter your email address
+4. Check your inbox for a reset link
+
+If you don't receive the email within 5 minutes, check your spam folder or contact us directly."
+```
+
+```conversation Product Recommendation
+Visitor: "What's the best hosting plan for a small business?"
+Agent: "For a small business website, I'd recommend our Business Plan. It includes:
+- 50GB SSD storage
+- Support for 10 websites
+- Free SSL certificate
+- Daily backups
+- Priority support
+
+You can view all plan features on our Pricing page. Would you like help choosing between plans?"
+```
+</CodeGroup>
+
+### Best Practices for AI Mode
+
+<AccordionGroup>
+  <Accordion title="Create Quality Documentation" icon="book">
+    AI responses are only as good as your content:
+    - Write comprehensive FAQs
+    - Create detailed product descriptions
+    - Maintain an updated knowledge base
+    - Use clear, simple language
+    - Structure content with headings
+  </Accordion>
+
+  <Accordion title="Choose the Right AI Model" icon="brain">
+    Different models excel at different tasks:
+    - **Claude 3.5 Sonnet:** Most natural conversational AI
+    - **GPT-4 Turbo:** Best comprehension and accuracy
+    - **Gemini 1.5 Pro:** Great for long documents, free tier available
+
+    Test different models to find the best fit.
+  </Accordion>
+
+  <Accordion title="Monitor Conversations" icon="chart-line">
+    Review chat logs regularly:
+    - Identify common questions
+    - Find content gaps
+    - Improve documentation
+    - Spot AI errors or hallucinations
+  </Accordion>
+
+  <Accordion title="Set Expectations" icon="message">
+    Be transparent with visitors:
+    - Mention it's an AI assistant
+    - Provide human support option
+    - Set hours of availability (if limited)
+    - Link to contact form for complex issues
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Contact Form Mode (Free)
+
+### How It Works
+
+When AI mode is disabled or unavailable, the widget shows a contact form:
+
+<img src="/images/helpdesk-contact-form.png" alt="Contact Form Mode" />
+
+**Fields:**
+- Name (required)
+- Email (required)
+- Message (required)
+- Page URL (auto-captured)
+
+**On submission:**
+1. Form data is validated
+2. Email sent to configured address
+3. Thank you message displayed
+4. Optional auto-reply to visitor
+
+### Email Configuration
+
+Configure email settings at **Generatify → Helpdesk Agent → Email**:
+
+```php
+// Email Template Variables
+{name}       - Visitor's name
+{email}      - Visitor's email
+{message}    - Message content
+{page}       - Page URL where form was submitted
+{site_name}  - Your site name
+{site_url}   - Your site URL
+```
+
+### Customizing Email Templates
+
+You can customize the email template sent to your team:
+
+1. Go to **Generatify → Helpdesk Agent → Email Template**
+2. Edit the HTML email template
+3. Use variables like `{name}`, `{email}`, `{message}`
+4. Preview before saving
+
+<Card title="Learn More" icon="arrow-right" href="/helpdesk/contact-form-mode">
+  Complete Contact Form Mode guide →
+</Card>
+
+---
+
+## Popular Topics / Help Articles
+
+Display frequently accessed articles directly in the chat widget:
+
+### Setup
+
+<Steps>
+  <Step title="Enable Help Articles">
+    Toggle **Show Help Articles** to ON
+  </Step>
+
+  <Step title="Choose Article Sources">
+    Select which post types to include:
+    - Posts
+    - Pages
+    - Custom post types (FAQs, Docs, etc.)
+  </Step>
+
+  <Step title="Set Display Criteria">
+    Articles can be shown based on:
+    - **Most viewed** (requires analytics)
+    - **Recent** (newest first)
+    - **Manual selection** (choose specific posts)
+  </Step>
+
+  <Step title="Configure Display">
+    - **Number of articles:** How many to show (default: 5)
+    - **Article title length:** Max characters
+    - **Show excerpt:** Include brief description
+  </Step>
+</Steps>
+
+### Manual Article Selection
+
+Pin specific articles to always appear:
+
+1. Go to **Generatify → Helpdesk Agent → Popular Topics**
+2. Search for posts/pages
+3. Drag to reorder
+4. Click **Save**
+
+<img src="/images/helpdesk-popular-topics.png" alt="Popular Topics Configuration" />
+
+---
+
+## Display Rules
+
+Control where and when the helpdesk widget appears:
+
+### Page Rules
+
+<Tabs>
+  <Tab title="Show Everywhere">
+    Widget appears on all pages (default)
+  </Tab>
+
+  <Tab title="Specific Pages">
+    Show only on selected pages:
+    - Homepage
+    - Product pages
+    - Contact page
+    - Blog posts
+    - Custom post types
+  </Tab>
+
+  <Tab title="Exclude Pages">
+    Hide on specific pages:
+    - Checkout pages
+    - Thank you pages
+    - Admin-only pages
+  </Tab>
+
+  <Tab title="Advanced Rules">
+    Use conditions:
+    - Show only to logged-out users
+    - Show on mobile only
+    - Show based on URL parameters
+    - Show after X seconds on page
+  </Tab>
+</Tabs>
+
+### User Rules
+
+Control visibility based on user status:
+
+- **All Visitors:** Everyone sees the widget
+- **Logged-Out Only:** Hide for logged-in users
+- **Logged-In Only:** Show only to members
+- **Specific Roles:** Show only to certain user roles
+
+---
+
+## Analytics & Reporting
+
+<Info>
+  **Coming Soon:** Built-in analytics dashboard for tracking conversations, popular questions, and agent performance.
+</Info>
+
+Currently, you can track:
+
+- **Email notifications:** Review messages in your inbox
+- **Chat logs:** View conversation history (if enabled)
+- **Google Analytics events:** Track widget opens and form submissions
+
+### Google Analytics Integration
+
+Helpdesk widget automatically sends GA4 events:
+
+```javascript
+// Events tracked
+- helpdesk_widget_opened
+- helpdesk_message_sent
+- helpdesk_article_clicked
+- helpdesk_chat_started
+```
+
+---
+
+## Performance & Loading
+
+The Helpdesk Agent is optimized for performance:
+
+<AccordionGroup>
+  <Accordion title="Lazy Loading" icon="bolt">
+    - Widget loads asynchronously
+    - Doesn't block page rendering
+    - Chat UI loads on first interaction
+    - No impact on initial page speed
+  </Accordion>
+
+  <Accordion title="Lightweight Assets" icon="feather">
+    - Total size: ~50KB (gzipped)
+    - No jQuery dependency
+    - Modern ES6 JavaScript
+    - Minimal CSS footprint
+  </Accordion>
+
+  <Accordion title="Caching" icon="database">
+    - Help articles cached in browser
+    - AI responses cached (optional)
+    - Reduces API calls and load times
+  </Accordion>
+
+  <Accordion title="Mobile Optimized" icon="mobile">
+    - Fully responsive design
+    - Touch-friendly interface
+    - Adaptive layout for small screens
+    - Fast on 3G/4G connections
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Widget not showing">
+    **Possible causes:**
+    - Feature not enabled
+    - Display rules excluding current page
+    - JavaScript error
+    - Caching issue
+
+    **Solutions:**
+    1. Verify feature is enabled
+    2. Check display rules
+    3. Clear cache (browser, plugin, server)
+    4. Check browser console for errors
+  </Accordion>
+
+  <Accordion title="AI responses not working">
+    **Possible causes:**
+    - AI mode not enabled (Premium only)
+    - No API key configured
+    - API rate limit reached
+    - Content not indexed
+
+    **Solutions:**
+    1. Ensure you have Premium license
+    2. Add AI provider API key
+    3. Check API provider dashboard
+    4. Publish more content for AI to reference
+  </Accordion>
+
+  <Accordion title="Contact form not sending">
+    **Possible causes:**
+    - Email address not configured
+    - Server email issues
+    - Spam filter blocking
+
+    **Solutions:**
+    1. Set contact email in settings
+    2. Test WordPress email with plugin like WP Mail SMTP
+    3. Check spam folder
+    4. Use SMTP instead of PHP mail()
+  </Accordion>
+
+  <Accordion title="Widget conflicts with theme/plugin">
+    **Possible causes:**
+    - CSS conflicts
+    - JavaScript conflicts
+    - Z-index issues
+
+    **Solutions:**
+    1. Adjust widget z-index in settings
+    2. Add custom CSS to fix conflicts
+    3. Disable conflicting plugins temporarily
+    4. Contact support with theme details
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Setup Guide" icon="bolt" href="/helpdesk/setup">
+    Detailed setup instructions
+  </Card>
+  <Card title="Customization" icon="palette" href="/helpdesk/customization">
+    Brand and design options
+  </Card>
+  <Card title="Chat Mode" icon="robot" href="/helpdesk/chat-mode">
+    Configure AI responses
+  </Card>
+  <Card title="Contact Form" icon="envelope" href="/helpdesk/contact-form-mode">
+    Setup contact collection
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Pro Tip:** Start with Contact Form mode to collect questions, identify common themes, then create documentation to address those topics before enabling AI mode. This ensures the AI has quality content to reference.
+</Tip>

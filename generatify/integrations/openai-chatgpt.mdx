@@ -1,0 +1,503 @@
+---
+title: 'OpenAI (ChatGPT)'
+description: 'Setup and configure OpenAI integration with Generatify'
+icon: 'openai'
+---
+
+## Overview
+
+OpenAI offers the most widely-used AI models, including GPT-4 and GPT-3.5 Turbo. Known for high-quality outputs, strong reasoning capabilities, and the technology behind ChatGPT.
+
+<CardGroup cols={2}>
+  <Card title="Best For" icon="star">
+    Content creation, complex tasks, general-purpose AI
+  </Card>
+  <Card title="Pricing" icon="dollar-sign">
+    Premium - Pay per token usage
+  </Card>
+</CardGroup>
+
+---
+
+## Available Models
+
+<Tabs>
+  <Tab title="GPT-4 Turbo">
+    ### Most Capable Model
+
+    **Model:** `gpt-4-turbo-2024-04-09`
+
+    **Strengths:**
+    - Exceptional reasoning and problem-solving
+    - Best for complex content creation
+    - Strong instruction following
+    - 128K token context window
+    - Vision capabilities
+
+    **Best For:**
+    - AI Assistant Chatbot
+    - Meta Descriptions
+    - Complex helpdesk queries
+
+    **Pricing:**
+    - Input: $10.00 / 1M tokens
+    - Output: $30.00 / 1M tokens
+
+    **Example Usage:**
+    - 1,000 chatbot queries: ~$0.50-1.50
+    - 100 meta descriptions: ~$0.10-0.30
+  </Tab>
+
+  <Tab title="GPT-4o">
+    ### Fast & Multimodal
+
+    **Model:** `gpt-4o`
+
+    **Strengths:**
+    - 2x faster than GPT-4 Turbo
+    - Multimodal (text and images)
+    - 128K context window
+    - More affordable than Turbo
+
+    **Best For:**
+    - Fast chatbot responses
+    - Image analysis
+    - Real-time interactions
+
+    **Pricing:**
+    - Input: $5.00 / 1M tokens
+    - Output: $15.00 / 1M tokens
+  </Tab>
+
+  <Tab title="GPT-3.5 Turbo">
+    ### Fast & Affordable
+
+    **Model:** `gpt-3.5-turbo`
+
+    **Strengths:**
+    - Very fast responses
+    - Highly cost-effective
+    - 16K context window
+    - Good for simple tasks
+
+    **Best For:**
+    - Auto post tags
+    - Auto categories
+    - High-volume automations
+
+    **Pricing:**
+    - Input: $0.50 / 1M tokens
+    - Output: $1.50 / 1M tokens
+
+    **Example Usage:**
+    - 1,000 auto-tags: ~$1.00-2.00
+    - 1,000 auto-categories: ~$1.00-2.00
+  </Tab>
+
+  <Tab title="GPT-4o Mini">
+    ### Ultra Fast & Cheap
+
+    **Model:** `gpt-4o-mini`
+
+    **Strengths:**
+    - Fastest OpenAI model
+    - Most affordable
+    - Great for simple queries
+    - 128K context
+
+    **Best For:**
+    - Quick suggestions
+    - Simple automations
+    - High-volume tasks
+
+    **Pricing:**
+    - Input: $0.15 / 1M tokens
+    - Output: $0.60 / 1M tokens
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Guide
+
+### Step 1: Create OpenAI Account
+
+<Steps>
+  <Step title="Visit OpenAI Platform">
+    Go to [platform.openai.com](https://platform.openai.com)
+  </Step>
+
+  <Step title="Sign Up">
+    Create an account with email or Google/Microsoft sign-in
+  </Step>
+
+  <Step title="Verify Email">
+    Check your inbox and verify your email address
+  </Step>
+
+  <Step title="Add Payment Method">
+    Navigate to **Billing** and add a credit/debit card
+  </Step>
+</Steps>
+
+### Step 2: Generate API Key
+
+<Steps>
+  <Step title="Navigate to API Keys">
+    In OpenAI Platform, go to **API Keys** section
+  </Step>
+
+  <Step title="Create New Key">
+    Click **Create new secret key**
+  </Step>
+
+  <Step title="Name Your Key">
+    Give it a descriptive name (e.g., "Generatify WordPress Plugin")
+  </Step>
+
+  <Step title="Copy Key">
+    Copy the key immediately—you won't see it again!
+  </Step>
+</Steps>
+
+<img src="/images/openai-api-key.png" alt="Creating OpenAI API Key" />
+
+<Warning>
+  **Save your API key securely!** Once you close the modal, the key cannot be viewed again. You'll need to create a new one if lost.
+</Warning>
+
+### Step 3: Add to Generatify
+
+<Steps>
+  <Step title="Open WordPress Admin">
+    Navigate to **Generatify → Settings → Integrations**
+  </Step>
+
+  <Step title="Find OpenAI Section">
+    Scroll to the **OpenAI** integration block
+  </Step>
+
+  <Step title="Enable OpenAI">
+    Toggle **Enable OpenAI** to ON
+  </Step>
+
+  <Step title="Paste API Key">
+    Paste your OpenAI API key in the field
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Look for a green checkmark confirming successful connection
+  </Step>
+</Steps>
+
+---
+
+## Model Selection by Feature
+
+Assign optimal models to each Generatify feature:
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Recommended</th>
+      <th>Budget Option</th>
+      <th>Premium Option</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI Assistant</td>
+      <td>GPT-4 Turbo</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>Auto Tags</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>GPT-4o Mini</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>Auto Categories</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>GPT-4o Mini</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>Meta Descriptions</td>
+      <td>GPT-4 Turbo</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>Helpdesk Agent</td>
+      <td>GPT-4 Turbo</td>
+      <td>GPT-3.5 Turbo</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Cost Management
+
+### Understanding Token Pricing
+
+**What are tokens?**
+- Tokens ≈ words (1,000 tokens ≈ 750 words)
+- Both input (prompt) and output (response) count
+- Prices vary by model
+
+**Example Calculation:**
+```
+Task: Generate 5 post tags
+Input tokens: ~200 (post title + content excerpt)
+Output tokens: ~20 (5 tags)
+
+Cost with GPT-3.5 Turbo:
+Input: 200 tokens × $0.50 / 1M = $0.0001
+Output: 20 tokens × $1.50 / 1M = $0.00003
+Total: ~$0.00013 per post
+```
+
+### Setting Budget Limits
+
+<Steps>
+  <Step title="Go to Billing Settings">
+    In OpenAI Platform, navigate to **Billing → Usage limits**
+  </Step>
+
+  <Step title="Set Hard Limit">
+    Set a maximum monthly spend (e.g., $50)
+  </Step>
+
+  <Step title="Set Soft Limit">
+    Get email alerts at a threshold (e.g., $40)
+  </Step>
+
+  <Step title="Enable Email Alerts">
+    Turn on notifications for usage milestones
+  </Step>
+</Steps>
+
+<img src="/images/openai-usage-limits.png" alt="OpenAI Usage Limits" />
+
+### Monitoring Usage
+
+Track your spending at [platform.openai.com/usage](https://platform.openai.com/usage):
+
+- **Daily usage:** See costs by day
+- **By model:** Which models cost the most
+- **By feature:** Track usage patterns
+- **Cost projections:** Estimated monthly total
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Choose the Right Model" icon="brain">
+    Don't use GPT-4 for everything:
+    - **GPT-4 Turbo:** Quality-critical tasks (chatbot, meta descriptions)
+    - **GPT-3.5 Turbo:** Automations and high-volume tasks
+    - **GPT-4o Mini:** Simple, repetitive tasks
+
+    This can reduce costs by 90% without sacrificing much quality.
+  </Accordion>
+
+  <Accordion title="Optimize Prompts" icon="message">
+    Shorter prompts = lower costs:
+    - Be concise but clear
+    - Remove unnecessary context
+    - Use system instructions for reusable guidelines
+    - Cache responses when possible
+  </Accordion>
+
+  <Accordion title="Monitor Usage Weekly" icon="chart-line">
+    Check your usage dashboard regularly:
+    - Spot unusual spikes
+    - Identify cost-heavy features
+    - Adjust model selection
+    - Set alerts before hitting limits
+  </Accordion>
+
+  <Accordion title="Secure Your API Key" icon="lock">
+    Protect your key:
+    - Never commit to Git
+    - Use environment variables
+    - Rotate keys every 3-6 months
+    - Revoke if compromised
+    - Use separate keys for dev/prod
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Rate Limits
+
+OpenAI enforces rate limits based on your tier:
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>TPM (Tokens/Min)</th>
+      <th>RPM (Requests/Min)</th>
+      <th>How to Reach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Free</td>
+      <td>40,000</td>
+      <td>200</td>
+      <td>New accounts</td>
+    </tr>
+    <tr>
+      <td>Tier 1</td>
+      <td>200,000</td>
+      <td>500</td>
+      <td>$5+ paid</td>
+    </tr>
+    <tr>
+      <td>Tier 2</td>
+      <td>2,000,000</td>
+      <td>5,000</td>
+      <td>$50+ paid</td>
+    </tr>
+    <tr>
+      <td>Tier 3</td>
+      <td>10,000,000</td>
+      <td>10,000</td>
+      <td>$1,000+ paid</td>
+    </tr>
+  </tbody>
+</table>
+
+<Info>
+  Most WordPress sites operate comfortably within Tier 1-2 limits. Contact OpenAI for higher limits if needed.
+</Info>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Invalid API Key">
+    **Error:** "Incorrect API key provided"
+
+    **Solutions:**
+    1. Check for typos or extra spaces
+    2. Verify key is active in OpenAI dashboard
+    3. Ensure billing is set up
+    4. Generate a new key
+  </Accordion>
+
+  <Accordion title="Rate Limit Exceeded">
+    **Error:** "Rate limit reached"
+
+    **Solutions:**
+    1. Wait a few seconds and retry
+    2. Check your tier limits
+    3. Upgrade to higher tier
+    4. Reduce concurrent requests
+    5. Implement exponential backoff
+  </Accordion>
+
+  <Accordion title="Insufficient Quota">
+    **Error:** "You exceeded your current quota"
+
+    **Solutions:**
+    1. Add payment method if not set
+    2. Check hard limit in billing settings
+    3. Increase usage limit
+    4. Wait for monthly reset
+  </Accordion>
+
+  <Accordion title="Model Not Found">
+    **Error:** "Model not found"
+
+    **Solutions:**
+    1. Check model name spelling
+    2. Verify you have access to the model
+    3. Some models require waitlist approval
+    4. Use a different model temporarily
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Configuration
+
+### Using Environment Variables
+
+For enhanced security, store API keys in environment variables:
+
+```php
+// wp-config.php
+define('OPENAI_API_KEY', getenv('OPENAI_API_KEY'));
+```
+
+Then use a WordPress filter:
+
+```php
+add_filter('generatify_openai_api_key', function($key) {
+    if (defined('OPENAI_API_KEY')) {
+        return OPENAI_API_KEY;
+    }
+    return $key;
+});
+```
+
+### Organization Keys
+
+For teams, use organization-level API keys:
+
+1. Create organization in OpenAI
+2. Invite team members
+3. Generate organization API key
+4. Track usage by organization
+
+---
+
+## Support Resources
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Documentation" icon="book" href="https://platform.openai.com/docs">
+    Official API documentation
+  </Card>
+  <Card title="Community Forum" icon="comments" href="https://community.openai.com">
+    Ask questions and get help
+  </Card>
+  <Card title="Status Page" icon="signal" href="https://status.openai.com">
+    Check API status
+  </Card>
+  <Card title="Pricing Calculator" icon="calculator" href="https://openai.com/pricing">
+    Estimate costs
+  </Card>
+</CardGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Anthropic Integration" icon="a" href="/integrations/anthropic-claude">
+    Setup Claude as an alternative
+  </Card>
+  <Card title="Google Integration" icon="google" href="/integrations/google-gemini">
+    Add Google Gemini for free tier
+  </Card>
+  <Card title="Configure Features" icon="sliders" href="/features/overview">
+    Enable AI features in Generatify
+  </Card>
+  <Card title="Cost Optimization" icon="dollar-sign" href="/advanced/performance">
+    Minimize API costs
+  </Card>
+</CardGroup>

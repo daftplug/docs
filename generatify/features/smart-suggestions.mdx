@@ -1,0 +1,536 @@
+---
+title: 'Smart Suggestions'
+description: 'Enhance user experience with AI-powered autocomplete and content recommendations'
+icon: 'lightbulb'
+---
+
+## Overview
+
+Smart Suggestions includes two powerful features that enhance user experience and keep visitors engaged:
+
+<CardGroup cols={2}>
+  <Card title="Smart Compose" icon="keyboard" href="/smart-suggestions/smart-compose">
+    Autocomplete for textareas—like Gmail's Smart Compose
+  </Card>
+  <Card title="Related Posts" icon="link" href="/smart-suggestions/related-posts">
+    AI-driven content recommendations based on taxonomy
+  </Card>
+</CardGroup>
+
+<Note>
+  **Free Features:** Both Smart Compose and Related Posts work without AI API keys. Smart Compose uses browser-based prediction, and Related Posts uses algorithmic matching.
+</Note>
+
+---
+
+## Smart Compose
+
+Inline autocomplete that suggests text as users type in textareas—perfect for comments, contact forms, and review fields.
+
+### How It Works
+
+1. User starts typing in a textarea
+2. Browser analyzes the text locally
+3. Predictions appear in gray text
+4. Press **Tab** or **→** to accept suggestion
+5. Continue typing normally to ignore
+
+<img src="/images/smart-compose-demo.gif" alt="Smart Compose in Action" />
+
+### Key Features
+
+- ✨ **Real-time predictions** as you type
+- 🔒 **Privacy-first** - runs entirely in browser
+- ⚡ **Lightning fast** - no API calls
+- 📱 **Mobile-friendly** with touch support
+- 🎯 **Context-aware** predictions
+- 🚫 **No external data** - completely offline
+
+### Usage Example
+
+```text
+User types: "Thank you for the gre"
+Suggestion appears: "Thank you for the great article!"
+
+User types: "I'm looking forward to"
+Suggestion: "I'm looking forward to hearing from you soon"
+```
+
+### Configuration
+
+Enable at **Generatify → Settings → Smart Suggestions**:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Smart Compose**</td>
+      <td>Turn feature on/off</td>
+      <td>OFF</td>
+    </tr>
+    <tr>
+      <td>**Target Elements**</td>
+      <td>Which textareas to enhance</td>
+      <td>Comment form</td>
+    </tr>
+    <tr>
+      <td>**Minimum Characters**</td>
+      <td>When to start suggesting</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>**Suggestion Style**</td>
+      <td>Inline or tooltip display</td>
+      <td>Inline</td>
+    </tr>
+    <tr>
+      <td>**Custom Selectors**</td>
+      <td>Additional textarea CSS selectors</td>
+      <td>(Empty)</td>
+    </tr>
+  </tbody>
+</table>
+
+<Card title="Learn More" icon="arrow-right" href="/smart-suggestions/smart-compose">
+  Complete Smart Compose documentation →
+</Card>
+
+---
+
+## Related Posts
+
+Display AI-powered related content recommendations that keep readers engaged and reduce bounce rates.
+
+### How It Works
+
+1. Visitor views a post/page
+2. Algorithm analyzes categories and tags
+3. Finds semantically related content
+4. Displays visually appealing recommendations
+5. Updates dynamically per page
+
+<img src="/images/related-posts-widget.png" alt="Related Posts Widget" />
+
+### Key Features
+
+- 🎯 **Smart matching** based on taxonomy
+- 📊 **Performance optimized** with caching
+- 🎨 **Customizable design** and layout
+- 📱 **Fully responsive** on all devices
+- 🔧 **Developer-friendly** with hooks
+- 🚀 **SEO-friendly** internal linking
+
+### Display Options
+
+<Tabs>
+  <Tab title="Auto-Insert">
+    Automatically append related posts after content:
+    - Below post content (default)
+    - Above content
+    - Both above and below
+    - Sidebar widget
+  </Tab>
+
+  <Tab title="Shortcode">
+    Place anywhere with shortcode:
+    ```shortcode
+    [generatify_related_posts]
+    ```
+
+    With parameters:
+    ```shortcode
+    [generatify_related_posts quantity="5" layout="grid"]
+    ```
+  </Tab>
+
+  <Tab title="PHP Function">
+    Use in templates:
+    ```php
+    <?php
+    if (function_exists('generatify_related_posts')) {
+        generatify_related_posts(array(
+            'quantity' => 6,
+            'layout' => 'grid',
+            'show_thumbnails' => true
+        ));
+    }
+    ?>
+    ```
+  </Tab>
+
+  <Tab title="Widget">
+    Add to sidebar via **Appearance → Widgets**:
+    - Drag "Generatify Related Posts" widget
+    - Configure title, quantity, layout
+    - Save and preview
+  </Tab>
+</Tabs>
+
+### Configuration
+
+Access settings at **Generatify → Settings → Smart Suggestions → Related Posts**:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Related Posts**</td>
+      <td>Turn feature on/off</td>
+      <td>ON / OFF</td>
+    </tr>
+    <tr>
+      <td>**Title**</td>
+      <td>Widget heading</td>
+      <td>Text (default: "Related Posts")</td>
+    </tr>
+    <tr>
+      <td>**Description**</td>
+      <td>Subheading text</td>
+      <td>Text (optional)</td>
+    </tr>
+    <tr>
+      <td>**Quantity**</td>
+      <td>Number of posts to show</td>
+      <td>1-12 (default: 3)</td>
+    </tr>
+    <tr>
+      <td>**Layout**</td>
+      <td>Display style</td>
+      <td>Grid, List, Carousel</td>
+    </tr>
+    <tr>
+      <td>**Show Thumbnails**</td>
+      <td>Display featured images</td>
+      <td>ON / OFF</td>
+    </tr>
+    <tr>
+      <td>**Show Excerpt**</td>
+      <td>Include post excerpt</td>
+      <td>ON / OFF</td>
+    </tr>
+    <tr>
+      <td>**Excerpt Length**</td>
+      <td>Characters to show</td>
+      <td>Number (default: 100)</td>
+    </tr>
+    <tr>
+      <td>**Post Types**</td>
+      <td>Which types to include</td>
+      <td>Posts, Pages, Custom</td>
+    </tr>
+    <tr>
+      <td>**Matching Logic**</td>
+      <td>How to find related content</td>
+      <td>Categories, Tags, Both</td>
+    </tr>
+  </tbody>
+</table>
+
+### Matching Algorithm
+
+Related Posts uses intelligent taxonomy-based matching:
+
+<Steps>
+  <Step title="Primary Match">
+    Find posts sharing the same **categories**
+  </Step>
+
+  <Step title="Secondary Match">
+    If insufficient results, match by **tags**
+  </Step>
+
+  <Step title="Scoring">
+    Rank by number of shared terms
+  </Step>
+
+  <Step title="Exclusion">
+    Remove current post and duplicates
+  </Step>
+
+  <Step title="Limit">
+    Return top N results (per settings)
+  </Step>
+</Steps>
+
+<Info>
+  **Performance:** Related posts are cached per post to minimize database queries. Cache refreshes automatically when content is updated.
+</Info>
+
+<Card title="Learn More" icon="arrow-right" href="/smart-suggestions/related-posts">
+  Complete Related Posts documentation →
+</Card>
+
+---
+
+## Customization
+
+### Smart Compose Styling
+
+Customize appearance with CSS:
+
+```css
+/* Suggestion text color */
+.generatify-smart-compose-suggestion {
+    color: #999;
+    font-style: italic;
+}
+
+/* Accepted suggestion animation */
+.generatify-suggestion-accepted {
+    animation: fadeIn 0.3s ease;
+}
+```
+
+### Related Posts Styling
+
+Override default styles:
+
+```css
+/* Widget container */
+.generatify-related-posts {
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Grid layout */
+.generatify-related-posts.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Individual post card */
+.generatify-related-post {
+    background: white;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    transition: transform 0.2s;
+}
+
+.generatify-related-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+```
+
+---
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Blog & Content Sites" icon="newspaper">
+    **Smart Compose:** Help readers write thoughtful comments faster
+
+    **Related Posts:** Keep visitors reading with relevant content recommendations, increasing time on site and pages per session
+  </Accordion>
+
+  <Accordion title="E-commerce" icon="shopping-cart">
+    **Smart Compose:** Speed up product reviews and customer questions
+
+    **Related Posts:** Cross-sell related products, "Customers also viewed" sections
+  </Accordion>
+
+  <Accordion title="Forums & Communities" icon="users">
+    **Smart Compose:** Enhance forum posts and replies with autocomplete
+
+    **Related Posts:** Surface related discussions and topics
+  </Accordion>
+
+  <Accordion title="Knowledge Base" icon="book">
+    **Smart Compose:** Help users search and ask questions more efficiently
+
+    **Related Posts:** Guide users to relevant documentation and articles
+  </Accordion>
+
+  <Accordion title="News & Media" icon="newspaper">
+    **Smart Compose:** Improve comment quality and engagement
+
+    **Related Posts:** Keep readers engaged with related stories and trending topics
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Performance & SEO
+
+### Performance Benefits
+
+<CardGroup cols={2}>
+  <Card title="No API Calls" icon="bolt">
+    Both features run locally—no external requests
+  </Card>
+  <Card title="Lightweight Code" icon="feather">
+    Minimal JavaScript footprint (~15KB total)
+  </Card>
+  <Card title="Efficient Caching" icon="database">
+    Related posts cached per post
+  </Card>
+  <Card title="Lazy Loading" icon="clock">
+    Assets load only when needed
+  </Card>
+</CardGroup>
+
+### SEO Benefits
+
+<CardGroup cols={2}>
+  <Card title="Internal Linking" icon="link">
+    Related Posts improve site structure
+  </Card>
+  <Card title="Reduced Bounce Rate" icon="arrow-down">
+    Keep visitors exploring your site
+  </Card>
+  <Card title="Increased Dwell Time" icon="clock">
+    More time on site signals quality
+  </Card>
+  <Card title="Content Discovery" icon="compass">
+    Surface older, valuable content
+  </Card>
+</CardGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Smart Compose Targeting" icon="crosshairs">
+    Choose the right textareas:
+    - ✅ Comment forms (high engagement)
+    - ✅ Contact forms (helpful for users)
+    - ✅ Review fields (speed up feedback)
+    - ❌ Admin forms (less beneficial)
+    - ❌ Login/register (security concern)
+  </Accordion>
+
+  <Accordion title="Related Posts Quantity" icon="list-ol">
+    Balance quantity with quality:
+    - **3-4 posts:** Best for sidebars
+    - **6-8 posts:** Good for post footers
+    - **12+ posts:** Use carousel or paginated grid
+
+    Too few = missed opportunities  
+    Too many = overwhelming, slow page
+  </Accordion>
+
+  <Accordion title="Taxonomy Structure" icon="sitemap">
+    Related Posts works best with:
+    - Clear, distinct categories
+    - Relevant, descriptive tags
+    - Consistent taxonomy usage
+    - Avoid over-tagging (5-10 tags max per post)
+  </Accordion>
+
+  <Accordion title="Visual Hierarchy" icon="layer-group">
+    For Related Posts widget:
+    - Use compelling featured images
+    - Write concise, descriptive excerpts
+    - Choose readable layouts
+    - Ensure mobile responsiveness
+    - Test different designs
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Smart Compose not working">
+    **Solutions:**
+    1. Verify feature is enabled
+    2. Check target textarea selector is correct
+    3. Test in different browser
+    4. Look for JavaScript errors in console
+    5. Ensure minimum character threshold is met
+  </Accordion>
+
+  <Accordion title="Related Posts showing irrelevant content">
+    **Solutions:**
+    1. Review post categories and tags
+    2. Ensure posts share taxonomy terms
+    3. Increase quantity to see more options
+    4. Switch matching logic (categories vs tags)
+    5. Manually curate categories for better matching
+  </Accordion>
+
+  <Accordion title="Related Posts not appearing">
+    **Solutions:**
+    1. Feature enabled in settings?
+    2. Current post has categories/tags?
+    3. Other posts share the same terms?
+    4. Clear cache (plugin, browser, server)
+    5. Check post type is enabled in settings
+  </Accordion>
+
+  <Accordion title="Performance issues">
+    **Solutions:**
+    1. Enable object caching (Redis, Memcached)
+    2. Reduce quantity of related posts
+    3. Disable thumbnails to reduce image processing
+    4. Use CDN for faster image delivery
+    5. Enable lazy loading for images
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Developer Resources
+
+### Hooks & Filters
+
+Customize behavior with WordPress hooks:
+
+```php
+// Modify related posts query
+add_filter('generatify_related_posts_args', function($args) {
+    $args['posts_per_page'] = 10;
+    return $args;
+});
+
+// Change related posts output
+add_filter('generatify_related_posts_html', function($html, $posts) {
+    // Custom HTML template
+    return $custom_html;
+}, 10, 2);
+
+// Exclude specific post IDs
+add_filter('generatify_related_posts_exclude', function($exclude_ids) {
+    $exclude_ids[] = 123; // Exclude post ID 123
+    return $exclude_ids;
+});
+```
+
+<Card title="Full Developer Documentation" icon="code" href="/developer/hooks-filters">
+  View all available hooks and filters →
+</Card>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Smart Compose Guide" icon="keyboard" href="/smart-suggestions/smart-compose">
+    Setup and customize autocomplete
+  </Card>
+  <Card title="Related Posts Guide" icon="link" href="/smart-suggestions/related-posts">
+    Configure content recommendations
+  </Card>
+  <Card title="Developer Hooks" icon="code" href="/developer/hooks-filters">
+    Extend with custom code
+  </Card>
+  <Card title="Performance Tips" icon="gauge-high" href="/advanced/performance">
+    Optimize for speed
+  </Card>
+</CardGroup>

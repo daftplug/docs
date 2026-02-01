@@ -1,0 +1,736 @@
+---
+title: 'Toxicity Checker'
+description: 'AI-powered comment moderation to maintain a safe community'
+icon: 'shield-check'
+---
+
+## Overview
+
+Toxicity Checker uses TensorFlow.js to analyze comments in real-time, detecting toxic, offensive, or harmful content before it's published. Keep your community safe and welcoming without manual moderation.
+
+<CardGroup cols={3}>
+  <Card title="Real-Time Detection" icon="bolt">
+    Analyze comments instantly
+  </Card>
+  <Card title="Client-Side AI" icon="shield">
+    Privacy-friendly, runs in browser
+  </Card>
+  <Card title="Zero Cost" icon="dollar-sign">
+    Completely free, no API fees
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="User Submits Comment">
+    Visitor writes and submits a comment
+  </Step>
+  
+  <Step title="TensorFlow.js Analysis">
+    AI analyzes text in browser using toxicity model
+  </Step>
+  
+  <Step title="Toxicity Scoring">
+    Assigns scores for 7 toxicity categories (0-100%)
+  </Step>
+  
+  <Step title="Decision">
+    Based on thresholds: Approve, Hold for review, or Block
+  </Step>
+  
+  <Step title="User Feedback">
+    Shows appropriate message to commenter
+  </Step>
+</Steps>
+
+<Info>
+**Privacy First:** Analysis happens in the user's browser. Comments are never sent to external AI services.
+</Info>
+
+---
+
+## Toxicity Categories
+
+AI detects 7 types of harmful content:
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Toxicity**</td>
+      <td>General rude, disrespectful, or unreasonable content</td>
+      <td>"You're an idiot", "This is garbage"</td>
+    </tr>
+    <tr>
+      <td>**Severe Toxicity**</td>
+      <td>Very hateful, aggressive, or disrespectful</td>
+      <td>Extreme insults, threats</td>
+    </tr>
+    <tr>
+      <td>**Identity Attack**</td>
+      <td>Attacks based on identity (race, religion, gender, etc.)</td>
+      <td>Slurs, discriminatory language</td>
+    </tr>
+    <tr>
+      <td>**Insult**</td>
+      <td>Personal insults or name-calling</td>
+      <td>"Stupid", "Moron", personal attacks</td>
+    </tr>
+    <tr>
+      <td>**Profanity**</td>
+      <td>Swear words and obscene language</td>
+      <td>F-word, S-word, etc.</td>
+    </tr>
+    <tr>
+      <td>**Threat**</td>
+      <td>Threatening harm or violence</td>
+      <td>"I'll hurt you", violent threats</td>
+    </tr>
+    <tr>
+      <td>**Sexually Explicit**</td>
+      <td>Sexual or inappropriate content</td>
+      <td>Sexual language, inappropriate comments</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Setup Guide
+
+<Steps>
+  <Step title="Enable Toxicity Checker">
+    Navigate to **Generatify → Settings → Features** and toggle **Toxicity Checker** to ON
+  </Step>
+  
+  <Step title="Set Thresholds">
+    Configure sensitivity levels for each toxicity category
+  </Step>
+  
+  <Step title="Choose Action">
+    Decide what happens with toxic comments (hold, block, or warn)
+  </Step>
+  
+  <Step title="Customize Messages">
+    Set user-facing messages for blocked/held comments
+  </Step>
+  
+  <Step title="Test">
+    Submit test comments to verify detection
+  </Step>
+</Steps>
+
+---
+
+## Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable**</td>
+      <td>On / Off</td>
+      <td>Activate toxicity checking</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Sensitivity**</td>
+      <td>Lenient, Balanced, Strict</td>
+      <td>Overall threshold preset</td>
+      <td>Balanced</td>
+    </tr>
+    <tr>
+      <td>**Action on Detection**</td>
+      <td>Hold for moderation, Block, Warn only</td>
+      <td>What to do with toxic comments</td>
+      <td>Hold for moderation</td>
+    </tr>
+    <tr>
+      <td>**Apply To**</td>
+      <td>All comments, New comments only</td>
+      <td>Scope</td>
+      <td>New comments</td>
+    </tr>
+    <tr>
+      <td>**Exclude Roles**</td>
+      <td>Admin, Editor, Author</td>
+      <td>Skip checking for these users</td>
+      <td>Admin, Editor</td>
+    </tr>
+    <tr>
+      <td>**Show Score**</td>
+      <td>To admin/moderators</td>
+      <td>Display toxicity scores in admin</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Threshold Settings
+
+<Tabs>
+  <Tab title="Lenient (Permissive)">
+    ### Low Sensitivity
+    
+    **Thresholds:**
+    ```
+    Toxicity: 80%
+    Severe Toxicity: 85%
+    Identity Attack: 90%
+    Insult: 75%
+    Profanity: 85%
+    Threat: 95%
+    Sexually Explicit: 85%
+    ```
+    
+    **Behavior:**
+    - Only blocks extremely toxic content
+    - Allows mild profanity
+    - Permits heated debates
+    - Fewer false positives
+    
+    **Best For:**
+    - Mature audiences
+    - Discussion forums
+    - Open debate platforms
+    - Less moderation needed
+  </Tab>
+  
+  <Tab title="Balanced (Recommended)">
+    ### Moderate Sensitivity
+    
+    **Thresholds:**
+    ```
+    Toxicity: 60%
+    Severe Toxicity: 70%
+    Identity Attack: 75%
+    Insult: 65%
+    Profanity: 70%
+    Threat: 80%
+    Sexually Explicit: 75%
+    ```
+    
+    **Behavior:**
+    - Blocks clearly toxic comments
+    - Holds borderline cases for review
+    - Balances safety and free expression
+    - Reasonable false positive rate
+    
+    **Best For:**
+    - Most blogs and websites
+    - General audiences
+    - Balanced moderation approach
+  </Tab>
+  
+  <Tab title="Strict (Family-Friendly)">
+    ### High Sensitivity
+    
+    **Thresholds:**
+    ```
+    Toxicity: 40%
+    Severe Toxicity: 50%
+    Identity Attack: 60%
+    Insult: 50%
+    Profanity: 50%
+    Threat: 60%
+    Sexually Explicit: 60%
+    ```
+    
+    **Behavior:**
+    - Blocks even mildly toxic content
+    - Zero tolerance for profanity
+    - Family-friendly environment
+    - Higher false positive rate
+    
+    **Best For:**
+    - Family/children's sites
+    - Educational platforms
+    - Brand-conscious businesses
+    - High moderation standards
+  </Tab>
+  
+  <Tab title="Custom">
+    ### Per-Category Configuration
+    
+    **Fine-Tune Each Category:**
+    ```
+    Settings → Toxicity Checker → Advanced
+    
+    Toxicity: [Slider 0-100%]
+    Severe Toxicity: [Slider 0-100%]
+    Identity Attack: [Slider 0-100%]
+    Insult: [Slider 0-100%]
+    Profanity: [Slider 0-100%]
+    Threat: [Slider 0-100%]
+    Sexually Explicit: [Slider 0-100%]
+    ```
+    
+    **Example Custom Setup:**
+    ```
+    Toxicity: 60% (moderate)
+    Severe Toxicity: 70% (strict on severe)
+    Identity Attack: 50% (very strict - zero tolerance)
+    Insult: 65% (moderate)
+    Profanity: 80% (lenient - allows mild swearing)
+    Threat: 60% (strict)
+    Sexually Explicit: 70% (strict)
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Actions on Detection
+
+<Tabs>
+  <Tab title="Hold for Moderation">
+    ### Send to Moderation Queue
+    
+    **How It Works:**
+    - Comment is submitted
+    - Marked as "Pending" in WordPress
+    - Appears in moderation queue
+    - Moderator reviews and approves/rejects
+    
+    **User Sees:**
+    "Your comment is awaiting moderation."
+    
+    **Best For:**
+    - Balanced approach
+    - Want human final decision
+    - Catch borderline cases
+    
+    **Pros:**
+    - ✅ No false rejections
+    - ✅ Humans make final call
+    - ✅ Learn from reviews
+    
+    **Cons:**
+    - ⚠️ Requires manual review
+    - ⚠️ Slower comment approval
+  </Tab>
+  
+  <Tab title="Block Comment">
+    ### Prevent Submission
+    
+    **How It Works:**
+    - Comment is rejected immediately
+    - Not saved to database
+    - User must edit and resubmit
+    
+    **User Sees:**
+    "Your comment appears to contain inappropriate language. Please revise and try again."
+    
+    **Best For:**
+    - Zero tolerance policies
+    - High-traffic sites (too many to moderate)
+    - Clear-cut toxic content
+    
+    **Pros:**
+    - ✅ No moderation needed
+    - ✅ Immediate action
+    - ✅ Discourages toxic users
+    
+    **Cons:**
+    - ⚠️ False positives frustrate users
+    - ⚠️ No human oversight
+  </Tab>
+  
+  <Tab title="Warn Only">
+    ### Show Warning, Allow Submission
+    
+    **How It Works:**
+    - Warning shown to user
+    - Comment is still submitted
+    - User can revise or proceed
+    
+    **User Sees:**
+    "⚠️ Your comment may contain inappropriate content. Please review before submitting."
+    [Submit Anyway] [Edit Comment]
+    
+    **Best For:**
+    - Educational approach
+    - Giving users second chance
+    - Testing thresholds
+    
+    **Pros:**
+    - ✅ No false rejections
+    - ✅ Educates users
+    - ✅ Maintains freedom
+    
+    **Cons:**
+    - ⚠️ Users can ignore warnings
+    - ⚠️ Toxic content still published
+  </Tab>
+</Tabs>
+
+---
+
+## User Messages
+
+Customize feedback shown to users:
+
+### Blocked Comment Message
+
+**Default:**
+```
+Your comment could not be published because it appears to contain 
+inappropriate language. Please revise your comment and try again.
+```
+
+**Friendly Alternative:**
+```
+Oops! It looks like your comment might have some language that doesn't 
+align with our community guidelines. Could you rephrase and try again? 
+Thanks for helping keep our community respectful! 😊
+```
+
+**Firm Alternative:**
+```
+This comment violates our community standards and cannot be published. 
+Please review our guidelines and submit a respectful comment.
+```
+
+---
+
+### Held for Moderation Message
+
+**Default:**
+```
+Your comment is being reviewed by our moderation team and will be 
+published once approved. Thank you for your patience.
+```
+
+**Transparent Alternative:**
+```
+Your comment has been flagged by our automated moderation system and 
+will be reviewed by a human moderator shortly. We appreciate your understanding.
+```
+
+---
+
+## False Positives
+
+AI isn't perfect. Handle false positives:
+
+<AccordionGroup>
+  <Accordion title="Review Moderation Queue" icon="list-check">
+    **Regularly check held comments:**
+    
+    ```
+    WordPress Admin → Comments → Pending
+    
+    Look for:
+    - Legitimate comments mistakenly flagged
+    - Context AI missed
+    - Sarcasm/humor misunderstood
+    ```
+    
+    **Action:**
+    - Approve false positives
+    - Note patterns
+    - Adjust thresholds if needed
+  </Accordion>
+  
+  <Accordion title="Whitelist Trusted Users" icon="user-check">
+    **Skip checking for approved users:**
+    
+    ```
+    Settings → Toxicity Checker → Exceptions
+    
+    ✅ Skip checking for:
+    - Administrators
+    - Editors
+    - Authors
+    - Approved commenters (X+ comments)
+    ```
+    
+    **Best Practice:** Skip checking after user has 3+ approved comments
+  </Accordion>
+  
+  <Accordion title="Adjust Thresholds" icon="sliders">
+    **If too many false positives:**
+    
+    1. Review blocked/held comments
+    2. Identify which category triggered
+    3. Increase threshold for that category
+    4. Test with sample comments
+    5. Iterate until balanced
+    
+    **Example:**
+    "Damn, this is good!" flagged for Profanity
+    → Increase Profanity threshold from 70% to 80%
+  </Accordion>
+  
+  <Accordion title="Context Keyword Allowlist" icon="spell-check">
+    **Allow specific words in context:**
+    
+    ```
+    Settings → Toxicity Checker → Allowlist
+    
+    Examples:
+    - "damn" (in certain contexts)
+    - "hell" (as in "what the hell is this about")
+    - Technical terms that trigger false positives
+    ```
+    
+    **Use Sparingly:** Allowlist reduces effectiveness
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Analytics
+
+Track moderation activity:
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Description</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Total Comments Analyzed**</td>
+      <td>All comments checked</td>
+      <td>Overall usage</td>
+    </tr>
+    <tr>
+      <td>**Blocked Comments**</td>
+      <td>Comments prevented from publishing</td>
+      <td>How much toxicity caught</td>
+    </tr>
+    <tr>
+      <td>**Held for Moderation**</td>
+      <td>Comments in review queue</td>
+      <td>Manual review workload</td>
+    </tr>
+    <tr>
+      <td>**False Positive Rate**</td>
+      <td>% of held comments later approved</td>
+      <td>Threshold tuning</td>
+    </tr>
+    <tr>
+      <td>**Most Common Category**</td>
+      <td>Which toxicity type most frequent</td>
+      <td>Understand your community</td>
+    </tr>
+    <tr>
+      <td>**Avg Toxicity Score**</td>
+      <td>Average score of all comments</td>
+      <td>Community health over time</td>
+    </tr>
+  </tbody>
+</table>
+
+**Access:** Generatify → Analytics → Toxicity Checker
+
+---
+
+## Performance
+
+<AccordionGroup>
+  <Accordion title="Client-Side Processing" icon="browser">
+    **TensorFlow.js runs in user's browser:**
+    
+    **Benefits:**
+    - Zero server load
+    - No API costs
+    - Privacy-friendly
+    - Instant results
+    
+    **Requirements:**
+    - Modern browser (Chrome, Firefox, Safari, Edge)
+    - JavaScript enabled
+    - ~2MB model download (one-time)
+    
+    **Performance:**
+    - Model loads once per session
+    - Analysis takes 200-500ms
+    - No noticeable delay for users
+  </Accordion>
+  
+  <Accordion title="Model Caching" icon="database">
+    **Model cached in browser:**
+    
+    - First visit: Downloads 2MB model
+    - Subsequent visits: Uses cached model
+    - Cache persists across sessions
+    - No re-download needed
+    
+    **Result:** Zero latency after first load
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Limitations
+
+<Warning>
+**AI Isn't Perfect:** Understand these limitations
+</Warning>
+
+<AccordionGroup>
+  <Accordion title="Context Challenges" icon="message-question">
+    **AI may miss:**
+    - Sarcasm ("Oh great, another tutorial" - sarcastic, not toxic)
+    - Cultural nuances
+    - Inside jokes
+    - Regional slang
+    
+    **Solution:** Human moderation review for borderline cases
+  </Accordion>
+  
+  <Accordion title="Language Support" icon="language">
+    **Currently supports:**
+    - English only
+    
+    **Coming soon:**
+    - Spanish
+    - French
+    - German
+    - More languages
+    
+    **Workaround:** Use WordPress comment moderation for non-English sites
+  </Accordion>
+  
+  <Accordion title="Sophisticated Trolls" icon="user-secret">
+    **Won't catch:**
+    - Coded language
+    - Dog whistles
+    - Subtle harassment
+    - Coordinated attacks
+    
+    **Solution:** Combine with human moderation and community reporting
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start with Balanced Settings" icon="balance-scale">
+    Don't go too strict initially:
+    
+    1. Enable with "Balanced" preset
+    2. Set action to "Hold for Moderation" (not Block)
+    3. Monitor for 1-2 weeks
+    4. Review false positive rate
+    5. Adjust thresholds based on data
+    6. Gradually tune to your needs
+  </Accordion>
+  
+  <Accordion title="Communicate with Users" icon="bullhorn">
+    Be transparent about moderation:
+    
+    **Add to Comment Guidelines:**
+    ```
+    "Comments are automatically screened for inappropriate content. 
+    If your comment is held for moderation, please be patient while 
+    we review it. We aim to approve comments within 24 hours."
+    ```
+    
+    **Benefits:**
+    - Sets expectations
+    - Reduces frustration
+    - Explains delays
+  </Accordion>
+  
+  <Accordion title="Combine with Human Moderation" icon="users">
+    **Hybrid Approach (Best):**
+    
+    - AI: First line of defense (catches 80-90%)
+    - Humans: Final decision (reviews borderline 10-20%)
+    
+    **Workflow:**
+    1. AI blocks obvious toxicity
+    2. AI holds borderline cases
+    3. Moderator reviews held comments daily
+    4. Approves legitimate, rejects toxic
+    5. Learns from patterns, adjusts thresholds
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Toxicity Checker Not Working">
+    **Possible Causes:**
+    1. Feature not enabled
+    2. JavaScript disabled/blocked
+    3. Old browser
+    4. TensorFlow.js model failed to load
+    
+    **Solutions:**
+    1. Verify enabled in Settings
+    2. Check browser console for errors
+    3. Test in Chrome/Firefox (latest)
+    4. Check internet connection
+    5. Try clearing browser cache
+  </Accordion>
+  
+  <Accordion title="Too Many False Positives">
+    **Solutions:**
+    1. Switch from Strict to Balanced
+    2. Increase thresholds by 10-20%
+    3. Review which category triggers most
+    4. Add common false positives to allowlist
+    5. Whitelist trusted commenters
+  </Accordion>
+  
+  <Accordion title="Toxic Comments Still Getting Through">
+    **Solutions:**
+    1. Lower thresholds (more sensitive)
+    2. Switch to Strict preset
+    3. Review which category they fall under
+    4. Check if users are circumventing (l33tspeak)
+    5. Add human moderation for all comments
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration Guide" icon="sliders" href="/moderation/configuration">
+    Detailed threshold tuning
+  </Card>
+  <Card title="Content Moderation Overview" icon="shield" href="/features/content-moderation">
+    All moderation features
+  </Card>
+  <Card title="Community Guidelines" icon="book" href="/advanced/settings">
+    Set up comment policies
+  </Card>
+  <Card title="WordPress Comments" icon="comments" href="/advanced/settings">
+    Integrate with WP moderation
+  </Card>
+</CardGroup>
+
+<Tip>
+**Recommended Setup:** Start with "Balanced" preset + "Hold for Moderation" action. Review held comments for first week, then adjust thresholds based on false positive rate.
+</Tip>

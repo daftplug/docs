@@ -1,0 +1,668 @@
+---
+title: 'Google (Gemini)'
+description: 'Setup and configure Google Gemini integration with Generatify'
+icon: 'google'
+---
+
+## Overview
+
+Google's Gemini models offer cutting-edge AI capabilities with a generous free tier, making them perfect for getting started or scaling affordably. Known for speed, multimodal capabilities, and massive context windows.
+
+<CardGroup cols={2}>
+  <Card title="Best For" icon="star">
+    High-volume usage, budget-conscious sites, free tier testing
+  </Card>
+  <Card title="Pricing" icon="dollar-sign">
+    Free tier available, then pay-as-you-go
+  </Card>
+</CardGroup>
+
+---
+
+## Available Models
+
+<Tabs>
+  <Tab title="Gemini 1.5 Pro">
+    ### Most Capable Model
+
+    **Model:** `gemini-1.5-pro`
+
+    **Strengths:**
+    - 1 million token context window (massive!)
+    - Multimodal (text, images, video, audio)
+    - Strong reasoning capabilities
+    - Long document analysis
+    - Free tier: 2 RPM
+
+    **Best For:**
+    - AI Assistant Chatbot
+    - Analyzing long documents
+    - Complex helpdesk queries
+    - Content with images
+
+    **Pricing (After Free Tier):**
+    - Input (<128K tokens): $1.25 / 1M tokens
+    - Input (>128K tokens): $2.50 / 1M tokens
+    - Output: $5.00 / 1M tokens
+
+    **Free Tier:**
+    - 2 requests per minute
+    - 1,000 requests per day
+    - 1,500,000 requests per month
+  </Tab>
+
+  <Tab title="Gemini 1.5 Flash">
+    ### Fast & Affordable
+
+    **Model:** `gemini-1.5-flash`
+
+    **Strengths:**
+    - Extremely fast responses
+    - Very cost-effective
+    - 1 million token context
+    - Multimodal support
+    - Free tier: 15 RPM
+
+    **Best For:**
+    - Auto post tags
+    - Auto categories
+    - Quick automations
+    - High-volume tasks
+
+    **Pricing (After Free Tier):**
+    - Input (<128K tokens): $0.075 / 1M tokens
+    - Input (>128K tokens): $0.15 / 1M tokens
+    - Output: $0.30 / 1M tokens
+
+    **Free Tier:**
+    - 15 requests per minute
+    - 1,500 requests per day
+    - 1,500,000 requests per month
+  </Tab>
+
+  <Tab title="Gemini 2.0 Flash">
+    ### Latest Experimental
+
+    **Model:** `gemini-2.0-flash-exp`
+
+    **Strengths:**
+    - Newest features
+    - Improved quality
+    - Faster than 1.5 Flash
+    - Experimental pricing
+
+    **Best For:**
+    - Testing new capabilities
+    - Early adopters
+    - Cutting-edge features
+
+    **Pricing:**
+    - Similar to 1.5 Flash
+    - Subject to change
+    - Check Google AI Studio for latest
+  </Tab>
+
+  <Tab title="Gemini 1.0 Pro">
+    ### Legacy Model
+
+    **Model:** `gemini-1.0-pro`
+
+    **Note:** Consider using 1.5 models instead for better performance and features.
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Guide
+
+### Step 1: Get Google AI API Key
+
+<Steps>
+  <Step title="Visit Google AI Studio">
+    Go to [aistudio.google.com](https://aistudio.google.com)
+  </Step>
+
+  <Step title="Sign In">
+    Sign in with your Google account
+  </Step>
+
+  <Step title="Get API Key">
+    Click **Get API Key** in the top navigation
+  </Step>
+
+  <Step title="Create New Key">
+    Click **Create API Key** and choose a Google Cloud project (or create new)
+  </Step>
+
+  <Step title="Copy Key">
+    Copy the generated API key
+  </Step>
+</Steps>
+
+<img src="/images/google-api-key.png" alt="Creating Google AI API Key" />
+
+<Info>
+  **No Credit Card Required:** You can start using Gemini's free tier immediately without adding payment details!
+</Info>
+
+### Step 2: Add to Generatify
+
+<Steps>
+  <Step title="Open WordPress Admin">
+    Navigate to **Generatify → Settings → Integrations**
+  </Step>
+
+  <Step title="Find Google Section">
+    Scroll to the **Google Gemini** integration block
+  </Step>
+
+  <Step title="Enable Google Gemini">
+    Toggle **Enable Google Gemini** to ON
+  </Step>
+
+  <Step title="Paste API Key">
+    Paste your Google AI API key
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Look for green checkmark confirming connection
+  </Step>
+</Steps>
+
+---
+
+## Free Tier Details
+
+Google offers an incredibly generous free tier:
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>RPM</th>
+      <th>RPD</th>
+      <th>Tokens/Min</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini 1.5 Pro</td>
+      <td>2</td>
+      <td>1,000</td>
+      <td>32,000</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>15</td>
+      <td>1,500</td>
+      <td>1,000,000</td>
+    </tr>
+  </tbody>
+</table>
+
+**What This Means:**
+- **Small blogs:** Can run entirely on free tier indefinitely
+- **Medium sites:** Free tier covers most usage, minimal paid costs
+- **Large sites:** Significant cost savings vs. OpenAI/Anthropic
+
+<Check>
+  **Perfect for Testing:** Try all Generatify features risk-free with Google's free tier before committing to any paid AI provider.
+</Check>
+
+---
+
+## Model Selection by Feature
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Recommended</th>
+      <th>Free Tier Option</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI Assistant</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>2 RPM sufficient for most</td>
+    </tr>
+    <tr>
+      <td>Auto Tags</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>15 RPM = ~900 posts/hour</td>
+    </tr>
+    <tr>
+      <td>Auto Categories</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>Very cost-effective</td>
+    </tr>
+    <tr>
+      <td>Meta Descriptions</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>Gemini 1.5 Flash</td>
+      <td>Pro for better SEO quality</td>
+    </tr>
+    <tr>
+      <td>Helpdesk Agent</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>Good conversational abilities</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Why Choose Gemini?
+
+<AccordionGroup>
+  <Accordion title="Massive Context Window" icon="expand">
+    1 million tokens = ~700,000 words:
+    - Analyze entire books or documentation
+    - Reference huge knowledge bases
+    - Maintain very long conversations
+    - Process large datasets at once
+
+    **Example:** Analyze all your blog posts in a single request.
+  </Accordion>
+
+  <Accordion title="Free Tier" icon="gift">
+    Start without any costs:
+    - No credit card required
+    - Generous limits (1.5M requests/month on Flash)
+    - Perfect for testing and small sites
+    - Upgrade only when needed
+
+    **Example:** Run a small blog entirely free indefinitely.
+  </Accordion>
+
+  <Accordion title="Blazing Fast" icon="bolt">
+    Gemini Flash is incredibly fast:
+    - Near-instant responses
+    - Great user experience
+    - High throughput for automations
+    - Reduces perceived latency
+
+    **Example:** Auto-tag 100 posts in under 2 minutes.
+  </Accordion>
+
+  <Accordion title="Multimodal Capabilities" icon="images">
+    Analyze text, images, video, and audio:
+    - Product image descriptions
+    - Video content analysis
+    - Audio transcription
+    - Mixed media understanding
+
+    **Example:** Generate alt text from images (coming soon to Generatify).
+  </Accordion>
+
+  <Accordion title="Cost Effective at Scale" icon="dollar-sign">
+    Cheapest paid tier when you exceed free limits:
+    - Flash: $0.075 / 1M input tokens
+    - 10-100x cheaper than competitors
+    - Scales affordably
+    - Great for high-volume usage
+
+    **Example:** 10,000 auto-tags = ~$0.75 (vs. $10+ with OpenAI).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Upgrading to Paid Tier
+
+When you exceed free tier limits:
+
+<Steps>
+  <Step title="Set Up Billing">
+    In Google AI Studio or Google Cloud Console, add billing account
+  </Step>
+
+  <Step title="Enable Paid API">
+    Switch from free tier to pay-as-you-go pricing
+  </Step>
+
+  <Step title="Set Budget Alerts">
+    Configure spending alerts in Google Cloud Console
+  </Step>
+
+  <Step title="Monitor Usage">
+    Track usage in Google Cloud Console dashboards
+  </Step>
+</Steps>
+
+<Info>
+  **Gradual Transition:** You can continue using free tier alongside paid usage. Google charges only for requests that exceed free limits.
+</Info>
+
+---
+
+## Cost Management
+
+### Understanding Token Pricing
+
+Gemini's pricing is tiered by input length:
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Input ≤128K</th>
+      <th>Input >128K</th>
+      <th>Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini 1.5 Pro</td>
+      <td>$1.25 / 1M</td>
+      <td>$2.50 / 1M</td>
+      <td>$5.00 / 1M</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>$0.075 / 1M</td>
+      <td>$0.15 / 1M</td>
+      <td>$0.30 / 1M</td>
+    </tr>
+  </tbody>
+</table>
+
+**Example Calculation:**
+```
+Task: Auto-tag a blog post
+Input tokens: ~300 (title + content excerpt)
+Output tokens: ~20 (5 tags)
+
+Cost with Gemini 1.5 Flash:
+Input: 300 × $0.075 / 1M = $0.0000225
+Output: 20 × $0.30 / 1M = $0.000006
+Total: ~$0.00003 per post
+
+1,000 posts = ~$0.03 (vs. $1-2 with other providers!)
+```
+
+### Setting Budget Alerts
+
+<Steps>
+  <Step title="Open Google Cloud Console">
+    Go to [console.cloud.google.com](https://console.cloud.google.com)
+  </Step>
+
+  <Step title="Navigate to Billing">
+    Go to **Billing → Budgets & alerts**
+  </Step>
+
+  <Step title="Create Budget">
+    Click **Create Budget** and set monthly limit
+  </Step>
+
+  <Step title="Set Alert Thresholds">
+    Configure alerts at 50%, 90%, 100% of budget
+  </Step>
+
+  <Step title="Add Email Recipients">
+    Add email addresses for notifications
+  </Step>
+</Steps>
+
+---
+
+## Rate Limits
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Gemini 1.5 Pro</th>
+      <th>Gemini 1.5 Flash</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Free Tier**</td>
+      <td>2 RPM, 1K RPD</td>
+      <td>15 RPM, 1.5K RPD</td>
+    </tr>
+    <tr>
+      <td>**Paid Tier**</td>
+      <td>1,000 RPM, 10K RPD</td>
+      <td>2,000 RPM, 10K RPD</td>
+    </tr>
+  </tbody>
+</table>
+
+<Note>
+  RPM = Requests per minute  
+  RPD = Requests per day
+</Note>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start with Free Tier" icon="play">
+    Test all features risk-free:
+    - No payment required
+    - Learn what works for your site
+    - Understand usage patterns
+    - Upgrade only when needed
+
+    Most small-medium sites never exceed free tier!
+  </Accordion>
+
+  <Accordion title="Use Flash for Volume" icon="bolt">
+    Gemini 1.5 Flash is perfect for:
+    - Auto-tagging (fast + cheap)
+    - Auto-categorization
+    - High-volume automations
+    - Simple queries
+
+    Save Pro for quality-critical tasks.
+  </Accordion>
+
+  <Accordion title="Leverage Long Context" icon="file">
+    Make use of 1M token context:
+    - Send entire post content (not just excerpts)
+    - Include multiple reference documents
+    - Provide comprehensive site context
+    - Maintain longer conversation histories
+
+    You have room to spare—use it!
+  </Accordion>
+
+  <Accordion title="Monitor Free Tier Usage" icon="chart-line">
+    Keep track of your limits:
+    - Check Google AI Studio dashboard
+    - Set up alerts before hitting limits
+    - Plan for paid tier if needed
+    - Optimize highest-volume features first
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Comparing Gemini to Competitors
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Gemini 1.5 Pro</th>
+      <th>GPT-4 Turbo</th>
+      <th>Claude 3.5 Sonnet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Context Window**</td>
+      <td>1M tokens 🏆</td>
+      <td>128K tokens</td>
+      <td>200K tokens</td>
+    </tr>
+    <tr>
+      <td>**Free Tier**</td>
+      <td>Yes 🏆</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Cost (Input)**</td>
+      <td>$1.25/1M 🏆</td>
+      <td>$10.00/1M</td>
+      <td>$3.00/1M</td>
+    </tr>
+    <tr>
+      <td>**Speed**</td>
+      <td>Very Fast</td>
+      <td>Fast</td>
+      <td>Fast</td>
+    </tr>
+    <tr>
+      <td>**Content Quality**</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Conversation**</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>**Multimodal**</td>
+      <td>Yes 🏆</td>
+      <td>Yes (Vision)</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+**Bottom Line:** Gemini offers the best value, especially with free tier and lowest paid pricing.
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="API Key Not Working">
+    **Error:** "API key not valid"
+
+    **Solutions:**
+    1. Verify key copied correctly (no spaces)
+    2. Check API is enabled in Google Cloud Console
+    3. Ensure you're using AI Studio API key (not Cloud API key)
+    4. Try generating a new key
+  </Accordion>
+
+  <Accordion title="Free Tier Limit Reached">
+    **Error:** "Quota exceeded"
+
+    **Solutions:**
+    1. Wait for quota to reset (per minute/day limits)
+    2. Upgrade to paid tier for higher limits
+    3. Optimize feature usage
+    4. Use Flash instead of Pro (higher free limits)
+  </Accordion>
+
+  <Accordion title="Billing Not Enabled">
+    **Error:** "Billing must be enabled"
+
+    **Solutions:**
+    1. This means you hit free tier limits
+    2. Add billing in Google Cloud Console
+    3. Or wait for free tier reset
+    4. Reduce usage to stay within free tier
+  </Accordion>
+
+  <Accordion title="Slow Responses">
+    **Issue:** Gemini feels slow
+
+    **Solutions:**
+    1. Switch to Gemini 1.5 Flash (faster)
+    2. Reduce context/prompt length
+    3. Check your internet connection
+    4. Try different time of day (off-peak)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Features
+
+### Multimodal Capabilities
+
+Gemini can process images, video, and audio:
+
+```
+Coming soon to Generatify:
+- Image analysis in chatbot
+- Product photo descriptions
+- Video content summaries
+- Audio transcription
+```
+
+### Function Calling
+
+Gemini supports structured function calling:
+
+```php
+// Generatify can use function calling for:
+// - Structured data extraction
+// - Tool integration
+// - API interactions
+// - Database queries
+```
+
+---
+
+## Support Resources
+
+<CardGroup cols={2}>
+  <Card title="Google AI Studio" icon="google" href="https://aistudio.google.com">
+    Create and test prompts
+  </Card>
+  <Card title="Gemini API Docs" icon="book" href="https://ai.google.dev/docs">
+    Official documentation
+  </Card>
+  <Card title="Google Cloud Console" icon="cloud" href="https://console.cloud.google.com">
+    Manage billing and quotas
+  </Card>
+  <Card title="Community Forum" icon="comments" href="https://discuss.ai.google.dev">
+    Get help from community
+  </Card>
+</CardGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Compare Providers" icon="balance-scale" href="/integrations/overview">
+    See full provider comparison
+  </Card>
+  <Card title="OpenAI Setup" icon="openai" href="/integrations/openai-chatgpt">
+    Add OpenAI for premium features
+  </Card>
+  <Card title="Anthropic Setup" icon="a" href="/integrations/anthropic-claude">
+    Add Claude for conversations
+  </Card>
+  <Card title="Enable Features" icon="toggle-on" href="/features/overview">
+    Start using AI features
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Recommended Strategy:** Start with Google Gemini's free tier for all features. Once comfortable and past free limits, mix providers—use Gemini for high-volume tasks and Claude/GPT-4 for quality-critical content.
+</Tip>

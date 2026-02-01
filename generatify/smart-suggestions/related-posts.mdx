@@ -1,0 +1,658 @@
+---
+title: 'Related Posts'
+description: 'AI-powered related content recommendations to increase engagement'
+icon: 'link'
+---
+
+## Overview
+
+Related Posts uses AI to recommend relevant content to readers, keeping them engaged longer and reducing bounce rates. Unlike traditional related posts plugins that use simple keyword matching, AI understands context and semantic relationships.
+
+<CardGroup cols={3}>
+  <Card title="Higher Engagement" icon="chart-line">
+    Keep visitors reading longer
+  </Card>
+  <Card title="Lower Bounce Rate" icon="arrow-trend-down">
+    Reduce single-page visits
+  </Card>
+  <Card title="Better Discovery" icon="compass">
+    Help readers find great content
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="Content Analysis">
+    AI analyzes current post content, title, and topics
+  </Step>
+  
+  <Step title="Semantic Matching">
+    Compares against all published posts using AI understanding
+  </Step>
+  
+  <Step title="Relevance Scoring">
+    Ranks posts by true topical relevance, not just keyword matches
+  </Step>
+  
+  <Step title="Smart Selection">
+    Chooses 3-6 most relevant posts
+  </Step>
+  
+  <Step title="Display">
+    Shows related posts at end of content or in sidebar
+  </Step>
+</Steps>
+
+<Info>
+**AI Advantage:** Traditional plugins match tags/categories. AI understands actual content meaning and context.
+</Info>
+
+---
+
+## Setup Guide
+
+<Steps>
+  <Step title="Enable Related Posts">
+    Navigate to **Generatify → Settings → Features** and toggle **Related Posts** to ON
+  </Step>
+  
+  <Step title="Connect AI Provider">
+    Ensure OpenAI, Anthropic, or Google is connected
+  </Step>
+  
+  <Step title="Configure Display">
+    Choose where and how to show related posts
+  </Step>
+  
+  <Step title="Customize Appearance">
+    Set colors, layout, thumbnail settings
+  </Step>
+  
+  <Step title="Test on Posts">
+    Visit a published post to see related recommendations
+  </Step>
+</Steps>
+
+---
+
+## Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AI Provider**</td>
+      <td>OpenAI, Anthropic, Google</td>
+      <td>Which AI to use</td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
+      <td>**AI Model**</td>
+      <td>Provider models</td>
+      <td>Specific model</td>
+      <td>GPT-4o Mini</td>
+    </tr>
+    <tr>
+      <td>**Number of Posts**</td>
+      <td>1-10</td>
+      <td>How many to show</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>**Display Location**</td>
+      <td>After content, Sidebar, Both</td>
+      <td>Where to show</td>
+      <td>After content</td>
+    </tr>
+    <tr>
+      <td>**Layout**</td>
+      <td>Grid, List, Carousel</td>
+      <td>Visual style</td>
+      <td>Grid</td>
+    </tr>
+    <tr>
+      <td>**Show Thumbnails**</td>
+      <td>Yes / No</td>
+      <td>Include featured images</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Show Excerpt**</td>
+      <td>Yes / No</td>
+      <td>Include post excerpt</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>**Show Date**</td>
+      <td>Yes / No</td>
+      <td>Include publish date</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>**Exclude Categories**</td>
+      <td>Multiple selection</td>
+      <td>Don't recommend from these</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>**Cache Duration**</td>
+      <td>1-168 hours</td>
+      <td>How long to cache results</td>
+      <td>24 hours</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Display Options
+
+<Tabs>
+  <Tab title="After Content (Recommended)">
+    ### Below Post Content
+    
+    **Appearance:**
+    - Shows at end of post
+    - Before comments section
+    - Full-width or contained
+    
+    **Best For:**
+    - Blog posts
+    - Articles
+    - Long-form content
+    
+    **Pros:**
+    - ✅ High visibility
+    - ✅ Natural reading flow
+    - ✅ Highest click-through rate
+    
+    **Cons:**
+    - ⚠️ Only seen if reader finishes post
+    
+    **Example:**
+    ```
+    [Your post content ends here]
+    
+    ━━━━━━━━━━━━━━━━━━━━━
+    
+    📚 You May Also Like
+    
+    [Post 1]  [Post 2]  [Post 3]
+    ```
+  </Tab>
+  
+  <Tab title="Sidebar Widget">
+    ### In Sidebar
+    
+    **Appearance:**
+    - Widget in sidebar
+    - Visible while scrolling
+    - Compact layout
+    
+    **Best For:**
+    - Sites with active sidebars
+    - Multi-column layouts
+    - Shorter posts
+    
+    **Pros:**
+    - ✅ Always visible
+    - ✅ Doesn't interrupt content
+    - ✅ Works for any post length
+    
+    **Cons:**
+    - ⚠️ Less prominent
+    - ⚠️ Mobile may hide sidebar
+    
+    **Setup:**
+    ```
+    Appearance → Widgets → Add "Generatify Related Posts" widget
+    ```
+  </Tab>
+  
+  <Tab title="Both Locations">
+    ### After Content + Sidebar
+    
+    **Strategy:** Maximum visibility
+    
+    **Configuration:**
+    - After content: Grid layout, 3 posts, with images
+    - Sidebar: List layout, 5 posts, no images (compact)
+    
+    **Best For:**
+    - High-traffic blogs
+    - Content-rich sites
+    - Maximizing engagement
+    
+    **Note:** Show different posts in each location to provide more options
+  </Tab>
+  
+  <Tab title="Shortcode (Custom)">
+    ### Manual Placement
+    
+    **Use Case:** Custom locations
+    
+    **Shortcode:**
+    ```
+    [generatify_related_posts count="4" layout="grid"]
+    ```
+    
+    **Parameters:**
+    - `count`: Number of posts (1-10)
+    - `layout`: grid, list, carousel
+    - `show_thumbnail`: true/false
+    - `show_excerpt`: true/false
+    - `show_date`: true/false
+    
+    **Example:**
+    Place mid-article:
+    ```
+    Your paragraph here...
+    
+    [generatify_related_posts count="2" layout="list"]
+    
+    Continue article...
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Layout Styles
+
+<Tabs>
+  <Tab title="Grid Layout">
+    ### Card Grid
+    
+    **Appearance:**
+    ```
+    ┌─────────┐ ┌─────────┐ ┌─────────┐
+    │  Image  │ │  Image  │ │  Image  │
+    │         │ │         │ │         │
+    │  Title  │ │  Title  │ │  Title  │
+    │ Excerpt │ │ Excerpt │ │ Excerpt │
+    └─────────┘ └─────────┘ └─────────┘
+    ```
+    
+    **Best For:**
+    - 3-4 posts
+    - After content placement
+    - Visual content (good images)
+    
+    **Responsive:** Stacks on mobile
+  </Tab>
+  
+  <Tab title="List Layout">
+    ### Vertical List
+    
+    **Appearance:**
+    ```
+    ┌──────────────────────────────┐
+    │ 📷  Title of Post 1          │
+    │     Short excerpt...         │
+    ├──────────────────────────────┤
+    │ 📷  Title of Post 2          │
+    │     Short excerpt...         │
+    ├──────────────────────────────┤
+    │ 📷  Title of Post 3          │
+    │     Short excerpt...         │
+    └──────────────────────────────┘
+    ```
+    
+    **Best For:**
+    - 5-8 posts
+    - Sidebar placement
+    - Compact spaces
+    
+    **Responsive:** Works well on all devices
+  </Tab>
+  
+  <Tab title="Carousel">
+    ### Horizontal Slider
+    
+    **Appearance:**
+    ```
+    ← [Post 1] [Post 2] [Post 3] →
+       ●      ○      ○
+    ```
+    
+    **Best For:**
+    - Many posts (6-10)
+    - Image-heavy content
+    - Modern design aesthetic
+    
+    **Features:**
+    - Swipe on mobile
+    - Arrow navigation
+    - Auto-play (optional)
+  </Tab>
+</Tabs>
+
+---
+
+## Matching Algorithm
+
+### How AI Determines Relevance
+
+<AccordionGroup>
+  <Accordion title="Semantic Understanding" icon="brain">
+    AI understands meaning, not just keywords.
+    
+    **Example:**
+    Current post: "Best React Hooks for State Management"
+    
+    **Traditional Match (Keywords):**
+    - "React Hooks Tutorial" ✅
+    - "React Hooks Examples" ✅
+    - "Understanding React Hooks" ✅
+    
+    **AI Match (Semantic):**
+    - "Redux vs Context API Comparison" ✅ (related concept)
+    - "Modern React State Management" ✅ (same topic)
+    - "useState and useReducer Guide" ✅ (specific hooks)
+    
+    **AI Understands:** These posts are relevant even without "hooks" in title
+  </Accordion>
+  
+  <Accordion title="Context Awareness" icon="magnifying-glass">
+    Considers full post content, not just title.
+    
+    **Factors:**
+    - Post body content (all paragraphs)
+    - Title and subtitle
+    - Category and tags
+    - Writing style and tone
+    - Target audience level (beginner/advanced)
+    
+    **Result:** Better matches based on actual content
+  </Accordion>
+  
+  <Accordion title="Recency Weighting" icon="clock">
+    Balance relevance with freshness.
+    
+    **Configuration:**
+    ```
+    Settings → Related Posts → Matching
+    
+    Recency Weight: 20% (0-50%)
+    ```
+    
+    **How It Works:**
+    - 80% relevance score
+    - 20% recency boost for newer posts
+    
+    **Result:** Mix of best matches + fresh content
+  </Accordion>
+  
+  <Accordion title="Diversity" icon="shuffle">
+    Avoid showing similar posts.
+    
+    **Strategy:**
+    - Don't show 3 posts all about same specific topic
+    - Vary between beginner/intermediate/advanced
+    - Mix tutorial/opinion/news post types
+    
+    **Example:**
+    If recommending React content:
+    - Post 1: React Hooks tutorial (specific)
+    - Post 2: React performance optimization (related)
+    - Post 3: Building a React app (broader)
+    
+    Not all hooks tutorials!
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Customization
+
+### Visual Styling
+
+<AccordionGroup>
+  <Accordion title="Colors" icon="palette">
+    Match your theme colors.
+    
+    **Configuration:**
+    ```
+    Settings → Related Posts → Appearance → Colors
+    
+    Title Color: #1F2937
+    Link Color: #2563EB
+    Link Hover: #1E40AF
+    Background: #F9FAFB
+    Border: #E5E7EB
+    ```
+  </Accordion>
+  
+  <Accordion title="Typography" icon="text">
+    Font customization.
+    
+    **Options:**
+    - Title Font: Inherit from theme, Custom Google Font
+    - Title Size: 18-28px
+    - Title Weight: 400-700
+    - Excerpt Font Size: 14-18px
+    
+    **Configuration:**
+    ```
+    Settings → Related Posts → Appearance → Typography
+    
+    Title Font: Inherit (use theme font)
+    Title Size: 20px
+    Excerpt Size: 15px
+    ```
+  </Accordion>
+  
+  <Accordion title="Spacing & Layout" icon="up-right-and-down-left-from-center">
+    Control padding, margins, gaps.
+    
+    **Options:**
+    - Card Padding: 16-32px
+    - Gap Between Cards: 16-40px
+    - Border Radius: 0-20px
+    - Shadow: None, Small, Medium, Large
+    
+    **Presets:**
+    - **Compact:** 12px padding, 16px gap, 4px radius
+    - **Default:** 20px padding, 24px gap, 8px radius
+    - **Spacious:** 32px padding, 40px gap, 12px radius
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Performance & Caching
+
+<AccordionGroup>
+  <Accordion title="Smart Caching" icon="database">
+    Results are cached to avoid repeated AI calls.
+    
+    **How It Works:**
+    1. First visitor: AI generates related posts (2-3 seconds)
+    2. Results cached for 24 hours (configurable)
+    3. Next visitors: Instant display (no AI call)
+    4. Cache expires after duration
+    5. Next visitor triggers refresh
+    
+    **Cache Duration:**
+    ```
+    Settings → Related Posts → Performance → Cache
+    
+    Duration: 24 hours (1-168 hours)
+    ```
+    
+    **Recommendations:**
+    - **New blog:** 1-7 days (content changing frequently)
+    - **Established blog:** 24-48 hours (balanced)
+    - **Archived content:** 168 hours (rarely changes)
+  </Accordion>
+  
+  <Accordion title="Manual Cache Refresh" icon="rotate">
+    Force regenerate related posts.
+    
+    **When to Use:**
+    - After publishing many new posts
+    - After updating post content significantly
+    - After changing matching settings
+    
+    **How To:**
+    ```
+    Generatify → Tools → Clear Related Posts Cache
+    
+    Options:
+    - Clear all cached results
+    - Clear specific post's cache
+    - Regenerate all immediately
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Options
+
+### Exclusion Rules
+
+<table>
+  <thead>
+    <tr>
+      <th>Exclusion Type</th>
+      <th>Use Case</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Exclude Categories**</td>
+      <td>Don't recommend from specific categories</td>
+      <td>Exclude "Press Releases", "Uncategorized"</td>
+    </tr>
+    <tr>
+      <td>**Exclude Tags**</td>
+      <td>Skip posts with certain tags</td>
+      <td>Exclude "Draft", "Private"</td>
+    </tr>
+    <tr>
+      <td>**Exclude Post IDs**</td>
+      <td>Manually exclude specific posts</td>
+      <td>Exclude post #123, #456</td>
+    </tr>
+    <tr>
+      <td>**Exclude Current Post**</td>
+      <td>Never recommend the post being viewed</td>
+      <td>Always enabled</td>
+    </tr>
+    <tr>
+      <td>**Exclude Old Posts**</td>
+      <td>Only recommend recent content</td>
+      <td>Exclude posts older than 2 years</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Cost Estimation
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Per Post (First Load)</th>
+      <th>1,000 Posts (Cached)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GPT-4o Mini</td>
+      <td>$0.0002</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>Gemini 1.5 Flash</td>
+      <td>$0.00006</td>
+      <td>$0.06</td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Haiku</td>
+      <td>$0.0002</td>
+      <td>$0.20</td>
+    </tr>
+  </tbody>
+</table>
+
+**With 24-hour caching:** Cost per visitor is effectively $0
+
+<Check>
+**Impact:** 30% increase in pages per session = 3-5 more pageviews per visitor = More ad revenue, more conversions
+</Check>
+
+---
+
+## Analytics
+
+Track related post performance:
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>What It Measures</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Click-Through Rate**</td>
+      <td>% of visitors who click related post</td>
+      <td>15-30%</td>
+    </tr>
+    <tr>
+      <td>**Popular Recommendations**</td>
+      <td>Which posts get recommended most</td>
+      <td>Use to identify best content</td>
+    </tr>
+    <tr>
+      <td>**Most Clicked Posts**</td>
+      <td>Which recommendations get clicked</td>
+      <td>Optimize these posts further</td>
+    </tr>
+    <tr>
+      <td>**Average Relevance**</td>
+      <td>User feedback on match quality</td>
+      <td>>80% relevant</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Smart Compose" icon="wand-magic-sparkles" href="/smart-suggestions/smart-compose">
+    AI writing suggestions
+  </Card>
+  <Card title="Smart Suggestions Overview" icon="lightbulb" href="/features/smart-suggestions">
+    All smart suggestion features
+  </Card>
+  <Card title="Performance Optimization" icon="gauge-high" href="/advanced/performance">
+    Optimize related posts speed
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Fine-tune all options
+  </Card>
+</CardGroup>
+
+<Tip>
+**Pro Tip:** Use 3-4 related posts in grid layout after content for best engagement. Too many choices can overwhelm readers!
+</Tip>

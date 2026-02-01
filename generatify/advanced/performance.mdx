@@ -1,0 +1,858 @@
+---
+title: 'Performance Optimization'
+description: 'Optimize Generatify for speed, efficiency, and cost savings'
+icon: 'gauge'
+---
+
+## Overview
+
+Optimize Generatify's performance to reduce costs, improve speed, and enhance user experience. Learn caching strategies, API optimization, and resource management.
+
+<CardGroup cols={3}>
+  <Card title="Caching" icon="database">
+    Reduce API calls
+  </Card>
+  <Card title="Cost Optimization" icon="dollar-sign">
+    Lower AI costs
+  </Card>
+  <Card title="Speed" icon="bolt">
+    Faster responses
+  </Card>
+</CardGroup>
+
+---
+
+## Caching Strategies
+
+### Response Caching
+
+Cache AI responses to avoid redundant API calls:
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Cache Duration</th>
+      <th>Cache Strategy</th>
+      <th>Impact</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Related Posts**</td>
+      <td>24 hours (recommended)</td>
+      <td>Per-post cache</td>
+      <td>99% cost reduction</td>
+    </tr>
+    <tr>
+      <td>**Auto Tags**</td>
+      <td>Permanent (until post updated)</td>
+      <td>Post meta</td>
+      <td>100% cost reduction on re-saves</td>
+    </tr>
+    <tr>
+      <td>**Auto Categories**</td>
+      <td>Permanent</td>
+      <td>Taxonomy terms</td>
+      <td>100% cost reduction</td>
+    </tr>
+    <tr>
+      <td>**Meta Descriptions**</td>
+      <td>Permanent</td>
+      <td>Post meta</td>
+      <td>100% cost reduction</td>
+    </tr>
+    <tr>
+      <td>**Chat Responses**</td>
+      <td>1 hour</td>
+      <td>Query-based hash</td>
+      <td>30-50% cost reduction</td>
+    </tr>
+    <tr>
+      <td>**Smart Compose**</td>
+      <td>5 minutes</td>
+      <td>Context hash</td>
+      <td>20-30% cost reduction</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Cache Configuration
+
+<Tabs>
+  <Tab title="Database Caching (Default)">
+    **Built-in WordPress transients:**
+    
+    ```php
+    // Configuration
+    Settings → Advanced → Performance → Cache Method: Database
+    
+    // Pros:
+    - No additional setup
+    - Works everywhere
+    - Simple management
+    
+    // Cons:
+    - Slower than object cache
+    - Database queries overhead
+    - Not ideal for high traffic
+    
+    // Recommended for:
+    - Small to medium sites (<10,000 pageviews/day)
+    - Shared hosting
+    - Simple setups
+    ```
+  </Tab>
+  
+  <Tab title="Redis (Recommended)">
+    **Object caching with Redis:**
+    
+    ```php
+    // Requirements:
+    - Redis server
+    - PHP Redis extension
+    - Object cache plugin (Redis Object Cache)
+    
+    // Configuration:
+    Settings → Advanced → Performance → Cache Method: Redis
+    
+    // Pros:
+    - Very fast (in-memory)
+    - Scales well
+    - Low overhead
+    
+    // Cons:
+    - Requires server setup
+    - Additional cost
+    
+    // Recommended for:
+    - Medium to large sites (>10,000 pageviews/day)
+    - VPS or dedicated hosting
+    - High performance needs
+    ```
+    
+    **Setup:**
+    ```bash
+    # Install Redis
+    sudo apt-get install redis-server
+    
+    # Install PHP extension
+    sudo apt-get install php-redis
+    
+    # Install WordPress plugin
+    wp plugin install redis-cache --activate
+    ```
+  </Tab>
+  
+  <Tab title="Memcached">
+    **Object caching with Memcached:**
+    
+    ```php
+    // Configuration:
+    Settings → Advanced → Performance → Cache Method: Memcached
+    
+    // Similar to Redis:
+    - In-memory caching
+    - Fast performance
+    - Requires setup
+    
+    // Choose Redis over Memcached unless:
+    - Already using Memcached
+    - Specific hosting requirements
+    ```
+  </Tab>
+  
+  <Tab title="File-Based">
+    **File system caching:**
+    
+    ```php
+    // Configuration:
+    Settings → Advanced → Performance → Cache Method: File
+    
+    // Pros:
+    - Faster than database
+    - No additional services
+    
+    // Cons:
+    - Slower than memory caching
+    - File system overhead
+    - Can fill disk space
+    
+    // Recommended for:
+    - Sites without object cache
+    - Better than database, worse than Redis/Memcached
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Cache Duration Optimization
+
+Adjust cache durations for optimal balance:
+
+<table>
+  <thead>
+    <tr>
+      <th>Content Type</th>
+      <th>Update Frequency</th>
+      <th>Recommended Cache</th>
+      <th>Reasoning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Blog posts</td>
+      <td>Rarely updated</td>
+      <td>7 days - permanent</td>
+      <td>Content stable after publish</td>
+    </tr>
+    <tr>
+      <td>Product pages</td>
+      <td>Frequently updated</td>
+      <td>1-6 hours</td>
+      <td>Prices/inventory change</td>
+    </tr>
+    <tr>
+      <td>News articles</td>
+      <td>Rarely updated</td>
+      <td>24 hours - permanent</td>
+      <td>News is time-sensitive but stable</td>
+    </tr>
+    <tr>
+      <td>Documentation</td>
+      <td>Occasionally updated</td>
+      <td>24-48 hours</td>
+      <td>Balance freshness and performance</td>
+    </tr>
+    <tr>
+      <td>Chat responses</td>
+      <td>N/A</td>
+      <td>1 hour</td>
+      <td>Common questions repeat</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+
+```php
+// Set cache durations
+Settings → Advanced → Performance
+
+Related Posts Cache: 24 hours
+Chat Response Cache: 1 hour
+Smart Compose Cache: 5 minutes
+```
+
+---
+
+### Manual Cache Management
+
+```php
+// Clear all Generatify caches
+Settings → Advanced → Performance → Clear Cache
+
+// Or via WP-CLI
+wp cache flush
+wp transient delete --all
+```
+
+**Programmatically:**
+
+```php
+// Clear specific feature cache
+do_action( 'generatify_clear_cache', 'related_posts' );
+
+// Clear cache for specific post
+do_action( 'generatify_clear_post_cache', $post_id );
+
+// Clear all Generatify caches
+do_action( 'generatify_clear_all_caches' );
+```
+
+---
+
+## API Optimization
+
+### Request Batching
+
+Batch multiple operations to reduce API calls:
+
+```php
+// Instead of individual requests:
+// ❌ Bad (3 API calls)
+generate_tags( $post_id ); // 1 call
+generate_categories( $post_id ); // 1 call
+generate_meta_description( $post_id ); // 1 call
+
+// Use batch processing:
+// ✅ Good (1 API call)
+generatify_batch_process( $post_id, [
+    'tags',
+    'categories',
+    'meta_description',
+]);
+```
+
+**Enable batching:**
+
+```
+Settings → Advanced → Performance
+✅ Enable API Request Batching
+```
+
+**Savings:** 60-70% cost reduction for bulk operations
+
+---
+
+### Model Selection
+
+Choose appropriate models for each task:
+
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Overkill</th>
+      <th>Optimal</th>
+      <th>Cost Savings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Auto Tags</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini</td>
+      <td>97% cheaper</td>
+    </tr>
+    <tr>
+      <td>Auto Categories</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini</td>
+      <td>97% cheaper</td>
+    </tr>
+    <tr>
+      <td>Meta Descriptions</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini / GPT-3.5</td>
+      <td>97-98% cheaper</td>
+    </tr>
+    <tr>
+      <td>Chat (Simple FAQs)</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini</td>
+      <td>97% cheaper</td>
+    </tr>
+    <tr>
+      <td>Chat (Complex)</td>
+      <td>GPT-4 Turbo</td>
+      <td>GPT-4o</td>
+      <td>50% cheaper</td>
+    </tr>
+    <tr>
+      <td>Smart Compose</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini</td>
+      <td>97% cheaper</td>
+    </tr>
+    <tr>
+      <td>Related Posts</td>
+      <td>GPT-4</td>
+      <td>GPT-4o Mini</td>
+      <td>97% cheaper</td>
+    </tr>
+  </tbody>
+</table>
+
+**Recommendation:**
+
+```
+Default Model: GPT-4o Mini (best price/performance)
+Complex Chat: GPT-4o (when quality matters)
+Simple Tasks: GPT-3.5 Turbo (maximum savings)
+```
+
+---
+
+### Token Optimization
+
+Reduce token usage to lower costs:
+
+<AccordionGroup>
+  <Accordion title="Shorter Prompts" icon="compress">
+    **Optimize prompt length:**
+    
+    ```php
+    // ❌ Verbose (100 tokens)
+    "Please analyze the following blog post content and generate 
+    a comprehensive list of relevant tags that accurately describe 
+    the main topics, themes, and subjects discussed in the article. 
+    Make sure the tags are SEO-friendly and commonly used..."
+    
+    // ✅ Concise (20 tokens)
+    "Generate 5 SEO-friendly tags for this post:\n\n{content}"
+    ```
+    
+    **Savings:** 80% token reduction
+  </Accordion>
+  
+  <Accordion title="Content Truncation" icon="scissors">
+    **Send only necessary content:**
+    
+    ```php
+    // For tagging/categorization, send excerpt instead of full post
+    
+    // ❌ Full post (2000 tokens)
+    $content = $post->post_content;
+    
+    // ✅ First 500 words (500 tokens)
+    $content = wp_trim_words( $post->post_content, 500 );
+    ```
+    
+    **Configuration:**
+    ```
+    Settings → Automations → Advanced
+    Content Length: First 500 words (default: Full content)
+    ```
+    
+    **Savings:** 75% token reduction (quality mostly maintained)
+  </Accordion>
+  
+  <Accordion title="Response Length Limits" icon="ruler">
+    **Limit response tokens:**
+    
+    ```php
+    // Set max_tokens appropriate to task
+    
+    // Tags (5 tags * 3 tokens = ~15 tokens)
+    max_tokens: 50
+    
+    // Meta description (~30 words = ~40 tokens)
+    max_tokens: 60
+    
+    // Chat response (100-200 words = ~150-300 tokens)
+    max_tokens: 400
+    ```
+    
+    **Don't over-allocate:** Unused tokens still count against rate limits
+  </Accordion>
+  
+  <Accordion title="Strip HTML" icon="code">
+    **Remove unnecessary formatting:**
+    
+    ```php
+    // Strip HTML tags before sending to AI
+    $clean_content = wp_strip_all_tags( $post->post_content );
+    
+    // Remove extra whitespace
+    $clean_content = preg_replace( '/\s+/', ' ', $clean_content );
+    ```
+    
+    **Savings:** 10-20% token reduction
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Cost Optimization
+
+### Monthly Budget Management
+
+Set spending limits:
+
+```
+Settings → Advanced → Cost Management
+
+Monthly Budget: $50
+Alert at: 80% ($40)
+Hard stop at: 100% ($50)
+
+Alert email: admin@yoursite.com
+```
+
+**Budget tracking:**
+
+| Feature | Est. Monthly Cost | Actual Cost | % of Budget |
+|---------|-------------------|-------------|-------------|
+| Chat | $15 | $12.45 | 25% |
+| Automations | $10 | $8.20 | 16% |
+| Smart Compose | $20 | $18.75 | 38% |
+| Related Posts | $5 | $4.10 | 8% |
+| **Total** | **$50** | **$43.50** | **87%** |
+
+---
+
+### Feature-Specific Limits
+
+Rate limit expensive features:
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Limit Type</th>
+      <th>Recommended Limit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Chat</td>
+      <td>Messages per user/hour</td>
+      <td>20 messages</td>
+    </tr>
+    <tr>
+      <td>Smart Compose</td>
+      <td>Suggestions per user/hour</td>
+      <td>50 suggestions</td>
+    </tr>
+    <tr>
+      <td>Automations</td>
+      <td>Posts processed per day</td>
+      <td>100 posts</td>
+    </tr>
+    <tr>
+      <td>Related Posts</td>
+      <td>Regenerations per hour</td>
+      <td>10 regenerations</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+
+```
+Settings → Features → [Feature] → Rate Limits
+
+Chat Messages: 20 per hour per user
+Smart Compose: 50 per hour per user
+Automations: 100 posts per day
+```
+
+---
+
+### Free vs Paid Features
+
+Prioritize budget allocation:
+
+**Cost Distribution (Typical Site):**
+
+```
+High Cost (70% of budget):
+├─ AI Assistant Chat (35%)
+├─ Smart Compose (25%)
+└─ Helpdesk Agent (10%)
+
+Medium Cost (20% of budget):
+├─ Automations (15%)
+└─ Related Posts (5%)
+
+Low/Zero Cost (10% of budget):
+└─ Toxicity Checker (TensorFlow.js - free)
+```
+
+**Budget Strategy:**
+
+1. **Essential features:** Enable first (Automations, Toxicity Checker)
+2. **High-value features:** If budget allows (Chat, Related Posts)
+3. **Nice-to-have features:** Last priority (Smart Compose)
+
+---
+
+## Performance Metrics
+
+### Monitoring
+
+Track performance metrics:
+
+```
+Settings → Advanced → Performance → Monitoring
+
+✅ Enable Performance Monitoring
+Log slow requests (>2 seconds)
+Daily performance report
+```
+
+**Key Metrics:**
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Good</th>
+      <th>Needs Improvement</th>
+      <th>Poor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Chat Response Time**</td>
+      <td><2 seconds</td>
+      <td>2-5 seconds</td>
+      <td>>5 seconds</td>
+    </tr>
+    <tr>
+      <td>**Cache Hit Rate**</td>
+      <td>>80%</td>
+      <td>50-80%</td>
+      <td><50%</td>
+    </tr>
+    <tr>
+      <td>**API Error Rate**</td>
+      <td><1%</td>
+      <td>1-5%</td>
+      <td>>5%</td>
+    </tr>
+    <tr>
+      <td>**Monthly API Cost**</td>
+      <td>Within budget</td>
+      <td>80-100% budget</td>
+      <td>Over budget</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Optimization Checklist
+
+<Steps>
+  <Step title="Enable Caching">
+    Turn on response caching for all features
+  </Step>
+  
+  <Step title="Choose Right Models">
+    Use GPT-4o Mini for most tasks, GPT-4o only when necessary
+  </Step>
+  
+  <Step title="Set Cache Durations">
+    24 hours for Related Posts, permanent for Automations
+  </Step>
+  
+  <Step title="Configure Rate Limits">
+    Prevent excessive usage per user
+  </Step>
+  
+  <Step title="Optimize Prompts">
+    Shorter, more concise prompts
+  </Step>
+  
+  <Step title="Truncate Content">
+    Send excerpts instead of full posts when possible
+  </Step>
+  
+  <Step title="Enable Batching">
+    Batch multiple operations into single API calls
+  </Step>
+  
+  <Step title="Monitor Usage">
+    Track costs and performance weekly
+  </Step>
+  
+  <Step title="Use Object Cache">
+    Install Redis or Memcached for high-traffic sites
+  </Step>
+  
+  <Step title="Set Budget Alerts">
+    Get notified at 80% of monthly budget
+  </Step>
+</Steps>
+
+---
+
+## Database Optimization
+
+### Clean Old Data
+
+```
+Settings → Advanced → Database → Cleanup
+
+Delete logs older than: 30 days
+Delete cached responses older than: 7 days
+Optimize tables: Weekly
+
+[Run Cleanup Now]
+```
+
+**WP-CLI:**
+
+```bash
+# Clean old transients
+wp transient delete --expired
+
+# Optimize database tables
+wp db optimize
+
+# Clean Generatify logs
+wp eval 'generatify_cleanup_old_logs();'
+```
+
+---
+
+## Asset Optimization
+
+### JavaScript/CSS Loading
+
+```
+Settings → Advanced → Performance → Assets
+
+✅ Load JS only on pages where needed
+✅ Load CSS only on pages where needed
+✅ Use minified assets
+✅ Defer non-critical JS
+✅ Inline critical CSS
+```
+
+**Impact:**
+
+- Page load time: 15-30% faster
+- Reduced HTTP requests
+- Better Core Web Vitals scores
+
+---
+
+### TensorFlow.js Lazy Loading
+
+```
+Settings → Content Moderation → Advanced
+
+✅ Lazy load TensorFlow.js model
+Load on: First comment submission (default: Page load)
+```
+
+**Benefits:**
+
+- Initial page load 2MB lighter
+- Faster page speed
+- Model loads only when needed
+
+---
+
+## Scaling Strategies
+
+<AccordionGroup>
+  <Accordion title="Small Sites (<1,000 posts)" icon="seedling">
+    **Configuration:**
+    - Database caching
+    - GPT-4o Mini for everything
+    - 24-hour cache durations
+    - No object cache needed
+    
+    **Expected Costs:** $5-20/month
+  </Accordion>
+  
+  <Accordion title="Medium Sites (1,000-10,000 posts)" icon="tree">
+    **Configuration:**
+    - Redis object cache
+    - GPT-4o Mini default, GPT-4o for complex chat
+    - 24-48 hour cache durations
+    - Rate limiting enabled
+    
+    **Expected Costs:** $20-100/month
+  </Accordion>
+  
+  <Accordion title="Large Sites (>10,000 posts)" icon="mountain">
+    **Configuration:**
+    - Redis/Memcached required
+    - Aggressive caching (48+ hours)
+    - Strict rate limiting
+    - API request batching
+    - Content truncation
+    - Multiple AI providers (failover)
+    
+    **Expected Costs:** $100-500/month
+  </Accordion>
+  
+  <Accordion title="High-Traffic Sites (>100,000 pageviews/day)" icon="rocket">
+    **Configuration:**
+    - Dedicated Redis server
+    - CDN for assets
+    - Aggressive caching (7+ days)
+    - Very strict rate limiting
+    - Manual queue for bulk operations
+    - Multi-provider load balancing
+    
+    **Expected Costs:** $500-2,000/month
+    
+    **Additional:**
+    - Consider dedicated API keys per feature
+    - Implement queue system for non-urgent tasks
+    - Use webhooks instead of polling
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting Performance
+
+<AccordionGroup>
+  <Accordion title="Slow Response Times">
+    **Causes:**
+    - No caching enabled
+    - Slow AI provider
+    - Large prompts/content
+    - Database slow queries
+    
+    **Solutions:**
+    1. Enable caching
+    2. Switch to faster model (GPT-4o vs GPT-4)
+    3. Truncate content to 500 words
+    4. Install object cache
+    5. Optimize database
+  </Accordion>
+  
+  <Accordion title="High API Costs">
+    **Causes:**
+    - Using expensive models
+    - No caching
+    - Verbose prompts
+    - No rate limiting
+    
+    **Solutions:**
+    1. Switch to GPT-4o Mini
+    2. Enable caching everywhere
+    3. Optimize prompts
+    4. Set rate limits
+    5. Enable request batching
+  </Accordion>
+  
+  <Accordion title="Cache Not Working">
+    **Diagnostics:**
+    ```
+    Settings → Advanced → Performance → Cache Debug
+    ✅ Enable cache debugging
+    ```
+    
+    **Check:**
+    1. Cache method configured correctly
+    2. Object cache plugin active (if using Redis/Memcached)
+    3. Sufficient disk space (file cache)
+    4. Redis/Memcached service running
+    5. Cache duration not set to 0
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Common issues and fixes
+  </Card>
+  <Card title="Customization" icon="paint-brush" href="/advanced/customization">
+    CSS and hooks
+  </Card>
+  <Card title="API Reference" icon="code" href="/developer/api-reference">
+    REST API documentation
+  </Card>
+  <Card title="Settings Reference" icon="sliders" href="/advanced/settings">
+    Complete settings guide
+  </Card>
+</CardGroup>
+
+<Tip>
+**Quick Win:** Enable caching + switch to GPT-4o Mini for 95% cost reduction with minimal quality impact.
+</Tip>

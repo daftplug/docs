@@ -1,0 +1,789 @@
+---
+title: 'Contact Form Mode'
+description: 'Configure traditional contact form support in the helpdesk widget'
+icon: 'envelope'
+---
+
+## Overview
+
+Contact Form Mode provides a simple, traditional support form within the helpdesk widget. Messages are sent to you via email or saved in WordPress for later review. Perfect for sites without AI budgets or as a fallback option.
+
+<CardGroup cols={3}>
+  <Card title="Free Forever" icon="dollar-sign">
+    No AI costs, no limits
+  </Card>
+  <Card title="Simple Setup" icon="plug">
+    Works out-of-the-box
+  </Card>
+  <Card title="Privacy First" icon="shield-check">
+    No third-party AI services
+  </Card>
+</CardGroup>
+
+---
+
+## When to Use Contact Form Mode
+
+<Tabs>
+  <Tab title="Primary Form (No AI)">
+    ### Use as Main Support Method
+    
+    **Best For:**
+    - Budget-conscious sites
+    - Low-traffic websites
+    - Prefer human-only support
+    - No AI provider available
+    - Privacy-sensitive industries
+    
+    **Pros:**
+    - ✅ Zero ongoing costs
+    - ✅ Complete privacy control
+    - ✅ Simple, proven solution
+    - ✅ No API dependencies
+    
+    **Cons:**
+    - ⚠️ No instant responses
+    - ⚠️ Requires manual replies
+    - ⚠️ Limited scalability
+    
+    **Ideal For:** Personal blogs, portfolio sites, small businesses
+  </Tab>
+  
+  <Tab title="Hybrid with AI">
+    ### AI + Contact Form Fallback
+    
+    **Best For:**
+    - Most websites (recommended)
+    - Balancing automation + human touch
+    - Complex products requiring human support
+    - 24/7 AI + human business hours
+    
+    **How It Works:**
+    1. AI handles 70-80% of questions instantly
+    2. Complex issues escalate to contact form
+    3. User can choose form anytime
+    
+    **Configuration:**
+    ```
+    Enable both:
+    ✅ AI Chat Mode (primary)
+    ✅ Contact Form Mode (fallback)
+    
+    Show "Talk to human" button in AI chat footer
+    ```
+    
+    **Result:** Best of both worlds - automation + personal touch
+  </Tab>
+  
+  <Tab title="Business Hours Only">
+    ### Form During Off-Hours
+    
+    **Best For:**
+    - Sites with defined business hours
+    - Live chat available sometimes
+    - Cost-conscious approach
+    
+    **How It Works:**
+    ```
+    During business hours (9am-5pm):
+    - AI Chat Mode enabled
+    
+    Outside business hours:
+    - Contact Form Mode only
+    - "We'll reply within 24 hours"
+    ```
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Display Rules → Time-Based
+    
+    Mon-Fri 9am-5pm EST: AI Chat
+    All other times: Contact Form
+    ```
+    
+    **Result:** AI costs only during peak hours
+  </Tab>
+</Tabs>
+
+---
+
+## Setup Guide
+
+<Steps>
+  <Step title="Enable Contact Form Mode">
+    Navigate to **Generatify → Settings → Helpdesk → Contact Form** and toggle ON
+  </Step>
+  
+  <Step title="Configure Form Fields">
+    Choose which fields to show (Name, Email, Message, etc.)
+  </Step>
+  
+  <Step title="Set Email Destination">
+    Enter email address(es) to receive submissions
+  </Step>
+  
+  <Step title="Configure Email Settings">
+    Set up SMTP (recommended) or use WordPress default email
+  </Step>
+  
+  <Step title="Customize Messages">
+    Set confirmation message, auto-reply, etc.
+  </Step>
+  
+  <Step title="Test Submission">
+    Submit test form and verify email delivery
+  </Step>
+  
+  <Step title="Go Live">
+    Enable for all visitors
+  </Step>
+</Steps>
+
+---
+
+## Form Field Configuration
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Required/Optional</th>
+      <th>Validation</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Name**</td>
+      <td>Required (recommended)</td>
+      <td>Min 2 characters</td>
+      <td>Personalization</td>
+    </tr>
+    <tr>
+      <td>**Email**</td>
+      <td>Required</td>
+      <td>Valid email format</td>
+      <td>Reply to user</td>
+    </tr>
+    <tr>
+      <td>**Subject**</td>
+      <td>Optional</td>
+      <td>Max 100 characters</td>
+      <td>Message categorization</td>
+    </tr>
+    <tr>
+      <td>**Message**</td>
+      <td>Required</td>
+      <td>Min 10 characters, Max 5,000</td>
+      <td>Actual inquiry</td>
+    </tr>
+    <tr>
+      <td>**Phone**</td>
+      <td>Optional</td>
+      <td>Phone number format</td>
+      <td>Call back option</td>
+    </tr>
+    <tr>
+      <td>**Order Number**</td>
+      <td>Optional</td>
+      <td>Alphanumeric</td>
+      <td>Order-related issues</td>
+    </tr>
+    <tr>
+      <td>**Category**</td>
+      <td>Optional</td>
+      <td>Dropdown selection</td>
+      <td>Route to correct team</td>
+    </tr>
+    <tr>
+      <td>**Attachment**</td>
+      <td>Optional</td>
+      <td>Max 5MB, specific types</td>
+      <td>Screenshots, receipts</td>
+    </tr>
+  </tbody>
+</table>
+
+### Field Configuration
+
+```
+Settings → Helpdesk → Contact Form → Fields
+
+✅ Name (Required)
+✅ Email (Required)
+✅ Subject (Optional)
+✅ Message (Required)
+⬜ Phone
+✅ Order Number (for e-commerce)
+⬜ Attachment uploads
+
+Validate:
+✅ Email format
+✅ Spam protection (reCAPTCHA)
+✅ Honeypot field (hidden spam trap)
+```
+
+---
+
+## Email Settings
+
+### Recipient Configuration
+
+<AccordionGroup>
+  <Accordion title="Single Recipient" icon="envelope">
+    All messages go to one email address.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Email
+    
+    Recipient: support@yoursite.com
+    ```
+    
+    **Best For:** Small teams, single support person
+  </Accordion>
+  
+  <Accordion title="Multiple Recipients" icon="envelopes-bulk">
+    Copy multiple people on submissions.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Email
+    
+    Recipients:
+    - support@yoursite.com
+    - sales@yoursite.com
+    - info@yoursite.com
+    
+    (Comma-separated)
+    ```
+    
+    **Best For:** Team inboxes, ensuring visibility
+  </Accordion>
+  
+  <Accordion title="Category-Based Routing" icon="arrows-split-up-and-left">
+    Route to different emails based on category.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Routing
+    
+    Category field: Enabled
+    
+    Routes:
+    "Sales Inquiry" → sales@yoursite.com
+    "Technical Support" → tech@yoursite.com
+    "Billing Question" → billing@yoursite.com
+    "General" → info@yoursite.com
+    ```
+    
+    **Best For:** Larger teams, specialized departments
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## SMTP Configuration (Recommended)
+
+WordPress default email is unreliable. Use SMTP for guaranteed delivery:
+
+<Steps>
+  <Step title="Install SMTP Plugin">
+    Recommended: **WP Mail SMTP** (free)
+    
+    ```
+    Plugins → Add New → Search "WP Mail SMTP" → Install → Activate
+    ```
+  </Step>
+  
+  <Step title="Choose SMTP Provider">
+    Options:
+    - Gmail (free, 500/day limit)
+    - SendGrid (100/day free, then paid)
+    - Mailgun (5,000/month free, then paid)
+    - Amazon SES (cheapest for high volume)
+    - Your web host's SMTP
+  </Step>
+  
+  <Step title="Configure SMTP Settings">
+    Example for Gmail:
+    ```
+    SMTP Host: smtp.gmail.com
+    Encryption: TLS
+    Port: 587
+    Username: your-email@gmail.com
+    Password: [App-specific password]
+    ```
+  </Step>
+  
+  <Step title="Send Test Email">
+    WP Mail SMTP → Tools → Email Test → Send
+  </Step>
+  
+  <Step title="Verify Delivery">
+    Check inbox (and spam folder)
+  </Step>
+</Steps>
+
+<Warning>
+**Gmail Security:** Use App-Specific Password, not your main Gmail password. Enable 2FA and generate app password in Google Account settings.
+</Warning>
+
+---
+
+## Email Templates
+
+### Notification Email (To You)
+
+**Subject:** New contact form submission from [Name]
+
+**Body:**
+```
+New message from your website:
+
+From: [Name]
+Email: [Email]
+Subject: [Subject]
+
+Message:
+[Message content]
+
+---
+Sent from: [Page URL]
+Date: [Submission date/time]
+IP Address: [User IP]
+
+Reply to this email to respond to the sender.
+```
+
+**Customization:**
+```
+Settings → Helpdesk → Contact Form → Email Template
+
+Customize:
+- Subject line
+- Email body format
+- Include/exclude fields
+- Add branding (header/footer)
+```
+
+---
+
+### Auto-Reply Email (To User)
+
+Send automatic confirmation to the user:
+
+**Subject:** We received your message
+
+**Body:**
+```
+Hi [Name],
+
+Thank you for contacting us! We've received your message and will 
+get back to you within 24 hours.
+
+Your message:
+"[Message excerpt]"
+
+Reference ID: #[Submission ID]
+
+In the meantime, you might find these helpful:
+- FAQ: https://yoursite.com/faq
+- Help Center: https://yoursite.com/help
+
+Best regards,
+[Your Company Name]
+support@yoursite.com
+```
+
+**Configuration:**
+```
+Settings → Helpdesk → Contact Form → Auto-Reply
+
+✅ Enable auto-reply
+Subject: "We received your message"
+From Name: "[Your Company Name] Support"
+From Email: support@yoursite.com
+
+Body: [Customize template]
+```
+
+<Info>
+**Professional Touch:** Auto-replies set expectations and reduce anxiety. Always include expected response time!
+</Info>
+
+---
+
+## Spam Protection
+
+Prevent spam submissions:
+
+<AccordionGroup>
+  <Accordion title="Google reCAPTCHA" icon="robot">
+    **Most Effective:** Stops 99% of spam
+    
+    **Setup:**
+    1. Get reCAPTCHA keys: [google.com/recaptcha](https://www.google.com/recaptcha)
+    2. Choose v2 (checkbox) or v3 (invisible)
+    3. Add keys to Generatify settings
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Spam Protection
+    
+    ✅ Enable reCAPTCHA
+    Version: v2 Checkbox (v3 Invisible for better UX)
+    Site Key: [Your site key]
+    Secret Key: [Your secret key]
+    ```
+    
+    **Pros:** Very effective, trusted
+    **Cons:** Extra step for users (v2), Google dependency
+  </Accordion>
+  
+  <Accordion title="Honeypot Field" icon="honey-pot">
+    **Invisible to humans, visible to bots**
+    
+    **How It Works:**
+    - Hidden field added to form (CSS display: none)
+    - Humans can't see it, don't fill it
+    - Bots fill all fields, including hidden one
+    - Submissions with honeypot filled = spam
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Spam Protection
+    
+    ✅ Enable honeypot field
+    Field name: "website_url" (looks legitimate to bots)
+    ```
+    
+    **Pros:** No user friction, free, privacy-friendly
+    **Cons:** Less effective than reCAPTCHA (stops ~70% of spam)
+  </Accordion>
+  
+  <Accordion title="Time-Based Validation" icon="clock">
+    **Reject submissions that are too fast**
+    
+    **How It Works:**
+    - Track when form is opened
+    - Reject if submitted in < 3 seconds (bots are fast)
+    - Legitimate users need time to type
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Spam Protection
+    
+    ✅ Minimum time before submit
+    Minimum: 3 seconds
+    ```
+    
+    **Pros:** No user impact, effective against simple bots
+    **Cons:** Won't stop sophisticated bots
+  </Accordion>
+  
+  <Accordion title="Akismet Integration" icon="shield-halved">
+    **WordPress anti-spam service**
+    
+    **How It Works:**
+    - Akismet checks submissions against spam database
+    - Learns from millions of sites
+    - Blocks known spammers
+    
+    **Setup:**
+    1. Install Akismet plugin
+    2. Get API key from akismet.com
+    3. Enable in Generatify
+    
+    **Cost:** Free for personal, $5-50/mo for business
+    
+    **Pros:** Very effective, learns over time
+    **Cons:** Requires account, costs money for business
+  </Accordion>
+</AccordionGroup>
+
+### Recommended Spam Protection
+
+**Best Setup:**
+```
+✅ reCAPTCHA v3 (invisible, no user friction)
+✅ Honeypot field (backup protection)
+✅ Time-based validation (3 second minimum)
+⬜ Akismet (only if spam still gets through)
+
+Result: 99.9% spam blocked, minimal user friction
+```
+
+---
+
+## Storing Submissions
+
+Besides email, save submissions in WordPress:
+
+<AccordionGroup>
+  <Accordion title="WordPress Database" icon="database">
+    Store all submissions for reference.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Storage
+    
+    ✅ Save submissions to database
+    Retention: 90 days (or Forever)
+    ```
+    
+    **Benefits:**
+    - Searchable history
+    - Export to CSV
+    - Analytics on common questions
+    - Backup if emails fail
+    
+    **View Submissions:**
+    ```
+    WordPress Admin → Generatify → Submissions
+    
+    Filter by: Date, Status, Category
+    Actions: View, Reply, Mark as Resolved, Delete
+    ```
+  </Accordion>
+  
+  <Accordion title="Third-Party Integrations" icon="plug">
+    Send to external services.
+    
+    **Options:**
+    - **Zapier:** Connect to 5,000+ apps
+    - **Google Sheets:** Log submissions
+    - **Slack:** Real-time notifications
+    - **HubSpot/Salesforce:** CRM integration
+    - **Mailchimp:** Add to email lists
+    
+    **Setup (Zapier Example):**
+    ```
+    1. Generatify → Settings → Integrations → Webhooks
+    2. Enable webhook on form submission
+    3. Copy webhook URL
+    4. Create Zap: Webhook → [Your App]
+    5. Map form fields to app fields
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Form Customization
+
+### Success Messages
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Message</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Default Success**</td>
+      <td>"Thank you! We'll reply within 24 hours."</td>
+      <td>Show message</td>
+    </tr>
+    <tr>
+      <td>**With Redirect**</td>
+      <td>"Redirecting to thank you page..."</td>
+      <td>Redirect to URL</td>
+    </tr>
+    <tr>
+      <td>**With Download**</td>
+      <td>"Here's your free guide!"</td>
+      <td>Offer file download</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+```
+Settings → Helpdesk → Contact Form → Success Message
+
+Message: "Thanks! We'll reply within 24 hours."
+
+Optional:
+⬜ Redirect to URL: /thank-you
+⬜ Download file: /guide.pdf
+⬜ Close widget automatically (after 3 seconds)
+```
+
+---
+
+### Error Messages
+
+<table>
+  <thead>
+    <tr>
+      <th>Error</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Invalid Email**</td>
+      <td>"Please enter a valid email address."</td>
+    </tr>
+    <tr>
+      <td>**Required Field**</td>
+      <td>"This field is required."</td>
+    </tr>
+    <tr>
+      <td>**Message Too Short**</td>
+      <td>"Message must be at least 10 characters."</td>
+    </tr>
+    <tr>
+      <td>**Spam Detected**</td>
+      <td>"Your submission was flagged as spam. Contact us at [email] if this is an error."</td>
+    </tr>
+    <tr>
+      <td>**Submission Failed**</td>
+      <td>"Sorry, something went wrong. Please try again or email us at [email]."</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Mobile Optimization
+
+<AccordionGroup>
+  <Accordion title="Full-Screen on Mobile" icon="mobile-screen">
+    Better UX for form filling.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Mobile
+    
+    ✅ Full-screen mode on mobile
+    ✅ Hide keyboard until focused
+    ✅ Large touch targets (48px minimum)
+    ```
+  </Accordion>
+  
+  <Accordion title="Autocomplete Support" icon="a">
+    Help users fill forms faster.
+    
+    **Enabled Fields:**
+    - Name: `autocomplete="name"`
+    - Email: `autocomplete="email"`
+    - Phone: `autocomplete="tel"`
+    
+    **Result:** Mobile browsers suggest saved info
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Emails Not Sending">
+    **Possible Causes:**
+    1. WordPress email not configured
+    2. Host blocking emails
+    3. Spam filters
+    4. Incorrect recipient email
+    
+    **Solutions:**
+    1. Install WP Mail SMTP plugin
+    2. Contact hosting support about email limits
+    3. Check spam folder, add to whitelist
+    4. Verify recipient email is correct
+    5. Test with different email provider
+    6. Check error logs (WP Mail SMTP → Tools → Email Log)
+  </Accordion>
+  
+  <Accordion title="Spam Submissions">
+    **Solutions:**
+    1. Enable reCAPTCHA
+    2. Add honeypot field
+    3. Enable time-based validation
+    4. Block specific IP addresses
+    5. Add Akismet if severe
+    6. Disable form temporarily if under attack
+  </Accordion>
+  
+  <Accordion title="Users Not Receiving Auto-Reply">
+    **Possible Causes:**
+    1. Auto-reply disabled
+    2. User email in spam
+    3. Invalid "From" email
+    
+    **Solutions:**
+    1. Verify auto-reply is enabled
+    2. Ask user to check spam folder
+    3. Use authenticated SMTP email as sender
+    4. Avoid generic emails like noreply@domain.com
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## GDPR Compliance
+
+<AccordionGroup>
+  <Accordion title="Privacy Policy Link" icon="file-contract">
+    Link to privacy policy.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Privacy
+    
+    ✅ Show privacy policy link
+    Text: "By submitting, you agree to our Privacy Policy"
+    Link: /privacy-policy
+    Required: Checkbox (user must check)
+    ```
+  </Accordion>
+  
+  <Accordion title="Data Retention" icon="clock-rotate-left">
+    Auto-delete old submissions.
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Contact Form → Data Retention
+    
+    Auto-delete after: 90 days
+    Or: Forever (but include in data export requests)
+    ```
+  </Accordion>
+  
+  <Accordion title="Data Export & Deletion" icon="file-export">
+    Allow users to request their data.
+    
+    **WordPress Built-in:**
+    - Tools → Export Personal Data
+    - Tools → Erase Personal Data
+    
+    **Generatify:** Automatically includes form submissions in exports
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Helpdesk Setup" icon="circle-play" href="/helpdesk/setup">
+    Initial configuration guide
+  </Card>
+  <Card title="AI Chat Mode" icon="comments" href="/helpdesk/chat-mode">
+    Add AI-powered responses
+  </Card>
+  <Card title="Customization" icon="palette" href="/helpdesk/customization">
+    Brand the widget
+  </Card>
+  <Card title="SMTP Setup Guide" icon="envelope" href="/advanced/settings">
+    Configure reliable email
+  </Card>
+</CardGroup>
+
+<Tip>
+**Best Practice:** Even if using AI Chat Mode, always enable Contact Form as a fallback. Some users prefer forms, and it's a backup if AI fails.
+</Tip>

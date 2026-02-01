@@ -1,0 +1,364 @@
+---
+title: 'Quick Setup'
+description: 'Get your first AI feature running in under 5 minutes'
+icon: 'bolt'
+---
+
+## Welcome to Generatify! 🎉
+
+Let's get your WordPress site AI-powered in just a few simple steps. This guide will walk you through the essential configuration to get started quickly.
+
+<Info>
+  **Time required:** 5-10 minutes  
+  **Prerequisites:** Generatify plugin installed and activated ([Installation Guide](/getting-started/installation))
+</Info>
+
+## Setup Overview
+
+<Steps>
+  <Step title="Access Generatify Dashboard" icon="gauge">
+    Navigate to settings
+  </Step>
+  <Step title="Connect an AI Provider" icon="plug">
+    Add your API key
+  </Step>
+  <Step title="Enable Your First Feature" icon="toggle-on">
+    Choose a module to activate
+  </Step>
+  <Step title="Test & Verify" icon="check">
+    Confirm everything works
+  </Step>
+</Steps>
+
+---
+
+## Step 1: Access Generatify Dashboard
+
+After installing and activating Generatify:
+
+1. In your WordPress admin sidebar, click **Generatify**
+2. You'll see the main Generatify dashboard with several tabs:
+   - **Chatbot** - AI Assistant Copilot
+   - **Settings** - Main configuration area
+   - **Automations** - Content automation settings
+   - **Helpdesk Agent** - Frontend chat widget
+   - **Smart Suggestions** - Inline AI features
+   - **Content Moderation** - Comment moderation
+
+<img src="/images/dashboard-overview.png" alt="Generatify Dashboard" />
+
+---
+
+## Step 2: Connect an AI Provider
+
+Before any features work, you need to connect at least one AI provider.
+
+### Choose Your AI Provider
+
+<CardGroup cols={3}>
+  <Card title="OpenAI" icon="openai" iconType="duotone">
+    ChatGPT models (GPT-4, GPT-3.5)
+  </Card>
+  <Card title="Anthropic" icon="a" iconType="duotone">
+    Claude models (Claude 3.5, Haiku)
+  </Card>
+  <Card title="Google" icon="google" iconType="duotone">
+    Gemini models (Pro, Flash)
+  </Card>
+</CardGroup>
+
+### Add Your API Key
+
+<Tabs>
+  <Tab title="OpenAI (ChatGPT)">
+    1. Navigate to **Generatify → Settings → Integrations**
+    2. Find the **OpenAI** section
+    3. Toggle **Enable OpenAI** to ON
+    4. Enter your OpenAI API key
+    5. Click **Save Settings**
+
+    <Accordion title="Where to get an OpenAI API key?">
+      1. Visit [platform.openai.com](https://platform.openai.com)
+      2. Sign up or log in to your account
+      3. Go to **API Keys** section
+      4. Click **Create new secret key**
+      5. Copy the key (you won't see it again!)
+      6. Paste it into Generatify settings
+
+      **Pricing:** Pay-as-you-go based on usage. Most features cost fractions of a cent per request.
+    </Accordion>
+  </Tab>
+
+  <Tab title="Anthropic (Claude)">
+    1. Navigate to **Generatify → Settings → Integrations**
+    2. Find the **Anthropic** section
+    3. Toggle **Enable Anthropic** to ON
+    4. Enter your Anthropic API key
+    5. Click **Save Settings**
+
+    <Accordion title="Where to get an Anthropic API key?">
+      1. Visit [console.anthropic.com](https://console.anthropic.com)
+      2. Sign up or log in to your account
+      3. Go to **API Keys** section
+      4. Click **Create Key**
+      5. Copy the key
+      6. Paste it into Generatify settings
+
+      **Pricing:** Pay-as-you-go. Claude models are competitive with OpenAI pricing.
+    </Accordion>
+  </Tab>
+
+  <Tab title="Google (Gemini)">
+    1. Navigate to **Generatify → Settings → Integrations**
+    2. Find the **Google Gemini** section
+    3. Toggle **Enable Google Gemini** to ON
+    4. Enter your Google AI API key
+    5. Click **Save Settings**
+
+    <Accordion title="Where to get a Google AI API key?">
+      1. Visit [makersuite.google.com](https://makersuite.google.com/app/apikey)
+      2. Sign in with your Google account
+      3. Click **Get API Key**
+      4. Create a new API key
+      5. Copy the key
+      6. Paste it into Generatify settings
+
+      **Pricing:** Generous free tier available. Pay-as-you-go for higher volumes.
+    </Accordion>
+  </Tab>
+</Tabs>
+
+<Check>
+  **API Key Added!** Once saved, Generatify will verify the connection. You'll see a green checkmark if successful.
+</Check>
+
+---
+
+## Step 3: Enable Your First Feature
+
+Now that you're connected to an AI provider, let's enable your first feature. We recommend starting with one of these:
+
+<Tabs>
+  <Tab title="AI Assistant Chatbot">
+    ### Perfect for: Content creators, site managers
+
+    The AI Assistant Chatbot is your WordPress copilot—it understands your site and helps with writing, troubleshooting, and answering questions.
+
+    **To enable:**
+    1. Go to **Generatify → Chatbot**
+    2. Toggle **Enable AI Assistant** to ON
+    3. Choose your preferred AI model (GPT-4, Claude, or Gemini)
+    4. Click **Save Settings**
+
+    **Test it:**
+    - You'll now see an AI chat icon in your WordPress admin bar
+    - Click it and ask: "Summarize my latest post"
+    - The AI will respond with context from your site!
+
+    <img src="/images/chatbot-demo.png" alt="AI Assistant Demo" />
+
+    [Learn more about AI Assistant →](/features/ai-assistant-chatbot)
+  </Tab>
+
+  <Tab title="Auto Post Tags">
+    ### Perfect for: Bloggers, content sites
+
+    Automatically generate relevant tags for your posts based on their content.
+
+    **To enable:**
+    1. Go to **Generatify → Settings → Automations**
+    2. Find **AI Post Tags**
+    3. Toggle to ON
+    4. Select your preferred AI model
+    5. Click **Save Settings**
+
+    **Test it:**
+    - Create a new post or update an existing one
+    - Leave the tags field empty
+    - Publish or update the post
+    - Tags will be automatically generated and added!
+
+    <img src="/images/auto-tags-demo.png" alt="Auto Tags Demo" />
+
+    [Learn more about Auto Tags →](/automations/auto-tags)
+  </Tab>
+
+  <Tab title="Helpdesk Agent">
+    ### Perfect for: Support teams, e-commerce sites
+
+    Add a front-end chat widget that answers visitor questions based on your site's content.
+
+    **To enable:**
+    1. Go to **Generatify → Helpdesk Agent**
+    2. Toggle **Enable Helpdesk Agent** to ON
+    3. Select your preferred AI model
+    4. Customize appearance (optional)
+    5. Click **Save Settings**
+
+    **Test it:**
+    - Visit your website's front-end
+    - You'll see a chat widget in the corner
+    - Ask it a question about your site
+    - The AI responds using your site's content!
+
+    <img src="/images/helpdesk-demo.png" alt="Helpdesk Agent Demo" />
+
+    [Learn more about Helpdesk Agent →](/helpdesk/setup)
+  </Tab>
+
+  <Tab title="Toxicity Checker">
+    ### Perfect for: Community sites, blogs with comments
+
+    Automatically detect and block toxic comments before they're submitted.
+
+    **To enable:**
+    1. Go to **Generatify → Settings → Content Moderation**
+    2. Find **AI Toxicity Checker**
+    3. Toggle to ON
+    4. Set your toxicity threshold (default: 0.7)
+    5. Click **Save Settings**
+
+    **Test it:**
+    - Go to a post with comments enabled
+    - Try submitting a test toxic comment
+    - The comment will be blocked with a warning message
+
+    <img src="/images/toxicity-demo.png" alt="Toxicity Checker Demo" />
+
+    [Learn more about Content Moderation →](/moderation/toxicity-checker)
+  </Tab>
+</Tabs>
+
+---
+
+## Step 4: Test & Verify
+
+After enabling your first feature, let's make sure everything is working:
+
+<AccordionGroup>
+  <Accordion title="✅ Check API Connection" icon="plug">
+    1. Go to **Generatify → Settings → Integrations**
+    2. Look for a **green checkmark** next to your AI provider
+    3. If you see a red X, double-check your API key
+
+    <img src="/images/api-status.png" alt="API Connection Status" />
+  </Accordion>
+
+  <Accordion title="✅ Test the Feature" icon="flask">
+    Follow the specific test instructions for the feature you enabled:
+    - **Chatbot:** Open the chat and ask a question
+    - **Auto Tags:** Create/update a post without tags
+    - **Helpdesk:** Visit your site's front-end and use the chat
+    - **Toxicity Checker:** Try submitting a test comment
+  </Accordion>
+
+  <Accordion title="✅ Monitor Usage" icon="chart-line">
+    Most AI providers have usage dashboards:
+    - **OpenAI:** [platform.openai.com/usage](https://platform.openai.com/usage)
+    - **Anthropic:** [console.anthropic.com/settings/usage](https://console.anthropic.com/settings/usage)
+    - **Google:** [console.cloud.google.com](https://console.cloud.google.com)
+
+    Check your usage to ensure API calls are being made successfully.
+  </Accordion>
+
+  <Accordion title="✅ Review Error Logs" icon="triangle-exclamation">
+    If something isn't working:
+    1. Enable WordPress debug mode
+    2. Check `/wp-content/debug.log`
+    3. Look for Generatify-related errors
+    4. See [Troubleshooting Guide](/advanced/troubleshooting)
+  </Accordion>
+</AccordionGroup>
+
+<Check>
+  **Everything working?** Congratulations! Your WordPress site is now AI-powered. 🎉
+</Check>
+
+---
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card
+    title="Explore All Features"
+    icon="compass"
+    href="/features/overview"
+  >
+    See what else Generatify can do for your site
+  </Card>
+  <Card
+    title="Customize Settings"
+    icon="sliders"
+    href="/advanced/settings"
+  >
+    Fine-tune Generatify to match your workflow
+  </Card>
+  <Card
+    title="Enable More Automations"
+    icon="robot"
+    href="/features/automations"
+  >
+    Automate more tasks with AI
+  </Card>
+  <Card
+    title="Developer Resources"
+    icon="code"
+    href="/developer/hooks-filters"
+  >
+    Extend Generatify with custom code
+  </Card>
+</CardGroup>
+
+---
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Do I need to choose just one AI provider?">
+    No! You can connect multiple AI providers and assign different models to different features. For example:
+    - Use GPT-4 for your AI Assistant (most powerful)
+    - Use GPT-3.5 Turbo for auto-tagging (faster, cheaper)
+    - Use Claude for helpdesk (great at conversation)
+  </Accordion>
+
+  <Accordion title="How much will AI API calls cost?">
+    It depends on your usage, but most features cost just fractions of a cent per action:
+    - **Auto tags:** ~$0.001 per post
+    - **Chatbot message:** ~$0.01 - $0.05 per conversation
+    - **Helpdesk response:** ~$0.01 - $0.03 per question
+
+    Most sites spend $5-20/month total. Monitor your provider's dashboard to track exact costs.
+  </Accordion>
+
+  <Accordion title="Can I use Generatify without API keys?">
+    Some features like **Toxicity Checker** and **Alt Image Detection** work entirely client-side using TensorFlow.js and don't require API keys. However, most features require an AI provider connection.
+  </Accordion>
+
+  <Accordion title="Is my data sent to AI providers?">
+    Yes, when you use AI features, relevant content (post text, user questions, etc.) is sent to your chosen AI provider for processing. Data is sent securely via HTTPS. No data is stored by Generatify itself—everything goes directly to your AI provider.
+  </Accordion>
+
+  <Accordion title="Can I enable all features at once?">
+    Yes! You can enable as many features as you want. Each module operates independently. Just keep in mind that more features = more API calls = higher costs.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Need Help?
+
+<CardGroup cols={3}>
+  <Card title="FAQ" icon="circle-question" href="/support/faq">
+    Answers to common questions
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Fix common issues
+  </Card>
+  <Card title="Get Support" icon="headset" href="/support/get-help">
+    Contact our team
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Pro Tip:** Start with one feature, test it thoroughly, then gradually enable more as you get comfortable with Generatify. This helps you learn the platform and manage API costs effectively.
+</Tip>

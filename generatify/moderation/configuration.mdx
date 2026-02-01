@@ -1,0 +1,846 @@
+---
+title: 'Moderation Configuration'
+description: 'Complete setup guide for content moderation features'
+icon: 'gear'
+---
+
+## Overview
+
+Configure toxicity detection, auto-moderation rules, and moderation workflows to maintain a safe, welcoming community with minimal manual effort.
+
+<CardGroup cols={2}>
+  <Card title="Automated Detection" icon="robot">
+    AI-powered toxicity analysis
+  </Card>
+  <Card title="Custom Rules" icon="list-check">
+    Define your own moderation criteria
+  </Card>
+  <Card title="Workflow Automation" icon="arrows-rotate">
+    Auto-approve, hold, or block
+  </Card>
+  <Card title="User Management" icon="users-gear">
+    Reputation-based moderation
+  </Card>
+</CardGroup>
+
+---
+
+## Configuration Overview
+
+Navigate to **Generatify → Settings → Content Moderation** to access all configuration options.
+
+---
+
+## Toxicity Detection Settings
+
+### Enable/Disable
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Toxicity Checker**</td>
+      <td>On / Off</td>
+      <td>Off</td>
+    </tr>
+    <tr>
+      <td>**Apply To**</td>
+      <td>All comments, New comments only, Selected post types</td>
+      <td>All comments</td>
+    </tr>
+    <tr>
+      <td>**Post Types**</td>
+      <td>Posts, Pages, Products (WooCommerce), Custom post types</td>
+      <td>Posts only</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Sensitivity Presets
+
+<Tabs>
+  <Tab title="Lenient">
+    ### Low Sensitivity
+    
+    **Thresholds:**
+    - Toxicity: 80%
+    - Severe Toxicity: 85%
+    - Identity Attack: 90%
+    - Insult: 75%
+    - Profanity: 85%
+    - Threat: 95%
+    - Sexually Explicit: 85%
+    
+    **When to Use:**
+    - Mature audience
+    - Open discussion forums
+    - Political/controversial topics
+    - Minimal false positives needed
+  </Tab>
+  
+  <Tab title="Balanced (Recommended)">
+    ### Moderate Sensitivity
+    
+    **Thresholds:**
+    - Toxicity: 60%
+    - Severe Toxicity: 70%
+    - Identity Attack: 75%
+    - Insult: 65%
+    - Profanity: 70%
+    - Threat: 80%
+    - Sexually Explicit: 75%
+    
+    **When to Use:**
+    - General audience blogs
+    - Business websites
+    - Most use cases
+    - Balance safety and freedom
+  </Tab>
+  
+  <Tab title="Strict">
+    ### High Sensitivity
+    
+    **Thresholds:**
+    - Toxicity: 40%
+    - Severe Toxicity: 50%
+    - Identity Attack: 60%
+    - Insult: 50%
+    - Profanity: 50%
+    - Threat: 60%
+    - Sexually Explicit: 60%
+    
+    **When to Use:**
+    - Family-friendly sites
+    - Children's content
+    - Educational platforms
+    - Brand-conscious businesses
+  </Tab>
+  
+  <Tab title="Custom">
+    ### Per-Category Custom Thresholds
+    
+    Configure each category independently:
+    
+    | Category | Threshold (0-100%) |
+    |----------|-------------------|
+    | Toxicity | [Slider] |
+    | Severe Toxicity | [Slider] |
+    | Identity Attack | [Slider] |
+    | Insult | [Slider] |
+    | Profanity | [Slider] |
+    | Threat | [Slider] |
+    | Sexually Explicit | [Slider] |
+    
+    **When to Use:**
+    - Specific needs (e.g., allow profanity but block insults)
+    - A/B testing thresholds
+    - Fine-tuning after initial deployment
+  </Tab>
+</Tabs>
+
+---
+
+## Action Configuration
+
+### What Happens When Toxicity Detected
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Behavior</th>
+      <th>User Experience</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Hold for Moderation**</td>
+      <td>Comment saved as "Pending"</td>
+      <td>"Your comment is awaiting moderation"</td>
+      <td>Balanced approach, human review</td>
+    </tr>
+    <tr>
+      <td>**Block Comment**</td>
+      <td>Comment rejected, not saved</td>
+      <td>"Your comment contains inappropriate language"</td>
+      <td>Zero tolerance, high traffic sites</td>
+    </tr>
+    <tr>
+      <td>**Warn Only**</td>
+      <td>Warning shown, user can proceed</td>
+      <td>"⚠️ This comment may violate guidelines"</td>
+      <td>Educational, testing</td>
+    </tr>
+    <tr>
+      <td>**Tag & Allow**</td>
+      <td>Comment published, flagged for review</td>
+      <td>Normal submission confirmation</td>
+      <td>Post-moderation workflow</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Per-Category Actions
+
+Configure different actions for different toxicity types:
+
+```
+Settings → Content Moderation → Advanced Actions
+
+Toxicity: Hold for Moderation
+Severe Toxicity: Block
+Identity Attack: Block
+Insult: Hold for Moderation
+Profanity: Warn Only
+Threat: Block
+Sexually Explicit: Hold for Moderation
+```
+
+<Info>
+**Example Use Case:** Allow mild profanity (Warn Only) but block severe toxicity and threats automatically.
+</Info>
+
+---
+
+## User Exemptions
+
+### Skip Checking for Trusted Users
+
+<table>
+  <thead>
+    <tr>
+      <th>Exemption Type</th>
+      <th>Configuration</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**By Role**</td>
+      <td>Administrator, Editor, Author, Contributor</td>
+      <td>Skip staff members</td>
+    </tr>
+    <tr>
+      <td>**By Reputation**</td>
+      <td>Users with X+ approved comments</td>
+      <td>Trust established commenters</td>
+    </tr>
+    <tr>
+      <td>**By Email Whitelist**</td>
+      <td>Specific email addresses</td>
+      <td>VIP users, partners</td>
+    </tr>
+    <tr>
+      <td>**By Domain**</td>
+      <td>@company.com, @partner.org</td>
+      <td>Organization members</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+
+```
+Settings → Content Moderation → Exemptions
+
+✅ Skip Toxicity Checking For:
+- Administrators
+- Editors
+- Authors
+- Users with 5+ approved comments
+- Email: partner@example.com
+- Domain: @company.com
+```
+
+---
+
+## Custom Rules
+
+### Keyword-Based Moderation
+
+Add your own blocklist/allowlist:
+
+<Tabs>
+  <Tab title="Blocklist">
+    ### Block Specific Words/Phrases
+    
+    **Configuration:**
+    ```
+    Settings → Content Moderation → Blocklist
+    
+    Add keywords (one per line):
+    spam keyword
+    promotional phrase
+    competitor name
+    offensive term not caught by AI
+    ```
+    
+    **Action Options:**
+    - Block immediately
+    - Hold for moderation
+    - Assign spam flag
+    
+    **Example Use Cases:**
+    - Block competitor mentions
+    - Prevent spam keywords ("buy now", "click here")
+    - Add language-specific profanity
+    - Block coded language AI misses
+  </Tab>
+  
+  <Tab title="Allowlist">
+    ### Always Allow Specific Words
+    
+    **Configuration:**
+    ```
+    Settings → Content Moderation → Allowlist
+    
+    Add keywords (one per line):
+    damn (in non-profane context)
+    hell (technical term)
+    your brand name (that triggers false positive)
+    ```
+    
+    **Behavior:**
+    - Overrides AI detection
+    - Bypasses blocklist
+    - Comment passes even if flagged
+    
+    **Use Sparingly:** Too many allowlist entries reduce effectiveness
+  </Tab>
+  
+  <Tab title="Regex Patterns">
+    ### Advanced Pattern Matching
+    
+    **Configuration:**
+    ```
+    Settings → Content Moderation → Advanced → Regex
+    
+    Add patterns:
+    /\b\d{3}-\d{3}-\d{4}\b/ (Block phone numbers)
+    /https?:\/\/[^\s]+/ (Block URLs)
+    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i (Block emails)
+    ```
+    
+    **Common Patterns:**
+    - Phone numbers
+    - Email addresses
+    - URLs/links
+    - Credit card numbers
+    - Specific formatting patterns
+  </Tab>
+</Tabs>
+
+---
+
+## Moderation Workflow
+
+### Auto-Moderation Rules
+
+Set up automated workflows:
+
+<AccordionGroup>
+  <Accordion title="New User Comments" icon="user-plus">
+    **First-time commenters:**
+    
+    ```
+    Settings → Moderation Workflow → New Users
+    
+    Action: Hold for moderation
+    After X approved comments: Auto-approve future comments
+    Recommended: 3 approved comments
+    ```
+    
+    **Rationale:** Manually vet new users, then trust them
+  </Accordion>
+  
+  <Accordion title="Link Moderation" icon="link">
+    **Comments with URLs:**
+    
+    ```
+    Settings → Moderation Workflow → Links
+    
+    Hold for moderation if comment contains:
+    - 2+ links
+    - Any links (for new users)
+    - Links to blocked domains
+    
+    Auto-approve if:
+    - Established user (5+ comments)
+    - Link to your own domain
+    ```
+    
+    **Prevents:** Spam, phishing, malicious links
+  </Accordion>
+  
+  <Accordion title="Duplicate Detection" icon="copy">
+    **Prevent spam/flooding:**
+    
+    ```
+    Settings → Moderation Workflow → Duplicates
+    
+    Block if:
+    - Exact same comment posted before
+    - Similar comment (90%+ match) within 5 minutes
+    - User posts X+ comments in Y minutes
+    
+    Example: Block if user posts 5+ comments in 1 minute
+    ```
+  </Accordion>
+  
+  <Accordion title="Length Restrictions" icon="text-width">
+    **Enforce comment length:**
+    
+    ```
+    Settings → Moderation Workflow → Length
+    
+    Minimum: 10 characters (prevent "ok", "lol")
+    Maximum: 5,000 characters (prevent spam walls)
+    
+    Action on violation:
+    - Show error message
+    - Character counter for user guidance
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Notifications
+
+### Moderation Alert Settings
+
+<table>
+  <thead>
+    <tr>
+      <th>Notification Type</th>
+      <th>Recipients</th>
+      <th>Trigger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Toxic Comment Detected**</td>
+      <td>Moderators, Admins</td>
+      <td>Any comment flagged by AI</td>
+    </tr>
+    <tr>
+      <td>**Held for Moderation**</td>
+      <td>Moderators</td>
+      <td>Comment in moderation queue</td>
+    </tr>
+    <tr>
+      <td>**Blocked Comment**</td>
+      <td>Admins (optional)</td>
+      <td>Comment automatically blocked</td>
+    </tr>
+    <tr>
+      <td>**Daily Summary**</td>
+      <td>Admins</td>
+      <td>Daily at 9 AM (configurable)</td>
+    </tr>
+  </tbody>
+</table>
+
+**Configuration:**
+
+```
+Settings → Content Moderation → Notifications
+
+✅ Email moderators when:
+- Comment flagged as toxic (immediately)
+- 5+ comments in moderation queue (digest)
+- Daily summary (9 AM)
+
+✅ Send to:
+- admin@yoursite.com
+- moderator@yoursite.com
+```
+
+---
+
+## User-Facing Messages
+
+Customize messages shown to users:
+
+### Blocked Comment Message
+
+**Fields:**
+- **Heading:** "Comment Not Published"
+- **Body:** "Your comment appears to contain inappropriate language. Please revise and try again."
+- **Link Text:** "Review our community guidelines"
+- **Link URL:** `/community-guidelines`
+
+**Examples:**
+
+<Tabs>
+  <Tab title="Friendly">
+    ```
+    Heading: Oops! 😊
+    Body: It looks like your comment might have some language that doesn't align with our community guidelines. Could you rephrase and try again? Thanks for helping keep our community respectful!
+    ```
+  </Tab>
+  
+  <Tab title="Professional">
+    ```
+    Heading: Comment Under Review
+    Body: Your comment has been flagged by our automated moderation system. Please ensure your comment adheres to our community guidelines and try again.
+    Link: View Community Guidelines
+    ```
+  </Tab>
+  
+  <Tab title="Firm">
+    ```
+    Heading: Violation Detected
+    Body: This comment violates our community standards and cannot be published. Repeated violations may result in account restrictions.
+    Link: Community Standards
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Held for Moderation Message
+
+**Fields:**
+- **Heading:** "Comment Pending Approval"
+- **Body:** "Your comment is being reviewed by our moderation team and will be published once approved."
+- **Estimated Time:** "Usually within 24 hours"
+
+---
+
+### Warning Message (Warn Only Mode)
+
+**Fields:**
+- **Heading:** "⚠️ Please Review"
+- **Body:** "Your comment may contain content that violates our guidelines. Please review before submitting."
+- **Buttons:** `[Submit Anyway]` `[Edit Comment]` `[Cancel]`
+
+---
+
+## Analytics & Reporting
+
+### Dashboard Metrics
+
+Access at **Generatify → Analytics → Moderation**
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Description</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Total Comments Analyzed**</td>
+      <td>All comments processed</td>
+      <td>Overall usage</td>
+    </tr>
+    <tr>
+      <td>**Flagged Comments**</td>
+      <td>Comments detected as toxic</td>
+      <td>Detection volume</td>
+    </tr>
+    <tr>
+      <td>**Blocked Comments**</td>
+      <td>Automatically rejected</td>
+      <td>Auto-moderation effectiveness</td>
+    </tr>
+    <tr>
+      <td>**Held Comments**</td>
+      <td>In moderation queue</td>
+      <td>Manual review workload</td>
+    </tr>
+    <tr>
+      <td>**False Positive Rate**</td>
+      <td>% flagged but later approved</td>
+      <td>Threshold tuning</td>
+    </tr>
+    <tr>
+      <td>**Avg Toxicity Score**</td>
+      <td>Mean score of all comments</td>
+      <td>Community health trend</td>
+    </tr>
+    <tr>
+      <td>**Top Toxicity Categories**</td>
+      <td>Most common violations</td>
+      <td>Focus moderation efforts</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Export Reports
+
+```
+Settings → Content Moderation → Reports → Export
+
+Format: CSV, JSON, PDF
+Date Range: Last 7 days, 30 days, 90 days, Custom
+Include:
+✅ Flagged comments
+✅ Toxicity scores
+✅ Actions taken
+✅ Moderator decisions
+```
+
+---
+
+## Integration Settings
+
+### WordPress Core Integration
+
+<AccordionGroup>
+  <Accordion title="Comment Moderation" icon="wordpress">
+    **Sync with WordPress native moderation:**
+    
+    ```
+    Settings → Content Moderation → WordPress Integration
+    
+    ✅ Use WordPress moderation queue
+    ✅ Show toxicity scores in comment admin
+    ✅ Add "Toxicity" column to comments list
+    ✅ Enable bulk actions (Approve, Reject)
+    ```
+    
+    **Result:** Manage AI-flagged comments alongside regular moderation
+  </Accordion>
+  
+  <Accordion title="User Roles & Capabilities" icon="user-shield">
+    **Define who can configure moderation:**
+    
+    ```
+    Capabilities:
+    - manage_generatify_moderation (Admins)
+    - moderate_generatify_comments (Moderators)
+    - view_toxicity_scores (Editors)
+    
+    Settings → Content Moderation → Permissions
+    
+    Administrator: Full access
+    Editor: View scores, approve/reject
+    Moderator: Moderate only, no config
+    ```
+  </Accordion>
+  
+  <Accordion title="Akismet Integration" icon="shield-check">
+    **Combine with spam detection:**
+    
+    ```
+    Settings → Content Moderation → Integrations → Akismet
+    
+    ✅ Run both Akismet and Toxicity checks
+    
+    Priority:
+    1. Akismet checks for spam
+    2. Toxicity Checker analyzes content
+    3. Block if either flags
+    
+    Result: Comprehensive protection (spam + toxicity)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Configuration
+
+<AccordionGroup>
+  <Accordion title="API Rate Limiting" icon="gauge">
+    **Prevent abuse:**
+    
+    ```
+    Settings → Content Moderation → Advanced → Rate Limiting
+    
+    Max comments per user:
+    - 5 per minute
+    - 20 per hour
+    - 100 per day
+    
+    Action when exceeded:
+    - Block further comments
+    - Show cooldown message
+    - Notify moderators
+    ```
+  </Accordion>
+  
+  <Accordion title="Comment Editing" icon="pen-to-square">
+    **Allow users to edit flagged comments:**
+    
+    ```
+    Settings → Content Moderation → User Edit
+    
+    ✅ Allow editing blocked comments
+    Time limit: 5 minutes after submission
+    Max edits: 3 attempts
+    
+    After max edits: Hold for manual moderation
+    ```
+  </Accordion>
+  
+  <Accordion title="Scheduled Moderation" icon="clock">
+    **Review comments at specific times:**
+    
+    ```
+    Settings → Content Moderation → Schedule
+    
+    Auto-hold all comments outside business hours:
+    Business Hours: 9 AM - 5 PM EST
+    Weekend Action: Hold all
+    
+    Publish held comments: Daily at 9 AM
+    ```
+    
+    **Use Case:** Ensure human oversight during active hours
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Testing & Validation
+
+### Test Toxicity Detection
+
+<Steps>
+  <Step title="Access Test Panel">
+    Navigate to **Settings → Content Moderation → Test**
+  </Step>
+  
+  <Step title="Enter Test Comment">
+    Type or paste sample comments
+  </Step>
+  
+  <Step title="Run Analysis">
+    Click "Analyze" to see toxicity scores
+  </Step>
+  
+  <Step title="Review Results">
+    Check which categories triggered and at what confidence
+  </Step>
+  
+  <Step title="Adjust Thresholds">
+    Fine-tune based on results
+  </Step>
+</Steps>
+
+**Sample Test Comments:**
+
+```
+✅ Positive: "Great article! I learned a lot."
+Expected: All scores < 10%
+
+⚠️ Borderline: "This is complete nonsense."
+Expected: Toxicity 30-60%
+
+❌ Toxic: "You're an idiot. This is garbage."
+Expected: Toxicity 70%+, Insult 80%+
+```
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start Conservative" icon="seedling">
+    **Initial Setup:**
+    1. Enable "Balanced" preset
+    2. Set action to "Hold for Moderation" (not Block)
+    3. Monitor for 1-2 weeks
+    4. Review false positive rate
+    5. Adjust thresholds based on data
+  </Accordion>
+  
+  <Accordion title="Regular Review" icon="calendar-check">
+    **Weekly Tasks:**
+    - Review moderation queue
+    - Approve false positives
+    - Reject true positives
+    - Note patterns
+    - Adjust thresholds if FP rate > 20%
+    
+    **Monthly Tasks:**
+    - Export analytics report
+    - Analyze trends
+    - Update blocklist/allowlist
+    - Refine custom rules
+  </Accordion>
+  
+  <Accordion title="Transparent Communication" icon="megaphone">
+    **Inform your community:**
+    
+    - Publish community guidelines
+    - Explain automated moderation
+    - Set response time expectations
+    - Provide appeal process
+    - Link to guidelines in messages
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Too Many False Positives">
+    **Solutions:**
+    1. Increase thresholds by 10-20%
+    2. Switch from Strict to Balanced
+    3. Review specific triggering category
+    4. Add common false positives to allowlist
+    5. Whitelist established users
+  </Accordion>
+  
+  <Accordion title="Toxic Comments Getting Through">
+    **Solutions:**
+    1. Lower thresholds (more sensitive)
+    2. Switch to Strict preset
+    3. Add specific terms to blocklist
+    4. Enable "Block" action for severe categories
+    5. Combine with human moderation
+  </Accordion>
+  
+  <Accordion title="High Moderation Queue">
+    **Solutions:**
+    1. Increase thresholds (fewer holds)
+    2. Enable auto-approve for trusted users
+    3. Switch some categories to "Tag & Allow"
+    4. Add more moderators
+    5. Consider "Block" action for obvious toxicity
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Toxicity Checker" icon="shield-check" href="/moderation/toxicity-checker">
+    How AI detection works
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Complete settings reference
+  </Card>
+  <Card title="WordPress Comments" icon="comments" href="/advanced/customization">
+    Integrate with WP moderation
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/advanced/performance">
+    Track moderation effectiveness
+  </Card>
+</CardGroup>
+
+<Tip>
+**Recommended Workflow:** Balanced thresholds → Hold for moderation → Review weekly → Adjust based on false positive rate → Auto-approve trusted users after 5 approved comments.
+</Tip>

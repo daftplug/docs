@@ -1,0 +1,534 @@
+---
+title: 'AI Assistant Chatbot'
+description: 'Your context-aware WordPress copilot for content creation and troubleshooting'
+icon: 'comments'
+---
+
+## What is the AI Assistant Chatbot?
+
+The AI Assistant Chatbot is your personal WordPress copilot—a context-aware AI that understands your entire site's content, plugins, themes, and configuration. It helps you write content, troubleshoot errors, answer questions, and manage your site more efficiently.
+
+<img src="/images/ai-assistant-interface.png" alt="AI Assistant Chatbot Interface" />
+
+<Info>
+  **Premium Feature:** The AI Assistant Chatbot requires a Generatify Pro license and an AI provider API key (OpenAI, Anthropic, or Google).
+</Info>
+
+---
+
+## Key Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Content Creation" icon="pen">
+    Write posts, generate ideas, rewrite text, and create on-brand copy
+  </Card>
+  <Card title="Translation" icon="language">
+    Translate content into any language while maintaining tone and style
+  </Card>
+  <Card title="Troubleshooting" icon="wrench">
+    Explain WordPress errors and provide step-by-step solutions
+  </Card>
+  <Card title="Site Knowledge" icon="database">
+    Access information about your posts, pages, plugins, themes, and users
+  </Card>
+  <Card title="Summarization" icon="compress">
+    Summarize long articles, posts, or documentation quickly
+  </Card>
+  <Card title="Code Assistance" icon="code">
+    Get help with PHP, JavaScript, CSS, and WordPress development
+  </Card>
+</CardGroup>
+
+---
+
+## How It Works
+
+The AI Assistant is context-aware, meaning it can access and understand various aspects of your WordPress site:
+
+### Context Sources
+
+<AccordionGroup>
+  <Accordion title="Posts & Pages" icon="file">
+    The assistant can read and analyze:
+    - Published posts and pages
+    - Custom post types
+    - Post titles, content, excerpts
+    - Meta data and custom fields
+    - Featured images
+  </Accordion>
+
+  <Accordion title="Plugins & Themes" icon="puzzle-piece">
+    Access information about:
+    - Installed plugins and their status
+    - Active theme details
+    - Plugin/theme configurations
+    - Available hooks and filters
+  </Accordion>
+
+  <Accordion title="Site Settings" icon="gear">
+    Query your site's:
+    - General WordPress settings
+    - Permalink structure
+    - User roles and capabilities
+    - Menu structures
+    - Widget areas
+  </Accordion>
+
+  <Accordion title="Users" icon="users">
+    Information about:
+    - User accounts (respecting permissions)
+    - User roles
+    - Author information
+    - User metadata
+  </Accordion>
+
+  <Accordion title="WooCommerce (if installed)" icon="shopping-cart">
+    E-commerce data:
+    - Products and categories
+    - Orders and customers
+    - Store settings
+    - Inventory information
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Getting Started
+
+### 1. Enable the Chatbot
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Generatify → Chatbot** in your WordPress admin
+  </Step>
+
+  <Step title="Enable the Feature">
+    Toggle **Enable AI Assistant Chatbot** to ON
+  </Step>
+
+  <Step title="Select AI Model">
+    Choose your preferred model:
+    - **GPT-4 Turbo** - Most powerful, best quality
+    - **Claude 3.5 Sonnet** - Great conversation, natural responses
+    - **Gemini 1.5 Pro** - Fast, generous free tier
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings** to activate the chatbot
+  </Step>
+</Steps>
+
+### 2. Access the Chatbot
+
+Once enabled, you can access the AI Assistant in multiple ways:
+
+<Tabs>
+  <Tab title="Admin Bar">
+    Click the **AI Assistant** icon in the WordPress admin bar (top of any admin page)
+    
+    <img src="/images/admin-bar-access.png" alt="Access from admin bar" />
+  </Tab>
+
+  <Tab title="Generatify Menu">
+    Navigate to **Generatify → Chatbot** to open the full chatbot interface
+  </Tab>
+
+  <Tab title="Post Editor">
+    Use the AI Assistant button in the Gutenberg or Classic editor sidebars
+  </Tab>
+
+  <Tab title="Keyboard Shortcut">
+    Press `Ctrl/Cmd + Shift + G` to quickly open the chatbot from anywhere in wp-admin
+  </Tab>
+</Tabs>
+
+---
+
+## Usage Examples
+
+### Content Creation
+
+<CodeGroup>
+```prompt Example: Write a Blog Post
+Write a blog post about "10 WordPress Security Best Practices" in a friendly, informative tone. Target length: 1200 words. Include practical examples and actionable tips.
+```
+
+```prompt Example: Rewrite Content
+Rewrite the following paragraph to be more engaging and conversational:
+[paste your content here]
+```
+
+```prompt Example: Generate Ideas
+Give me 10 blog post ideas about WordPress performance optimization for beginners.
+```
+</CodeGroup>
+
+### Translation
+
+<CodeGroup>
+```prompt Example: Translate Post
+Translate my latest blog post into Spanish, maintaining the same friendly tone.
+```
+
+```prompt Example: Multilingual Content
+Create a French version of this product description:
+[paste description]
+```
+</CodeGroup>
+
+### Troubleshooting
+
+<CodeGroup>
+```prompt Example: Explain Error
+I'm seeing this error: "Fatal error: Maximum execution time of 30 seconds exceeded". What does it mean and how do I fix it?
+```
+
+```prompt Example: Plugin Conflict
+My site broke after installing a new plugin. How do I troubleshoot this?
+```
+
+```prompt Example: Debug Code
+This PHP code isn't working as expected. Can you spot the issue?
+[paste code]
+```
+</CodeGroup>
+
+### Site Management
+
+<CodeGroup>
+```prompt Example: Summarize Post
+Summarize my latest post in 2-3 sentences for social media.
+```
+
+```prompt Example: List Content
+Show me all posts published in the last 7 days that don't have featured images.
+```
+
+```prompt Example: User Info
+How many registered users do I have? Break down by role.
+```
+</CodeGroup>
+
+---
+
+## Advanced Features
+
+### Conversation History
+
+The AI Assistant maintains conversation context within each session:
+
+- Ask follow-up questions without repeating context
+- Reference previous responses
+- Build on earlier suggestions
+- Context persists until you close the chat
+
+<Note>
+  **Privacy:** Conversation history is stored locally in your browser and cleared when you close the chatbot. It's never saved to your database unless you explicitly enable chat history logging.
+</Note>
+
+### Context Documents
+
+Attach relevant context to your queries:
+
+1. Click the **Add Context** button
+2. Select posts, pages, or other content
+3. The AI will reference these documents when responding
+4. Remove context items when no longer needed
+
+<img src="/images/context-documents.png" alt="Adding context documents" />
+
+### System Instructions
+
+Customize how the AI responds:
+
+```
+Examples of custom instructions:
+- "Always respond in a professional, corporate tone"
+- "Keep responses under 200 words"
+- "Use British English spelling"
+- "Format code examples with proper syntax highlighting"
+- "Include sources and citations when possible"
+```
+
+Set custom instructions in **Generatify → Chatbot → System Instructions**.
+
+### Model Selection
+
+Switch between AI models mid-conversation:
+
+- **GPT-4 Turbo** - Complex tasks, highest quality
+- **GPT-3.5 Turbo** - Quick responses, cost-effective
+- **Claude 3.5 Sonnet** - Natural conversation, safety
+- **Claude 3.5 Haiku** - Fast, budget-friendly
+- **Gemini 1.5 Pro** - Long context, multimodal
+- **Gemini 1.5 Flash** - Ultra-fast responses
+
+<Tip>
+  Use faster, cheaper models for simple queries and save premium models for complex tasks to optimize costs.
+</Tip>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Be Specific" icon="bullseye">
+    **Good:** "Write a 500-word blog post about WordPress caching plugins, comparing W3 Total Cache and WP Super Cache. Include pros, cons, and recommendations."
+
+    **Bad:** "Tell me about caching"
+
+    Specific prompts yield better results. Include details about length, tone, format, and context.
+  </Accordion>
+
+  <Accordion title="Provide Context" icon="layer-group">
+    When asking about your site:
+    - Mention specific posts/pages
+    - Reference error messages exactly
+    - Include relevant settings or configurations
+    - Attach context documents when helpful
+
+    Example: "Analyze my post titled 'Getting Started with WordPress' and suggest SEO improvements"
+  </Accordion>
+
+  <Accordion title="Iterate and Refine" icon="arrows-rotate">
+    Don't expect perfection on the first try:
+    1. Start with a general request
+    2. Review the AI's response
+    3. Ask for modifications
+    4. Refine until satisfied
+
+    Example conversation:
+    - "Write a product description for my WordPress hosting service"
+    - "Make it more technical and include performance metrics"
+    - "Great, now make it shorter—under 100 words"
+  </Accordion>
+
+  <Accordion title="Verify Information" icon="shield-check">
+    The AI is powerful but not infallible:
+    - Double-check facts and statistics
+    - Test code before deploying to production
+    - Verify plugin/theme recommendations
+    - Review content for accuracy
+
+    Treat AI output as a **draft** that needs human review.
+  </Accordion>
+
+  <Accordion title="Manage Costs" icon="dollar-sign">
+    AI API calls cost money:
+    - Use cheaper models for simple tasks
+    - Keep conversations focused
+    - Avoid unnecessary context
+    - Set usage alerts in your AI provider dashboard
+
+    See our [Cost Optimization Guide](/advanced/performance) for more tips.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Configuration Options
+
+Access settings at **Generatify → Chatbot**:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable AI Assistant**</td>
+      <td>Turn the chatbot on/off</td>
+      <td>OFF</td>
+    </tr>
+    <tr>
+      <td>**Default AI Model**</td>
+      <td>Which model to use by default</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>**System Instructions**</td>
+      <td>Custom instructions for AI behavior</td>
+      <td>(Empty)</td>
+    </tr>
+    <tr>
+      <td>**Max Context Items**</td>
+      <td>Maximum number of context documents</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>**Conversation History Length**</td>
+      <td>How many previous messages to remember</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>**Enable Chat History Logging**</td>
+      <td>Save conversations to database</td>
+      <td>OFF</td>
+    </tr>
+    <tr>
+      <td>**Access Permissions**</td>
+      <td>Which user roles can use the chatbot</td>
+      <td>Administrator</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Chatbot icon not showing">
+    **Possible causes:**
+    - Feature not enabled
+    - User doesn't have required permissions
+    - JavaScript conflict
+
+    **Solutions:**
+    1. Verify the feature is enabled in settings
+    2. Check user role has access
+    3. Clear browser cache
+    4. Disable other plugins temporarily
+  </Accordion>
+
+  <Accordion title="'API key invalid' error">
+    **Possible causes:**
+    - Incorrect API key
+    - Key doesn't have required permissions
+    - Billing issue with AI provider
+
+    **Solutions:**
+    1. Re-check and re-enter API key
+    2. Verify key is active in provider dashboard
+    3. Check billing/payment status
+    4. Generate a new API key
+  </Accordion>
+
+  <Accordion title="Responses are slow or timing out">
+    **Possible causes:**
+    - Using a slow model
+    - Too much context
+    - AI provider is experiencing high traffic
+
+    **Solutions:**
+    1. Switch to a faster model (Flash, Haiku, 3.5 Turbo)
+    2. Reduce context documents
+    3. Simplify your prompt
+    4. Try a different AI provider
+  </Accordion>
+
+  <Accordion title="AI gives incorrect information about my site">
+    **Possible causes:**
+    - Context not attached
+    - Cache issue
+    - Permission restrictions
+
+    **Solutions:**
+    1. Attach relevant posts/pages as context
+    2. Be more specific in your query
+    3. Reference content by exact title or URL
+    4. Clear plugin cache and try again
+  </Accordion>
+
+  <Accordion title="Chatbot window won't open">
+    **Possible causes:**
+    - JavaScript error
+    - Browser compatibility
+    - Plugin conflict
+
+    **Solutions:**
+    1. Check browser console for errors
+    2. Try a different browser
+    3. Disable ad blockers
+    4. Clear browser cache
+    5. Deactivate other plugins one by one
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Privacy & Security
+
+<Warning>
+  **Data Transmission:** When you use the AI Assistant, your queries and selected context are sent to your chosen AI provider (OpenAI, Anthropic, or Google) for processing. Ensure this complies with your privacy policy and local regulations.
+</Warning>
+
+### What Data Is Shared?
+
+- **Sent to AI provider:**
+  - Your prompt/question
+  - Selected context documents (post content, etc.)
+  - Conversation history from current session
+  - System instructions
+
+- **NOT sent to AI provider:**
+  - User passwords or credentials
+  - Database connection details
+  - API keys or secrets
+  - Personal user information (unless explicitly included in context)
+
+### Security Recommendations
+
+<Steps>
+  <Step title="Limit User Access">
+    Only grant chatbot access to trusted users. Configure in **Generatify → Chatbot → Access Permissions**.
+  </Step>
+
+  <Step title="Review Privacy Policies">
+    Understand your AI provider's data handling:
+    - [OpenAI Privacy Policy](https://openai.com/privacy)
+    - [Anthropic Privacy Policy](https://www.anthropic.com/privacy)
+    - [Google AI Privacy](https://support.google.com/gemini/answer/13594961)
+  </Step>
+
+  <Step title="Disable Chat Logging">
+    Unless needed for compliance, disable chat history logging to minimize data retention.
+  </Step>
+
+  <Step title="Use HTTPS">
+    Ensure your WordPress site uses HTTPS to encrypt data in transit.
+  </Step>
+</Steps>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Automations"
+    icon="robot"
+    href="/features/automations"
+  >
+    Automate content tasks with AI
+  </Card>
+  <Card
+    title="Helpdesk Agent"
+    icon="headset"
+    href="/features/helpdesk-agent"
+  >
+    Add customer-facing AI chat
+  </Card>
+  <Card
+    title="Advanced Settings"
+    icon="sliders"
+    href="/advanced/settings"
+  >
+    Fine-tune chatbot behavior
+  </Card>
+  <Card
+    title="Developer API"
+    icon="code"
+    href="/developer/api-reference"
+  >
+    Extend the chatbot programmatically
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Pro Tip:** Create a set of "prompt templates" for common tasks (e.g., "Write a product description for [PRODUCT]"). This ensures consistency and saves time.
+</Tip>

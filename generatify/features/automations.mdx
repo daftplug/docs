@@ -1,0 +1,508 @@
+---
+title: 'Automations'
+description: 'Let AI handle repetitive content tasks automatically'
+icon: 'robot'
+---
+
+## Overview
+
+Generatify Automations use AI to handle time-consuming, repetitive content tasks automatically—freeing you to focus on creating great content instead of managing metadata.
+
+<CardGroup cols={2}>
+  <Card title="Auto Post Tags" icon="tags" href="/automations/auto-tags">
+    Automatically generate relevant tags for posts
+  </Card>
+  <Card title="Auto Categories" icon="folder-tree" href="/automations/auto-categories">
+    Intelligently categorize uncategorized posts
+  </Card>
+  <Card title="Meta Descriptions" icon="file-alt" href="/automations/meta-descriptions">
+    Generate SEO-optimized meta descriptions
+  </Card>
+  <Card title="Image Alt Text" icon="image" href="/automations/image-alt-text">
+    Add descriptive alt text to images (TensorFlow)
+  </Card>
+</CardGroup>
+
+---
+
+## How Automations Work
+
+Automations run **automatically in the background** when certain triggers occur. You don't need to do anything—just enable the features you want and let AI handle the rest.
+
+### Trigger Events
+
+<table>
+  <thead>
+    <tr>
+      <th>Automation</th>
+      <th>When It Runs</th>
+      <th>Condition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Auto Post Tags**</td>
+      <td>When you publish or update a post</td>
+      <td>Only if tags field is empty</td>
+    </tr>
+    <tr>
+      <td>**Auto Categories**</td>
+      <td>When you publish or update a post</td>
+      <td>Only if post is uncategorized</td>
+    </tr>
+    <tr>
+      <td>**Meta Descriptions**</td>
+      <td>When a page loads on the frontend</td>
+      <td>Only if meta description is missing</td>
+    </tr>
+    <tr>
+      <td>**Image Alt Text**</td>
+      <td>When images load in browser</td>
+      <td>Only if alt attribute is empty</td>
+    </tr>
+  </tbody>
+</table>
+
+<Info>
+  **Non-invasive:** Automations only process content that **needs** processing. They won't override your manually-set tags, categories, or meta descriptions.
+</Info>
+
+---
+
+## Quick Setup
+
+Enable all automations in just a few steps:
+
+<Steps>
+  <Step title="Navigate to Automations">
+    Go to **Generatify → Settings → Automations** in your WordPress admin
+  </Step>
+
+  <Step title="Choose Features">
+    Toggle ON the automations you want to use:
+    - ✅ AI Post Tags
+    - ✅ AI Post Categories  
+    - ✅ AI Meta Descriptions
+    - ✅ AI Alt Images
+  </Step>
+
+  <Step title="Select AI Models">
+    For each AI-powered feature, choose which model to use:
+    - Use **GPT-3.5 Turbo** or **Gemini Flash** for speed and cost-efficiency
+    - Use **GPT-4** or **Claude Sonnet** for higher quality
+  </Step>
+
+  <Step title="Save Settings">
+    Click **Save Settings** to activate automations
+  </Step>
+</Steps>
+
+<Check>
+  **Done!** Automations are now running. Test by creating a new post without tags—AI will add them automatically when you publish.
+</Check>
+
+---
+
+## Feature Comparison
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>AI Required</th>
+      <th>Runs On</th>
+      <th>Cost Impact</th>
+      <th>Premium</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Auto Post Tags**</td>
+      <td>✅ Yes</td>
+      <td>Backend (save_post)</td>
+      <td>💰 Low (~$0.001/post)</td>
+      <td>✅ Yes</td>
+    </tr>
+    <tr>
+      <td>**Auto Categories**</td>
+      <td>✅ Yes</td>
+      <td>Backend (save_post)</td>
+      <td>💰 Low (~$0.001/post)</td>
+      <td>✅ Yes</td>
+    </tr>
+    <tr>
+      <td>**Meta Descriptions**</td>
+      <td>✅ Yes</td>
+      <td>Frontend (wp_head)</td>
+      <td>💰 Low (~$0.002/page)</td>
+      <td>✅ Yes</td>
+    </tr>
+    <tr>
+      <td>**Image Alt Text**</td>
+      <td>❌ No (TensorFlow.js)</td>
+      <td>Frontend (browser)</td>
+      <td>💰 Free</td>
+      <td>❌ Free</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Auto Post Tags
+
+Automatically generate 5 relevant tags for posts that don't have any.
+
+### How It Works
+
+1. You create or edit a post
+2. Leave the **Tags** field empty
+3. Publish or update the post
+4. AI analyzes title + content
+5. 5 relevant tags are automatically added
+
+### Example
+
+**Post Title:** "10 WordPress Security Best Practices for 2026"
+
+**Post Content Excerpt:** "Keeping your WordPress site secure requires vigilance and best practices. From strong passwords to regular updates, here's what you need to know..."
+
+**Generated Tags:**
+- wordpress security
+- best practices
+- website protection
+- wordpress tips
+- cyber security
+
+<Card title="Learn More" icon="arrow-right" href="/automations/auto-tags">
+  Complete Auto Post Tags documentation →
+</Card>
+
+---
+
+## Auto Categories
+
+Intelligently categorize posts based on content and your existing category structure.
+
+### How It Works
+
+1. You publish a post without selecting a category
+2. AI analyzes the post title and content
+3. Compares against your **existing categories**
+4. Assigns the most relevant category
+5. Falls back to "Uncategorized" if no good match
+
+### Example
+
+**Your Existing Categories:**
+- WordPress Tutorials
+- Web Design
+- SEO Tips
+- Plugin Reviews
+
+**Post Title:** "How to Choose the Best WordPress SEO Plugin"
+
+**AI Decision:** Assigns to **"SEO Tips"** and **"Plugin Reviews"**
+
+<Card title="Learn More" icon="arrow-right" href="/automations/auto-categories">
+  Complete Auto Categories documentation →
+</Card>
+
+---
+
+## Meta Descriptions
+
+Generate SEO-optimized meta descriptions for posts and pages that are missing them.
+
+### How It Works
+
+1. A visitor loads a page on your site
+2. Generatify checks if meta description exists
+3. If missing, AI generates one based on content
+4. Meta description is added to the page
+5. Cached for future requests (if caching enabled)
+
+### Example
+
+**Post Title:** "Ultimate Guide to WordPress Performance Optimization"
+
+**Generated Meta:** "Learn how to speed up your WordPress site with caching, image optimization, and database tuning. Complete guide with actionable tips."
+
+<Note>
+  Meta descriptions are generated **on-demand** the first time a page loads, then cached. This ensures minimal API costs.
+</Note>
+
+<Card title="Learn More" icon="arrow-right" href="/automations/meta-descriptions">
+  Complete Meta Descriptions documentation →
+</Card>
+
+---
+
+## Image Alt Text
+
+Automatically add descriptive alt text to images using TensorFlow.js and the MobileNet model.
+
+### How It Works
+
+1. Images load in the browser
+2. TensorFlow.js analyzes each image
+3. MobileNet model identifies objects
+4. Descriptive alt text is added
+5. Runs entirely **client-side** (no API calls!)
+
+### Example
+
+**Image:** Photo of a golden retriever sitting in grass
+
+**Generated Alt Text:** "golden retriever, dog, grass, outdoor, pet"
+
+<Check>
+  **Free Feature:** Image Alt Text uses browser-based AI (TensorFlow.js) and doesn't require an API key or incur costs.
+</Check>
+
+<Card title="Learn More" icon="arrow-right" href="/automations/image-alt-text">
+  Complete Image Alt Text documentation →
+</Card>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Review AI Output" icon="eye">
+    While AI is accurate, always review automatically-generated content:
+    - Check tags are relevant and consistent
+    - Ensure categories make sense
+    - Review meta descriptions for clarity
+    - Verify alt text describes images accurately
+
+    Edit manually if needed—AI won't override your changes.
+  </Accordion>
+
+  <Accordion title="Start Small" icon="seedling">
+    Don't enable all automations at once:
+    1. Start with one feature (e.g., Auto Post Tags)
+    2. Test on a few posts
+    3. Review quality and accuracy
+    4. Adjust settings if needed
+    5. Enable additional features gradually
+
+    This helps you understand how each automation works and manage API costs.
+  </Accordion>
+
+  <Accordion title="Choose Cost-Effective Models" icon="dollar-sign">
+    Automations run frequently, so costs can add up:
+    - Use **GPT-3.5 Turbo**, **Gemini Flash**, or **Claude Haiku** for bulk tasks
+    - Reserve premium models for manual, high-value tasks
+    - Monitor usage in your AI provider dashboard
+    - Set monthly budget alerts
+
+    Example: Using GPT-3.5 Turbo for auto-tagging 100 posts/month costs ~$0.10.
+  </Accordion>
+
+  <Accordion title="Maintain Category Structure" icon="sitemap">
+    For Auto Categories to work well:
+    - Create clear, distinct categories
+    - Use descriptive category names
+    - Don't create too many overlapping categories
+    - Review and consolidate similar categories
+
+    AI performs better with well-organized category structures.
+  </Accordion>
+
+  <Accordion title="Optimize for SEO" icon="search">
+    To get the best SEO results:
+    - Use **Auto Tags** to improve internal linking
+    - Enable **Meta Descriptions** for better CTR
+    - Add **Image Alt Text** for accessibility and image SEO
+    - Combine all three for maximum SEO impact
+
+    These features work together to improve your site's search visibility.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Configuration Options
+
+### Global Automation Settings
+
+Access at **Generatify → Settings → Automations**:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Enable Auto Post Tags**</td>
+      <td>ON / OFF</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Tags AI Model**</td>
+      <td>GPT-4, GPT-3.5, Claude, Gemini</td>
+      <td>GPT-3.5 Turbo</td>
+    </tr>
+    <tr>
+      <td>**Enable Auto Categories**</td>
+      <td>ON / OFF</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Categories AI Model**</td>
+      <td>GPT-4, GPT-3.5, Claude, Gemini</td>
+      <td>GPT-3.5 Turbo</td>
+    </tr>
+    <tr>
+      <td>**Enable Meta Descriptions**</td>
+      <td>ON / OFF</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Meta AI Model**</td>
+      <td>GPT-4, GPT-3.5, Claude, Gemini</td>
+      <td>GPT-4 Turbo</td>
+    </tr>
+    <tr>
+      <td>**Enable Image Alt Text**</td>
+      <td>ON / OFF</td>
+      <td>ON</td>
+    </tr>
+    <tr>
+      <td>**Alt Text Confidence Threshold**</td>
+      <td>0.1 - 1.0</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+
+### Per-Feature Settings
+
+Each automation has additional configuration options. See individual feature documentation for details.
+
+---
+
+## Performance Considerations
+
+<Warning>
+  Automations that make API calls (tags, categories, meta) can impact costs and performance if you publish hundreds of posts daily. Monitor usage and adjust accordingly.
+</Warning>
+
+### Cost Optimization
+
+<Steps>
+  <Step title="Use Faster Models">
+    Choose GPT-3.5 Turbo, Gemini Flash, or Claude Haiku for bulk automations
+  </Step>
+
+  <Step title="Disable Unused Features">
+    Only enable automations you actually need
+  </Step>
+
+  <Step title="Batch Process">
+    Use bulk editing tools to process multiple posts at once (coming soon)
+  </Step>
+
+  <Step title="Set Budget Alerts">
+    Configure spending alerts in your AI provider dashboard
+  </Step>
+</Steps>
+
+### Performance Tips
+
+- **Caching:** Enable object caching (Redis, Memcached) to cache AI responses
+- **Async Processing:** Automations run asynchronously where possible
+- **Rate Limiting:** Built-in rate limiting prevents API overload
+- **Error Handling:** Failed API calls are logged but don't break your site
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tags/Categories not being added">
+    **Possible causes:**
+    - Feature not enabled
+    - No AI provider connected
+    - Post already has tags/categories
+    - API rate limit reached
+
+    **Solutions:**
+    1. Verify feature is enabled in settings
+    2. Check AI provider API key is valid
+    3. Ensure post has empty tags/categories field
+    4. Check error logs for API issues
+  </Accordion>
+
+  <Accordion title="Meta descriptions not showing">
+    **Possible causes:**
+    - Another SEO plugin is overriding
+    - Caching plugin serving old version
+    - Theme doesn't support meta tags
+
+    **Solutions:**
+    1. Disable other SEO plugins temporarily
+    2. Clear all caches (plugin, server, CDN)
+    3. Check theme's `<head>` section includes `wp_head()`
+    4. View page source to verify meta tag presence
+  </Accordion>
+
+  <Accordion title="Image alt text not working">
+    **Possible causes:**
+    - Browser doesn't support TensorFlow.js
+    - Images already have alt text
+    - JavaScript error
+
+    **Solutions:**
+    1. Test in a modern browser (Chrome, Firefox, Safari)
+    2. Check images have empty alt attributes
+    3. Open browser console and look for errors
+    4. Ensure JavaScript isn't blocked
+  </Accordion>
+
+  <Accordion title="API costs too high">
+    **Solutions:**
+    1. Switch to cheaper models (GPT-3.5, Gemini Flash)
+    2. Disable automations for custom post types
+    3. Manually add tags/categories to reduce automation frequency
+    4. Set monthly budget limits in AI provider dashboard
+  </Accordion>
+
+  <Accordion title="Inconsistent tag/category quality">
+    **Solutions:**
+    1. Use a more capable model (GPT-4, Claude Sonnet)
+    2. Ensure posts have sufficient content (at least 300 words)
+    3. Review and consolidate your existing tags/categories
+    4. Add custom system instructions to guide AI behavior
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Auto Tags Guide" icon="tags" href="/automations/auto-tags">
+    Deep dive into auto-tagging
+  </Card>
+  <Card title="Auto Categories" icon="folder-tree" href="/automations/auto-categories">
+    Learn about categorization
+  </Card>
+  <Card title="Meta Descriptions" icon="file-alt" href="/automations/meta-descriptions">
+    SEO optimization guide
+  </Card>
+  <Card title="Image Alt Text" icon="image" href="/automations/image-alt-text">
+    Accessibility automation
+  </Card>
+  <Card title="Performance Tips" icon="gauge-high" href="/advanced/performance">
+    Optimize costs and speed
+  </Card>
+  <Card title="Developer API" icon="code" href="/developer/api-reference">
+    Extend automations
+  </Card>
+</CardGroup>

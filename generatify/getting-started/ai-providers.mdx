@@ -1,0 +1,472 @@
+---
+title: 'AI Providers'
+description: 'Connect OpenAI, Anthropic, or Google to power your WordPress site'
+icon: 'network-wired'
+---
+
+## Overview
+
+Generatify works with three major AI providers, giving you the flexibility to choose the models that best fit your needs and budget. You can even mix and match—use different providers for different features.
+
+<CardGroup cols={3}>
+  <Card title="OpenAI" icon="openai" iconType="duotone">
+    **GPT-4, GPT-3.5 Turbo**  
+    Most popular, widely tested
+  </Card>
+  <Card title="Anthropic" icon="a" iconType="duotone">
+    **Claude 3.5, Haiku**  
+    Excels at conversation
+  </Card>
+  <Card title="Google" icon="google" iconType="duotone">
+    **Gemini Pro, Flash**  
+    Generous free tier
+  </Card>
+</CardGroup>
+
+---
+
+## Comparison Table
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Best For</th>
+      <th>Strengths</th>
+      <th>Pricing</th>
+      <th>Speed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>General use, content creation</td>
+      <td>Most powerful, great quality</td>
+      <td>💰💰💰</td>
+      <td>⚡⚡⚡</td>
+    </tr>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Conversations, support</td>
+      <td>Natural dialogue, safety</td>
+      <td>💰💰</td>
+      <td>⚡⚡⚡</td>
+    </tr>
+    <tr>
+      <td>**Google**</td>
+      <td>High volume, budget-conscious</td>
+      <td>Free tier, fast, multimodal</td>
+      <td>💰 (Free tier available)</td>
+      <td>⚡⚡⚡⚡</td>
+    </tr>
+  </tbody>
+</table>
+
+<Info>
+  **Can't decide?** Start with **Google Gemini** for its generous free tier, then experiment with OpenAI or Anthropic as you scale.
+</Info>
+
+---
+
+## OpenAI (ChatGPT)
+
+The most widely-used AI provider, powering ChatGPT. Known for high-quality outputs and strong reasoning capabilities.
+
+### Available Models
+
+<Tabs>
+  <Tab title="GPT-4 Turbo">
+    **Best for:** Complex tasks, high-quality content, troubleshooting
+
+    - Most capable model
+    - Excellent reasoning and comprehension
+    - Handles complex instructions well
+    - Best for AI Assistant and Helpdesk Agent
+
+    **Cost:** ~$0.01 per 1,000 input tokens, ~$0.03 per 1,000 output tokens
+  </Tab>
+
+  <Tab title="GPT-3.5 Turbo">
+    **Best for:** Automations, high-volume tasks, cost-effective use
+
+    - Fast and affordable
+    - Great for simpler tasks
+    - Ideal for auto-tagging and categorization
+    - Good balance of quality and cost
+
+    **Cost:** ~$0.0005 per 1,000 input tokens, ~$0.0015 per 1,000 output tokens
+  </Tab>
+
+  <Tab title="GPT-4o Mini">
+    **Best for:** Ultra-fast responses, budget-friendly tasks
+
+    - Fastest OpenAI model
+    - Very affordable
+    - Good for quick suggestions and simple queries
+
+    **Cost:** ~$0.00015 per 1,000 input tokens, ~$0.0006 per 1,000 output tokens
+  </Tab>
+</Tabs>
+
+### Setup Instructions
+
+<Steps>
+  <Step title="Get an API Key">
+    1. Visit [platform.openai.com](https://platform.openai.com)
+    2. Sign up or log in
+    3. Navigate to **API Keys**
+    4. Click **Create new secret key**
+    5. Copy the key (you won't see it again!)
+  </Step>
+
+  <Step title="Add to Generatify">
+    1. Go to **Generatify → Settings → Integrations**
+    2. Find the **OpenAI** section
+    3. Toggle **Enable OpenAI** to ON
+    4. Paste your API key
+    5. Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Look for a green checkmark next to OpenAI indicating successful connection.
+  </Step>
+</Steps>
+
+### Pricing & Billing
+
+- **Pay-as-you-go** based on token usage
+- Tokens ≈ words (1,000 tokens ≈ 750 words)
+- Add billing details at [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
+- Set usage limits to control costs
+- Monitor usage at [platform.openai.com/usage](https://platform.openai.com/usage)
+
+<Tip>
+  **Cost Optimization:** Use GPT-4 for quality-critical tasks and GPT-3.5 Turbo for high-volume automations. You can assign different models to different features in Generatify.
+</Tip>
+
+---
+
+## Anthropic (Claude)
+
+Created by former OpenAI researchers, Claude excels at natural conversation and follows instructions carefully with built-in safety features.
+
+### Available Models
+
+<Tabs>
+  <Tab title="Claude 3.5 Sonnet">
+    **Best for:** Helpdesk agent, complex conversations, content creation
+
+    - Excellent at following instructions
+    - Natural, human-like responses
+    - Strong safety and refusal training
+    - Great for customer-facing features
+
+    **Cost:** ~$0.003 per 1,000 input tokens, ~$0.015 per 1,000 output tokens
+  </Tab>
+
+  <Tab title="Claude 3.5 Haiku">
+    **Best for:** Fast responses, budget-friendly tasks, automations
+
+    - Fastest Claude model
+    - Still maintains good quality
+    - Affordable for high-volume use
+    - Great for auto-tagging and quick queries
+
+    **Cost:** ~$0.00025 per 1,000 input tokens, ~$0.00125 per 1,000 output tokens
+  </Tab>
+
+  <Tab title="Claude 3 Opus">
+    **Best for:** Highest quality outputs, critical content
+
+    - Most capable Claude model
+    - Superior reasoning and analysis
+    - Best for complex, nuanced tasks
+
+    **Cost:** ~$0.015 per 1,000 input tokens, ~$0.075 per 1,000 output tokens
+  </Tab>
+</Tabs>
+
+### Setup Instructions
+
+<Steps>
+  <Step title="Get an API Key">
+    1. Visit [console.anthropic.com](https://console.anthropic.com)
+    2. Sign up or log in
+    3. Navigate to **API Keys**
+    4. Click **Create Key**
+    5. Copy the key
+  </Step>
+
+  <Step title="Add to Generatify">
+    1. Go to **Generatify → Settings → Integrations**
+    2. Find the **Anthropic** section
+    3. Toggle **Enable Anthropic** to ON
+    4. Paste your API key
+    5. Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Look for a green checkmark confirming the connection.
+  </Step>
+</Steps>
+
+### Pricing & Billing
+
+- **Pay-as-you-go** pricing
+- New accounts get $5 free credit
+- Add payment method at [console.anthropic.com/settings/billing](https://console.anthropic.com/settings/billing)
+- Monitor usage at [console.anthropic.com/settings/usage](https://console.anthropic.com/settings/usage)
+
+<Note>
+  **Claude Strength:** Claude is particularly good for customer-facing interactions and helpdesk use cases thanks to its conversational nature and safety features.
+</Note>
+
+---
+
+## Google (Gemini)
+
+Google's latest AI models with a generous free tier, multimodal capabilities, and excellent speed.
+
+### Available Models
+
+<Tabs>
+  <Tab title="Gemini 1.5 Pro">
+    **Best for:** Complex analysis, long content, document understanding
+
+    - Massive context window (1M tokens)
+    - Strong reasoning capabilities
+    - Great for analyzing long documents
+    - Multimodal (text and images)
+
+    **Cost:** Free tier available, then ~$0.00125 per 1,000 input tokens
+  </Tab>
+
+  <Tab title="Gemini 1.5 Flash">
+    **Best for:** Speed, high-volume tasks, real-time responses
+
+    - Extremely fast
+    - Very cost-effective
+    - Great for automations
+    - Ideal for helpdesk quick responses
+
+    **Cost:** Free tier available, then ~$0.000075 per 1,000 input tokens
+  </Tab>
+
+  <Tab title="Gemini 2.0 Flash">
+    **Best for:** Latest features, experimental capabilities
+
+    - Newest model with cutting-edge features
+    - Balanced speed and quality
+    - Regular updates and improvements
+
+    **Cost:** Similar to Gemini 1.5 Flash
+  </Tab>
+</Tabs>
+
+### Setup Instructions
+
+<Steps>
+  <Step title="Get an API Key">
+    1. Visit [makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey)
+    2. Sign in with your Google account
+    3. Click **Get API Key** or **Create API Key**
+    4. Copy the generated key
+  </Step>
+
+  <Step title="Add to Generatify">
+    1. Go to **Generatify → Settings → Integrations**
+    2. Find the **Google Gemini** section
+    3. Toggle **Enable Google Gemini** to ON
+    4. Paste your API key
+    5. Click **Save Settings**
+  </Step>
+
+  <Step title="Verify Connection">
+    Check for a green checkmark indicating successful connection.
+  </Step>
+</Steps>
+
+### Pricing & Billing
+
+- **Generous free tier:** 15 requests per minute, 1,500 per day, 1.5M per month
+- Perfect for testing and small-to-medium sites
+- Paid tier available for higher volumes
+- Monitor usage at [console.cloud.google.com](https://console.cloud.google.com)
+
+<Check>
+  **Free Tier Advantage:** Start with Gemini's free tier to experiment with AI features without any costs. Perfect for testing and small sites!
+</Check>
+
+---
+
+## Mixed Provider Strategy
+
+One of Generatify's powerful features is the ability to use **different AI providers for different features**. This lets you optimize for both cost and quality.
+
+### Recommended Setup
+
+<Tabs>
+  <Tab title="Cost-Optimized">
+    **For budget-conscious users:**
+
+    - **AI Assistant:** Google Gemini 1.5 Pro (free tier)
+    - **Auto Tags:** Google Gemini 1.5 Flash (fast & free)
+    - **Auto Categories:** Google Gemini 1.5 Flash
+    - **Helpdesk Agent:** Google Gemini 1.5 Pro
+    - **Meta Descriptions:** GPT-3.5 Turbo (low volume)
+
+    **Estimated monthly cost:** $0-5/month
+  </Tab>
+
+  <Tab title="Balanced">
+    **For quality & cost balance:**
+
+    - **AI Assistant:** GPT-4 Turbo (best quality for content)
+    - **Auto Tags:** Claude 3.5 Haiku (affordable & good)
+    - **Auto Categories:** Claude 3.5 Haiku
+    - **Helpdesk Agent:** Claude 3.5 Sonnet (great conversation)
+    - **Meta Descriptions:** GPT-3.5 Turbo
+
+    **Estimated monthly cost:** $10-30/month
+  </Tab>
+
+  <Tab title="Performance-Focused">
+    **For maximum quality:**
+
+    - **AI Assistant:** GPT-4 Turbo (best reasoning)
+    - **Auto Tags:** GPT-3.5 Turbo (reliable)
+    - **Auto Categories:** GPT-4 Turbo
+    - **Helpdesk Agent:** Claude 3.5 Sonnet (natural dialogue)
+    - **Meta Descriptions:** GPT-4 Turbo (best SEO quality)
+
+    **Estimated monthly cost:** $30-100/month
+  </Tab>
+</Tabs>
+
+---
+
+## Security Best Practices
+
+<Warning>
+  **API keys are sensitive!** Treat them like passwords. Never share them publicly or commit them to version control.
+</Warning>
+
+### Protecting Your API Keys
+
+<AccordionGroup>
+  <Accordion title="Use Environment Variables" icon="lock">
+    For developers, store API keys in environment variables instead of hardcoding:
+
+    ```php
+    // wp-config.php
+    define('GENERATIFY_OPENAI_KEY', getenv('OPENAI_API_KEY'));
+    define('GENERATIFY_ANTHROPIC_KEY', getenv('ANTHROPIC_API_KEY'));
+    define('GENERATIFY_GOOGLE_KEY', getenv('GOOGLE_API_KEY'));
+    ```
+  </Accordion>
+
+  <Accordion title="Set Usage Limits" icon="gauge">
+    Prevent unexpected charges by setting limits in your AI provider dashboard:
+
+    - **OpenAI:** Set monthly budget limits
+    - **Anthropic:** Configure spending alerts
+    - **Google:** Enable quota alerts
+  </Accordion>
+
+  <Accordion title="Monitor Usage Regularly" icon="chart-line">
+    Check your usage dashboards weekly:
+    - Look for unexpected spikes
+    - Identify which features use the most tokens
+    - Adjust model selection if costs are too high
+  </Accordion>
+
+  <Accordion title="Rotate Keys Periodically" icon="arrows-rotate">
+    For security, rotate your API keys every few months:
+    1. Generate a new key in your provider dashboard
+    2. Update Generatify with the new key
+    3. Delete the old key from your provider
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting Connection Issues
+
+<AccordionGroup>
+  <Accordion title="Red X / Connection Failed">
+    **Possible causes:**
+    - Invalid or expired API key
+    - API key doesn't have required permissions
+    - Network/firewall blocking requests
+    - HTTPS not enabled on your site
+
+    **Solutions:**
+    1. Double-check you copied the entire API key
+    2. Verify the key is active in your provider dashboard
+    3. Ensure your WordPress site uses HTTPS
+    4. Check if server firewall blocks external API calls
+  </Accordion>
+
+  <Accordion title="API Key Works Then Stops">
+    **Possible causes:**
+    - Billing issue (credit card expired, payment failed)
+    - Usage limits reached
+    - API key was revoked or regenerated
+
+    **Solutions:**
+    1. Check billing status in provider dashboard
+    2. Verify payment method is valid
+    3. Check usage limits haven't been exceeded
+    4. Generate a new key if needed
+  </Accordion>
+
+  <Accordion title="Slow Response Times">
+    **Possible causes:**
+    - Using a slower model
+    - Server latency
+    - High provider traffic
+
+    **Solutions:**
+    1. Switch to faster models (Flash, Haiku, 3.5 Turbo)
+    2. Check your server's internet connection
+    3. Try a different AI provider temporarily
+  </Accordion>
+
+  <Accordion title="'Quota Exceeded' Error">
+    **Possible causes:**
+    - Free tier limits reached (Google)
+    - Rate limits exceeded
+    - Monthly quota consumed
+
+    **Solutions:**
+    1. Wait for quota to reset (usually daily/monthly)
+    2. Upgrade to paid tier
+    3. Switch to a different provider temporarily
+    4. Reduce feature usage or adjust settings
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Configure Features"
+    icon="sliders"
+    href="/features/overview"
+  >
+    Now that you're connected, enable AI features
+  </Card>
+  <Card
+    title="Optimize Costs"
+    icon="dollar-sign"
+    href="/advanced/performance"
+  >
+    Learn how to minimize API usage and costs
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Pro Tip:** Start with one provider (we recommend Google for the free tier), test all features, then consider adding other providers for specific use cases where they excel.
+</Tip>

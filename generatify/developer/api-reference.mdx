@@ -1,0 +1,852 @@
+---
+title: 'API Reference'
+description: 'REST API endpoints and JavaScript API documentation'
+icon: 'code'
+---
+
+## Overview
+
+Generatify provides both REST API endpoints and JavaScript APIs for programmatic access to AI features. Use these APIs to build custom integrations and extend functionality.
+
+<CardGroup cols={2}>
+  <Card title="REST API" icon="globe">
+    HTTP endpoints for backend integration
+  </Card>
+  <Card title="JavaScript API" icon="js">
+    Frontend APIs for browser integration
+  </Card>
+</CardGroup>
+
+---
+
+## REST API
+
+### Authentication
+
+All API requests require WordPress authentication:
+
+<Tabs>
+  <Tab title="Application Password">
+    **Recommended for external apps:**
+    
+    ```bash
+    curl https://yoursite.com/wp-json/generatify/v1/chat \
+      -u "username:APPLICATION_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{"message": "Hello"}'
+    ```
+    
+    Create application password:
+    ```
+    WordPress Admin → Users → Profile → Application Passwords
+    ```
+  </Tab>
+  
+  <Tab title="Cookie Authentication">
+    **For logged-in WordPress users:**
+    
+    ```javascript
+    fetch('/wp-json/generatify/v1/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': wpApiSettings.nonce // WordPress nonce
+      },
+      body: JSON.stringify({ message: 'Hello' })
+    })
+    ```
+  </Tab>
+  
+  <Tab title="OAuth">
+    **For third-party apps:**
+    
+    Requires OAuth plugin like WP REST API OAuth 1.0a Server
+    
+    ```bash
+    # Get access token first
+    curl https://yoursite.com/oauth/authorize \
+      --oauth-consumer-key YOUR_KEY \
+      --oauth-consumer-secret YOUR_SECRET
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Endpoints
+
+#### Chat
+
+<AccordionGroup>
+  <Accordion title="POST /wp-json/generatify/v1/chat" icon="message">
+    **Send chat message to AI**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/chat
+    Content-Type: application/json
+    
+    {
+      "message": "What are your business hours?",
+      "session_id": "abc123",
+      "context": {
+        "page_url": "https://example.com/contact",
+        "user_id": 42
+      }
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "response": "Our business hours are Monday-Friday, 9 AM to 5 PM EST.",
+        "session_id": "abc123",
+        "tokens_used": 150,
+        "model": "gpt-4o-mini"
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `message` (string, required): User's message
+    - `session_id` (string, optional): Conversation ID for context
+    - `context` (object, optional): Additional context
+    
+    **Response Fields:**
+    - `response` (string): AI's reply
+    - `session_id` (string): Session identifier
+    - `tokens_used` (int): API tokens consumed
+    - `model` (string): AI model used
+    
+    **Errors:**
+    ```json
+    {
+      "success": false,
+      "data": {
+        "error": "Rate limit exceeded",
+        "code": "rate_limit_exceeded"
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="GET /wp-json/generatify/v1/chat/history" icon="clock-rotate-left">
+    **Get chat conversation history**
+    
+    **Request:**
+    ```http
+    GET /wp-json/generatify/v1/chat/history?session_id=abc123
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "session_id": "abc123",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What are your hours?",
+            "timestamp": "2024-01-15T10:30:00Z"
+          },
+          {
+            "role": "assistant",
+            "content": "Our hours are 9 AM - 5 PM EST.",
+            "timestamp": "2024-01-15T10:30:02Z"
+          }
+        ]
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Automations
+
+<AccordionGroup>
+  <Accordion title="POST /wp-json/generatify/v1/generate-tags" icon="tags">
+    **Generate tags for post**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/generate-tags
+    Content-Type: application/json
+    
+    {
+      "post_id": 123,
+      "count": 5,
+      "model": "gpt-4o-mini"
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "tags": ["AI", "WordPress", "Automation", "Tutorial", "SEO"],
+        "tokens_used": 85
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `post_id` (int, required): WordPress post ID
+    - `count` (int, optional): Number of tags (default: 5)
+    - `model` (string, optional): AI model to use
+  </Accordion>
+  
+  <Accordion title="POST /wp-json/generatify/v1/generate-categories" icon="folder">
+    **Generate categories for post**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/generate-categories
+    Content-Type: application/json
+    
+    {
+      "post_id": 123,
+      "strategy": "single"
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "categories": ["Technology"],
+        "tokens_used": 75
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `post_id` (int, required)
+    - `strategy` (string): "single", "multiple", or "hierarchical"
+  </Accordion>
+  
+  <Accordion title="POST /wp-json/generatify/v1/generate-meta-description" icon="file-lines">
+    **Generate SEO meta description**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/generate-meta-description
+    Content-Type: application/json
+    
+    {
+      "post_id": 123,
+      "length": 155,
+      "tone": "professional"
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "meta_description": "Learn how to use AI-powered WordPress plugins to automate content creation and improve SEO rankings.",
+        "length": 112,
+        "tokens_used": 95
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="POST /wp-json/generatify/v1/batch-process" icon="layer-group">
+    **Batch process multiple automations**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/batch-process
+    Content-Type: application/json
+    
+    {
+      "post_id": 123,
+      "features": ["tags", "categories", "meta_description"]
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "results": {
+          "tags": ["AI", "WordPress", "SEO"],
+          "categories": ["Technology"],
+          "meta_description": "Learn about AI in WordPress..."
+        },
+        "total_tokens_used": 250
+      }
+    }
+    ```
+    
+    **Benefits:** 60-70% fewer API calls vs individual requests
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Related Posts
+
+<AccordionGroup>
+  <Accordion title="GET /wp-json/generatify/v1/related-posts" icon="link">
+    **Get AI-recommended related posts**
+    
+    **Request:**
+    ```http
+    GET /wp-json/generatify/v1/related-posts?post_id=123&count=6
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "related_posts": [
+          {
+            "id": 456,
+            "title": "Getting Started with AI",
+            "url": "https://example.com/getting-started-ai",
+            "excerpt": "Learn the basics...",
+            "thumbnail": "https://example.com/image.jpg",
+            "relevance_score": 0.92
+          }
+        ],
+        "cached": true,
+        "cache_expires": "2024-01-16T10:30:00Z"
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `post_id` (int, required)
+    - `count` (int, optional): Number of posts (default: 6)
+    - `exclude` (array, optional): Post IDs to exclude
+  </Accordion>
+  
+  <Accordion title="POST /wp-json/generatify/v1/related-posts/refresh" icon="arrows-rotate">
+    **Force refresh related posts cache**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/related-posts/refresh
+    Content-Type: application/json
+    
+    {
+      "post_id": 123
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "post_id": 123,
+        "cache_cleared": true,
+        "new_posts_generated": true
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Smart Suggestions
+
+<AccordionGroup>
+  <Accordion title="POST /wp-json/generatify/v1/smart-compose" icon="pen">
+    **Get writing suggestions**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/smart-compose
+    Content-Type: application/json
+    
+    {
+      "content": "WordPress is a powerful",
+      "context": {
+        "post_title": "WordPress Guide",
+        "post_category": "Tutorial"
+      },
+      "length": "sentence",
+      "tone": "professional"
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "suggestion": "content management system used by millions of websites worldwide.",
+        "tokens_used": 45,
+        "model": "gpt-4o-mini"
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `content` (string, required): Current text
+    - `context` (object, optional): Additional context
+    - `length` (string): "sentence", "paragraph", "short"
+    - `tone` (string): "professional", "casual", "creative", "match_style"
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Content Moderation
+
+<AccordionGroup>
+  <Accordion title="POST /wp-json/generatify/v1/check-toxicity" icon="shield-check">
+    **Check text for toxicity**
+    
+    **Request:**
+    ```http
+    POST /wp-json/generatify/v1/check-toxicity
+    Content-Type: application/json
+    
+    {
+      "text": "This is a test comment",
+      "categories": ["toxicity", "insult", "profanity"]
+    }
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "is_toxic": false,
+        "scores": {
+          "toxicity": 0.05,
+          "severe_toxicity": 0.01,
+          "identity_attack": 0.02,
+          "insult": 0.03,
+          "profanity": 0.01,
+          "threat": 0.01,
+          "sexually_explicit": 0.01
+        },
+        "recommended_action": "approve"
+      }
+    }
+    ```
+    
+    **Parameters:**
+    - `text` (string, required): Text to analyze
+    - `categories` (array, optional): Categories to check
+    
+    **Scores:** 0.0 - 1.0 (0% - 100% confidence)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Analytics
+
+<AccordionGroup>
+  <Accordion title="GET /wp-json/generatify/v1/analytics/usage" icon="chart-line">
+    **Get usage statistics**
+    
+    **Request:**
+    ```http
+    GET /wp-json/generatify/v1/analytics/usage?period=30days
+    ```
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "period": "30days",
+        "total_requests": 1250,
+        "total_tokens": 125000,
+        "estimated_cost": 12.50,
+        "by_feature": {
+          "chat": { "requests": 500, "tokens": 50000, "cost": 5.00 },
+          "tags": { "requests": 300, "tokens": 30000, "cost": 3.00 },
+          "smart_compose": { "requests": 450, "tokens": 45000, "cost": 4.50 }
+        }
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="GET /wp-json/generatify/v1/analytics/performance" icon="gauge">
+    **Get performance metrics**
+    
+    **Response:**
+    ```json
+    {
+      "success": true,
+      "data": {
+        "cache_hit_rate": 0.85,
+        "avg_response_time_ms": 1250,
+        "error_rate": 0.02,
+        "uptime": 0.998
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## JavaScript API
+
+### Chat Widget
+
+```javascript
+// Get chat widget instance
+const chatWidget = window.GeneratifyChat;
+
+// Methods
+chatWidget.open();                    // Open chat
+chatWidget.close();                   // Close chat
+chatWidget.toggle();                  // Toggle open/close
+chatWidget.sendMessage('Hello');      // Send message programmatically
+chatWidget.clearHistory();            // Clear chat history
+chatWidget.setContext({ user_id: 123 }); // Set context data
+
+// Event listeners
+chatWidget.on('opened', function() {
+    console.log('Chat opened');
+});
+
+chatWidget.on('closed', function() {
+    console.log('Chat closed');
+});
+
+chatWidget.on('messageSent', function(message) {
+    console.log('User sent:', message);
+});
+
+chatWidget.on('messageReceived', function(response) {
+    console.log('AI responded:', response);
+});
+
+chatWidget.on('error', function(error) {
+    console.error('Chat error:', error);
+});
+
+// Configuration
+chatWidget.setConfig({
+    position: 'bottom-right',
+    theme: 'light',
+    autoOpen: false
+});
+
+// Get current state
+const isOpen = chatWidget.isOpen();
+const messageCount = chatWidget.getMessageCount();
+const session = chatWidget.getSessionId();
+```
+
+---
+
+### Smart Compose
+
+```javascript
+// Get Smart Compose instance
+const smartCompose = window.GeneratifySmartCompose;
+
+// Methods
+smartCompose.getSuggestion();         // Request new suggestion
+smartCompose.acceptSuggestion();      // Accept current suggestion
+smartCompose.rejectSuggestion();      // Reject current suggestion
+smartCompose.regenerateSuggestion();  // Get new suggestion
+smartCompose.enable();                // Enable suggestions
+smartCompose.disable();               // Disable suggestions
+
+// Event listeners
+smartCompose.on('suggestionReceived', function(suggestion) {
+    console.log('New suggestion:', suggestion);
+});
+
+smartCompose.on('suggestionAccepted', function() {
+    console.log('User accepted suggestion');
+    // Track conversion
+    gtag('event', 'suggestion_accepted');
+});
+
+smartCompose.on('suggestionRejected', function() {
+    console.log('User rejected suggestion');
+});
+
+// Configuration
+smartCompose.setConfig({
+    trigger: 'auto',        // 'auto', 'manual', 'wordcount'
+    pauseDuration: 1500,    // ms before auto-trigger
+    length: 'sentence',     // 'sentence', 'paragraph', 'short'
+    tone: 'professional'    // 'professional', 'casual', 'creative', 'match_style'
+});
+
+// Get state
+const isEnabled = smartCompose.isEnabled();
+const currentSuggestion = smartCompose.getCurrentSuggestion();
+```
+
+---
+
+### Related Posts
+
+```javascript
+// Get Related Posts instance
+const relatedPosts = window.GeneratifyRelatedPosts;
+
+// Methods
+relatedPosts.refresh();                       // Refresh recommendations
+relatedPosts.setLayout('grid');              // 'grid', 'list', 'carousel'
+relatedPosts.setCount(6);                    // Number of posts
+relatedPosts.filterByCategory([5, 12]);      // Category IDs
+relatedPosts.excludePosts([10, 20]);         // Exclude post IDs
+
+// Event listeners
+relatedPosts.on('postsLoaded', function(posts) {
+    console.log('Posts loaded:', posts);
+});
+
+relatedPosts.on('postClicked', function(postId) {
+    console.log('User clicked:', postId);
+    // Track analytics
+    gtag('event', 'related_post_click', {
+        'post_id': postId
+    });
+});
+
+// Get current data
+const currentPosts = relatedPosts.getCurrentPosts();
+const isLoading = relatedPosts.isLoading();
+```
+
+---
+
+### Toxicity Checker
+
+```javascript
+// Get Toxicity Checker instance
+const toxicityChecker = window.GeneratifyToxicity;
+
+// Methods
+toxicityChecker.checkText('Test comment').then(function(result) {
+    console.log('Toxicity scores:', result);
+    if (result.is_toxic) {
+        alert('This comment may be inappropriate');
+    }
+});
+
+// Event listeners
+toxicityChecker.on('commentChecked', function(result) {
+    console.log('Comment analyzed:', result);
+    
+    if (result.is_toxic) {
+        // Show warning to user
+        showWarningMessage(result.scores);
+    }
+});
+
+toxicityChecker.on('modelLoaded', function() {
+    console.log('TensorFlow.js model loaded');
+});
+
+// Configuration
+toxicityChecker.setThresholds({
+    toxicity: 0.6,
+    severe_toxicity: 0.7,
+    insult: 0.65,
+    profanity: 0.7,
+    threat: 0.8,
+    identity_attack: 0.75,
+    sexually_explicit: 0.75
+});
+
+// Get model status
+const isModelLoaded = toxicityChecker.isModelLoaded();
+```
+
+---
+
+## Webhooks
+
+Configure webhooks to receive notifications:
+
+```
+Settings → Advanced → Webhooks → Add Webhook
+```
+
+### Available Events
+
+<table>
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Trigger</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`chat.message.sent`</td>
+      <td>User sends chat message</td>
+      <td>`{ message, user_id, session_id }`</td>
+    </tr>
+    <tr>
+      <td>`chat.escalated`</td>
+      <td>Chat escalated to human</td>
+      <td>`{ conversation, user_id, reason }`</td>
+    </tr>
+    <tr>
+      <td>`automation.completed`</td>
+      <td>Automation finishes</td>
+      <td>`{ post_id, feature, result }`</td>
+    </tr>
+    <tr>
+      <td>`moderation.toxic_detected`</td>
+      <td>Toxic comment found</td>
+      <td>`{ comment_data, scores }`</td>
+    </tr>
+    <tr>
+      <td>`usage.threshold_reached`</td>
+      <td>80% of budget used</td>
+      <td>`{ current_usage, budget }`</td>
+    </tr>
+  </tbody>
+</table>
+
+**Example Webhook Payload:**
+
+```json
+{
+  "event": "chat.message.sent",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "site_url": "https://example.com",
+  "data": {
+    "message": "What are your hours?",
+    "user_id": 42,
+    "session_id": "abc123"
+  }
+}
+```
+
+---
+
+## Rate Limits
+
+<table>
+  <thead>
+    <tr>
+      <th>Endpoint</th>
+      <th>Limit</th>
+      <th>Window</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/chat`</td>
+      <td>20 requests</td>
+      <td>Per hour per user</td>
+    </tr>
+    <tr>
+      <td>`/generate-*`</td>
+      <td>100 requests</td>
+      <td>Per hour per site</td>
+    </tr>
+    <tr>
+      <td>`/smart-compose`</td>
+      <td>50 requests</td>
+      <td>Per hour per user</td>
+    </tr>
+    <tr>
+      <td>`/check-toxicity`</td>
+      <td>Unlimited</td>
+      <td>Client-side (TensorFlow.js)</td>
+    </tr>
+  </tbody>
+</table>
+
+**Rate Limit Headers:**
+
+```http
+X-RateLimit-Limit: 20
+X-RateLimit-Remaining: 15
+X-RateLimit-Reset: 1642248600
+```
+
+---
+
+## Error Codes
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Message</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`invalid_api_key`</td>
+      <td>Invalid AI API key</td>
+      <td>Check API key in settings</td>
+    </tr>
+    <tr>
+      <td>`rate_limit_exceeded`</td>
+      <td>Too many requests</td>
+      <td>Wait before retrying</td>
+    </tr>
+    <tr>
+      <td>`insufficient_permissions`</td>
+      <td>User lacks permission</td>
+      <td>Check user capabilities</td>
+    </tr>
+    <tr>
+      <td>`feature_disabled`</td>
+      <td>Feature not enabled</td>
+      <td>Enable in settings</td>
+    </tr>
+    <tr>
+      <td>`ai_request_failed`</td>
+      <td>AI API error</td>
+      <td>Check AI provider status</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Hooks & Filters" icon="plug" href="/developer/hooks-filters">
+    WordPress hooks reference
+  </Card>
+  <Card title="Extending Generatify" icon="puzzle-piece" href="/developer/extending">
+    Build custom features
+  </Card>
+  <Card title="Customization" icon="paint-brush" href="/advanced/customization">
+    CSS and JavaScript
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/advanced/troubleshooting">
+    Common API issues
+  </Card>
+</CardGroup>
+
+<Tip>
+**Testing:** Use tools like Postman or curl to test REST API endpoints before integrating into your application.
+</Tip>

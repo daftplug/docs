@@ -1,0 +1,703 @@
+---
+title: 'Helpdesk Setup'
+description: 'Set up and configure the AI-powered helpdesk agent widget'
+icon: 'circle-play'
+---
+
+## Overview
+
+The Generatify Helpdesk Agent is a front-end widget that provides AI-powered customer support directly on your website. Set it up in minutes and start helping customers 24/7.
+
+<CardGroup cols={3}>
+  <Card title="Quick Setup" icon="bolt">
+    Live in under 5 minutes
+  </Card>
+  <Card title="No Coding" icon="wand-magic-sparkles">
+    Visual configuration
+  </Card>
+  <Card title="Works Anywhere" icon="globe">
+    Any WordPress theme
+  </Card>
+</CardGroup>
+
+---
+
+## Setup Steps
+
+<Steps>
+  <Step title="Enable Helpdesk Agent">
+    Navigate to **Generatify → Settings → Features** and toggle **Helpdesk Agent** to ON
+  </Step>
+  
+  <Step title="Connect AI Provider">
+    Ensure at least one AI provider (OpenAI, Anthropic, or Google) is connected in **Settings → Integrations**
+  </Step>
+  
+  <Step title="Choose Mode">
+    Select **AI Chat Mode** or **Contact Form Mode** (or both) in **Settings → Helpdesk**
+  </Step>
+  
+  <Step title="Configure Basic Settings">
+    Set widget position, colors, and welcome message
+  </Step>
+  
+  <Step title="Set Display Rules">
+    Choose where and when the widget appears
+  </Step>
+  
+  <Step title="Test the Widget">
+    Visit your site and test the helpdesk functionality
+  </Step>
+  
+  <Step title="Go Live">
+    Enable for all visitors
+  </Step>
+</Steps>
+
+<Check>
+**That's it!** Your AI helpdesk is now live and ready to help customers.
+</Check>
+
+---
+
+## Mode Selection
+
+<Tabs>
+  <Tab title="AI Chat Mode">
+    ### Real-Time AI Support
+    
+    **What It Does:**
+    Visitors chat with AI that answers questions using your site content, products, and knowledge base.
+    
+    **Best For:**
+    - E-commerce stores (product questions)
+    - SaaS websites (feature explanations)
+    - Blogs with extensive content
+    - Sites with FAQs
+    
+    **Requirements:**
+    - AI provider connected (OpenAI, Anthropic, or Google)
+    - API credits available
+    
+    **User Experience:**
+    ```
+    Visitor: "What's your return policy?"
+    AI: "We offer a 30-day money-back guarantee on all products. 
+         To initiate a return, visit your account page..."
+    ```
+    
+    **Cost:** ~$0.001-0.01 per conversation
+    
+    [Learn more about AI Chat Mode →](/helpdesk/chat-mode)
+  </Tab>
+  
+  <Tab title="Contact Form Mode">
+    ### Traditional Support Form
+    
+    **What It Does:**
+    Visitors fill out a form, messages are emailed to you or saved in WordPress.
+    
+    **Best For:**
+    - Sites without AI provider budgets
+    - Low-traffic sites
+    - Businesses preferring human-only support
+    - Fallback when AI is unavailable
+    
+    **Requirements:**
+    - WordPress email functionality
+    - Or email integration (SMTP plugin)
+    
+    **User Experience:**
+    ```
+    Visitor fills out form:
+    Name: John Smith
+    Email: john@example.com
+    Message: "When will product X be back in stock?"
+    
+    You receive email notification
+    ```
+    
+    **Cost:** FREE
+    
+    [Learn more about Contact Form Mode →](/helpdesk/contact-form-mode)
+  </Tab>
+  
+  <Tab title="Hybrid Mode (Recommended)">
+    ### Best of Both Worlds
+    
+    **What It Does:**
+    - Primary: AI Chat for instant answers
+    - Fallback: Contact Form button if AI can't help
+    - Escalation: "Talk to Human" option
+    
+    **Best For:**
+    - Most websites
+    - Balancing automation + human touch
+    - Complex products/services
+    
+    **Configuration:**
+    ```
+    Enable both modes:
+    ✅ AI Chat Mode
+    ✅ Contact Form Mode
+    
+    Chat Widget Footer:
+    [Need more help? Contact us →]
+    ```
+    
+    **User Journey:**
+    1. Visitor asks AI about shipping
+    2. AI answers instantly
+    3. Follow-up about custom order
+    4. AI offers "Contact Form" for complex request
+    5. Visitor submits form for human review
+    
+    **Result:** 80% automated, 20% human escalation
+  </Tab>
+</Tabs>
+
+---
+
+## Basic Configuration
+
+### Widget Position
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Options</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Position**</td>
+      <td>Bottom Right, Bottom Left, Top Right, Top Left</td>
+      <td>Widget placement on screen</td>
+      <td>Bottom Right</td>
+    </tr>
+    <tr>
+      <td>**Offset**</td>
+      <td>0-100px (horizontal/vertical)</td>
+      <td>Distance from screen edge</td>
+      <td>20px</td>
+    </tr>
+    <tr>
+      <td>**Z-Index**</td>
+      <td>1000-9999</td>
+      <td>Layering (above other elements)</td>
+      <td>9999</td>
+    </tr>
+  </tbody>
+</table>
+
+### Welcome Message
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Greeting**</td>
+      <td>First message shown to visitors</td>
+      <td>"Hi! How can I help you today?"</td>
+    </tr>
+    <tr>
+      <td>**Subtitle**</td>
+      <td>Secondary text below greeting</td>
+      <td>"Ask me anything about our products"</td>
+    </tr>
+    <tr>
+      <td>**Suggested Questions**</td>
+      <td>Quick-click question prompts</td>
+      <td>"What's your return policy?", "Track my order"</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Display Rules
+
+Control where and when the helpdesk appears:
+
+<AccordionGroup>
+  <Accordion title="Page-Level Rules" icon="file">
+    Show or hide widget on specific pages:
+    
+    **Options:**
+    - All pages (default)
+    - Homepage only
+    - Blog posts only
+    - Product pages only
+    - Custom URL patterns
+    - Exclude specific pages
+    
+    **Example Use Cases:**
+    ```
+    ✅ Show on: Product pages, Checkout, FAQ
+    ❌ Hide on: Login page, Admin pages, Thank you page
+    ```
+    
+    **Configuration:**
+    ```
+    Navigate to: Settings → Helpdesk → Display Rules → Pages
+    
+    Include: /shop/*, /product/*, /faq
+    Exclude: /wp-admin/*, /my-account/*, /thank-you
+    ```
+  </Accordion>
+  
+  <Accordion title="User-Based Rules" icon="user">
+    Show to specific user types:
+    
+    **Options:**
+    - All visitors (default)
+    - Logged-in users only
+    - Non-logged-in users only
+    - Specific user roles (Customer, Subscriber, etc.)
+    - First-time visitors
+    - Returning visitors
+    
+    **Example Use Cases:**
+    ```
+    E-commerce: Show to all visitors (guests + customers)
+    Membership Site: Show only to logged-in members
+    SaaS Platform: Hide from administrators
+    ```
+  </Accordion>
+  
+  <Accordion title="Time-Based Rules" icon="clock">
+    Control when widget appears:
+    
+    **Options:**
+    - Always visible
+    - After X seconds on page
+    - Before exit intent
+    - After scrolling X% down page
+    - On specific days/times (business hours)
+    
+    **Example Use Cases:**
+    ```
+    Engagement: Show after 10 seconds on page
+    Exit Intent: Show when cursor moves to close tab
+    Business Hours: Only show 9am-5pm EST
+    ```
+  </Accordion>
+  
+  <Accordion title="Device Rules" icon="mobile">
+    Show on specific devices:
+    
+    **Options:**
+    - All devices (default)
+    - Desktop only
+    - Mobile only
+    - Tablet only
+    
+    **Example Use Cases:**
+    ```
+    Mobile-First: Only show on mobile (phone support)
+    Desktop-Focus: Hide on mobile (complex products)
+    ```
+  </Accordion>
+  
+  <Accordion title="Geographic Rules" icon="earth-americas">
+    Show to specific regions:
+    
+    **Options:**
+    - All countries
+    - Specific countries (US, UK, CA, etc.)
+    - Exclude countries
+    
+    **Example Use Cases:**
+    ```
+    Multi-Language: Different widget per country
+    Compliance: Hide in EU for GDPR
+    Business Coverage: Only show in service areas
+    ```
+    
+    **Note:** Requires geolocation detection (free with Cloudflare, paid services, or IP database)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## AI Provider Selection
+
+Configure which AI provider powers the helpdesk:
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Recommended Model</th>
+      <th>Response Time</th>
+      <th>Cost per Chat</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**Anthropic**</td>
+      <td>Claude 3.5 Sonnet</td>
+      <td>1-2 seconds</td>
+      <td>~$0.01</td>
+      <td>Natural conversations</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o</td>
+      <td>1-2 seconds</td>
+      <td>~$0.008</td>
+      <td>Balanced quality/cost</td>
+    </tr>
+    <tr>
+      <td>**Google**</td>
+      <td>Gemini 1.5 Pro</td>
+      <td>1-2 seconds</td>
+      <td>~$0.003</td>
+      <td>Budget-friendly</td>
+    </tr>
+    <tr>
+      <td>**OpenAI**</td>
+      <td>GPT-4o Mini</td>
+      <td><1 second</td>
+      <td>~$0.002</td>
+      <td>High volume, speed</td>
+    </tr>
+  </tbody>
+</table>
+
+<Tip>
+**Recommended:** **Claude 3.5 Sonnet** for best conversational quality, or **GPT-4o Mini** for budget-conscious sites with high traffic.
+</Tip>
+
+---
+
+## Knowledge Sources
+
+Configure what information the AI uses to answer questions:
+
+<AccordionGroup>
+  <Accordion title="WordPress Content" icon="wordpress">
+    **Sources:**
+    - Published posts
+    - Published pages
+    - Post excerpts
+    - Page meta descriptions
+    
+    **Use Cases:**
+    - Blog content reference
+    - About page info
+    - Service descriptions
+    
+    **Configuration:**
+    ```
+    Enable: Settings → Helpdesk → Knowledge Sources → Posts & Pages
+    
+    Options:
+    ✅ Include posts
+    ✅ Include pages
+    ⬜ Include drafts
+    
+    Limit: 50 most recent (performance)
+    ```
+  </Accordion>
+  
+  <Accordion title="WooCommerce Products" icon="shopping-cart">
+    **Sources:**
+    - Product titles
+    - Product descriptions
+    - Short descriptions
+    - SKUs, categories, tags
+    - Stock status, pricing
+    - Product attributes
+    
+    **Use Cases:**
+    - "Do you have this in blue?"
+    - "What's the return policy for Product X?"
+    - "Is this in stock?"
+    
+    **Configuration:**
+    ```
+    Enable: Settings → Helpdesk → Knowledge Sources → WooCommerce
+    
+    ✅ Product info
+    ✅ Stock status
+    ✅ Pricing
+    ✅ Variations
+    ```
+  </Accordion>
+  
+  <Accordion title="FAQs & Documentation" icon="circle-question">
+    **Sources:**
+    - FAQ posts/pages
+    - Knowledge base articles
+    - Help documentation
+    
+    **Use Cases:**
+    - Common questions
+    - Troubleshooting
+    - How-to guides
+    
+    **Configuration:**
+    ```
+    Enable: Settings → Helpdesk → Knowledge Sources → FAQs
+    
+    Category: FAQ (all posts in "FAQ" category)
+    Custom Post Type: Knowledge Base
+    ```
+  </Accordion>
+  
+  <Accordion title="Custom Instructions" icon="file-pen">
+    **What It Is:**
+    Add custom context/rules for AI to follow
+    
+    **Use Cases:**
+    - Return/shipping policies
+    - Business hours
+    - Special promotions
+    - Brand voice guidelines
+    
+    **Example:**
+    ```
+    Our return policy: 30-day money-back guarantee on all products.
+    Shipping: Free on orders over $50, otherwise $5.99 flat rate.
+    Business hours: Mon-Fri 9am-6pm EST.
+    Response tone: Friendly, helpful, professional.
+    Always offer to connect customer with human support if AI can't help.
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Testing the Helpdesk
+
+Before going live, thoroughly test:
+
+<Steps>
+  <Step title="Test AI Responses">
+    Ask common customer questions:
+    - "What's your return policy?"
+    - "Do you ship internationally?"
+    - "Tell me about Product X"
+    
+    Verify AI gives accurate answers
+  </Step>
+  
+  <Step title="Test Contact Form">
+    If using Contact Form mode:
+    - Fill out form
+    - Verify email delivery
+    - Check spam folder
+    - Test with different email addresses
+  </Step>
+  
+  <Step title="Test on Different Devices">
+    Check widget on:
+    - Desktop (Chrome, Firefox, Safari)
+    - Mobile (iOS Safari, Android Chrome)
+    - Tablet
+    
+    Verify layout, responsiveness, functionality
+  </Step>
+  
+  <Step title="Test Display Rules">
+    Verify widget shows/hides correctly:
+    - Correct pages
+    - Correct user types
+    - Correct times/triggers
+  </Step>
+  
+  <Step title="Test Edge Cases">
+    - Ask question AI can't answer (escalation flow)
+    - Long messages (character limits)
+    - Special characters (quotes, emojis)
+    - Multiple rapid messages
+  </Step>
+</Steps>
+
+<Warning>
+**Don't Skip Testing!** A poorly configured helpdesk can frustrate customers. Test thoroughly before full deployment.
+</Warning>
+
+---
+
+## Going Live
+
+<Steps>
+  <Step title="Enable for All Visitors">
+    In **Settings → Helpdesk → Visibility**, change from "Test Mode" to "Live"
+  </Step>
+  
+  <Step title="Monitor Initial Conversations">
+    Watch first 10-20 conversations closely:
+    - Are answers accurate?
+    - Any confusion or errors?
+    - Are visitors satisfied?
+  </Step>
+  
+  <Step title="Adjust Based on Feedback">
+    - Refine custom instructions
+    - Add missing FAQ content
+    - Adjust display rules
+    - Tune AI model selection
+  </Step>
+  
+  <Step title="Set Up Analytics">
+    Enable conversation tracking:
+    - Total conversations
+    - Resolution rate
+    - Average response time
+    - Common questions
+  </Step>
+</Steps>
+
+---
+
+## Common Setup Issues
+
+<AccordionGroup>
+  <Accordion title="Widget Not Appearing">
+    **Possible Causes:**
+    1. Helpdesk Agent not enabled
+    2. Display rules excluding current page
+    3. JavaScript error (check console)
+    4. Theme conflict
+    5. Caching plugin blocking script
+    
+    **Solutions:**
+    1. Verify enabled in Settings → Features
+    2. Check display rules, set to "All Pages" for testing
+    3. Check browser console for errors
+    4. Test with default WordPress theme
+    5. Clear cache, exclude widget JS from caching
+  </Accordion>
+  
+  <Accordion title="AI Not Responding">
+    **Possible Causes:**
+    1. No AI provider connected
+    2. API key invalid/expired
+    3. API quota exceeded
+    4. Model not selected
+    
+    **Solutions:**
+    1. Connect provider in Settings → Integrations
+    2. Verify API key, generate new one if needed
+    3. Check provider dashboard for usage limits
+    4. Select model in Settings → Helpdesk → AI Model
+  </Accordion>
+  
+  <Accordion title="Inaccurate Answers">
+    **Possible Causes:**
+    1. Knowledge sources not configured
+    2. Content not indexed yet
+    3. Custom instructions unclear
+    4. AI model too weak
+    
+    **Solutions:**
+    1. Enable all relevant knowledge sources
+    2. Wait 5-10 minutes for indexing, or manually trigger
+    3. Add detailed custom instructions with key info
+    4. Switch to better model (Claude 3.5 Sonnet, GPT-4o)
+  </Accordion>
+  
+  <Accordion title="Contact Form Emails Not Sending">
+    **Possible Causes:**
+    1. WordPress email not configured
+    2. Host blocking emails
+    3. Spam filters
+    4. Wrong recipient email
+    
+    **Solutions:**
+    1. Install SMTP plugin (WP Mail SMTP recommended)
+    2. Contact hosting support
+    3. Check spam folder, whitelist sender
+    4. Verify recipient email in settings
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Performance Optimization
+
+<AccordionGroup>
+  <Accordion title="Lazy Load Widget Script" icon="bolt">
+    Don't load widget on every page:
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Performance → Lazy Load
+    
+    ✅ Load only when widget triggered
+    ✅ Exclude from critical pages (checkout)
+    ```
+    
+    **Result:** Faster page load times
+  </Accordion>
+  
+  <Accordion title="Limit Knowledge Sources" icon="database">
+    More sources = slower responses:
+    
+    **Recommendation:**
+    - Include only essential content
+    - Limit to 50-100 most relevant items
+    - Exclude old/irrelevant posts
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → Knowledge Sources
+    
+    Posts: Last 50 posts only
+    Pages: Include only key pages
+    Products: Active products only
+    ```
+  </Accordion>
+  
+  <Accordion title="Use Faster AI Model" icon="gauge-high">
+    Speed vs. quality tradeoff:
+    
+    **Fast Models:**
+    - GPT-4o Mini (OpenAI)
+    - Gemini 1.5 Flash (Google)
+    - Claude 3.5 Haiku (Anthropic)
+    
+    **Configuration:**
+    ```
+    Settings → Helpdesk → AI Model
+    
+    Select: GPT-4o Mini (fastest, cheapest)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Customize Appearance" icon="palette" href="/helpdesk/customization">
+    Brand colors, logo, styling
+  </Card>
+  <Card title="AI Chat Mode Details" icon="comments" href="/helpdesk/chat-mode">
+    Configure AI chat behavior
+  </Card>
+  <Card title="Contact Form Mode" icon="envelope" href="/helpdesk/contact-form-mode">
+    Set up contact forms
+  </Card>
+  <Card title="Advanced Settings" icon="sliders" href="/advanced/settings">
+    Fine-tune all options
+  </Card>
+</CardGroup>
+
+<Tip>
+**Quick Start:** Most sites work great with default settings. Enable → Connect AI → Test → Go live. You can refine later!
+</Tip>
