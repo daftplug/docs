@@ -1,0 +1,76 @@
+---
+title: "Notifications"
+description: "Email alerts, with thresholds so nothing floods your inbox."
+icon: "envelope"
+---
+
+**Rankify > Settings > Notifications**
+
+Rankify can tell you when something needs attention, without you having to remember to look. Everything here is off until you turn it on, and each alert has a threshold or an interval behind it. Nothing mails on a single event, and nothing repeats while the situation is unchanged.
+
+<ParamField path="Send to" type="email">
+  Leave blank to use the site administrator address.
+
+  Mail goes out through this site, not through DaftPlug. Everything Rankify sends is built from data the site already holds, and no request leaves your server to produce it.
+</ParamField>
+
+<Warning>
+  Send a test before relying on any of this. Mail is configured outside Rankify and fails silently more often than anything else on a WordPress site, so it is worth proving once.
+</Warning>
+
+## The alerts
+
+<ParamField path="General email digest" type="toggle" default="off">
+  Coverage, broken URLs, and which AI crawlers read your site, in one email.
+</ParamField>
+
+<ParamField path="How often" type="select" default="weekly">
+  **Weekly** is often enough to catch a problem in the week it appears. **Monthly** suits a site that changes slowly, where a weekly email would repeat itself.
+</ParamField>
+
+<ParamField path="Email when something is badly wrong" type="toggle" default="off">
+  Two conditions that cancel out everything else the plugin does: the site has started blocking search engines, or the sitemap has stopped being served.
+
+  Each mails at most once a week while it lasts, and goes quiet the moment it is fixed.
+</ParamField>
+
+<ParamField path="Email when a URL keeps returning 404" type="toggle" default="off">
+  Somewhere is still linking to an address that no longer exists. A redirect turns that traffic back into visits.
+</ParamField>
+
+<ParamField path="Tell me after this many hits" type="number" default="10">
+  Counted per address. Once one is reported it stays quiet until the count doubles, so a URL that is broken for a month is not a daily email.
+</ParamField>
+
+<ParamField path="Email when AI crawlers go quiet" type="toggle" default="off">
+  Pro. Compares the last seven days against the seven before them, and only speaks up when requests fall by 70% or more from a meaningful number. Crawlers that can cite you are listed first.
+
+  Assistants cite what they have recently read. If ChatGPT or Perplexity stop fetching your pages, you stop being quotable long before search traffic shows it.
+</ParamField>
+
+## Which to turn on
+
+<Steps>
+  <Step title="Email when something is badly wrong">
+    Enable this on every site. Both conditions it watches are silent catastrophes: a site set to noindex looks completely normal to everyone except search engines, and can run that way for months.
+  </Step>
+  <Step title="Email when a URL keeps returning 404">
+    Enable on any site that has existed long enough to have moved pages. Raise the threshold if your site is heavily scanned.
+  </Step>
+  <Step title="General email digest">
+    Monthly for most sites. Weekly if you are actively working on SEO and want the feedback loop.
+  </Step>
+  <Step title="AI crawler drop">
+    Enable if being cited by assistants matters to you. It is the earliest warning you get, well ahead of anything visible in search traffic.
+  </Step>
+</Steps>
+
+<Tip>
+  Send these somewhere a person actually reads. A shared inbox nobody opens is the usual reason an alert about a real problem goes unnoticed for a month.
+</Tip>
+
+## Routing alerts elsewhere
+
+Rankify does not expose its own filters for the message contents, so the recipient field is the supported way to change where mail goes.
+
+To get alerts into Slack or a ticketing system, point the recipient at an address that forwards there. Most of those tools provide an inbound email address for exactly this. Alternatively, WordPress's own `wp_mail` filter sees these messages like any other, so a site-level mail integration picks them up without Rankify needing to know about it.

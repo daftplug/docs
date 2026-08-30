@@ -1,0 +1,124 @@
+---
+title: "Answer engine optimization"
+description: "What makes a page quotable by ChatGPT, Perplexity, and AI Overviews."
+icon: "quote-left"
+---
+
+Ranking and being cited are different problems.
+
+A search engine returns a list and lets the reader choose. An answer engine reads several pages, writes one answer, and names some of its sources. To be one of those sources, a page has to be **easy to lift a passage from**, which is a property of how the page is written, not only of how well it ranks.
+
+## What answer engines need
+
+<Columns cols={2}>
+  <Card title="Access" icon="door-open">
+    Their crawler has to be allowed to fetch the page. Blocking AI crawlers removes you from cited answers as surely as it removes you from training data.
+  </Card>
+  <Card title="Structure" icon="list-tree">
+    Passages that stand alone. An assistant quotes a section, not your whole article, so a section that only makes sense after reading the previous three is not quotable.
+  </Card>
+  <Card title="Directness" icon="bullseye">
+    The answer near the top. A page that spends four paragraphs on preamble has buried the sentence worth quoting.
+  </Card>
+  <Card title="Identity" icon="id-card">
+    Structured data connecting the page to an author and an organization. Assistants name sources they can identify.
+  </Card>
+</Columns>
+
+## The retrieval score
+
+Pro adds a retrieval score in the editor, scoring five signals as good, warning, or bad, for a maximum of ten points.
+
+<AccordionGroup>
+  <Accordion title="Passage size">
+    Words per section, measured between headings. Under 300 is good, up to 500 is a warning, beyond that is bad. A section with no headings at all scores nothing.
+
+    The reason is mechanical: an assistant retrieves chunks. A 1,500-word run of text without a heading is either truncated or skipped.
+  </Accordion>
+
+  <Accordion title="Self-contained sections">
+    Sections that depend on earlier ones to make sense. A section beginning "This is why it fails" cannot be quoted, because the quote does not say what "it" is.
+
+    Fix by naming the subject again at the start of each section. Slight repetition reads fine and makes each section liftable.
+  </Accordion>
+
+  <Accordion title="Question headings">
+    Headings phrased as questions. Two or more is good, one is a warning, none is bad.
+
+    People ask assistants questions. A heading that matches the question is the strongest possible signal that the text under it is the answer, and it is what [answer blocks](/rankify/settings/ai-geo) turn into FAQPage markup.
+  </Accordion>
+
+  <Accordion title="Answer-first opening">
+    Whether the page defines its subject early. Good or bad, no middle.
+
+    Say what the thing is in the first paragraph, then elaborate. The journalistic instinct to build up to a conclusion works against you here.
+  </Accordion>
+
+  <Accordion title="Lists and tables">
+    Whether the content has any structural formatting. Present is good, absent is a warning.
+
+    Lists and tables are unambiguous to parse and easy to reproduce in an answer. A comparison written as prose is much harder to lift than the same comparison as a table.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  The score measures how quotable a page is, not how good it is. A brilliant essay can score badly, and a mediocre FAQ can score well. Treat it as a structural check on pages you want cited, not as an editorial verdict.
+</Note>
+
+## What Rankify does for you
+
+<Steps>
+  <Step title="Publishes llms.txt">
+    A plain-text index of your important pages with summaries, written for models. On by default.
+  </Step>
+  <Step title="Marks up your answers">
+    Pro. Question-shaped headings become FAQPage markup with a concise answer summary, in the format answer engines quote.
+  </Step>
+  <Step title="Keeps the crawlers allowed">
+    AI crawlers are allowed by default, with a per-crawler list if you want to be selective.
+  </Step>
+  <Step title="Connects your identity">
+    The schema graph ties pages to authors and to your organization, and your social profiles confirm it.
+  </Step>
+</Steps>
+
+## Measuring it
+
+This is the part traditional SEO tools cannot show you.
+
+| Signal | What it proves | Where |
+| --- | --- | --- |
+| Crawler requests | Your pages are reachable | AI crawler log |
+| Distinct crawlers, identity verified | The assistants that matter are reading, and it is really them | AI crawler log, Pro |
+| Most-read pages | Which content assistants keep returning to | Overview |
+| Visitors from AI answers | You were actually cited | AI referral tracking, Pro |
+
+Read it as a funnel. Crawlers reading but no referrals means you are readable but not quotable, which is a content structure problem. No crawlers at all means an access problem, so check robots.txt first.
+
+<Card title="AI and GEO settings" icon="robot" horizontal href="/rankify/settings/ai-geo">
+  Every switch on this tab, and what each one does.
+</Card>
+
+## Writing a page to be cited
+
+<Steps>
+  <Step title="Answer in the first paragraph">
+    Then explain. If someone read only the opening, they should have the answer.
+  </Step>
+  <Step title="Use question headings">
+    Phrase them the way a person would ask, not the way a marketer would title a section.
+  </Step>
+  <Step title="Keep sections under 300 words">
+    And make each one make sense alone. Name the subject again rather than relying on "it".
+  </Step>
+  <Step title="Use tables for comparisons and lists for steps">
+    Structure is easier to lift than prose, and it survives being quoted out of context.
+  </Step>
+  <Step title="Be specific">
+    Numbers, versions, dates, and named things. An assistant weighing two sources prefers the one making checkable claims, and vague copy is indistinguishable from every other page on the topic.
+  </Step>
+</Steps>
+
+<Warning>
+  None of this is a substitute for being worth quoting. Answer engines are trying to give a correct answer, and a well-structured page that says nothing specific is still not the one they name.
+</Warning>

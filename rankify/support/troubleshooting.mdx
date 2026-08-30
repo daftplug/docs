@@ -1,0 +1,164 @@
+---
+title: "Troubleshooting"
+description: "Why pages are not indexed, tags are wrong, or nothing seems to change."
+icon: "wrench"
+---
+
+Two checks resolve most reports.
+
+<Steps>
+  <Step title="Is the site blocking search engines?">
+    **Settings > Reading**, the **Discourage search engines** box. If ticked, nothing else matters. Rankify raises this at the top of its own settings screen too.
+  </Step>
+  <Step title="Is another SEO plugin active?">
+    Two plugins writing the same tags produces duplicates, and search engines pick between them unpredictably. Deactivate one.
+  </Step>
+</Steps>
+
+## Indexing
+
+<AccordionGroup>
+  <Accordion title="Pages are not appearing in Google">
+    Work through it in order:
+
+    1. Check the noindex setting for that content type on the [Content Types tab](/rankify/settings/content-types).
+    2. Check `robots.txt` is not blocking the path.
+    3. Confirm the page is in your sitemap at `/sitemap.xml`.
+    4. Confirm the sitemap is submitted in Search Console.
+    5. Use Search Console's URL Inspection on the specific page. It tells you exactly why Google excluded it, which no plugin can.
+
+    Then wait. Indexing takes days to weeks, and a new site takes longer.
+  </Accordion>
+
+  <Accordion title="A page is indexed that should not be">
+    Set it to noindex and leave it crawlable. Do not block it in robots.txt: a blocked page can still appear in results with no description, because the crawler was never allowed to read the noindex directive.
+
+    Removal from the index takes a recrawl. Search Console's removals tool is faster if it is urgent.
+  </Accordion>
+
+  <Accordion title="The sitemap is empty or returns a 404">
+    Check permalinks first. Under **Settings > Permalinks**, anything other than Plain works; on Plain the sitemap URL cannot be served.
+
+    Then check that at least one post type is selected under [what goes in the sitemap](/rankify/settings/sitemaps#what-goes-in-the-sitemap), and that those types are not all noindexed.
+  </Accordion>
+
+  <Accordion title="robots.txt changes have no effect">
+    A physical `robots.txt` file on disk always wins over the one WordPress serves. Check your site root. If one exists, either delete it or edit it directly.
+  </Accordion>
+</AccordionGroup>
+
+## Titles and descriptions
+
+<AccordionGroup>
+  <Accordion title="Google shows a different title than mine">
+    Normal, and not a fault. Google rewrites titles when it judges its own version more useful for the query, especially if yours is very long, keyword-stuffed, or does not match the page content.
+
+    Write shorter, more accurate titles. There is no setting that forces Google to use yours.
+  </Accordion>
+
+  <Accordion title="My title is duplicated, or two titles appear">
+    Another SEO plugin, or a theme, is also outputting a title tag. View source and count. If it is your theme, use [`rankify_filter_document_title`](/rankify/reference/hooks#rankify_filter_document_title) to decide which one wins.
+  </Accordion>
+
+  <Accordion title="Titles from my old SEO plugin are showing">
+    That is deliberate. Rankify reads what the old plugin stored and uses it wherever you have not set your own value. Editing the field in Rankify overrides it permanently. See [switching to Rankify](/rankify/guides/migrating).
+
+    To stop it entirely, turn off the reuse setting.
+  </Accordion>
+
+  <Accordion title="The description is empty or wrong">
+    The default template is `%%excerpt%%`, which falls back to the start of the content. A page built entirely with a page builder often has no meaningful content in the post body, so there is nothing to fall back to. Write descriptions by hand on those pages.
+  </Accordion>
+</AccordionGroup>
+
+## Schema
+
+<AccordionGroup>
+  <Accordion title="The Rich Results Test reports errors">
+    Read which type it names. Each has required fields, and a missing one makes the page ineligible rather than penalized. Fill them in on the post.
+  </Accordion>
+
+  <Accordion title="Two schema graphs on one page">
+    Your theme, page builder, or another plugin is also outputting JSON-LD. Search for `application/ld+json` in the page source. Turn off whichever you do not want, or use [`rankify_output_schema`](/rankify/reference/hooks#output-switches) to disable Rankify's on specific templates.
+  </Accordion>
+
+  <Accordion title="Rich results are not showing despite valid markup">
+    Valid markup makes a page eligible, not guaranteed. Google decides per query, and a page that does not rank well has no result to enrich. There is nothing to fix in the plugin.
+  </Accordion>
+</AccordionGroup>
+
+## Social previews
+
+<AccordionGroup>
+  <Accordion title="The wrong image appears when sharing">
+    Platforms cache aggressively. Use Facebook's or LinkedIn's sharing debugger to force a refetch after changing an image.
+  </Accordion>
+
+  <Accordion title="No image appears at all">
+    The page has no featured image and no [fallback share image](/rankify/settings/social#default-share-image) is set. Set one, at least 1200 by 630 pixels.
+  </Accordion>
+</AccordionGroup>
+
+## Redirects
+
+<AccordionGroup>
+  <Accordion title="A redirect is not firing">
+    Rules only run on requests that would otherwise return a 404. If the URL resolves to a real page, the rule is skipped by design, so a redirect can never hide live content.
+
+    Also check the [Redirect Manager](/rankify/settings/redirects#redirects) toggle is on, since turning it off keeps your rules but stops applying them.
+  </Accordion>
+
+  <Accordion title="The 404 log is full of URLs I do not recognize">
+    Vulnerability scanners probing for other software. A 404 is the correct answer and nothing needs fixing. Add patterns to the ignore list to keep the log readable, and only act on URLs that used to exist on your site or that have real referrers.
+  </Accordion>
+
+  <Accordion title="I renamed a page and lost traffic">
+    That is what automatic slug redirects prevent. Add a redirect from the old URL now, and enable the Pro setting so it happens by itself next time.
+  </Accordion>
+</AccordionGroup>
+
+## AI and answer engines
+
+<AccordionGroup>
+  <Accordion title="The AI crawler log is empty">
+    Either nothing has crawled you yet, which is normal on a new or small site, or crawlers are blocked. Check that AI crawlers are allowed on the [AI & GEO tab](/rankify/settings/ai-geo) and that `robots.txt` does not block them.
+  </Accordion>
+
+  <Accordion title="Crawlers are reading but no AI referrals">
+    Your pages are reachable but not being quoted. That is a content structure problem rather than a configuration one. Check the [retrieval score](/rankify/guides/answer-engines#the-retrieval-score) on the pages you expected to be cited.
+  </Accordion>
+
+  <Accordion title="llms.txt returns a 404">
+    Check permalinks are not set to Plain, and that the llms.txt setting is on.
+  </Accordion>
+
+  <Accordion title="IndexNow submissions fail">
+    IndexNow reaches Bing, Yandex, and Seznam. Google does not take part, so a page not appearing in Google is not an IndexNow failure. Use the test submission button to confirm the key file is being served.
+  </Accordion>
+</AccordionGroup>
+
+## Notifications
+
+<AccordionGroup>
+  <Accordion title="No emails arrive">
+    Send a test from the [Notifications tab](/rankify/settings/notifications). Mail on WordPress is configured outside Rankify and fails silently more often than anything else on a site. If the test does not arrive, the problem is your site's mail configuration, not the plugin.
+  </Accordion>
+
+  <Accordion title="Too many 404 emails">
+    Raise the hit threshold, and add the noisy paths to the 404 ignore list.
+  </Accordion>
+</AccordionGroup>
+
+## Conflicts worth knowing about
+
+| Conflicts with | Symptom | What to do |
+| --- | --- | --- |
+| Another SEO plugin | Duplicate titles, descriptions, schema | Run one only |
+| Themes with built-in SEO | Duplicate meta tags | Disable the theme's, or use the output filters |
+| Themes with breadcrumbs | Two trails, two BreadcrumbList blocks | Turn off one |
+| Another redirect plugin | Rules in two places, unpredictable order | Import into Rankify and disable the other |
+| A caching plugin | Tag changes not visible | Purge the cache after editing SEO fields |
+
+<Card title="Still stuck" icon="life-ring" horizontal href="/rankify/support/get-help">
+  What to include when you contact support.
+</Card>

@@ -1,0 +1,84 @@
+---
+title: "AI and GEO"
+description: "llms.txt, answer blocks, crawler access, tracking, and IndexNow."
+icon: "robot"
+---
+
+**Rankify > Settings > AI & GEO**
+
+This tab is the part of Rankify that has no equivalent in a traditional SEO plugin. It exists because being cited by ChatGPT, Claude, Perplexity, Gemini, or an AI Overview is a different problem from ranking in a list of links.
+
+## Answer engines
+
+<ParamField path="llms.txt" type="toggle" default="on">
+  Publishes an `/llms.txt` map of your site: a plain-text index of your important pages with short summaries, written for language models rather than for browsers.
+
+  AI crawlers increasingly look for it, and it costs nothing to serve.
+</ParamField>
+
+<ParamField path="Allow AI Crawlers" type="toggle" default="on">
+  Lets GPTBot, ClaudeBot, PerplexityBot, and Google-Extended fetch your content. Written into your robots.txt.
+
+  <Warning>
+    Turning this off blocks AI training and retrieval crawlers, and **also removes you from AI answers that cite sources**. If your goal is to be quoted, blocking crawlers is the one setting guaranteed to prevent it. Blocking is a reasonable choice if your objection is to training, but understand that citation goes with it.
+  </Warning>
+</ParamField>
+
+<ParamField path="Answer Blocks" type="toggle" default="on">
+  Pro. Finds question-shaped headings in your content and emits FAQPage markup plus a concise answer summary, which is the format answer engines quote.
+
+  This is the most direct thing you can do to make existing content citable, because it works with the headings you already wrote rather than asking you to restructure anything.
+</ParamField>
+
+<ParamField path="AI Crawler Log" type="toggle" default="on">
+  Logs AI crawler visits per URL, so you can see which assistants are fetching your pages, how often, and which pages.
+
+  Free keeps 7 days. Pro extends it to 90 and **verifies each crawler's identity** by reverse DNS or the vendor's published IP ranges.
+</ParamField>
+
+<Note>
+  Identity verification is the difference between a number you can trust and one you cannot. A user agent is a string anyone can send, so without verification anything that wants to look like GPTBot can inflate your figures.
+</Note>
+
+<ParamField path="AI Referral Tracking" type="toggle" default="on">
+  Pro. Counts visits arriving from ChatGPT, Perplexity, Claude, Gemini, and Copilot, per page.
+
+  A crawler reading a page proves it is reachable. A person arriving from an AI answer proves it was **cited**, which is the number worth optimizing against. Most analytics bury these under generic referral traffic.
+</ParamField>
+
+<ParamField path="IndexNow" type="toggle" default="on">
+  Pro. Tells Bing, Yandex, and Seznam the moment a page is published or changed.
+
+  Submissions are batched a minute after you save, so a bulk edit is one request. Your key file is served by Rankify rather than written to your site root, so nothing is left behind if you deactivate the plugin.
+
+  <Note>
+    Google does not take part in IndexNow. Its Indexing API only accepts job postings and live streams, so Rankify does not pretend otherwise. Bing matters here beyond its search share, because its index feeds several AI assistants.
+  </Note>
+</ParamField>
+
+## AI crawler access
+
+A per-crawler list, written into your robots.txt, for when **Allow AI Crawlers** is too blunt.
+
+This is where you allow the assistants that cite sources while blocking the ones that only train. The distinction is real: some crawlers fetch pages to answer a question and name the source, others collect text for training and never send anyone back.
+
+<Tip>
+  If you are unsure, allow everything. The traffic cost of being crawled is trivial, and being absent from AI answers is a slow, invisible loss you will not notice until a competitor is the one being named.
+</Tip>
+
+## What this looks like on the overview
+
+The overview page turns this data into three things worth checking:
+
+| Panel | Tells you |
+| --- | --- |
+| Crawler requests, distinct crawlers, pages read | Whether AI systems can reach you at all |
+| Crawlers that can cite you, identity verified | Whether the ones that matter are reading |
+| Most-read pages | Which content assistants keep returning to |
+| Visitors arriving from AI answers | Whether any of it turned into a citation |
+
+The last row is the outcome. The rest are inputs.
+
+<Card title="Answer engine optimization" icon="quote-left" horizontal href="/rankify/guides/answer-engines">
+  What makes a page quotable, and how the retrieval score measures it.
+</Card>

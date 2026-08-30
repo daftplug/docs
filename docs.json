@@ -171,6 +171,57 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Rankify",
+        "icon": "/images/rankify.png",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "rankify/getting-started/introduction",
+              "rankify/getting-started/installation",
+              "rankify/getting-started/quickstart",
+              "rankify/getting-started/free-vs-pro"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "rankify/settings/general",
+              "rankify/settings/content-types",
+              "rankify/settings/sitemaps",
+              "rankify/settings/schema",
+              "rankify/settings/redirects",
+              "rankify/settings/social",
+              "rankify/settings/ai-geo",
+              "rankify/settings/notifications"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "rankify/guides/answer-engines",
+              "rankify/guides/migrating"
+            ]
+          },
+          {
+            "group": "Developer reference",
+            "pages": [
+              "rankify/reference/hooks",
+              "rankify/reference/rest-api",
+              "rankify/reference/settings-keys"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "rankify/support/troubleshooting",
+              "rankify/support/faq",
+              "rankify/support/get-help"
+            ]
+          }
+        ]
       }
     ]
   },

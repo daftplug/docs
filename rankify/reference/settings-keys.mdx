@@ -1,0 +1,122 @@
+---
+title: "Settings keys"
+description: "Every option key, its default, and which version seeds it."
+icon: "key"
+---
+
+All of Rankify's settings live in a single WordPress option, `rankify_settings`, stored as an associative array.
+
+```php
+$settings = get_option('rankify_settings');
+echo $settings['metaTitleSeparator']; // -
+```
+
+Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
+
+<Warning>
+  Prefer the settings screen or the [`PUT /settings`](/rankify/reference/rest-api#settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
+</Warning>
+
+To change one value safely in code:
+
+```php
+$settings = get_option('rankify_settings', []);
+$settings['breadcrumbs'] = 'on';
+update_option('rankify_settings', $settings);
+```
+
+## When keys are seeded
+
+Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten.
+
+Most Pro keys default to `on`, so activating a license turns those features on immediately rather than waiting to be asked.
+
+## Free settings
+
+| Key | Default |
+| --- | --- |
+| `metaTitleTemplate` | '%%title%% %%sep%% %%sitename%%' |
+| `metaTitleSeparator` | '-' |
+| `metaDescriptionTemplate` | '%%excerpt%%' |
+| `xmlSitemap` | 'on' |
+| `xmlSitemapPostTypes` | ['post' => 'on', 'page' => 'on'] |
+| `xmlSitemapTaxonomies` | ['category' => 'on'] |
+| `xmlSitemapExcludeNoindex` | 'on' |
+| `xmlSitemapImages` | 'on' |
+| `robotsTxt` | 'on' |
+| `robotsTxtContent` | '' |
+| `llmsTxtPostTypes` | ['page', 'post'] |
+| `llmsTxtExcludeNoindex` | 'on' |
+| `schemaMarkup` | 'on' |
+| `schemaSiteType` | 'organization' |
+| `schemaSiteName` | Your site title |
+| `schemaSiteLogo` | '' |
+| `schemaSitelinksSearch` | 'on' |
+| `openGraph` | 'on' |
+| `twitterCards` | 'on' |
+| `socialFallbackImage` | '' |
+| `socialTwitterSite` | '' |
+| `socialFacebook` | '' |
+| `socialInstagram` | '' |
+| `socialLinkedin` | '' |
+| `socialYoutube` | '' |
+| `socialPinterest` | '' |
+| `verifyGoogle` | '' |
+| `verifyBing` | '' |
+| `verifyYandex` | '' |
+| `verifyPinterest` | '' |
+| `verifyBaidu` | '' |
+| `mediaPages` | 'off' |
+| `disableAuthorArchivesSingleAuthor` | 'off' |
+| `breadcrumbs` | 'off' |
+| `breadcrumbsSeparator` | '/' |
+| `breadcrumbsHomeLabel` | '' |
+| `llmsTxt` | 'on' |
+| `aiCrawlersAllow` | 'on' |
+| `aiCrawlers` | [] |
+| `redirects` | 'on' |
+| `redirects404Monitor` | 'on' |
+| `redirects404Retention` | '30' |
+| `redirects404Ignore` | '' |
+| `reuseExistingSeo` | 'on' |
+| `aeoCitationTracking` | 'on' |
+| `emailNotificationsRecipient` | '' |
+| `notifyDigest` | 'off' |
+| `notifyDigestFrequency` | 'weekly' |
+| `notifyCritical` | 'off' |
+| `notify404` | 'off' |
+| `notify404Threshold` | 10 |
+
+## Pro settings
+
+These keys only exist on an install with an active license.
+
+| Key | Default |
+| --- | --- |
+| `redirectsAutoOnSlugChange` | 'on' |
+| `internalLinkSuggestions` | 'on' |
+| `aeoFaqBlocks` | 'on' |
+| `localSeo` | 'off' |
+| `localLocations` | [] |
+| `roleAccess` | [] |
+| `aiReferralTracking` | 'on' |
+| `indexNow` | 'on' |
+| `notifyCrawlerDrop` | 'off' |
+
+## Per-post values
+
+The keys above are site-wide. Per-post SEO values, the title, description, canonical, robots directives, social overrides, and schema type, live in post meta rather than in this option, and are edited in the Rankify panel in the editor.
+
+Values another SEO plugin stored are read as a fallback wherever a post has no Rankify value of its own. See [switching to Rankify](/rankify/guides/migrating).
+
+## Notable defaults
+
+| Key | Why it matters |
+| --- | --- |
+| `xmlSitemap` | On. The sitemap exists from activation, but you still have to submit it. |
+| `schemaMarkup` | On. One connected JSON-LD graph rather than separate blocks. |
+| `llmsTxt` | On. `/llms.txt` is published immediately. |
+| `aiCrawlersAllow` | On. Blocking AI crawlers also removes you from cited answers. |
+| `reuseExistingSeo` | On. Another SEO plugin's values are read as a fallback. |
+| `xmlSitemapExcludeNoindex` | On. Noindexed pages stay out of the sitemap, avoiding a contradictory signal. |
+| `redirects404Retention` | 30 days, with a hard row cap so the log cannot grow without limit. |

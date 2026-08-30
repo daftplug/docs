@@ -1,0 +1,166 @@
+---
+title: "REST API"
+description: "The rankify/v1 endpoints, their permissions, and what they do."
+icon: "server"
+---
+
+Rankify registers its endpoints under the `rankify/v1` namespace. They serve the plugin's own admin screens and editor panel, so treat them as an internal API rather than a versioned public contract.
+
+```
+https://example.com/wp-json/rankify/v1/
+```
+
+## Endpoints
+
+| Endpoint | Method | Access |
+| --- | --- | --- |
+| `/settings` | PUT | `manage_options` |
+| `/setup/complete` | POST | `manage_options` |
+| `/legacy-seo` | GET | `manage_options` |
+| `/redirects` | GET, POST | `manage_options` |
+| `/redirects/{id}` | DELETE | `manage_options` |
+| `/redirects/import` | POST | `manage_options` |
+| `/redirects/export` | GET | `manage_options` |
+| `/404s` | GET, DELETE | `manage_options` |
+| `/404s/redirect` | POST | `manage_options` |
+| `/geo/crawlers` | GET | `manage_options` |
+| `/geo/referrals` | GET | `manage_options` |
+| `/geo/clear` | POST | `manage_options` |
+| `/geo/indexnow` | POST | `manage_options` |
+| `/link-suggestions` | GET | `manage_options` |
+| `/orphans` | GET | `manage_options` |
+| `/retrieval-score` | GET | `edit_post` on the post |
+| `/notifications/test` | POST | `manage_options` |
+
+Every endpoint requires authentication. There are no public routes.
+
+<Note>
+  `/retrieval-score` is the only one not gated on `manage_options`. It checks `edit_post` against the specific post being scored, so an author can see the score for their own draft without being an administrator.
+</Note>
+
+## Settings
+
+<ParamField path="PUT /settings" type="endpoint">
+  Merges the supplied values over the stored settings. Send only the keys you want to change.
+</ParamField>
+
+```bash
+curl -X PUT https://example.com/wp-json/rankify/v1/settings \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"settings": {"breadcrumbs": "on"}}'
+```
+
+Fires [`rankify_settings_update:before`](/rankify/reference/hooks#rankify_settings_updatebefore-after) and `:after`.
+
+<ParamField path="POST /setup/complete" type="endpoint">
+  Marks the setup wizard as finished and stores the answers.
+</ParamField>
+
+<ParamField path="GET /legacy-seo" type="endpoint">
+  Reports which other SEO plugins left data on the site and how many posts each covers. Backs the wizard's existing-data step. See [switching to Rankify](/rankify/guides/migrating).
+</ParamField>
+
+## Redirects
+
+<ParamField path="GET /redirects" type="endpoint">
+  Lists redirect rules.
+</ParamField>
+
+<ParamField path="POST /redirects" type="endpoint">
+  Creates a rule.
+</ParamField>
+
+<ParamField path="DELETE /redirects/{id}" type="endpoint">
+  Deletes one rule by ID.
+</ParamField>
+
+<ParamField path="POST /redirects/import" type="endpoint">
+  Imports rules, which is how you bring them across from another plugin's CSV export.
+</ParamField>
+
+<ParamField path="GET /redirects/export" type="endpoint">
+  Exports your rules. Useful for moving a rule set between staging and production.
+</ParamField>
+
+Creating or deleting a rule fires [`rankify_redirects_changed`](/rankify/reference/hooks#redirects-and-links).
+
+## 404 monitor
+
+<ParamField path="GET /404s" type="endpoint">
+  The logged missing URLs, ranked by hit count.
+</ParamField>
+
+<ParamField path="DELETE /404s" type="endpoint">
+  Clears the log.
+</ParamField>
+
+<ParamField path="POST /404s/redirect" type="endpoint">
+  Creates a redirect from a logged 404 in one step, which is what the button on the Redirects & Links page calls.
+</ParamField>
+
+## AI and GEO
+
+<ParamField path="GET /geo/crawlers" type="endpoint">
+  AI crawler activity: which crawlers, how often, which pages. Free returns 7 days, Pro returns 90 with verified identity.
+</ParamField>
+
+<ParamField path="GET /geo/referrals" type="endpoint">
+  Pro. Visits arriving from AI assistants, per page.
+</ParamField>
+
+<ParamField path="POST /geo/clear" type="endpoint">
+  Clears the stored crawler and referral data.
+</ParamField>
+
+<ParamField path="POST /geo/indexnow" type="endpoint">
+  Pro. Submits URLs to IndexNow, reaching Bing, Yandex, and Seznam. Also used by the test submission button.
+
+  Fires [`rankify_indexnow_submitted`](/rankify/reference/hooks#rankify_indexnow_submitted).
+</ParamField>
+
+## Content analysis
+
+<ParamField path="GET /retrieval-score" type="endpoint">
+  Pro. Scores how quotable a post is for answer engines, across five signals worth two points each.
+
+  Takes a `postId` parameter and checks `edit_post` against it.
+</ParamField>
+
+```bash
+curl "https://example.com/wp-json/rankify/v1/retrieval-score?postId=42" \
+  -H "X-WP-Nonce: $NONCE" \
+  --cookie "$COOKIE_JAR"
+```
+
+The five signals are passage size, self-contained sections, question headings, answer-first opening, and lists and tables. See [answer engine optimization](/rankify/guides/answer-engines#the-retrieval-score).
+
+<ParamField path="GET /link-suggestions" type="endpoint">
+  Pro. Related pages worth linking to from the post being edited.
+</ParamField>
+
+<ParamField path="GET /orphans" type="endpoint">
+  Pro. Pages nothing on the site links to.
+</ParamField>
+
+## Notifications
+
+<ParamField path="POST /notifications/test" type="endpoint">
+  Sends a test email to the configured recipient.
+
+  Worth calling before relying on any alert, because WordPress mail is configured outside the plugin and fails silently more often than anything else on a site.
+</ParamField>
+
+## Authentication
+
+All endpoints need a capability and a valid `X-WP-Nonce` header. For calls from outside a browser session, use an application password:
+
+```bash
+curl https://example.com/wp-json/rankify/v1/404s \
+  -u "reporting:xxxx xxxx xxxx xxxx xxxx xxxx"
+```
+
+<Note>
+  Most of these need `manage_options`, which is administrator-level access. Create a dedicated user for any automation rather than reusing your own account.
+</Note>

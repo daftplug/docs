@@ -1,0 +1,121 @@
+---
+title: "Quickstart"
+description: "The settings worth changing on day one, and the ones to leave alone."
+icon: "list-check"
+---
+
+Rankify ships with the right defaults, so this is less about turning things on than about supplying the handful of values only you know.
+
+## 1. Confirm the site is visible
+
+Go to **Settings > Reading** and make sure **Discourage search engines from indexing this site** is unticked.
+
+This is the single most common cause of a site not ranking, and it usually happens because someone left staging settings on at launch. Rankify raises it at the top of its own settings screen, so you will see it there too.
+
+## 2. Deactivate any other SEO plugin
+
+Two plugins writing titles and meta descriptions produce duplicates. You do not need to export anything first, because Rankify [reads what the old plugin stored](/rankify/guides/migrating).
+
+## 3. Say who publishes the site
+
+**Settings > Schema**. Choose whether the site represents an **organization** or a **person**, and set the name.
+
+This is the root of your structured data, and everything else attaches to it. Add the **Organization Logo** at the same time: a square image, at least 112 by 112 pixels, which is what Google requires for organization rich results.
+
+## 4. Set a fallback share image
+
+**Settings > Social > Default Share Image**. At least 1200 by 630 pixels.
+
+Every page without a featured image uses this when shared. Without one, a link posted to Slack, WhatsApp, or LinkedIn renders as a bare line of text.
+
+While you are there, fill in your **Social Profiles**. They become `sameAs` links in your structured data, which is how search engines and AI assistants confirm those accounts and this site are the same entity.
+
+## 5. Submit your sitemap
+
+Rankify generates `/sitemap.xml` automatically, but nothing tells the search engines it exists.
+
+<Steps>
+  <Step title="Google Search Console">
+    Add the property, verify it with the code from **Settings > General > Site Verification**, then submit `https://example.com/sitemap.xml`.
+  </Step>
+  <Step title="Bing Webmaster Tools">
+    Same sitemap URL. Bing also feeds several AI assistants, so this matters more than it used to.
+  </Step>
+</Steps>
+
+## 6. Decide what stays out of search
+
+**Settings > Content Types** lists every post type, taxonomy, and special page with a noindex switch.
+
+The defaults are already sensible. Search results are permanently noindexed because the URL space is infinite. Two worth a moment's thought:
+
+<AccordionGroup>
+  <Accordion title="Author archives">
+    On a single-author site these duplicate your blog index exactly. Noindex them, or disable them entirely.
+  </Accordion>
+  <Accordion title="Date archives">
+    Year, month, and day listings rarely rank and duplicate your category pages. Most sites should noindex them.
+  </Accordion>
+</AccordionGroup>
+
+## 7. Check your title template
+
+**Settings > General > Titles & Meta**. The default is `%%title%% %%sep%% %%sitename%%`, which is right for most sites.
+
+Change the **Title Separator** if you prefer a pipe or dash. Keep it consistent, because mixed separators across a site look careless in a results page.
+
+## 8. Turn on the AI side
+
+**Settings > AI & GEO**. Most of this is already on.
+
+<Steps>
+  <Step title="Confirm llms.txt is published">
+    Visit `https://example.com/llms.txt`. It should list your important pages with short summaries.
+  </Step>
+  <Step title="Leave AI crawlers allowed">
+    Blocking them also removes you from AI answers that cite sources. Only block if you have a specific reason.
+  </Step>
+  <Step title="Let the crawler log fill up">
+    It records which assistants fetch which pages. Give it a week before it says anything useful.
+  </Step>
+</Steps>
+
+<Card title="Answer engine optimization" icon="quote-left" horizontal href="/rankify/guides/answer-engines">
+  What being citable actually requires, and how to measure it.
+</Card>
+
+## 9. Turn on the alerts worth having
+
+**Settings > Notifications**. Everything is off by default, and each has a threshold so nothing floods you.
+
+The two worth enabling on any site:
+
+- **Email when something is badly wrong** tells you if the site starts blocking search engines or the sitemap stops being served. At most once a week, and silent once fixed.
+- **Email when a URL keeps returning 404** tells you something is still linking to an address that no longer exists.
+
+<Tip>
+  Send a test first. Mail on WordPress is configured outside the plugin and fails silently more often than anything else on a site.
+</Tip>
+
+## What to leave alone
+
+<AccordionGroup>
+  <Accordion title="Breadcrumbs">
+    Off by default because your theme may already output its own. Enable it only if it does not, or you will get two trails.
+  </Accordion>
+  <Accordion title="News and video sitemaps">
+    News is only useful if you are approved in Google News. Video only if you actually publish video.
+  </Accordion>
+  <Accordion title="Media pages">
+    Attachment pages are thin duplicates of an image. Leave them disabled.
+  </Accordion>
+  <Accordion title="robots.txt rules">
+    The generated file already references your sitemap and handles AI crawler rules. Add directives only when you know exactly what you are blocking; a wrong line here can remove your whole site from search.
+  </Accordion>
+</AccordionGroup>
+
+## Then wait
+
+SEO changes do not show up quickly. Search engines have to recrawl, and rankings move over weeks.
+
+Use the overview checklist to confirm the configuration is right, and use the [AI crawler log](/rankify/settings/ai-geo) to see who is reading you, which updates far faster than rankings do.

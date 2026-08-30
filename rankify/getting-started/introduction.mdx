@@ -1,0 +1,100 @@
+---
+title: "Introduction"
+description: "What Rankify does for search engines, and what it does for AI assistants."
+icon: "rocket"
+---
+
+Rankify is an SEO plugin that does the things you expect, and one thing most SEO plugins still do not.
+
+The expected part: titles and meta descriptions, XML sitemaps, schema markup, Open Graph tags, redirects, breadcrumbs, and a robots.txt editor.
+
+The other part is **answer engine optimization**. Search is no longer only a list of blue links. ChatGPT, Claude, Perplexity, Gemini, and Google's AI Overviews answer questions by reading pages and citing them, and being citable is a different problem from ranking.
+
+<Frame>
+  <img src="https://daftplug.com/wp-content/uploads/rankify-admin-overview.png" alt="The Rankify overview page, showing SEO health, content coverage, and AI crawler activity" />
+</Frame>
+
+## The two jobs
+
+<Columns cols={2}>
+  <Card title="Be found by search engines" icon="magnifying-glass">
+    Titles, descriptions, sitemaps, schema, canonicals, redirects, and robots rules. The foundations, correct by default.
+  </Card>
+  <Card title="Be quoted by AI assistants" icon="quote-left">
+    An llms.txt map, question-shaped markup, crawler access control, and measurement of which assistants actually read and cite you.
+  </Card>
+</Columns>
+
+## What makes the AI side different
+
+Most plugins stop at "we output schema, so AI can read you". Rankify treats it as something you can measure and act on.
+
+<Steps>
+  <Step title="Publish a map written for models">
+    An `/llms.txt` index of your important pages with short summaries. It costs nothing to serve and AI crawlers increasingly look for it.
+  </Step>
+  <Step title="Mark up answers so they can be quoted">
+    Question-shaped headings become FAQPage markup with a concise answer summary, which is the format answer engines lift.
+  </Step>
+  <Step title="See who is actually reading you">
+    A log of AI crawler visits per URL, with each crawler's identity confirmed by reverse DNS or published IP ranges rather than trusting a user agent string.
+  </Step>
+  <Step title="See who actually cited you">
+    A crawler reading a page proves it is reachable. A person arriving from a ChatGPT or Perplexity answer proves it was cited, which is the number worth optimizing against.
+  </Step>
+</Steps>
+
+## How the plugin is organized
+
+Rankify adds a top-level **Rankify** menu with three pages.
+
+| Page | What it holds |
+| --- | --- |
+| Overview | SEO health, content coverage, AI crawler activity, and a setup checklist |
+| Redirects & Links | The redirect manager, the 404 log, and orphan pages |
+| Settings | Eight tabs |
+
+The settings tabs:
+
+<Columns cols={2}>
+  <Card title="General" icon="gear" href="/rankify/settings/general">
+    Title and description templates, breadcrumbs, site verification.
+  </Card>
+  <Card title="Content types" icon="file-lines" href="/rankify/settings/content-types">
+    Per-type indexing, templates, and archive control.
+  </Card>
+  <Card title="Sitemaps" icon="sitemap" href="/rankify/settings/sitemaps">
+    XML sitemaps, robots.txt, and what goes in them.
+  </Card>
+  <Card title="Schema" icon="diagram-project" href="/rankify/settings/schema">
+    JSON-LD structured data and site identity.
+  </Card>
+  <Card title="Redirects and links" icon="arrow-right-arrow-left" href="/rankify/settings/redirects">
+    Redirect rules, the 404 monitor, internal link suggestions.
+  </Card>
+  <Card title="Social" icon="share-nodes" href="/rankify/settings/social">
+    Open Graph, X cards, share images, profiles.
+  </Card>
+  <Card title="AI and GEO" icon="robot" href="/rankify/settings/ai-geo">
+    llms.txt, answer blocks, crawler access, IndexNow.
+  </Card>
+  <Card title="Notifications" icon="envelope" href="/rankify/settings/notifications">
+    Email alerts, with thresholds so nothing spams you.
+  </Card>
+</Columns>
+
+## Coming from another SEO plugin
+
+You do not have to migrate. Rankify **reads** the titles, descriptions, canonicals, and social values that Yoast, Rank Math, SEO Press, or All in One SEO already stored, and uses them as a fallback. Nothing is copied, nothing is written, and the other plugin's data is never touched.
+
+<Card title="Switching to Rankify" icon="right-left" horizontal href="/rankify/guides/migrating">
+  What is read, what wins, and what to do about the old plugin.
+</Card>
+
+<Warning>
+  Do not run two SEO plugins at once. Both will output titles, descriptions, and social tags, search engines will see duplicates, and which one wins is unpredictable. Rankify warns you on the settings screen when it detects another.
+</Warning>
+
+<Card title="Install Rankify" icon="download" horizontal href="/rankify/getting-started/installation">
+  Requirements, installation, and the setup wizard.
+</Card>

@@ -1,0 +1,117 @@
+---
+title: "Switching to Rankify"
+description: "Moving from Yoast, Rank Math, SEO Press, or All in One SEO without an import."
+icon: "right-left"
+---
+
+There is no migration wizard, and you do not need one.
+
+Rankify **reads** the SEO values another plugin already stored, in the background, and uses them wherever you have not set your own. Nothing is imported, nothing is written, and the other plugin's data is never touched.
+
+## Why it works this way
+
+Nobody wants to run an import. What people actually want is for the titles and descriptions they already wrote to keep working. Reading rather than copying achieves that, and it avoids the usual problems with imports.
+
+<Columns cols={2}>
+  <Card title="Your values always win" icon="circle-check">
+    Editing a field in Rankify overrides whatever the old plugin had, permanently, with no merge step to think about.
+  </Card>
+  <Card title="Nothing is destroyed" icon="shield">
+    Deactivate Rankify and the old plugin is exactly as it was. There is no half-migrated state to recover from.
+  </Card>
+  <Card title="It survives uninstalling" icon="database">
+    The values live in post meta that outlives the plugin, so it keeps working after you remove the old one.
+  </Card>
+  <Card title="It costs nothing" icon="feather">
+    One meta read per field, from the cache already primed for the post being rendered.
+  </Card>
+</Columns>
+
+## What is read
+
+| Plugin | Supported |
+| --- | --- |
+| Yoast SEO | Yes |
+| Rank Math | Yes |
+| SEO Press | Yes |
+| All in One SEO, legacy versions | Yes |
+
+For each, Rankify reads the SEO title, meta description, canonical URL, focus keyword, and the social title, description, and image.
+
+<Note>
+  All in One SEO version 4 moved its data into its own table rather than post meta, so it is handled separately from the others.
+</Note>
+
+Rankify also detects which plugins left data on your site and how many posts are affected, and shows it during setup so you know what is being picked up.
+
+## The switch
+
+<Steps>
+  <Step title="Install and activate Rankify">
+    Leave the other plugin in place for now.
+  </Step>
+  <Step title="Run the setup wizard">
+    It reports what existing SEO data it found. Nothing is imported; it is telling you what will be used as a fallback.
+  </Step>
+  <Step title="Check a few pages">
+    Look at pages where you wrote a custom title or description. View source and confirm the title is the one you wrote, not a generated one.
+  </Step>
+  <Step title="Deactivate the other plugin">
+    Do not put this off. Two SEO plugins both output titles, descriptions, and social tags, and search engines see duplicates.
+  </Step>
+  <Step title="Check the same pages again">
+    They should be unchanged, because Rankify is reading the same stored values.
+  </Step>
+</Steps>
+
+<Warning>
+  Do not run two SEO plugins side by side for a "transition period". That is when duplicate tags actually cause damage, and search engines pick between them unpredictably. Rankify warns you on its settings screen when it detects another active SEO plugin.
+</Warning>
+
+## What does not carry over
+
+Reading covers per-post meta. Some things are configuration rather than content, and you set those up once in Rankify.
+
+| Set up again | Where |
+| --- | --- |
+| Title and description templates | [General](/rankify/settings/general#titles-and-meta) |
+| Which types are indexed | [Content types](/rankify/settings/content-types) |
+| Sitemap contents | [Sitemaps](/rankify/settings/sitemaps) |
+| Schema identity and logo | [Schema](/rankify/settings/schema) |
+| Social profiles and fallback image | [Social](/rankify/settings/social) |
+| Verification codes | [General](/rankify/settings/general#site-verification) |
+
+## Redirects from the old plugin
+
+Redirect rules are not read as a fallback, because a redirect is behavior rather than a value on a post.
+
+Export them from the old plugin as CSV, then import on **Rankify > Redirects & Links**. Do this **before** deactivating it, since the export screen goes with the plugin.
+
+<Warning>
+  Rankify's rules only run on requests that would otherwise 404, which is stricter than some plugins. A rule that used to shadow a live page will stop doing so, which is almost always a fix rather than a regression, but check any rule you relied on for that behavior.
+</Warning>
+
+## Turning the fallback off
+
+Reading existing values is controlled by a setting, on by default. Turn it off once you are confident every page you care about has its own Rankify values, or if you want to be certain nothing is inherited.
+
+<Note>
+  Turning it off does not delete anything. It only stops Rankify reading the other plugin's meta, so pages without their own values fall back to your templates instead.
+</Note>
+
+## After the switch
+
+<Steps>
+  <Step title="Resubmit your sitemap">
+    The URL is `https://example.com/sitemap.xml`. It may differ from your old plugin's, and Search Console should be pointed at the current one.
+  </Step>
+  <Step title="Check your robots.txt">
+    Visit `/robots.txt` and confirm it references the right sitemap and contains no rules left over from the old plugin.
+  </Step>
+  <Step title="Validate your schema">
+    Run a page through the Rich Results Test to confirm one clean graph, and that the old plugin is not still emitting one.
+  </Step>
+  <Step title="Watch for 404s">
+    The [404 monitor](/rankify/settings/redirects#404-monitor) catches anything that broke, ranked by how often it is requested.
+  </Step>
+</Steps>

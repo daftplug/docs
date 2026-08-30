@@ -1,0 +1,121 @@
+---
+title: "FAQ"
+description: "Questions that come up before and after installing Rankify."
+icon: "circle-question"
+---
+
+## Switching
+
+<AccordionGroup>
+  <Accordion title="Do I have to migrate from Yoast or Rank Math?">
+    No. Rankify reads the titles, descriptions, canonicals, and social values those plugins already stored, and uses them wherever you have not set your own. Nothing is imported and nothing is overwritten.
+
+    Yoast, Rank Math, SEO Press, and legacy All in One SEO are all read. See [switching to Rankify](/rankify/guides/migrating).
+  </Accordion>
+
+  <Accordion title="Can I run Rankify alongside my current SEO plugin?">
+    No. Both would output titles, descriptions, and social tags, search engines would see duplicates, and which one wins is unpredictable. Rankify warns you when it detects another active SEO plugin.
+  </Accordion>
+
+  <Accordion title="What if I switch back?">
+    Nothing is lost. Rankify never writes to the other plugin's data, so deactivating Rankify leaves it exactly as it was.
+  </Accordion>
+
+  <Accordion title="Do my redirects carry over?">
+    Not automatically, because a redirect is behavior rather than a value on a post. Export them as CSV from the old plugin before deactivating it, then import on **Rankify > Redirects & Links**.
+  </Accordion>
+</AccordionGroup>
+
+## Indexing and ranking
+
+<AccordionGroup>
+  <Accordion title="How long until I see results?">
+    Search engines have to recrawl before anything changes, and rankings move over weeks. Configuration correctness is what you can verify immediately; ranking is not.
+
+    The [AI crawler log](/rankify/settings/ai-geo) moves much faster, and is a useful early signal that your pages are being read.
+  </Accordion>
+
+  <Accordion title="Will Rankify make me rank higher?">
+    It makes sure nothing technical is stopping you: correct titles, valid schema, a working sitemap, no accidental noindex, no broken URLs bleeding traffic. That is the floor, not the ceiling.
+
+    What actually ranks is content people want. No plugin supplies that.
+  </Accordion>
+
+  <Accordion title="Google shows a different title than the one I set">
+    Google rewrites titles when it judges its own more useful for the query. Shorter, more accurate titles get rewritten less. No setting forces yours.
+  </Accordion>
+
+  <Accordion title="Do I need to submit my sitemap?">
+    Yes. Rankify generates it, but nothing tells the search engines it exists. Submit `https://example.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+  </Accordion>
+</AccordionGroup>
+
+## AI and answer engines
+
+<AccordionGroup>
+  <Accordion title="What is llms.txt?">
+    A plain-text index of your important pages with short summaries, written for language models rather than browsers. AI crawlers increasingly look for it, and it costs nothing to serve. On by default at `/llms.txt`.
+  </Accordion>
+
+  <Accordion title="Should I block AI crawlers?">
+    Only if your objection is to training, and you accept the cost. Blocking also removes you from AI answers that cite sources, so you lose the citations along with the training.
+
+    If you want to be selective, the per-crawler list lets you allow the ones that cite and block the ones that only train.
+  </Accordion>
+
+  <Accordion title="How do I know if AI assistants actually cite me?">
+    Crawler logs prove your pages are reachable. AI referral tracking, which is Pro, counts people arriving from ChatGPT, Perplexity, Claude, Gemini, and Copilot, and that is the number that proves a citation.
+
+    Crawlers reading but no referrals means readable but not quotable, which is a content structure problem.
+  </Accordion>
+
+  <Accordion title="Why does crawler identity verification matter?">
+    A user agent is a string anyone can send. Without verification, anything that wants to look like GPTBot inflates your figures. Pro confirms each crawler by reverse DNS or the vendor's published IP ranges, so the number means something.
+  </Accordion>
+
+  <Accordion title="Does IndexNow work with Google?">
+    No. Google does not take part. IndexNow reaches Bing, Yandex, and Seznam. Google's own Indexing API only accepts job postings and live streams, so Rankify does not pretend otherwise.
+
+    Bing still matters here beyond its search share, because its index feeds several AI assistants.
+  </Accordion>
+</AccordionGroup>
+
+## Features
+
+<AccordionGroup>
+  <Accordion title="Should I enable breadcrumbs?">
+    Only if your theme does not already output them. Two trails and two BreadcrumbList blocks is worse than none. Off by default for this reason.
+  </Accordion>
+
+  <Accordion title="What is the difference between noindex and disabling a type?">
+    Noindex keeps the page working and asks search engines to ignore it. Disabling removes the URL entirely, so it returns a 404. Never disable something people have linked to without adding a redirect first.
+  </Accordion>
+
+  <Accordion title="Why does my redirect not fire?">
+    Rules only run on requests that would otherwise return a 404, so a redirect can never hide a page that exists. That is deliberate, and it removes a whole category of accident.
+  </Accordion>
+
+  <Accordion title="Does it work with WooCommerce?">
+    Yes. Product post types and taxonomies appear on the Content Types tab like anything else, Product schema is available with Pro, and there is a `%%wc_brand%%` template variable.
+  </Accordion>
+
+  <Accordion title="Does it work with a caching plugin?">
+    Yes. Purge the cache after editing SEO fields, or cached pages keep serving the old tags. If you use Lightify, publishing a post purges it automatically.
+  </Accordion>
+</AccordionGroup>
+
+## Licensing
+
+<AccordionGroup>
+  <Accordion title="Is Rankify sold on its own?">
+    Pro is part of the DaftPlug membership. One license covers Rankify and every other DaftPlug Pro plugin, and plans differ only in how many sites you can activate on.
+  </Accordion>
+
+  <Accordion title="What happens if the license lapses?">
+    Nothing is deleted. Pro features stop applying and the free ones carry on, including your sitemap, schema, redirects, and llms.txt.
+  </Accordion>
+
+  <Accordion title="Which Pro feature should I care about most?">
+    Automatic redirects on slug change, because renaming a published page and forgetting the redirect is the most common way a site loses traffic it had already earned.
+  </Accordion>
+</AccordionGroup>

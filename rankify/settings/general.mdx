@@ -1,0 +1,90 @@
+---
+title: "General"
+description: "Title and description templates, breadcrumbs, and site verification."
+icon: "gear"
+---
+
+**Rankify > Settings > General**
+
+## Titles and meta
+
+The title and description search engines show for a page, and the starting point for what AI assistants quote.
+
+<ParamField path="Title Template" type="template" default="%%title%% %%sep%% %%sitename%%">
+  The default title pattern for every page. Individual posts can override it in the editor.
+</ParamField>
+
+<ParamField path="Title Separator" type="select" default="-">
+  The character `%%sep%%` becomes. Options are a dash, an en dash, a pipe, a middle dot, or a slash.
+
+  Keep it consistent across the site. Mixed separators look careless in a results page, and it is one of the few purely cosmetic choices that shows up in every listing you appear in.
+</ParamField>
+
+<ParamField path="Description Template" type="template" default="%%excerpt%%">
+  The default description pattern. `%%excerpt%%` falls back to the first part of the content when a post has no excerpt.
+</ParamField>
+
+### Template variables
+
+| Variable | Becomes |
+| --- | --- |
+| `%%title%%` | The post or page title |
+| `%%sitename%%` | Your site title |
+| `%%sitedesc%%` | Your site tagline |
+| `%%sep%%` | The separator chosen above |
+| `%%page%%` | The page number, on paginated content |
+| `%%excerpt%%` | The excerpt, falling back to the content |
+| `%%category%%` | The primary category |
+| `%%date%%` | The publish date |
+| `%%author%%` | The author's display name |
+| `%%author_description%%` | The author's bio |
+| `%%term_title%%` | The term name, on taxonomy archives |
+| `%%term_description%%` | The term description |
+| `%%pt_plural%%` | The post type's plural label |
+| `%%searchphrase%%` | The search term, on search pages |
+| `%%name%%` | The name, in identity contexts |
+| `%%wc_brand%%` | The WooCommerce brand |
+
+<Tip>
+  Templates are a starting point, not a finished title. A generated title is better than nothing, but the pages you care about deserve one written by hand in the editor. Do that for your homepage, your main service or product pages, and anything already ranking.
+</Tip>
+
+<Note>
+  Per-post overrides beat the template. Values another SEO plugin stored are also read as a fallback, so titles you wrote in Yoast or Rank Math keep working. See [switching to Rankify](/rankify/guides/migrating).
+</Note>
+
+## Breadcrumbs
+
+<ParamField path="Breadcrumbs" type="toggle" default="off">
+  Outputs a breadcrumb trail with `BreadcrumbList` structured data, which is what turns the URL line in a Google result into a readable path.
+</ParamField>
+
+<ParamField path="Separator" type="string" default="/">
+  The character shown between levels.
+</ParamField>
+
+<Warning>
+  Off by default because many themes output their own breadcrumbs. Enabling this alongside a theme that already has them gives visitors two trails and search engines two `BreadcrumbList` blocks. Check your theme first.
+</Warning>
+
+## Site verification
+
+Proves you own the site so you can use each engine's webmaster tools. Rankify supports Google, Bing, Yandex, Pinterest, and Baidu.
+
+Paste either the token or the whole `<meta>` tag; Rankify extracts the token either way.
+
+<Steps>
+  <Step title="Start with Google">
+    Add your site in Search Console, choose the HTML tag method, and paste the value here. Search Console is where you submit your sitemap and see what is actually indexed.
+  </Step>
+  <Step title="Then Bing">
+    Bing Webmaster Tools takes the same sitemap, and Bing's index feeds several AI assistants, so it matters more than its search share suggests.
+  </Step>
+  <Step title="The rest are optional">
+    Yandex, Baidu, and Pinterest are worth it only if you have an audience there.
+  </Step>
+</Steps>
+
+<Note>
+  Verification proves ownership. It does not affect ranking, and adding a code does not submit anything on its own. You still submit your sitemap inside each tool.
+</Note>

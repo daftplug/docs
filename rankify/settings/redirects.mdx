@@ -1,0 +1,115 @@
+---
+title: "Redirects and links"
+description: "Redirect rules, the 404 monitor, and internal link suggestions."
+icon: "arrow-right-arrow-left"
+---
+
+**Rankify > Settings > Redirects & Links**
+
+The switches are here. The rules themselves live on **Rankify > Redirects & Links**, which is its own admin page.
+
+## Redirects
+
+<ParamField path="Redirect Manager" type="toggle" default="on">
+  Applies your redirect rules to incoming requests.
+
+  Rules only run on requests that would otherwise return a 404, so **a redirect can never hide a page that actually exists**. That is a deliberate design choice and it removes an entire category of accident, where a broad rule quietly shadows live content.
+
+  Turning this off keeps your rules but stops applying them.
+</ParamField>
+
+<ParamField path="Redirect Automatically When a URL Changes" type="toggle" default="on">
+  Pro. Writes a 301 the moment you change the slug of a published page, so existing links keep working.
+
+  Only published posts are watched, so a draft URL nobody ever had is never redirected. Rename a page twice and the first rule is repointed at the new address rather than becoming a chain.
+</ParamField>
+
+<Tip>
+  Renaming a published page and forgetting the redirect is the most common way a site loses traffic it had already earned. If you enable one Pro feature on this tab, make it this one.
+</Tip>
+
+## 404 monitor
+
+<ParamField path="Log 404s" type="toggle" default="on">
+  Records the URLs people and crawlers ask for that do not exist, ranked by how often they are requested.
+
+  Repeat requests for the same URL increment a counter rather than adding rows, and common bot probes are ignored, so the log stays small even on a site under constant scanning.
+</ParamField>
+
+<ParamField path="Keep entries for (days)" type="number" default="30">
+  Entries older than this are removed daily. A hard row cap applies as well, so the log cannot grow without limit.
+</ParamField>
+
+<ParamField path="Also ignore these URLs" type="textarea">
+  One per line. A URL containing any of these is not logged.
+
+  ```text
+  /wp-json
+  /cgi-bin
+  ```
+
+  `wp-login.php`, `xmlrpc.php`, favicons, and feeds are already ignored.
+</ParamField>
+
+### Using the log
+
+The point is not to fix every 404. Most of them are scanners looking for vulnerabilities, and a 404 is the correct answer.
+
+Sort by hit count and look for two things:
+
+<Steps>
+  <Step title="URLs that used to exist on your site">
+    Someone renamed or deleted a page and the links are still out there. Redirect these to the closest equivalent.
+  </Step>
+  <Step title="URLs with real referrers">
+    Another site is linking to you and getting a 404. That is inbound authority being wasted. Redirect it.
+  </Step>
+</Steps>
+
+<Warning>
+  Do not redirect everything to your homepage. A visitor looking for a specific page gets dumped somewhere unrelated, and search engines treat a redirect to an irrelevant page as a soft 404 anyway. Redirect to the closest match, or let it 404 honestly.
+</Warning>
+
+## Internal links
+
+<ParamField path="Link Suggestions" type="toggle" default="on">
+  Pro. While editing, shows related pages worth linking to from this one.
+
+  Suggestions are ranked by shared categories and tags, overlapping wording, and whether the page is an orphan. Pages you already link to are left out.
+</ParamField>
+
+Internal links are how search engines learn which of your pages matter. A page nothing links to is found only through your sitemap, which is the weakest possible signal that it is important.
+
+<Note>
+  Orphan pages, ones nothing on your site links to, are listed on the **Redirects & Links** page. They are usually old landing pages, or posts published before you had a category structure.
+</Note>
+
+## The Redirects & Links page
+
+<Columns cols={2}>
+  <Card title="Redirect rules" icon="arrow-right-arrow-left">
+    Add, edit, import, and export. Rules apply only to requests that would 404.
+  </Card>
+  <Card title="404 log" icon="triangle-exclamation">
+    Missing URLs by hit count, with one-click redirect creation.
+  </Card>
+  <Card title="Orphan pages" icon="link-slash">
+    Pro. Pages nothing else links to.
+  </Card>
+  <Card title="Import and export" icon="file-arrow-down">
+    Move rules between sites, or bring them from another plugin.
+  </Card>
+</Columns>
+
+## Choosing a redirect type
+
+| Type | Use when |
+| --- | --- |
+| 301 permanent | The page has moved for good. Passes ranking signals. The usual choice. |
+| 302 temporary | The move is genuinely temporary, such as a seasonal page. |
+| 307 temporary | Like 302, preserving the request method. |
+| 410 gone | The page is deliberately deleted with no replacement. Tells search engines to drop it faster than a 404. |
+
+<Warning>
+  Avoid chains. A redirecting to B redirecting to C wastes crawl budget and loses signal at each hop. When you move a page for the second time, update the original rule rather than adding another. Automatic slug redirects already do this for you.
+</Warning>

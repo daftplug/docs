@@ -1,0 +1,149 @@
+---
+title: "Installation"
+description: "Requirements, installing the plugin, and the setup wizard."
+icon: "download"
+---
+
+## Requirements
+
+| Requirement | Minimum |
+| --- | --- |
+| WordPress | 6.2 |
+| PHP | 7.4 |
+| Pretty permalinks | Required, for sitemaps and llms.txt |
+
+<Warning>
+  Under **Settings > Permalinks**, anything other than Plain works. On Plain permalinks the sitemap and llms.txt URLs cannot be served.
+</Warning>
+
+## Install the free plugin
+
+<Steps>
+  <Step title="Search the plugin directory">
+    In WordPress, go to **Plugins > Add New** and search for `Rankify`.
+  </Step>
+  <Step title="Install and activate">
+    Select **Install Now**, then **Activate**.
+  </Step>
+  <Step title="Run the setup wizard">
+    Rankify opens a short wizard on first activation. It takes a couple of minutes and is described [below](#the-setup-wizard).
+  </Step>
+</Steps>
+
+## Install Pro from a ZIP
+
+Pro is a separate plugin rather than an unlock applied to the free one, so it is distributed as a ZIP.
+
+<Steps>
+  <Step title="Download the ZIP">
+    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Rankify Pro archive.
+  </Step>
+  <Step title="Upload it">
+    Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
+  </Step>
+  <Step title="Activate">
+    Select **Activate Plugin**. If the free version is installed and active, Rankify deactivates it for you.
+  </Step>
+</Steps>
+
+<Note>
+  Your settings survive the switch. Both versions read the same `rankify_settings` option.
+</Note>
+
+## Activate your license
+
+<Steps>
+  <Step title="Open the activation screen">
+    After activating Pro, WordPress shows an activation notice. You can also reach it from **Rankify > Account**.
+  </Step>
+  <Step title="Enter your license key">
+    Paste the key from your purchase confirmation email, then select **Activate License**.
+  </Step>
+</Steps>
+
+<Note>
+  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Rankify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on.
+</Note>
+
+## Before anything else
+
+Two site-wide conditions override everything Rankify does. Both are raised at the top of the settings screen rather than buried in a tab, because nothing else works while either is true.
+
+<AccordionGroup>
+  <Accordion title="This site is blocking search engines">
+    **Settings > Reading** has **Discourage search engines from indexing this site** ticked. Every sitemap, canonical, and schema tag is irrelevant while this is on. Untick it.
+
+    This is normal on a staging site and a disaster on a live one, so check it the day you launch.
+  </Accordion>
+  <Accordion title="Another SEO plugin is active">
+    Two plugins writing the same tags means duplicate titles and descriptions, and search engines pick between them unpredictably. Deactivate the other one.
+
+    You do not need to export anything first. See [switching to Rankify](/rankify/guides/migrating).
+  </Accordion>
+</AccordionGroup>
+
+## The setup wizard
+
+The wizard covers the settings that cannot be guessed. Everything else already has a sensible default.
+
+<Steps>
+  <Step title="Welcome">
+    Confirms Rankify is active and flags the site if it is hidden from search engines.
+  </Step>
+  <Step title="Who publishes this site">
+    Whether the site represents an organization or a person, and the name to use. This becomes the root of your [schema graph](/rankify/settings/schema), and everything else attaches to it.
+  </Step>
+  <Step title="Existing data">
+    If another SEO plugin's data is present, Rankify tells you it will be used as a fallback. Nothing is imported and nothing is overwritten.
+  </Step>
+  <Step title="What gets indexed">
+    Anything that should stay out of search results. Sensible defaults are already applied; this is for the pages specific to your site.
+  </Step>
+  <Step title="Search Console and social">
+    Your Google Search Console verification code, and the sitemap URL to submit there.
+  </Step>
+  <Step title="Done">
+    Points you at the overview page, where the setup checklist lists whatever still needs attention.
+  </Step>
+</Steps>
+
+You can skip it and configure everything from the settings screen instead. The overview checklist covers the same ground.
+
+## What works immediately
+
+Rankify enables the correct defaults on activation, so a fresh install is already doing the important things.
+
+| On by default | Version |
+| --- | --- |
+| XML sitemap at `/sitemap.xml`, for posts, pages, and categories | Free |
+| Sitemap images, and noindexed content excluded | Free |
+| robots.txt with a sitemap reference | Free |
+| Schema markup, as one connected JSON-LD graph | Free |
+| Sitelinks search box | Free |
+| Open Graph tags and X cards | Free |
+| Title and description templates | Free |
+| `llms.txt`, and AI crawlers allowed | Free |
+| AI crawler logging | Free |
+| Redirect manager and 404 monitor | Free |
+| Reading another SEO plugin's existing values | Free |
+| Answer blocks, IndexNow, AI referral tracking | Pro |
+| Automatic redirects on slug change, link suggestions | Pro |
+
+What is off until you ask for it: breadcrumbs, media pages, email notifications, News and video sitemaps, and local SEO.
+
+## First things to do
+
+<Steps>
+  <Step title="Submit your sitemap">
+    Add `https://example.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools. Rankify generates it, but nobody is told it exists until you say so.
+  </Step>
+  <Step title="Set a fallback share image">
+    Under [Social](/rankify/settings/social). Without one, a shared page with no featured image renders as a bare text link.
+  </Step>
+  <Step title="Add your organization logo">
+    Under [Schema](/rankify/settings/schema). Google needs at least 112 by 112 pixels for organization rich results.
+  </Step>
+  <Step title="Check the overview checklist">
+    It lists what is still missing, in the order worth fixing.
+  </Step>
+</Steps>

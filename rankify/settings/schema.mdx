@@ -1,0 +1,89 @@
+---
+title: "Schema"
+description: "JSON-LD structured data and the identity everything attaches to."
+icon: "diagram-project"
+---
+
+**Rankify > Settings > Schema**
+
+Structured data describes your content in a format search engines and AI assistants read directly, rather than inferring from your HTML. It is what makes rich results possible, and it is one of the clearest signals an answer engine has about what a page actually is.
+
+## Schema markup
+
+<ParamField path="Schema Markup" type="toggle" default="on">
+  Outputs JSON-LD for the site, posts, pages, and authors.
+
+  Rankify emits a **single connected graph** rather than separate blocks. That is what Google recommends, and it is what AI crawlers parse most reliably, because the relationships between entities are explicit instead of implied.
+</ParamField>
+
+<ParamField path="This Site Represents" type="select" default="organization">
+  Whether the site-level entity is an `Organization` or a `Person`. Everything else in the graph attaches to it.
+
+  Choose `Person` for a personal blog, a portfolio, or a consultant trading under their own name. Choose `Organization` for anything with a business name, even a one-person business.
+</ParamField>
+
+<ParamField path="Name" type="string">
+  The name used in the site-level entity. Defaults to your site title, but they are often different: your site might be "The Widget Blog" while the organization is "Widget Co Ltd".
+</ParamField>
+
+<ParamField path="Advanced Schema Types" type="toggle" default="on">
+  Pro. Adds per-post schema selection with the fields each type needs: Article, Product, Recipe, Event, FAQ, How-To, Course, and Job Posting.
+
+  This is what makes rich results eligible. A recipe without Recipe markup cannot show cook time and ratings in a result, however good the recipe is.
+</ParamField>
+
+## Site identity
+
+<ParamField path="Organization Logo" type="image">
+  Square, at least 112 by 112 pixels, on a solid background. Google requires a logo of at least that size for organization rich results.
+</ParamField>
+
+<ParamField path="Sitelinks Search Box" type="toggle" default="on">
+  Declares that your site has its own search, so results can include a search box.
+
+  Google decides whether to show it. Declaring it does not guarantee it appears, and it mostly shows for brand-name searches.
+</ParamField>
+
+<Note>
+  Your [social profiles](/rankify/settings/social#social-profiles) become `sameAs` links on this entity. That is how search engines and AI assistants confirm that your site and your accounts are the same organization, so filling them in strengthens everything else here.
+</Note>
+
+## Why the graph matters for AI
+
+A search engine can infer a lot from your HTML. An AI assistant reading a page to answer a question benefits far more from being told directly: this is an article, published on this date, by this person, who belongs to this organization, which is the same entity as these social accounts.
+
+That is the difference between being a page that mentions a topic and being a source with an identity attached, and identity is what an assistant needs before it will name you.
+
+## Checking your markup
+
+<Steps>
+  <Step title="Google Rich Results Test">
+    Paste a URL into [search.google.com/test/rich-results](https://search.google.com/test/rich-results). It reports which rich result types the page is eligible for and any errors.
+  </Step>
+  <Step title="Schema Markup Validator">
+    [validator.schema.org](https://validator.schema.org/) validates the whole graph rather than only what Google uses.
+  </Step>
+  <Step title="View source">
+    Search for `application/ld+json`. You should find one connected graph, not several disconnected blocks.
+  </Step>
+</Steps>
+
+<Warning>
+  If another plugin also outputs schema, you will have two graphs describing the same page, and search engines may pick the wrong one or ignore both. Many themes and page builders emit their own; check the page source before assuming Rankify's is the only one.
+</Warning>
+
+## Getting rich results
+
+Markup makes a page eligible. It does not guarantee anything.
+
+<AccordionGroup>
+  <Accordion title="The content has to match the markup">
+    Marking a page up as a Recipe when it is a blog post about food does not make it a recipe. Search engines check, and mismatched markup can be ignored or penalized.
+  </Accordion>
+  <Accordion title="Required fields are required">
+    Each type has fields it cannot omit. The Rich Results Test names them.
+  </Accordion>
+  <Accordion title="Google chooses when to show them">
+    Correct markup on a page that ranks poorly still shows nothing, because there is no result to enrich.
+  </Accordion>
+</AccordionGroup>

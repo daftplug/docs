@@ -1,0 +1,95 @@
+---
+title: "Content types"
+description: "Per-type indexing, templates, and which archives exist at all."
+icon: "file-lines"
+---
+
+**Rankify > Settings > Content Types**
+
+Every post type, taxonomy, and special page on your site gets a row here. This is where you decide what search engines are allowed to index, and what should not exist as a URL in the first place.
+
+## What each row offers
+
+<ParamField path="noindex" type="toggle">
+  Tells search engines not to index the page. The page still exists and visitors can still reach it.
+</ParamField>
+
+<ParamField path="Title Template" type="template">
+  Overrides the [global title template](/rankify/settings/general#titles-and-meta) for this type.
+</ParamField>
+
+<ParamField path="Description Template" type="template">
+  Overrides the global description template for this type.
+</ParamField>
+
+<ParamField path="Schema Article Type" type="select">
+  Which article type this content is marked up as in your [schema graph](/rankify/settings/schema).
+</ParamField>
+
+<ParamField path="Disable these pages entirely" type="toggle">
+  Stronger than noindex. The URL stops existing and returns a 404.
+</ParamField>
+
+<Warning>
+  Noindex and disable are different things. Noindex keeps the page working and asks search engines to ignore it. Disabling removes the URL. Never disable something people have bookmarked or linked to without adding a [redirect](/rankify/settings/redirects) first.
+</Warning>
+
+## The groups
+
+### Special pages
+
+<AccordionGroup>
+  <Accordion title="Homepage">
+    Your front page, whether that is a static page or the blog index. Give it a hand-written title and description; it is the page most likely to be your first impression in a result.
+  </Accordion>
+
+  <Accordion title="Author archives">
+    One page per author listing their posts. On a single-author site these duplicate the blog index exactly, so noindex them, or disable them entirely.
+
+    On a multi-author site with real author pages, keep them. They are useful for E-E-A-T signals and they give your schema a person to attach articles to.
+  </Accordion>
+
+  <Accordion title="Date archives">
+    Year, month, and day listings. They rarely rank and duplicate your category pages. Most sites should noindex them.
+  </Accordion>
+
+  <Accordion title="Search results">
+    Always noindexed, and this cannot be changed. The URL space is infinite, so letting a crawler into it wastes crawl budget and generates thin pages without limit.
+  </Accordion>
+
+  <Accordion title="Media pages">
+    Attachment pages: one page per uploaded file, containing an image and nothing else. Off by default, and that is the right setting for nearly every site.
+  </Accordion>
+</AccordionGroup>
+
+### Post types
+
+Every registered post type appears twice: the single view and, where one exists, the archive listing.
+
+Custom post types created by other plugins show up here too, which is how you handle the ones you did not ask for. WooCommerce products, event listings, and form entries all register post types, and not all of them belong in search.
+
+### Taxonomies
+
+Category and tag archives, plus any custom taxonomy.
+
+<Tip>
+  Categories usually deserve to be indexed. Tags often do not, especially if you have hundreds of tags with two posts each; those are thin pages competing with the posts they list.
+</Tip>
+
+## A sensible starting point
+
+| Type | Setting |
+| --- | --- |
+| Posts and pages | Indexed |
+| Categories | Indexed |
+| Tags | Noindex, unless each has real content behind it |
+| Author archives | Noindex on a single-author site |
+| Date archives | Noindex |
+| Search results | Always noindexed |
+| Media pages | Disabled |
+
+## How this connects to the sitemap
+
+A type set to noindex, or disabled, is left out of your [XML sitemap](/rankify/settings/sitemaps) automatically. You do not have to keep two lists in step.
+
+That matters because listing a page in your sitemap while telling search engines not to index it is a contradictory signal, and it is one of the most common configuration mistakes in SEO plugins.

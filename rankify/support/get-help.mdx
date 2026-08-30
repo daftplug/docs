@@ -1,0 +1,85 @@
+---
+title: "Get help"
+description: "How to reach support and what to send."
+icon: "life-ring"
+---
+
+<Columns cols={2}>
+  <Card title="Email support" icon="envelope" href="mailto:support@daftplug.com">
+    support@daftplug.com
+  </Card>
+  <Card title="Plugin support forum" icon="wordpress" href="https://wordpress.org/support/plugin/rankify/">
+    For the free version.
+  </Card>
+</Columns>
+
+## Before you write
+
+<Columns cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/rankify/support/troubleshooting">
+    Indexing, tags, schema, redirects, and AI crawlers.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/rankify/support/faq">
+    Switching, ranking expectations, and answer engines.
+  </Card>
+</Columns>
+
+Two checks answer most reports on their own:
+
+<Steps>
+  <Step title="Is the site blocking search engines?">
+    **Settings > Reading**. If **Discourage search engines** is ticked, nothing else in the plugin matters.
+  </Step>
+  <Step title="Is another SEO plugin active?">
+    Two plugins writing the same tags is the cause of most duplicate-tag reports.
+  </Step>
+</Steps>
+
+## What to include
+
+<Steps>
+  <Step title="The URL where it happens">
+    A specific page, not just your homepage.
+  </Step>
+  <Step title="What you expected and what you see">
+    For a tag problem, paste the relevant lines from **View source** rather than describing them. It is usually immediately obvious which plugin wrote what.
+  </Step>
+  <Step title="What Search Console says">
+    For an indexing question, run URL Inspection on the page and include the reason it gives. That tells you more than any plugin setting can.
+  </Step>
+  <Step title="Which SEO plugin you came from">
+    If you switched recently. Rankify reads several plugins' stored values, and knowing which one explains a lot of surprising output.
+  </Step>
+  <Step title="Your versions">
+    Rankify version, WordPress version, PHP version, and whether Pro is active.
+  </Step>
+</Steps>
+
+## Things support cannot fix
+
+Worth knowing before you write, so you are not waiting on an answer that does not exist.
+
+<AccordionGroup>
+  <Accordion title="Google rewriting your title">
+    Google substitutes its own when it judges it more useful for the query. No plugin setting overrides that. Shorter, more accurate titles get rewritten less often.
+  </Accordion>
+  <Accordion title="How long indexing takes">
+    Search engines recrawl on their own schedule. Submitting a sitemap and using URL Inspection is the most you can do.
+  </Accordion>
+  <Accordion title="Whether rich results appear">
+    Valid markup makes a page eligible, not guaranteed. Google decides per query, and a page that does not rank has no result to enrich.
+  </Accordion>
+  <Accordion title="Whether an AI assistant cites you">
+    You can make a page reachable, structured, and identifiable. Which sources an assistant names is its own judgment.
+  </Accordion>
+</AccordionGroup>
+
+## Reporting something that looks like a bug
+
+Narrow it first. Switching to a default theme and deactivating other plugins separates a Rankify bug from a conflict. Say which you tried and what changed.
+
+A page URL where the wrong output is visible is worth more than a description of it, because the output can be read directly.
+
+<Card title="Feature requests" icon="lightbulb" horizontal href="mailto:support@daftplug.com">
+  Send them to the same address. Say what you are trying to accomplish rather than the feature you have in mind.
+</Card>

@@ -1,0 +1,249 @@
+---
+title: "Hooks"
+description: "Every action and filter Rankify exposes, grouped by what it controls."
+icon: "code"
+---
+
+Add these to your theme's `functions.php` or a site-specific plugin.
+
+Several filters receive a `$context` object describing what is being rendered, so one filter can behave differently on a post, an archive, and the homepage.
+
+## Meta output
+
+### rankify_meta_title
+
+The final title tag, after templates and per-post overrides.
+
+<ParamField path="$title" type="string" required />
+<ParamField path="$context" type="object" />
+
+```php
+add_filter('rankify_meta_title', function ($title, $context) {
+    if (is_search()) {
+        return 'Search results';
+    }
+
+    return $title;
+}, 10, 2);
+```
+
+### rankify_meta_description
+
+<ParamField path="$description" type="string" required />
+<ParamField path="$context" type="object" />
+
+### rankify_meta_robots
+
+The robots directives for the current page.
+
+<ParamField path="$directives" type="array" required />
+<ParamField path="$context" type="object" />
+
+```php
+// Noindex anything still carrying a legacy taxonomy term.
+add_filter('rankify_meta_robots', function ($directives, $context) {
+    if (is_singular('post') && has_term('archived', 'post_tag')) {
+        $directives[] = 'noindex';
+    }
+
+    return $directives;
+}, 10, 2);
+```
+
+### rankify_meta_canonical
+
+The canonical URL.
+
+<ParamField path="$canonical" type="string" required />
+
+### rankify_meta_image
+
+The social share image.
+
+### rankify_meta_separator
+
+The character `%%sep%%` resolves to.
+
+### rankify_meta_variable
+
+Resolves a template variable, which is how you add your own.
+
+### rankify_filter_document_title
+
+Whether Rankify takes over WordPress's own title output. Return `false` to leave the theme's title alone.
+
+### Output switches
+
+Three filters turn whole blocks of output off, for when a theme or another plugin should own them.
+
+| Filter | Controls |
+| --- | --- |
+| `rankify_output_head_tags` | All head output |
+| `rankify_output_schema` | JSON-LD schema |
+| `rankify_output_social_tags` | Open Graph and X cards |
+
+```php
+// Let a page builder own the social tags on one template.
+add_filter('rankify_output_social_tags', function ($output) {
+    return is_page_template('landing.php') ? false : $output;
+});
+```
+
+## Schema
+
+### rankify_schema_graph
+
+The complete JSON-LD graph before output. The broadest hook in the plugin.
+
+<ParamField path="$graph" type="array" required />
+<ParamField path="$context" type="object" />
+
+```php
+add_filter('rankify_schema_graph', function ($graph, $context) {
+    foreach ($graph['@graph'] as &$node) {
+        if (($node['@type'] ?? '') === 'Organization') {
+            $node['foundingDate'] = '2019-04-01';
+        }
+    }
+
+    return $graph;
+}, 10, 2);
+```
+
+### Other schema filters
+
+| Filter | Controls |
+| --- | --- |
+| `rankify_schema_types` | Which schema types are offered |
+| `rankify_schema_article_types` | Article subtypes available per post type |
+| `rankify_schema_page_types` | Page types available |
+| `rankify_schema_default_currency` | Currency used in Product markup |
+| `rankify_local_business_types` | LocalBusiness subtypes |
+
+### rankify_metabox_schema_panel
+
+Action. Fires inside the editor's schema panel, for adding your own fields.
+
+## Sitemaps and breadcrumbs
+
+| Hook | Type | Controls |
+| --- | --- | --- |
+| `rankify_sitemap_per_page` | filter | URLs per sitemap page |
+| `rankify_sitemap_subtypes` | filter | Which subtypes get their own sitemap |
+| `rankify_sitemap_index_extra` | action | Add entries to the sitemap index |
+| `rankify_breadcrumb_trail` | filter | The trail as an array, with `$context` |
+| `rankify_breadcrumbs_html` | filter | The rendered breadcrumb markup |
+| `rankify_archive_disabled` | filter | Whether an archive is disabled |
+
+```php
+add_filter('rankify_breadcrumb_trail', function ($crumbs, $context) {
+    // Drop the blog index from post trails.
+    return array_values(array_filter($crumbs, function ($crumb) {
+        return $crumb['url'] !== get_permalink(get_option('page_for_posts'));
+    }));
+}, 10, 2);
+```
+
+## AI and answer engines
+
+### rankify_llms_txt_groups
+
+The grouped page list published at `/llms.txt`.
+
+<ParamField path="$groups" type="array" required />
+
+```php
+add_filter('rankify_llms_txt_groups', function ($groups) {
+    $groups['Support'] = [
+        ['title' => 'Contact us', 'url' => home_url('/contact/'), 'summary' => 'How to reach the team.'],
+    ];
+
+    return $groups;
+});
+```
+
+### rankify_blocked_ai_crawlers
+
+Which AI crawlers are blocked in robots.txt.
+
+<ParamField path="$crawlers" type="array" required />
+
+### rankify_answer_source_content
+
+The content analyzed when generating answer blocks. Use it to strip boilerplate that would otherwise be read as part of an answer.
+
+<ParamField path="$content" type="string" required />
+<ParamField path="$post" type="WP_Post" />
+
+### AI tracking
+
+| Filter | Controls |
+| --- | --- |
+| `rankify_ai_referral_sources` | Which referrers count as AI referrals |
+| `rankify_ai_referral_utm_sources` | Which UTM sources count as AI referrals |
+| `rankify_geo_retention_days` | How long crawler and referral data is kept |
+| `rankify_trust_proxy_headers` | Whether to trust proxy headers for client IP |
+
+<Warning>
+  Only enable `rankify_trust_proxy_headers` when your site genuinely sits behind a proxy you control. Trusting these headers otherwise lets any client claim any IP, which defeats crawler identity verification.
+</Warning>
+
+### rankify_indexnow_submitted
+
+Action. Fires after URLs are submitted to IndexNow.
+
+## Redirects and links
+
+| Hook | Type | Controls |
+| --- | --- | --- |
+| `rankify_404_ignore_list` | filter | URLs never logged as 404s |
+| `rankify_404_log_max_rows` | filter | The hard cap on log size |
+| `rankify_link_graph_post_types` | filter | Post types included in link analysis |
+| `rankify_orphan_exclusions` | filter | Post IDs never reported as orphans |
+| `rankify_redirects_changed` | action | Fires when rules change |
+| `rankify_slug_change_redirect` | action | Fires when an automatic redirect is written |
+
+```php
+add_action('rankify_slug_change_redirect', function ($from, $to) {
+    error_log(sprintf('Rankify redirected %s to %s', $from, $to));
+}, 10, 2);
+```
+
+## Admin and permissions
+
+| Hook | Type | Controls |
+| --- | --- | --- |
+| `rankify_user_can_edit_meta` | filter | Whether a user may edit SEO fields |
+| `rankify_admin_column_post_types` | filter | Which list tables get Rankify columns |
+| `rankify_admin_js_vars` | filter | Variables passed to the admin JavaScript |
+| `rankify_page_cache_active` | filter | Whether a page cache is considered active |
+| `rankify_save_post_meta` | action | Fires when per-post SEO meta is saved |
+
+```php
+// Let editors manage SEO fields, not just administrators.
+add_filter('rankify_user_can_edit_meta', function ($can) {
+    return $can || current_user_can('edit_others_posts');
+});
+```
+
+## Settings and bootstrap
+
+### rankify_settings_update:before / :after
+
+Fire around the settings write, both receiving `$settings`.
+
+### rankify_pro_loaded
+
+Fires once the Freemius SDK is initialized, before features are constructed.
+
+## Constants
+
+| Constant | Value |
+| --- | --- |
+| `RANKIFY_VERSION` | The plugin version string |
+| `RANKIFY_FILE` | Absolute path to `rankify.php` |
+| `RANKIFY_BASENAME` | Plugin basename |
+| `RANKIFY_DIR_PATH` | Absolute path to the plugin directory |
+| `RANKIFY_DIR_URL` | URL of the plugin directory |
+| `RANKIFY_UPLOAD_DIR` | Absolute path to the plugin's uploads directory |
+| `RANKIFY_UPLOAD_URL` | URL of the plugin's uploads directory |
