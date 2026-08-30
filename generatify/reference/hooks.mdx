@@ -1,0 +1,234 @@
+---
+title: "Hooks"
+description: "Every action and filter Generatify exposes."
+icon: "code"
+---
+
+Add these to your theme's `functions.php` or a site-specific plugin.
+
+## Content generation
+
+### generatify_ai_content_generation_post_types
+
+Which post types get the **Generate with AI** button.
+
+<ParamField path="$postTypes" type="array" default="['post']" />
+
+```php
+add_filter('generatify_ai_content_generation_post_types', function ($postTypes) {
+    $postTypes[] = 'product';
+
+    return $postTypes;
+});
+```
+
+### generatify_ai_content_generation_languages
+
+The language list offered in the generation dialog.
+
+<ParamField path="$languages" type="array">
+  Defaults to English, Spanish, French, German, Italian, Portuguese, Dutch, Polish, Russian, Ukrainian, Georgian, Turkish, Arabic, Hindi, and Chinese, among others.
+</ParamField>
+
+```php
+add_filter('generatify_ai_content_generation_languages', function ($languages) {
+    return ['English', 'Welsh'];
+});
+```
+
+### generatify_imagen_model
+
+Overrides which image model is used, instead of discovering one from the key.
+
+<ParamField path="$model" type="string|null" default="null" />
+<ParamField path="$apiKey" type="string" />
+
+Return a model identifier as a non-empty string to force it. Return `null` to keep the default discovery.
+
+### generatify_image_request_timeout
+
+Seconds to wait for an image to come back.
+
+<ParamField path="$timeout" type="float" default="180.0" />
+
+## Internal linking
+
+Generated articles are linked to posts you have already published. These four control that.
+
+### generatify_ai_internal_linking
+
+<ParamField path="$enabled" type="bool" default="true" />
+
+```php
+// Turn internal linking off entirely.
+add_filter('generatify_ai_internal_linking', '__return_false');
+```
+
+### generatify_ai_internal_link_post_types
+
+Which post types may be linked to.
+
+<ParamField path="$postTypes" type="array" />
+
+### generatify_ai_internal_link_pool_size
+
+How many existing posts are considered as candidates.
+
+<ParamField path="$size" type="int" default="100" />
+
+Raising this widens the search at the cost of a larger request. Lower it on very large sites if generation is slow.
+
+### generatify_ai_internal_link_candidates
+
+The final say over what may be linked to, after the pool has been gathered.
+
+<ParamField path="$candidates" type="array" required />
+<ParamField path="$title" type="string" />
+<ParamField path="$brief" type="string" />
+<ParamField path="$excludePostId" type="int" />
+
+```php
+add_filter('generatify_ai_internal_link_candidates', function ($candidates, $title, $brief, $excludePostId) {
+    // Never link to posts in a category that is being retired.
+    return array_filter($candidates, function ($candidate) {
+        return !has_term('legacy', 'category', $candidate['id']);
+    });
+}, 10, 4);
+```
+
+## Content summary
+
+### generatify_ai_content_summary_post_types
+
+Where the summary button appears.
+
+<ParamField path="$postTypes" type="array" default="['post']" />
+
+### generatify_ai_content_summary_prompt
+
+The prompt sent to ChatGPT when a reader selects the button.
+
+<ParamField path="$prompt" type="string" required />
+<ParamField path="$postId" type="int" />
+
+```php
+add_filter('generatify_ai_content_summary_prompt', function ($prompt, $postId) {
+    return $prompt . ' Answer in the reader\'s own language.';
+}, 10, 2);
+```
+
+## Helpdesk contact form
+
+These four shape the email sent when a visitor uses contact mode. Each receives the visitor's name, email, and message alongside the value being filtered.
+
+| Filter | Filters |
+| --- | --- |
+| `generatify_helpdesk_contact_recipient` | Where the email is sent |
+| `generatify_helpdesk_contact_subject` | The subject line |
+| `generatify_helpdesk_contact_body` | The body |
+| `generatify_helpdesk_contact_headers` | The mail headers |
+
+```php
+// Route helpdesk mail to a different address outside office hours.
+add_filter('generatify_helpdesk_contact_recipient', function ($recipient, $name, $email, $message) {
+    $hour = (int) current_time('G');
+
+    return ($hour < 9 || $hour > 17) ? 'oncall@example.com' : $recipient;
+}, 10, 4);
+```
+
+```php
+// Reply-To so you can answer the visitor directly from your mail client.
+add_filter('generatify_helpdesk_contact_headers', function ($headers, $name, $email, $message) {
+    $headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
+
+    return $headers;
+}, 10, 4);
+```
+
+## Requests and timeouts
+
+### generatify_ai_request_timeout
+
+Seconds to wait for a provider response.
+
+<ParamField path="$timeout" type="float" default="180.0" />
+
+### generatify_ai_time_limit
+
+The PHP execution limit set for a copilot request, which needs headroom for the whole tool loop rather than a single call.
+
+<ParamField path="$seconds" type="int">
+  Defaults to four times the request timeout.
+</ParamField>
+
+```php
+add_filter('generatify_ai_time_limit', function ($seconds) {
+    return 300;
+});
+```
+
+<Note>
+  Raising this does nothing if your host caps execution time above WordPress. If long generations are cut short, check the host limit before changing this.
+</Note>
+
+### generatify_openai_reasoning_effort
+
+Applies only to OpenAI models that require an explicit reasoning effort when tools are in use.
+
+<ParamField path="$effort" type="string" default="'none'" />
+<ParamField path="$modelId" type="string" />
+
+## Admin
+
+### generatify_admin_js_vars
+
+Filters the variables passed to the admin JavaScript.
+
+<ParamField path="$vars" type="array" required />
+
+```php
+add_filter('generatify_admin_js_vars', function ($vars) {
+    $vars['myCustomFlag'] = true;
+
+    return $vars;
+});
+```
+
+## Actions
+
+### generatify_settings_update:before
+
+Fires before settings are written, with the merged settings about to be saved.
+
+<ParamField path="$settings" type="array" required />
+
+### generatify_settings_update:after
+
+Fires immediately after the settings option is updated.
+
+<ParamField path="$settings" type="array" required />
+
+```php
+add_action('generatify_settings_update:after', function ($settings) {
+    if (($settings['aiHelpdeskAgentMessageMode'] ?? '') === 'conversation') {
+        error_log('Generatify helpdesk switched to AI conversation mode.');
+    }
+});
+```
+
+### generatify_pro_loaded
+
+Fires once the Freemius SDK is initialized, before the plugin's features are constructed. The earliest safe point to check licensing state.
+
+## Constants
+
+| Constant | Value |
+| --- | --- |
+| `GENERATIFY_VERSION` | The plugin version string |
+| `GENERATIFY_FILE` | Absolute path to `generatify.php` |
+| `GENERATIFY_BASENAME` | Plugin basename |
+| `GENERATIFY_DIR_PATH` | Absolute path to the plugin directory |
+| `GENERATIFY_DIR_URL` | URL of the plugin directory |
+| `GENERATIFY_UPLOAD_DIR` | Absolute path to the plugin's uploads directory |
+| `GENERATIFY_UPLOAD_URL` | URL of the plugin's uploads directory |

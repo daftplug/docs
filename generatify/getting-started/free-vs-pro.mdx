@@ -1,0 +1,73 @@
+---
+title: "Free and Pro"
+description: "Which features work without a license and which need one."
+icon: "scale-balanced"
+---
+
+The dividing line is not arbitrary. Free covers everything Generatify can do without calling an AI provider. Pro covers everything that needs one, plus the connectors that hold your API keys.
+
+## Free
+
+These work as soon as you activate the plugin. No account, no key, no per-request cost.
+
+| Feature | Where the work happens |
+| --- | --- |
+| AI toxicity checker | A model in the commenter's browser |
+| AI alt images | An image recognition model in the browser |
+| AI related posts | Content and taxonomy analysis on your server |
+| AI content summary | A prepared prompt that opens in ChatGPT |
+| AI smart compose | A built-in phrase list in the browser |
+| AI page agent | The visitor's browser |
+| AI helpdesk agent, contact mode | Your server sends the email |
+| Browser AI tools (WebMCP) | Read-only REST routes on your site |
+
+## Pro
+
+These call an AI provider, so they need both a license and your own API key.
+
+| Feature | What it does |
+| --- | --- |
+| Copilot chatbot | The assistant on **Generatify > Chatbot** |
+| AI content generation | Writes a full post from a brief |
+| AI meta descriptions | Writes meta descriptions from post content |
+| Connectors | ChatGPT, Claude, Gemini, and Kimi, with your keys |
+| Helpdesk conversation mode | Live AI answers instead of a contact form |
+| Helpdesk popular topics | Up to three suggested topics on the home tab |
+| Helpdesk knowledge pages | Up to three pages whose full content the agent can use |
+| Helpdesk custom instructions | Language, tone, and guidelines for the agent |
+
+## The helpdesk agent is split
+
+The widget itself is free. Its appearance, home tab, help articles, and contact form all work without a license.
+
+What Pro adds is the part that thinks: conversation mode, the pages it can read for context, the custom instructions that shape its answers, and the popular topics on the home tab.
+
+<Note>
+  A free install can select **Conversation** in the mode dropdown, but the endpoint that produces the answers is Pro. Use **Contact** mode on free.
+</Note>
+
+## Costs after Pro
+
+A license unlocks the connectors. It does not include AI usage.
+
+Each provider bills you directly for what you send them. What that costs depends entirely on which features you enable and how much you use them.
+
+<AccordionGroup>
+  <Accordion title="Cheap or free to run">
+    Toxicity checking, alt text, related posts, smart compose, the summary button, and the page agent never call a paid API.
+  </Accordion>
+  <Accordion title="Costs per use">
+    Copilot conversations, generated posts, generated images, and meta descriptions each send a request to your provider. Generated images are the most expensive item by a wide margin.
+  </Accordion>
+  <Accordion title="Costs per visitor">
+    Helpdesk conversation mode is the one to watch, because your visitors, not you, decide how often it runs. Set a spending limit in the provider dashboard before enabling it on a busy site.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  Pro is sold as the DaftPlug membership rather than as a single-plugin upgrade. One license covers Generatify and every other DaftPlug Pro plugin, and plans differ only in the number of site activations.
+</Note>
+
+<Card title="See pricing" icon="rocket" horizontal href="https://daftplug.com/#pricing">
+  Compare the plans on daftplug.com.
+</Card>

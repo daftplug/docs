@@ -1,0 +1,96 @@
+---
+title: "Generating content"
+description: "Writing a post from a brief in the editor, and getting a draft worth publishing."
+icon: "pen-nib"
+---
+
+<Info>
+  Pro, and needs a [connected provider](/generatify/settings/connectors). Enable it under **Settings > Automations > AI Content Generation**.
+</Info>
+
+## The workflow
+
+Open the post editor and select **Generate with AI**.
+
+<Steps>
+  <Step title="Describe the article">
+    A short brief. This is the input that matters most; see [writing a brief](#writing-a-brief) below.
+  </Step>
+  <Step title="Choose what to generate">
+    Title, content, featured image, tags, and categories are independent. Tick only what you want.
+  </Step>
+  <Step title="Set tone and style">
+    Conversational, Friendly, Informative, Persuasive, Professional, Storytelling, or Technical.
+  </Step>
+  <Step title="Choose a language">
+    Defaults to your site language.
+  </Step>
+  <Step title="Generate, then edit">
+    The result goes into the editor as a normal draft. Nothing is published.
+  </Step>
+</Steps>
+
+## Filling gaps in an existing post
+
+You do not have to generate a whole article. On a post that already has a body, use the individual controls:
+
+- **Suggest tags** proposes tags, and you tap the ones you want. Nothing is added until you do.
+- **Suggest a category** proposes one existing category, and says so plainly when none fits rather than inventing one.
+- **Generate featured image** produces an image for a post that has none.
+
+This is the most reliable way to use the feature: your writing, its housekeeping.
+
+## Internal linking
+
+Generated articles are linked to posts you have already published, so a new piece arrives connected to your site rather than as an orphan.
+
+Candidates are drawn from a pool of your existing posts and matched against the title and brief. Three filters control it:
+
+| Filter | Controls |
+| --- | --- |
+| [`generatify_ai_internal_linking`](/generatify/reference/hooks#generatify_ai_internal_linking) | Turns linking on or off |
+| [`generatify_ai_internal_link_post_types`](/generatify/reference/hooks#generatify_ai_internal_link_post_types) | Which post types can be linked to |
+| [`generatify_ai_internal_link_pool_size`](/generatify/reference/hooks#generatify_ai_internal_link_pool_size) | How many candidates are considered |
+
+## Featured images
+
+Image generation needs ChatGPT or Gemini specifically. If you have only connected Claude or Kimi, the editor tells you no image model is available.
+
+<Warning>
+  Generated images are the most expensive thing in this plugin, by a wide margin over text. Generate them deliberately rather than ticking the box on every post.
+</Warning>
+
+## Writing a brief
+
+The brief is the whole job. A vague brief produces the generic article everyone recognizes on sight.
+
+<AccordionGroup>
+  <Accordion title="Say who it is for and what they already know">
+    "For shop owners who have used WooCommerce for years but have never touched the REST API" produces something entirely different from "about the WooCommerce REST API".
+  </Accordion>
+  <Accordion title="Give it your specifics">
+    Your prices, your process, your product names, the objection you actually hear. The model has general knowledge of your topic and none of your business. Whatever you leave out gets replaced with something generic.
+  </Accordion>
+  <Accordion title="Say what to leave out">
+    "Do not explain what a PWA is, the reader knows" removes the throat-clearing that otherwise fills the first three paragraphs.
+  </Accordion>
+  <Accordion title="Ask for a shape">
+    Number of sections, roughly how long, whether it needs a comparison table or a step-by-step. Structure is easier to get right up front than to fix afterwards.
+  </Accordion>
+</AccordionGroup>
+
+## Before publishing
+
+<Warning>
+  Check every factual claim, every number, and every name. A generated draft is confident whether or not it is correct, and the mistakes are not marked. Anything about prices, dates, legal or medical matters, or third-party products needs verifying against a source.
+</Warning>
+
+Then read it aloud. Generated prose has a particular rhythm, and it tends to restate its own points in the closing paragraph. Cutting the last paragraph improves most drafts.
+
+<Note>
+  Search engines rank content on whether it is useful, not on whether a human typed it. A generated draft you have fact-checked, cut, and added your own experience to is a good page. The same draft published untouched is the one that reads like everyone else's.
+</Note>
+
+## Which post types
+
+By default this applies to posts. Extend it with [`generatify_ai_content_generation_post_types`](/generatify/reference/hooks#generatify_ai_content_generation_post_types), and adjust the language list with [`generatify_ai_content_generation_languages`](/generatify/reference/hooks#generatify_ai_content_generation_languages).

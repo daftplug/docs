@@ -1,0 +1,97 @@
+---
+title: "Quickstart"
+description: "Get useful results from Generatify in about ten minutes."
+icon: "list-check"
+---
+
+Generatify has a lot of switches. This page picks a path through them, starting with what works immediately and moving to what needs a provider.
+
+## 1. Turn on what costs nothing
+
+Go to **Generatify > Settings**. These four need no API key and no license, so there is no reason not to try them.
+
+<Steps>
+  <Step title="Content Moderation > AI Toxicity Checker">
+    Blocks insults, threats, and hate speech in comments before they are submitted. The model runs in the commenter's browser, so it adds no load to your server.
+  </Step>
+  <Step title="Automations > AI Alt Images">
+    Fills in alt text for images that have none, by recognizing what is in the picture. Good for accessibility and for image search.
+  </Step>
+  <Step title="Smart Suggestions > AI Related Posts">
+    Adds related post cards at the end of each post. Set the section title, description, and how many to show.
+  </Step>
+  <Step title="Smart Suggestions > AI Content Summary">
+    Adds a button that opens ChatGPT with a prompt about the post. Readers get a summary, and your site stays the source it cites.
+  </Step>
+</Steps>
+
+<Tip>
+  Smart Compose and the AI page agent are already on by default. Look at your front end before changing anything else, so you know what visitors are currently seeing.
+</Tip>
+
+## 2. Set up the visitor-facing agents
+
+Go to **Settings > Agents**.
+
+The **AI page agent** is on by default and sits in the bottom-left corner. Set its **Primary Color** to match your site, or move it if it collides with something.
+
+The **AI helpdesk agent** is off. Turn it on if you answer the same questions repeatedly. Fill in the home title, tagline, and button text, add your **Help Articles**, and choose a **Mode**:
+
+| Mode | What visitors get | Needs |
+| --- | --- | --- |
+| Contact | A form that emails you | Free |
+| Conversation | A live chat that answers from your content | Pro and a connected provider |
+
+Start with **Contact**. It works immediately, and the messages it collects tell you what the conversation mode should be trained to answer.
+
+## 3. Connect a provider
+
+Everything above works without one. The copilot, content generation, meta descriptions, and helpdesk conversations do not.
+
+<Steps>
+  <Step title="Get an API key">
+    Pick one provider to start. See [choosing a provider](/generatify/guides/choosing-a-provider) if you are not sure which.
+  </Step>
+  <Step title="Enter it">
+    Go to **Settings > Connectors**, enable the provider, and paste the key. The field validates the format before saving.
+  </Step>
+  <Step title="Check it worked">
+    Go to **Generatify > Chatbot**. The model selector at the bottom should now list your provider instead of **No AI Model Available**.
+  </Step>
+</Steps>
+
+<Warning>
+  You are billed by the provider, not by DaftPlug. Set a spending limit in the provider's dashboard before you start, so an unexpected loop cannot run up a bill.
+</Warning>
+
+## 4. Try the copilot
+
+Go to **Generatify > Chatbot** and ask it something about your own site, such as "what did I publish last month?" or "find posts that mention shipping".
+
+Then ask it to change something, and watch what happens: it describes the change and waits. Nothing is written until you confirm.
+
+<Card title="Working with the copilot" icon="robot" horizontal href="/generatify/guides/copilot">
+  What it can read, what it can change, and how approvals work.
+</Card>
+
+## 5. Generate a post
+
+With a provider connected, open the post editor and select **Generate with AI**. Describe the article, then choose which parts to generate: title, content, featured image, tags, and categories.
+
+<Card title="Generating content" icon="pen-nib" horizontal href="/generatify/guides/generating-content">
+  Writing a brief that produces something you would publish.
+</Card>
+
+## What to leave off at first
+
+<AccordionGroup>
+  <Accordion title="Browser AI tools">
+    Only useful in browsers that support WebMCP, and it opens a read path into your content plus, on WooCommerce, add-to-cart. Read [browser AI tools](/generatify/guides/browser-ai-tools) before enabling it on a store.
+  </Accordion>
+  <Accordion title="AI meta descriptions">
+    If you already run an SEO plugin that writes meta descriptions, turning this on gives you two systems writing the same field.
+  </Accordion>
+  <Accordion title="Content generation, until you have read a draft">
+    Generate one post and read it end to end before generating more. The quality depends heavily on your brief, and you want to learn that on one post rather than twenty.
+  </Accordion>
+</AccordionGroup>

@@ -30,24 +30,25 @@ icon: "download"
   </Step>
 </Steps>
 
-## Install manually from a ZIP
+## Install Pro from a ZIP
 
-Use this route for the Pro version, which is distributed as a ZIP rather than through the plugin directory.
+Pro is a separate plugin rather than an unlock applied to the free one, so it is distributed as a ZIP instead of through the plugin directory.
 
 <Steps>
   <Step title="Download the ZIP">
-    Sign in at [daftplug.com](https://daftplug.com/) and download the Progressify Pro archive from your account.
+    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Progressify Pro archive.
   </Step>
   <Step title="Upload it">
     Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
   </Step>
-  <Step title="Replace the free version">
-    If the free version is already installed, WordPress asks whether to replace it. Choose to replace. Your settings are stored in the database and survive the swap.
-  </Step>
   <Step title="Activate">
-    Select **Activate Plugin**.
+    Select **Activate Plugin**. If the free version is installed and active, Progressify deactivates it for you, so there is nothing to uninstall first.
   </Step>
 </Steps>
+
+<Note>
+  Your settings survive the switch. Both versions read the same `progressify_settings` option, so everything you configured on free is still there, and going back later loses nothing either.
+</Note>
 
 ## Activate your license
 

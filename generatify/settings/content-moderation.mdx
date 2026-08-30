@@ -1,0 +1,61 @@
+---
+title: "Content moderation"
+description: "Blocking toxic comments before they are submitted."
+icon: "shield"
+---
+
+**Generatify > Settings > Content Moderation**
+
+## AI comment moderation
+
+<ParamField path="AI Toxicity Checker" type="toggle" default="off">
+  Checks a comment as it is being written and blocks submission if it detects toxic content: threats, insults, obscenity, identity-based hate, or sexually explicit language.
+
+  The commenter is told the comment cannot be submitted and can edit it. Nothing reaches your moderation queue, and nothing reaches your database.
+</ParamField>
+
+## How it works
+
+The model runs in the commenter's own browser. That has three consequences worth knowing.
+
+<Columns cols={2}>
+  <Card title="No cost, no provider" icon="circle-check">
+    No API key and no per-comment charge, however many comments you get.
+  </Card>
+  <Card title="No content leaves the visitor's device" icon="lock">
+    Comments are not sent to a third party to be scored.
+  </Card>
+  <Card title="A first-load download" icon="download">
+    The model is fetched the first time a commenter reaches a page with comments. It is cached afterwards.
+  </Card>
+  <Card title="Client-side only" icon="triangle-exclamation">
+    Anything that posts comments without running your JavaScript is unaffected.
+  </Card>
+</Columns>
+
+<Warning>
+  This is a usability feature, not a security control. It stops a real person writing something abusive in the heat of the moment. It does not stop a spam bot posting directly to `wp-comments-post.php`, because that never runs the check. Keep your existing spam protection.
+</Warning>
+
+## What it does and does not catch
+
+It detects the categories the model was trained on, listed above. It does not detect spam, off-topic comments, link dropping, or politely worded bad faith.
+
+<Note>
+  Detection is in English. Toxic comments in other languages will mostly pass through.
+</Note>
+
+Expect occasional false positives. Quoted abuse, reclaimed slurs, and frank discussion of a sensitive topic can all read as toxic to a classifier. Because blocking happens before submission, a false positive means a legitimate commenter simply cannot post, and will not tell you. On a site with heated but legitimate discussion, weigh that against what you gain.
+
+## Pairing it with the moderation queue
+
+The checker and WordPress's own moderation settings solve different halves of the problem.
+
+| | Toxicity checker | WordPress moderation |
+| --- | --- | --- |
+| When | Before submission | After submission |
+| Stops | Abusive language | Anything matching your rules |
+| Visible to the commenter | Yes, immediately | No |
+| Works without JavaScript | No | Yes |
+
+Run both. Under **Settings > Discussion**, keep your keyword list and your held-for-review rules in place; the toxicity checker reduces what reaches them rather than replacing them.

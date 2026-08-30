@@ -1,0 +1,65 @@
+---
+title: "Smart suggestions"
+description: "Related posts, the ChatGPT summary button, and autocomplete."
+icon: "lightbulb"
+---
+
+**Generatify > Settings > Smart Suggestions**
+
+Three small features that help readers, none of which calls an AI provider or costs anything to run.
+
+## AI related content
+
+<ParamField path="AI Related Posts" type="toggle" default="off">
+  Shows related post cards at the end of a post, chosen by analyzing the current post's content and the taxonomy it shares with others.
+</ParamField>
+
+<ParamField path="Section Title" type="string" default="Related Posts">
+  The heading above the cards. Leave it empty to show no heading.
+</ParamField>
+
+<ParamField path="Section Description" type="string" default="You may also like">
+  A line under the heading. Also optional.
+</ParamField>
+
+<ParamField path="Quantity" type="number" default="3">
+  How many posts to show. Three fits most layouts on one row; more than four tends to wrap awkwardly on a phone.
+</ParamField>
+
+<Note>
+  Selection is based on shared categories and tags. A post with no terms assigned has nothing to match against, so it will show no related posts. If the section is empty where you expected it, check the post's taxonomy first.
+</Note>
+
+<Warning>
+  If your theme already outputs related posts, you will get two sets. Disable one.
+</Warning>
+
+## AI content summary
+
+<ParamField path="AI Content Summary" type="toggle" default="off">
+  Adds a button in the middle of a post that opens ChatGPT in a new tab with a prepared prompt about that post. The reader gets a summary and can ask follow-up questions, while your site remains the source being discussed.
+</ParamField>
+
+<ParamField path="Primary Color" type="color" default="#000000">
+  The button color. The label color adjusts automatically for contrast.
+</ParamField>
+
+This costs you nothing, because the request happens in the reader's own ChatGPT session rather than through your API key.
+
+<Tip>
+  It suits long, reference-style posts more than short ones. On a 600-word article the button asks people to leave for something they could get by reading.
+</Tip>
+
+By default the button appears on posts. Change that with the [`generatify_ai_content_summary_post_types`](/generatify/reference/hooks#generatify_ai_content_summary_post_types) filter, and change the prompt itself with [`generatify_ai_content_summary_prompt`](/generatify/reference/hooks#generatify_ai_content_summary_prompt).
+
+## AI autocomplete
+
+<ParamField path="AI Smart Compose" type="toggle" default="on">
+  Suggests the rest of a phrase as people type in text areas, in the manner of Gmail's Smart Compose. Press Tab or the right arrow key to accept, Escape to dismiss.
+
+  This is on by default and uses a built-in phrase list rather than a model, so it works offline, adds no latency, and sends nothing anywhere.
+</ParamField>
+
+<Note>
+  The suggestions are common English phrases. On a site whose forms are in another language, or whose visitors write in domain-specific terms, it will rarely be useful. Turn it off rather than leaving it to add noise.
+</Note>

@@ -1,0 +1,92 @@
+---
+title: "Settings keys"
+description: "Every option key, its default, and which version seeds it."
+icon: "key"
+---
+
+All of Generatify's settings live in a single WordPress option, `generatify_settings`, stored as an associative array.
+
+```php
+$settings = get_option('generatify_settings');
+echo $settings['aiRelatedPostsQuantity']; // 3
+```
+
+Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
+
+<Warning>
+  Prefer the settings screen or the [`PUT /settings`](/generatify/reference/rest-api#update-settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out, including your API keys.
+</Warning>
+
+To change one value safely in code:
+
+```php
+$settings = get_option('generatify_settings', []);
+$settings['aiRelatedPosts'] = 'on';
+update_option('generatify_settings', $settings);
+```
+
+## When keys are seeded
+
+Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten.
+
+This means a free install has no `connectorChatgptApiKey` key at all rather than an empty one. Code that reads a Pro key on a free site should handle it being missing.
+
+## Free settings
+
+| Key | Default |
+| --- | --- |
+| `aiAltImages` | 'off' |
+| `aiPageAgent` | 'on' |
+| `aiPageAgentPosition` | 'bottom-left' |
+| `aiPageAgentPrimaryColor` | '#b034ef' |
+| `aiHelpdeskAgent` | 'off' |
+| `aiHelpdeskAgentPosition` | 'bottom-right' |
+| `aiHelpdeskAgentPrimaryColor` | '#000000' |
+| `aiHelpdeskAgentCover` | '' |
+| `aiHelpdeskAgentIcon` | '' |
+| `aiHelpdeskAgentHomeTitle` | 'Hi, there 👋' |
+| `aiHelpdeskAgentHomeTagline` | 'Our support is here to help.' |
+| `aiHelpdeskAgentHomeButtonText` | 'Send us a message' |
+| `aiHelpdeskAgentMessageMode` | 'contact' |
+| `aiHelpdeskAgentMessageContactEmail` | Your WordPress admin email |
+| `aiHelpdeskAgentHelpArticles` | [] |
+| `aiRelatedPosts` | 'off' |
+| `aiRelatedPostsTitle` | 'Related Posts' |
+| `aiRelatedPostsDescription` | 'You may also like' |
+| `aiRelatedPostsQuantity` | 3 |
+| `aiContentSummary` | 'off' |
+| `aiContentSummaryPrimaryColor` | '#000000' |
+| `aiSmartCompose` | 'on' |
+| `aiToxicityChecker` | 'off' |
+| `aiWebMcp` | 'off' |
+
+## Pro settings
+
+These keys only exist on an install with an active license.
+
+| Key | Default |
+| --- | --- |
+| `aiContentGeneration` | 'off' |
+| `aiMetaDescriptions` | 'off' |
+| `aiHelpdeskAgentHomePopularTopics` | [] |
+| `aiHelpdeskAgentMessageKnowledge` | [] |
+| `aiHelpdeskAgentMessageCustomInstructions` | '' |
+| `connectorChatgpt` | 'off' |
+| `connectorChatgptApiKey` | '' |
+| `connectorClaude` | 'off' |
+| `connectorClaudeApiKey` | '' |
+| `connectorGemini` | 'off' |
+| `connectorGeminiApiKey` | '' |
+| `connectorKimi` | 'off' |
+| `connectorKimiApiKey` | '' |
+
+## Renamed keys
+
+Two migrations run automatically on update. You do not need to do anything, but if you have code referencing the old names, update it.
+
+| Old key | New key | Since |
+| --- | --- | --- |
+| `integrationChatgpt` and the other `integration*` keys | `connectorChatgpt` and the matching `connector*` keys | 1.1.6 |
+| `aiPostTitle`, `aiPostTags`, `aiPostCategories`, `aiPostFeaturedImage` | `aiContentGeneration` | 1.3.4 |
+
+The four editor toggles became a single feature. An install with any of them enabled keeps the capability under the new key.

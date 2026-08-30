@@ -1,0 +1,89 @@
+---
+title: "Browser AI tools"
+description: "Exposing your content and store to AI agents built into the browser, with WebMCP."
+icon: "plug"
+---
+
+Browsers are starting to ship their own AI agents. Without help, an agent has to work out your site the way a person would: read the page, guess at links, and hope. [WebMCP](https://developer.chrome.com/docs/ai/webmcp) lets a page hand the agent a set of tools instead, so it can search your content and answer questions about your store directly.
+
+Enable it under **Settings > Agents > WebMCP Tools**. It is free.
+
+<Note>
+  This only does anything in a browser that supports WebMCP, which is a small and changing set. Everywhere else the tools are simply not registered, and nothing about your site changes.
+</Note>
+
+## The tools
+
+Your page registers these, and the browser's agent calls them on the visitor's behalf.
+
+### Always available
+
+| Tool | What it does |
+| --- | --- |
+| Search content | Finds posts, pages, and other content by keyword |
+| Get content | Returns the full text of one post or page by ID |
+| List categories | Lists the content categories in use |
+
+### With WooCommerce active
+
+| Tool | What it does |
+| --- | --- |
+| Search products | Finds products by keyword |
+| Get product | Returns one product's price, stock status, and description |
+| Get cart | Returns the current cart contents and totals |
+| Add to cart | Adds a product to the cart |
+
+## What it cannot do
+
+Everything is read-only except adding to the cart, and that one mutation is fenced in.
+
+<Columns cols={2}>
+  <Card title="No checkout" icon="ban">
+    The agent cannot place an order, apply a coupon, or reach payment.
+  </Card>
+  <Card title="No account or order data" icon="ban">
+    Customer records and order history are not exposed.
+  </Card>
+  <Card title="Published products only" icon="circle-check">
+    Drafts and private products return nothing.
+  </Card>
+  <Card title="Simple products only" icon="circle-check">
+    Variable products are refused, because the agent cannot choose a variant. It is told to open the product page instead.
+  </Card>
+</Columns>
+
+Stock is checked before anything is added, and a request for more than you have is declined rather than partially filled. Results are capped at 20 rows however many the agent asks for.
+
+<Note>
+  Adding to a cart is reversible, needs no account, and is exactly what an anonymous visitor can already do through your storefront. That is the reasoning behind it being the only write: it grants the agent nothing a person browsing your shop did not already have.
+</Note>
+
+## Should you enable it?
+
+<AccordionGroup>
+  <Accordion title="Content sites: yes">
+    Search and read are exactly what an agent needs to answer a question using your site, and they expose nothing that is not already public.
+  </Accordion>
+  <Accordion title="Stores: probably, but decide about the cart">
+    Product search and stock lookups help someone shopping through an agent. The add-to-cart tool is the part to think about. It cannot spend money, but it can put things in a cart the visitor did not explicitly choose, and support will occasionally hear about it.
+  </Accordion>
+  <Accordion title="Membership or private sites: check what is public first">
+    The tools return published, public content. If your access control depends on something other than post status, verify what the search tool returns before enabling it.
+  </Accordion>
+</AccordionGroup>
+
+## How it relates to the other agents
+
+These three are often confused. They do different things.
+
+| | Runs where | Whose AI | Can act |
+| --- | --- | --- | --- |
+| [Page agent](/generatify/settings/agents#ai-page-agent) | A button on your site | Provided by the feature | Navigates and acts on your pages |
+| [Helpdesk agent](/generatify/settings/agents#ai-helpdesk-agent) | A widget on your site | Yours, via your API key | Answers questions |
+| Browser AI tools | The browser itself | The visitor's | Calls the tools you expose |
+
+The important difference is who pays. The page agent and browser tools cost you nothing per use. The helpdesk agent in conversation mode spends your API credit on every exchange.
+
+## For developers
+
+The tools are backed by REST routes under `generatify/v1/webmcp`, so the agent never touches your DOM. See the [REST API reference](/generatify/reference/rest-api#browser-ai-tools-webmcp) for the routes and their parameters.

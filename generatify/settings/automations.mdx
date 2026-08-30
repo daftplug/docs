@@ -1,0 +1,64 @@
+---
+title: "Automations"
+description: "Content generation in the editor, alt text, and meta descriptions."
+icon: "gears"
+---
+
+**Generatify > Settings > Automations**
+
+Two kinds of automation live here. One writes whole posts on demand from the editor. The other quietly fills in fields you would otherwise leave empty.
+
+## AI content automation
+
+<ParamField path="AI Content Generation" type="toggle" default="off">
+  Pro. Adds a **Generate with AI** button to the post editor. You describe the article you want, then choose which parts to generate: title, content, featured image, tags, and categories.
+
+  Generated articles are linked to related posts you have already published, so a new piece arrives with internal links rather than as an orphan. Posts that already have a body but are missing tags or a featured image can be filled in without rewriting the text.
+</ParamField>
+
+By default this applies to posts. To extend it to other post types, use the [`generatify_ai_content_generation_post_types`](/generatify/reference/hooks#generatify_ai_content_generation_post_types) filter.
+
+<Card title="Writing a good brief" icon="pen-nib" horizontal href="/generatify/guides/generating-content">
+  The editor workflow, and what separates a usable draft from a generic one.
+</Card>
+
+## AI technical SEO automation
+
+### AI alt images
+
+<ParamField path="AI Alt Images" type="toggle" default="off">
+  Adds alt text to images that have an empty alt attribute, by analyzing the image and describing what is in it.
+
+  This runs an image recognition model in the browser rather than calling an AI provider, so it is free and costs nothing per image.
+</ParamField>
+
+Alt text matters for screen reader users first and image search second. Both are served by a plain description of what the image shows.
+
+<Note>
+  Only empty alt attributes are filled. Alt text you wrote yourself is never replaced, so this is safe to enable on a site with a mixed history.
+</Note>
+
+<Warning>
+  Recognition describes what is in the picture, not what the picture means in context. A photo of your founder becomes "a person in a suit". Review the results on important pages and write those by hand.
+</Warning>
+
+### AI meta descriptions
+
+<ParamField path="AI Meta Descriptions" type="toggle" default="off">
+  Pro. Reads a post's content and writes a meta description for posts that have none. Calls your connected AI provider, so each one costs a request.
+</ParamField>
+
+<Warning>
+  If you already run an SEO plugin that generates meta descriptions, enabling this gives you two systems writing the same field. Decide which one owns it before turning this on.
+</Warning>
+
+## Related settings
+
+<Columns cols={2}>
+  <Card title="Connectors" icon="plug" href="/generatify/settings/connectors">
+    Content generation and meta descriptions both need a provider.
+  </Card>
+  <Card title="Free and Pro" icon="scale-balanced" href="/generatify/getting-started/free-vs-pro">
+    Which of these two costs money to run.
+  </Card>
+</Columns>

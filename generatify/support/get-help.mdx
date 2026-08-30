@@ -1,0 +1,61 @@
+---
+title: "Get help"
+description: "How to reach support and what to send."
+icon: "life-ring"
+---
+
+<Columns cols={2}>
+  <Card title="Email support" icon="envelope" href="mailto:support@daftplug.com">
+    support@daftplug.com
+  </Card>
+  <Card title="Plugin support forum" icon="wordpress" href="https://wordpress.org/support/plugin/generatify/">
+    For the free version.
+  </Card>
+</Columns>
+
+## Before you write
+
+<Columns cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/generatify/support/troubleshooting">
+    The problems that come up most often.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/generatify/support/faq">
+    Costs, keys, and what the copilot can do.
+  </Card>
+</Columns>
+
+## What to include
+
+<Steps>
+  <Step title="Which feature">
+    Say which one specifically. Half of Generatify calls an AI provider and half does not, and that changes where the problem can be.
+  </Step>
+  <Step title="Whether a provider is connected">
+    Which one, and whether **Generatify > Chatbot** lists a model or says **No AI Model Available**.
+  </Step>
+  <Step title="What you expected and what happened">
+    Including the exact wording of any error.
+  </Step>
+  <Step title="Any console errors">
+    The free features run in the browser, so their errors appear in the browser console rather than in your PHP log.
+  </Step>
+  <Step title="Your versions">
+    Generatify version, WordPress version, PHP version, and whether Pro is active.
+  </Step>
+</Steps>
+
+<Warning>
+  Never send us your API key. We do not need it, and it should be treated as a password. If you have already pasted one into an email or a public forum, revoke it at the provider and create a new one.
+</Warning>
+
+## Provider errors
+
+If the failure is an error from ChatGPT, Claude, Gemini, or Kimi, check that provider's dashboard first. Out of credit, rate limited, and revoked key all look the same from inside WordPress, and only the provider can tell you which it is. Include their error message if you write to us.
+
+## Reporting something that looks like a bug
+
+Try to narrow it first. Switching to a default theme and deactivating other plugins takes a few minutes and tells you whether the problem is Generatify or a conflict. Say which you tried and what changed.
+
+<Card title="Feature requests" icon="lightbulb" horizontal href="mailto:support@daftplug.com">
+  Send them to the same address. Say what you are trying to accomplish rather than the feature you have in mind.
+</Card>

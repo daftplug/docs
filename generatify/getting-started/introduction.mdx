@@ -1,151 +1,76 @@
 ---
-title: 'Introduction'
-description: 'Welcome to Generatify - Your All-in-One AI Suite for WordPress'
-icon: 'rocket'
+title: "Introduction"
+description: "What Generatify adds to WordPress and how its features are organized."
+icon: "rocket"
 ---
 
-## What is Generatify?
+Generatify brings AI into WordPress in two directions: tools that help **you** run the site, and tools that help **your visitors** use it.
 
-Generatify is a comprehensive WordPress plugin that transforms your website into a complete **Artificial Intelligence (AI) suite**. It brings powerful AI capabilities directly into your WordPress workflow, helping you automate tasks, engage visitors, moderate content, and enhance productivity—all from a single, streamlined interface.
+For you, there is a copilot in the admin that can read your site, draft posts, and make changes you approve. For your visitors, there is an on-page agent that follows instructions and navigates the site for them, a helpdesk agent that answers questions, and a set of tools browser AI agents can call directly.
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Generatify Dashboard"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Generatify Dashboard"
-/>
+<Frame>
+  <img src="https://daftplug.com/wp-content/uploads/generatify-admin-overview.png" alt="The Generatify chatbot page in the WordPress admin, showing the prompt box, context controls, and model selector" />
+</Frame>
 
-## Why Generatify?
+## The one thing to understand first
 
-<CardGroup cols={2}>
-  <Card
-    title="Context-Aware AI"
-    icon="brain"
-    iconType="duotone"
-  >
-    Understands your site's content, plugins, themes, and configuration for accurate, grounded responses.
+Generatify's features split into two groups by where the intelligence runs, and this split explains almost everything about how the plugin behaves.
+
+<Columns cols={2}>
+  <Card title="Runs on your site" icon="server">
+    Toxicity checking, image alt text, related posts, smart compose, the content summary button, and the browser AI tools. These use models in the visitor's browser or plain analysis on your server. No API key, no account, no per-request cost.
   </Card>
-  <Card
-    title="No Coding Required"
-    icon="sparkles"
-    iconType="duotone"
-  >
-    Simple on/off toggles and intuitive settings—no technical knowledge needed.
+  <Card title="Runs on an AI provider" icon="cloud">
+    The copilot, content generation, meta descriptions, and helpdesk conversations. These call ChatGPT, Claude, Gemini, or Kimi using an API key you supply, and you pay that provider directly for what you use.
   </Card>
-  <Card
-    title="Multiple AI Providers"
-    icon="network-wired"
-    iconType="duotone"
-  >
-    Seamlessly integrate with OpenAI (ChatGPT), Anthropic (Claude), or Google (Gemini).
-  </Card>
-  <Card
-    title="Modular Design"
-    icon="puzzle-piece"
-    iconType="duotone"
-  >
-    Enable only the features you need. Each module works independently.
-  </Card>
-</CardGroup>
-
-## Key Features at a Glance
-
-### 🤖 AI Assistant Chatbot (Copilot)
-Your personal WordPress AI assistant that understands your entire site. Write, rewrite, translate, troubleshoot errors, and get instant answers—all context-aware.
-
-### ⚙️ AI Automations
-Automatically generate post tags, categorize content, fill missing meta descriptions, and add alt text to images. Let AI handle the repetitive work.
-
-### 💬 Helpdesk Agent
-A front-end chat widget powered by your site's knowledge base. Provide instant support to visitors 24/7 with AI-driven responses.
-
-### ✍️ Smart Suggestions
-Inline autocomplete for textareas and AI-powered related posts that keep visitors engaged with relevant content.
-
-### 🛡️ Content Moderation
-Detect and block toxic or hateful comments before they're submitted, maintaining a positive community.
-
-### 🔌 Flexible Integrations
-Works with your preferred AI provider—OpenAI, Anthropic, or Google—with the ability to assign different models to different features.
-
-## Who Is Generatify For?
-
-<AccordionGroup>
-  <Accordion title="Content Creators & Bloggers">
-    Automate SEO tasks, generate tags/categories, get writing suggestions, and keep readers engaged with smart content recommendations.
-  </Accordion>
-
-  <Accordion title="E-commerce Sites">
-    Provide instant customer support, automatically optimize product descriptions, and moderate reviews with AI-powered tools.
-  </Accordion>
-
-  <Accordion title="Agencies & Developers">
-    Deploy AI capabilities across multiple client sites with flexible settings, white-label options, and developer-friendly hooks.
-  </Accordion>
-
-  <Accordion title="Support Teams">
-    Deploy a 24/7 AI helpdesk agent that answers common questions based on your knowledge base, reducing support ticket volume.
-  </Accordion>
-
-  <Accordion title="Community & Forum Managers">
-    Keep discussions healthy with AI-powered content moderation that detects toxicity before it's published.
-  </Accordion>
-</AccordionGroup>
-
-## How It Works
-
-1. **Install & Activate** - Get started in seconds with the WordPress plugin
-2. **Connect AI Provider** - Add your API key from OpenAI, Anthropic, or Google
-3. **Enable Features** - Turn on the modules you want to use
-4. **Customize Settings** - Configure each feature to match your needs
-5. **Let AI Work** - Sit back and watch AI enhance your site automatically
-
-## What Makes Generatify Different?
-
-<CardGroup cols={3}>
-  <Card title="Built for WordPress" icon="wordpress">
-    Native WordPress integration with hooks, filters, and REST API support
-  </Card>
-  <Card title="Privacy-Focused" icon="shield-check">
-    Your data stays on your server. API calls go directly to your chosen provider
-  </Card>
-  <Card title="Performance Optimized" icon="gauge-high">
-    Lightweight assets, asynchronous processing, and efficient caching
-  </Card>
-  <Card title="Fully Translatable" icon="language">
-    Compatible with WPML, Polylang, TranslatePress, and includes POT files
-  </Card>
-  <Card title="Regular Updates" icon="arrows-rotate">
-    Continuous improvements, new features, and compatibility updates
-  </Card>
-  <Card title="Professional Support" icon="headset">
-    Expert help from the DaftPlug team whenever you need it
-  </Card>
-</CardGroup>
-
-## Ready to Get Started?
-
-<CardGroup cols={2}>
-  <Card
-    title="Installation Guide"
-    icon="download"
-    href="/getting-started/installation"
-  >
-    Install Generatify and get your WordPress site AI-ready
-  </Card>
-  <Card
-    title="Quick Setup"
-    icon="bolt"
-    href="/getting-started/quick-setup"
-  >
-    Configure your first AI feature in under 5 minutes
-  </Card>
-</CardGroup>
+</Columns>
 
 <Note>
-  **New to AI?** Don't worry! Generatify is designed to be user-friendly even if you've never used AI tools before. Our documentation will guide you through every step.
+  The first group is free and works the moment you activate the plugin. The second group needs Pro, because the connectors that hold your API keys are a Pro feature.
 </Note>
+
+## What you get
+
+<Columns cols={2}>
+  <Card title="Copilot" icon="robot" href="/generatify/guides/copilot">
+    An assistant in the admin that knows your site. It can search content, draft and edit posts, generate images, and change settings, and it asks before it changes anything.
+  </Card>
+  <Card title="AI page agent" icon="wand-magic-sparkles" href="/generatify/settings/agents#ai-page-agent">
+    A floating copilot for visitors. They say what they want, and the agent works through your site to do it.
+  </Card>
+  <Card title="Helpdesk agent" icon="headset" href="/generatify/settings/agents#ai-helpdesk-agent">
+    A support widget with help articles, popular topics, and either a contact form or a live AI conversation.
+  </Card>
+  <Card title="Browser AI tools" icon="plug" href="/generatify/guides/browser-ai-tools">
+    Exposes your content and store to AI agents built into the browser, so they can search and shop on a visitor's behalf.
+  </Card>
+  <Card title="Content generation" icon="pen-nib" href="/generatify/guides/generating-content">
+    Write a whole post from a brief: title, body, featured image, tags, categories, and internal links.
+  </Card>
+  <Card title="Smart suggestions" icon="lightbulb" href="/generatify/settings/smart-suggestions">
+    Related posts, a ChatGPT summary button, and autocomplete in text fields.
+  </Card>
+  <Card title="Content moderation" icon="shield" href="/generatify/settings/content-moderation">
+    Blocks toxic comments before they are submitted, using a model in the commenter's browser.
+  </Card>
+  <Card title="SEO automation" icon="magnifying-glass" href="/generatify/settings/automations">
+    Fills in missing image alt text and meta descriptions.
+  </Card>
+</Columns>
+
+## How the plugin is organized
+
+Generatify adds a top-level **Generatify** menu with two pages.
+
+<Steps>
+  <Step title="Chatbot">
+    The copilot. This is the plugin's landing page, and where you talk to your site.
+  </Step>
+  <Step title="Settings">
+    Five tabs: Automations, Agents, Smart Suggestions, Content Moderation, and Connectors.
+  </Step>
+</Steps>
+
+<Card title="Install Generatify" icon="download" horizontal href="/generatify/getting-started/installation">
+  Requirements, installation, and license activation.
+</Card>

@@ -1,0 +1,136 @@
+---
+title: "Working with the copilot"
+description: "What the admin assistant can read, what it can change, and how approvals work."
+icon: "robot"
+---
+
+<Info>
+  The copilot is a Pro feature and needs a [connected provider](/generatify/settings/connectors).
+</Info>
+
+**Generatify > Chatbot** is an assistant that knows your site. It is not a general chatbot that happens to live in WordPress: it can query your content, and it can make changes, with your approval, through a defined set of abilities.
+
+## The prompt box
+
+<ParamField path="Add Context" type="control">
+  Attach images, PDFs, or CSVs for the assistant to work from.
+</ParamField>
+
+<ParamField path="Mention WordPress content" type="control">
+  Reference a specific post, page, or other content so the assistant works on exactly what you mean rather than searching for it.
+</ParamField>
+
+<ParamField path="Select AI Model" type="control">
+  Choose which connected provider answers. **Auto** picks for you. If this reads **No AI Model Available**, no connector is set up.
+</ParamField>
+
+Conversations are kept in your browser's local storage, not in your database. They stay on the machine you used, and **New Chat** discards the current one.
+
+## What it can read
+
+These run without asking, because they change nothing.
+
+| Ability | Returns |
+| --- | --- |
+| `generatify/get-site-info` | WordPress and PHP versions, active theme, active plugins |
+| `generatify/search-posts` | Posts matching a query |
+| `generatify/list-recent-posts` | Recent posts, filterable by type and status |
+| `generatify/get-post` | One post's content, excerpt, author, terms, featured image, and meta |
+| `generatify/list-users` | Users, optionally with email addresses |
+
+This is what makes questions about your own site work: "which posts mention returns", "what did I publish in March", "who wrote the most posts last year".
+
+## What it can change
+
+Every one of these stops and asks first.
+
+| Ability | Effect |
+| --- | --- |
+| `generatify/create-post` | Creates a post |
+| `generatify/update-post` | Edits an existing post |
+| `generatify/trash-post` | Moves a post to trash |
+| `generatify/set-post-terms` | Sets categories and tags |
+| `generatify/set-featured-image` | Sets a featured image |
+| `generatify/generate-image` | Generates an image |
+| `generatify/moderate-comment` | Approves, unapproves, spams, or trashes a comment |
+| `generatify/update-plugin-setting` | Changes a Generatify setting |
+
+## How approval works
+
+Nothing is written when the assistant decides to write it. Instead:
+
+<Steps>
+  <Step title="It builds a preview">
+    The change is prepared and held, not applied.
+  </Step>
+  <Step title="It describes the change to you">
+    In plain language, in the conversation.
+  </Step>
+  <Step title="You confirm or you do not">
+    Only on your confirmation does the change actually happen.
+  </Step>
+</Steps>
+
+<Note>
+  This is enforced in the plugin, not in the prompt. The write path returns a preview and a token instead of performing the action, and the action only runs when the pending change is applied. An assistant that decides to skip asking still cannot write anything.
+</Note>
+
+Ask to see what is waiting at any point, and pending changes are listed back to you.
+
+## Developer abilities
+
+The copilot can also work on the site itself: reading and writing files under `wp-content`, activating and deactivating plugins, and reading and setting options. This is the difference between an assistant that hands you a snippet and one that creates the child theme and fixes the broken function it just found.
+
+| Ability | Effect |
+| --- | --- |
+| `generatify/list-files` | Lists files under `wp-content` |
+| `generatify/read-file` | Reads one file |
+| `generatify/write-file` | Creates or overwrites a file |
+| `generatify/delete-file` | Deletes a file |
+| `generatify/manage-plugin` | Activates or deactivates a plugin |
+| `generatify/get-option` | Reads an option |
+| `generatify/update-option` | Writes an option |
+
+### The limits on those
+
+<AccordionGroup>
+  <Accordion title="Capability checks">
+    Requires `manage_options` at minimum, plus WordPress's own file-editing capabilities. Checked against the logged-in user both when the preview is built and again when it is applied.
+  </Accordion>
+  <Accordion title="Location">
+    Every path is resolved and must land inside `wp-content`. Symlinks cannot escape it and neither can `..`.
+  </Accordion>
+  <Accordion title="File types">
+    An allowlist of source and text extensions: `php`, `js`, `mjs`, `jsx`, `ts`, `tsx`, `css`, `scss`, `json`, `txt`, `md`, `html`, `svg`, `xml`, `po`, `pot`, `yml`, `yaml`. Anything else is refused rather than guessed at. `.htaccess` is deliberately excluded, because one bad directive there takes down the admin you would need to undo it.
+  </Accordion>
+  <Accordion title="Site policy">
+    `DISALLOW_FILE_MODS` and `DISALLOW_FILE_EDIT` are honored. A site that has locked file editing stays locked.
+  </Accordion>
+  <Accordion title="Reversibility">
+    Every write and delete copies the previous file into `uploads/generatify-backups` first and returns the backup path. Nothing is removed outright.
+  </Accordion>
+  <Accordion title="Protected options">
+    A fixed list stays out of reach: `siteurl`, `home`, `active_plugins`, `template`, `stylesheet`, `admin_email`, `new_admin_email`, `users_can_register`, `default_role`, `cron`, `db_version`, `initial_db_version`, and `recently_activated`.
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  These protections are real, and they are not a substitute for backups. An approved change to a theme file is still a change to a theme file. Work on staging when asking the assistant to modify code, and confirm you have a working backup before approving anything structural.
+</Warning>
+
+## Getting better results
+
+<AccordionGroup>
+  <Accordion title="Mention the content instead of describing it">
+    Use the mention control to point at the exact post. Searching for "that post about shipping" wastes a round trip and sometimes finds the wrong one.
+  </Accordion>
+  <Accordion title="Ask for one change at a time">
+    A request bundling five edits produces one confirmation you have to accept or reject as a whole. Separate requests are easier to review and easier to undo.
+  </Accordion>
+  <Accordion title="Read the preview, not the summary">
+    The description is generated. The preview is what will actually be written. When they disagree, the preview is right.
+  </Accordion>
+  <Accordion title="Start a new chat when you change topic">
+    Long conversations carry everything forward, which costs more per request and gives the assistant more chances to conflate two tasks.
+  </Accordion>
+</AccordionGroup>

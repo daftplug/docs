@@ -1,0 +1,94 @@
+---
+title: "Connectors"
+description: "Connecting ChatGPT, Claude, Gemini, or Kimi with your own API key."
+icon: "plug"
+---
+
+**Generatify > Settings > Connectors**
+
+Connectors are how Generatify reaches an AI provider. Each one is a toggle and an API key. The whole tab is Pro, which is why every AI feature that calls a provider is also Pro.
+
+<Info>
+  A license unlocks the connectors. It does not include AI usage. You get a key from the provider, and the provider bills you for what you send them.
+</Info>
+
+## AI providers
+
+<ParamField path="ChatGPT" type="toggle" default="off">
+  Pro. OpenAI. Also the provider used for image generation.
+</ParamField>
+
+<ParamField path="OpenAI API Key" type="password">
+  From [platform.openai.com](https://platform.openai.com/api-keys). Validated for format before saving.
+</ParamField>
+
+<ParamField path="Claude" type="toggle" default="off">
+  Pro. Anthropic.
+</ParamField>
+
+<ParamField path="Anthropic API Key" type="password">
+  From [console.anthropic.com](https://console.anthropic.com/).
+</ParamField>
+
+<ParamField path="Gemini" type="toggle" default="off">
+  Pro. Google.
+</ParamField>
+
+<ParamField path="Gemini API Key" type="password">
+  From [aistudio.google.com](https://aistudio.google.com/apikey).
+</ParamField>
+
+<ParamField path="Kimi" type="toggle" default="off">
+  Pro. Moonshot AI.
+</ParamField>
+
+<ParamField path="Kimi API Key" type="password">
+  From the Moonshot AI platform console.
+</ParamField>
+
+## Enabling more than one
+
+You can connect all four. The model selector on **Generatify > Chatbot** then lists the most capable model from each, plus an **Auto** option that picks for you.
+
+Connecting several is useful for comparing answers and for continuing when one provider has an outage. It does not reduce cost, since you pay whichever one you actually use.
+
+<Card title="Which provider to choose" icon="scale-balanced" horizontal href="/generatify/guides/choosing-a-provider">
+  What each is good at, and what a key costs to get.
+</Card>
+
+## Where your key is stored
+
+Keys are saved in the `generatify_settings` option, in your database, alongside every other setting.
+
+<Warning>
+  Anyone with administrator access to the site, or with database access, can read the key. Treat it as a shared credential.
+
+  Give each site its own key rather than reusing one, so a compromised site can be cut off without disturbing the others. Set a spending limit in the provider's dashboard, which is your only hard ceiling if a key does leak. Rotate keys when an administrator leaves.
+</Warning>
+
+## Verifying a connection
+
+Go to **Generatify > Chatbot** and open the model selector at the bottom of the prompt box.
+
+| What you see | What it means |
+| --- | --- |
+| Your provider listed | The key was accepted |
+| **No AI Model Available** | No connector is enabled, or no key is saved |
+| The model listed but requests fail | The key is saved but rejected, out of credit, or rate limited |
+
+For the third case, check the provider's dashboard rather than the plugin. Generatify passes their error back, and it will usually say which of the three it is.
+
+## Requests that take a long time
+
+The plugin allows up to three minutes for a provider to respond, which covers long generations on a slow model.
+
+If your host enforces a shorter PHP execution limit, a long request can be cut off before the provider replies. Both the timeout and the execution limit are filterable:
+
+<Columns cols={2}>
+  <Card title="generatify_ai_request_timeout" icon="clock" href="/generatify/reference/hooks#generatify_ai_request_timeout">
+    How long to wait for the provider.
+  </Card>
+  <Card title="generatify_ai_time_limit" icon="hourglass" href="/generatify/reference/hooks#generatify_ai_time_limit">
+    The PHP execution limit for the request.
+  </Card>
+</Columns>

@@ -1,0 +1,148 @@
+---
+title: "REST API"
+description: "The generatify/v1 endpoints, their permissions, and their parameters."
+icon: "server"
+---
+
+Generatify registers its endpoints under the `generatify/v1` namespace. Most of them exist to serve the plugin's own admin screens and front-end scripts, so treat them as an internal API rather than a versioned public contract. The exception is the WebMCP group, which is designed to be called by something other than the plugin.
+
+```
+https://example.com/wp-json/generatify/v1/
+```
+
+## Authentication
+
+Administrative endpoints require a capability and a valid `X-WP-Nonce` header. Front-end endpoints are public because visitors are not logged in.
+
+<Warning>
+  Do not request a nonce from `/helpdesk-agent/nonce` and reuse it for an administrative call. That route re-resolves the user from the cookie so that logged-in visitors get a nonce bound to themselves rather than to user 0, and it is deliberately never cached.
+</Warning>
+
+## Endpoints
+
+| Endpoint | Method | Access |
+| --- | --- | --- |
+| `/settings` | PUT | `manage_options` |
+| `/context/search` | GET | `edit_posts` |
+| `/generateAiResponse` | POST | `manage_options` |
+| `/progress` | GET | `manage_options` |
+| `/generate-title` | POST | `edit_posts` |
+| `/generate-content` | POST | `edit_posts` |
+| `/generate-tags` | POST | `edit_posts` |
+| `/generate-categories` | POST | `edit_posts` |
+| `/generate-featured-image` | POST | `edit_posts` |
+| `/image-capability` | GET | `edit_posts` |
+| `/helpdesk-agent/nonce` | GET | Public |
+| `/helpdesk-agent/contact` | POST | Public |
+| `/helpdesk-agent/ai-response` | POST | Public, Pro only |
+| `/webmcp/*` | GET, POST | Public |
+
+## Settings
+
+### Update settings
+
+<ParamField path="PUT /settings" type="endpoint">
+  Merges the supplied values over the stored settings. Send only the keys you want to change.
+</ParamField>
+
+```bash
+curl -X PUT https://example.com/wp-json/generatify/v1/settings \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"settings": {"aiRelatedPosts": "on", "aiRelatedPostsQuantity": 4}}'
+```
+
+Fires [`generatify_settings_update:before`](/generatify/reference/hooks#generatify_settings_updatebefore) and `:after` around the write.
+
+<Warning>
+  This endpoint can write API keys, since they are ordinary settings. Anyone who can call it with `manage_options` can read and replace your provider credentials.
+</Warning>
+
+There is no GET counterpart. Read settings in PHP with `get_option('generatify_settings')`.
+
+## Copilot
+
+<ParamField path="POST /generateAiResponse" type="endpoint">
+  Runs a copilot turn, including the tool loop that reads your site and prepares any changes. Requires `manage_options`.
+</ParamField>
+
+<ParamField path="GET /progress" type="endpoint">
+  Reports progress for a running request, so the interface can show what the assistant is doing rather than a blank spinner.
+</ParamField>
+
+<ParamField path="GET /context/search" type="endpoint">
+  Backs the mention control in the prompt box, returning content matching a query. Requires `edit_posts`.
+</ParamField>
+
+## Content generation
+
+All five generation routes require `edit_posts` and a connected provider.
+
+| Route | Generates |
+| --- | --- |
+| `POST /generate-title` | A title from the brief |
+| `POST /generate-content` | The post body |
+| `POST /generate-tags` | Suggested tags |
+| `POST /generate-categories` | A suggested existing category |
+| `POST /generate-featured-image` | A featured image |
+
+<ParamField path="GET /image-capability" type="endpoint">
+  Reports whether any connected key offers an image model. The editor calls this before showing the featured image control, which is why you see a specific message rather than a failure when only Claude or Kimi is connected.
+</ParamField>
+
+## Helpdesk agent
+
+<ParamField path="GET /helpdesk-agent/nonce" type="endpoint">
+  Returns a fresh REST nonce for the front-end widget. Never cached.
+</ParamField>
+
+<ParamField path="POST /helpdesk-agent/contact" type="endpoint">
+  Sends a contact form submission by email. The recipient, subject, body, and headers are all [filterable](/generatify/reference/hooks#helpdesk-contact-form).
+</ParamField>
+
+<ParamField path="POST /helpdesk-agent/ai-response" type="endpoint">
+  Answers a visitor message in conversation mode. Only registered when Pro is active, which is why conversation mode does nothing on a free install.
+</ParamField>
+
+## Browser AI tools (WebMCP)
+
+Registered only when **WebMCP Tools** is enabled, under `generatify/v1/webmcp`. All are public, because a browser agent acts as an anonymous visitor. Results are capped at 20 rows.
+
+| Route | Method | Returns |
+| --- | --- | --- |
+| `/webmcp/search` | GET | Content matching `query`, with an optional `limit` |
+| `/webmcp/content/{id}` | GET | The full text of one post or page |
+| `/webmcp/categories` | GET | Categories in use |
+
+With WooCommerce active:
+
+| Route | Method | Returns |
+| --- | --- | --- |
+| `/webmcp/products` | GET | Products matching `query`, with an optional `limit` |
+| `/webmcp/product/{id}` | GET | Price, stock status, and description |
+| `/webmcp/cart` | GET | Cart contents and totals |
+| `/webmcp/cart/add` | POST | Adds `id` to the cart, with an optional `quantity` |
+
+```bash
+curl "https://example.com/wp-json/generatify/v1/webmcp/search?query=shipping&limit=5"
+```
+
+`/webmcp/cart/add` is the only route in the plugin that changes anything without authentication, and it is constrained accordingly:
+
+<ResponseField name="404" type="generatify_not_found">
+  No published product with that ID.
+</ResponseField>
+<ResponseField name="400" type="generatify_not_purchasable">
+  The product is not purchasable, or is not a simple product. Variable products are refused because a variant cannot be chosen from here.
+</ResponseField>
+<ResponseField name="409" type="generatify_out_of_stock">
+  Not enough stock for the requested quantity.
+</ResponseField>
+<ResponseField name="503" type="generatify_no_cart">
+  The cart is not available.
+</ResponseField>
+
+<Card title="What this exposes, and whether to enable it" icon="plug" horizontal href="/generatify/guides/browser-ai-tools">
+  The reasoning behind the limits, and when to leave it off.
+</Card>

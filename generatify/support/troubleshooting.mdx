@@ -1,0 +1,110 @@
+---
+title: "Troubleshooting"
+description: "The problems that come up most often, and how to diagnose them."
+icon: "wrench"
+---
+
+Most Generatify problems fall into one of three groups: a feature that needs a provider and does not have one, a request that takes longer than your host allows, or a free feature behaving differently from how people expect because it runs in the browser.
+
+## Start here
+
+<Steps>
+  <Step title="Check whether the feature needs a provider">
+    The copilot, content generation, meta descriptions, and helpdesk conversation mode all call an AI provider. Everything else does not. See [free and Pro](/generatify/getting-started/free-vs-pro).
+  </Step>
+  <Step title="Check the model selector">
+    Go to **Generatify > Chatbot**. If it reads **No AI Model Available**, no connector is enabled or no key is saved, and every provider-backed feature will fail.
+  </Step>
+  <Step title="Check the provider dashboard">
+    Out of credit, rate limited, and revoked key all look identical from inside WordPress. The provider will tell you which.
+  </Step>
+  <Step title="Check your browser console">
+    The free features run client-side. If alt text, toxicity checking, smart compose, or the page agent is not working, the error is in the console, not in PHP.
+  </Step>
+</Steps>
+
+## Common problems
+
+<AccordionGroup>
+  <Accordion title="No AI Model Available, but I saved a key">
+    The connector toggle itself has to be on, not just the key filled in. Check the toggle above the key field on **Settings > Connectors**, and save again.
+  </Accordion>
+
+  <Accordion title="Generation starts and then fails partway">
+    Almost always your host's PHP execution limit rather than the provider. A long article can take a minute or more, and shared hosting often cuts requests off at 30 or 60 seconds.
+
+    Raise the limit at the host if you can. If you cannot, generate content in parts: title and body separately, then tags and the featured image afterwards. See the [timeout filters](/generatify/settings/connectors#requests-that-take-a-long-time).
+  </Accordion>
+
+  <Accordion title="The featured image control says no image model is available">
+    Image generation needs ChatGPT or Gemini. Claude and Kimi do not provide one. Connect one of the two on **Settings > Connectors**.
+  </Accordion>
+
+  <Accordion title="The helpdesk agent shows a contact form when I chose conversation">
+    Conversation mode needs Pro and a connected provider. The endpoint that answers messages is only registered on a licensed install, so a free site falls back to the form.
+  </Accordion>
+
+  <Accordion title="Related posts section is empty">
+    Selection is based on shared categories and tags. A post with no terms has nothing to match against. Assign terms, or accept that untagged posts will show nothing.
+  </Accordion>
+
+  <Accordion title="Alt text is not being added">
+    Only empty alt attributes are filled, so images you already described are skipped by design. The model also runs in the browser, so check the console for a failed model load, particularly on sites with a strict content security policy.
+  </Accordion>
+
+  <Accordion title="Toxic comments still get through">
+    The check runs in the commenter's browser before submission. Anything that posts directly to `wp-comments-post.php` never runs it. This is a usability feature, not spam protection, and it does not replace your existing spam plugin.
+
+    It also only detects English, and only the categories it was trained on. Spam, off-topic comments, and politely worded bad faith all pass.
+  </Accordion>
+
+  <Accordion title="Two floating buttons overlap on mobile">
+    The page agent defaults to bottom-left and the helpdesk agent to bottom-right precisely to avoid this. If you moved one, move it back, or disable whichever you use less. Also check for a chat widget or cookie banner claiming the same corner.
+  </Accordion>
+
+  <Accordion title="Browser AI tools do nothing">
+    They only register in a browser that supports WebMCP, which is currently a small set. In any other browser this is expected, not a fault. Confirm the routes themselves work by calling one directly:
+
+    ```bash
+    curl "https://example.com/wp-json/generatify/v1/webmcp/search?query=test"
+    ```
+  </Accordion>
+
+  <Accordion title="The copilot forgot our earlier conversation">
+    History is kept in your browser's local storage, not in your database. It does not follow you to another browser or machine, and clearing site data clears it.
+  </Accordion>
+
+  <Accordion title="The copilot says it made a change but nothing happened">
+    Changes are held until confirmed. If you did not confirm, nothing was written. Ask it to list pending changes.
+  </Accordion>
+
+  <Accordion title="The copilot cannot edit files">
+    Check `DISALLOW_FILE_MODS` and `DISALLOW_FILE_EDIT` in `wp-config.php`. Both are honored. Then check the extension is on the [allowlist](/generatify/guides/copilot#developer-abilities) and the path is inside `wp-content`.
+  </Accordion>
+</AccordionGroup>
+
+## Unexpected provider costs
+
+<Warning>
+  DaftPlug cannot see or cap your provider usage. If a bill surprises you, the provider's dashboard is the only place that shows what caused it.
+</Warning>
+
+The two usual causes:
+
+- **Helpdesk conversation mode on a busy site.** Your visitors control how often this runs, not you.
+- **Long copilot conversations.** Every message resends the whole conversation, so cost climbs as the chat grows. Start a new chat when you change subject.
+
+Set a spending limit in the provider dashboard. It is the only hard ceiling that exists.
+
+## Conflicts worth knowing about
+
+| Conflicts with | Symptom | What to do |
+| --- | --- | --- |
+| An SEO plugin writing meta descriptions | Two systems fighting over one field | Turn off one of them |
+| A theme with its own related posts | Two related sections | Disable one |
+| Another floating chat widget | Overlapping buttons | Reposition or disable |
+| A strict content security policy | Browser-side models fail to load | Allow the script sources in your policy |
+
+<Card title="Still stuck" icon="life-ring" horizontal href="/generatify/support/get-help">
+  What to include when you contact support.
+</Card>

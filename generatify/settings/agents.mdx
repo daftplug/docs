@@ -1,0 +1,133 @@
+---
+title: "Agents"
+description: "The AI page agent, the helpdesk agent, and browser AI tools."
+icon: "robot"
+---
+
+**Generatify > Settings > Agents**
+
+This tab holds the three features that face your visitors rather than you.
+
+## AI page agent
+
+<ParamField path="AI Page Agent" type="toggle" default="on">
+  A floating copilot for the people using your site. A visitor opens it, says what they want in plain language, and the agent works through your pages to do it.
+
+  This is the one feature that is on by default, so check your front end before assuming it is not there.
+</ParamField>
+
+<ParamField path="Position" type="select" default="bottom-left">
+  `bottom-left`, `bottom-right`, `top-left`, or `top-right`. It defaults to the left so it does not collide with the helpdesk agent, which defaults to the right.
+</ParamField>
+
+<ParamField path="Primary Color" type="color" default="#b034ef">
+  The button color. The icon color is derived automatically for contrast, so you only choose one value.
+</ParamField>
+
+<Note>
+  If you run a chat widget, a cookie banner, or a back-to-top button, check all four corners on a phone before deciding this is fine where it is.
+</Note>
+
+## AI helpdesk agent
+
+<ParamField path="AI Helpdesk Agent" type="toggle" default="off">
+  A support widget with three tabs: a home tab you write, a message tab that either emails you or chats, and a help tab listing your articles.
+</ParamField>
+
+### Appearance
+
+<ParamField path="Position" type="select" default="bottom-right">
+  Keep this on the opposite side from the page agent if both are enabled.
+</ParamField>
+
+<ParamField path="Primary Color" type="color" default="#000000">
+  Match your site's main color.
+</ParamField>
+
+<ParamField path="Cover" type="image">
+  A large background image across the top of the widget.
+</ParamField>
+
+<ParamField path="Icon" type="image">
+  Represents your site inside the widget. Your logo or favicon is the right choice.
+</ParamField>
+
+### Home tab
+
+<ParamField path="Title" type="string" default="Hi, there">
+  The greeting at the top of the home tab.
+</ParamField>
+
+<ParamField path="Tagline" type="string" default="Our support is here to help.">
+  A line under the title. Use it to set expectations about response times.
+</ParamField>
+
+<ParamField path="Button Text" type="string" default="Send us a message">
+  The label on the button that opens the message tab.
+</ParamField>
+
+<ParamField path="Popular Topics" type="repeater">
+  Pro. Up to three suggestions shown on the home tab, each with a title, description, and URL. Point them at the three things people actually ask about, which your contact form inbox will tell you.
+</ParamField>
+
+### Message tab
+
+<ParamField path="Mode" type="select" default="contact">
+  | Mode | Behavior |
+  | --- | --- |
+  | `contact` | Shows a form that sends you an email |
+  | `conversation` | Opens a live chat answered by AI |
+
+  Conversation mode needs Pro and a connected provider. On a free install, use contact mode.
+</ParamField>
+
+<ParamField path="Contact Email" type="email">
+  Where contact form submissions are sent. Defaults to your WordPress admin email.
+</ParamField>
+
+<ParamField path="Knowledge" type="multi-select">
+  Pro. The agent already knows the titles and links of every public page on your site. This setting adds up to three pages whose **full content** it can read.
+
+  Spend those three slots carefully: shipping and returns, pricing, and a getting-started page will answer more questions than three deep feature pages.
+</ParamField>
+
+<ParamField path="Custom Instructions" type="textarea">
+  Pro. Guidance for the agent about what language to speak, what tone to use, and what rules to follow.
+
+  Be specific about what it should refuse. "If you do not know, say so and offer the contact form" prevents more bad answers than any amount of instruction about tone.
+</ParamField>
+
+### Help tab
+
+<ParamField path="Help Articles" type="repeater">
+  A list of articles shown in the Help section, each with a title, description, and URL. These are links to your own pages, not content stored in the plugin.
+</ParamField>
+
+<Tip>
+  Fill in help articles even if you use conversation mode. Some visitors would rather read the page than ask a question, and a visible list of topics also tells people what the agent knows about.
+</Tip>
+
+## Browser AI tools
+
+<ParamField path="WebMCP Tools" type="toggle" default="off">
+  Registers tools on your front end that AI agents built into the browser can call: content search, reading a post, listing categories, and, with WooCommerce, product search and adding to the cart.
+
+  Everything is read-only except adding to the cart. Requires a browser that supports WebMCP and is ignored everywhere else.
+</ParamField>
+
+<Card title="Browser AI tools in detail" icon="plug" horizontal href="/generatify/guides/browser-ai-tools">
+  The exact tools exposed, the limits enforced, and what to consider before enabling this on a store.
+</Card>
+
+## Running both agents at once
+
+They do different jobs and can coexist, but two floating buttons on a phone is a lot.
+
+| | Page agent | Helpdesk agent |
+| --- | --- | --- |
+| Answers questions | Indirectly, by navigating | Directly |
+| Acts on the site | Yes | No |
+| Needs a provider | No | Only in conversation mode |
+| Best for | Complex sites and stores | Sites with repeat support questions |
+
+If you only want one, choose the helpdesk agent for a content or service site, and the page agent for a store or an app-like site where people are trying to accomplish something rather than learn something.

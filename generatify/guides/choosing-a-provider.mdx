@@ -1,0 +1,96 @@
+---
+title: "Choosing a provider"
+description: "Which of the four AI providers to connect, and how to get a key."
+icon: "scale-balanced"
+---
+
+Generatify connects to ChatGPT, Claude, Gemini, or Kimi. You can connect all four, but you only need one to start.
+
+## Getting a key
+
+The process is the same everywhere: create an account, add a payment method, create a key, copy it once.
+
+<Steps>
+  <Step title="Create an account with the provider">
+    ChatGPT and Gemini keys come from a developer console that is separate from the consumer chat product. A ChatGPT Plus subscription does not include API access, and this catches people out.
+  </Step>
+  <Step title="Add billing and set a spending limit">
+    Do this before you generate the key, not after. The limit is your only hard ceiling.
+  </Step>
+  <Step title="Create the key and copy it">
+    Most providers show a key once. If you lose it, create another rather than hunting for it.
+  </Step>
+  <Step title="Paste it into Generatify">
+    **Settings > Connectors**, enable the provider, paste the key, save.
+  </Step>
+</Steps>
+
+| Provider | Where to get a key |
+| --- | --- |
+| ChatGPT | [platform.openai.com](https://platform.openai.com/api-keys) |
+| Claude | [console.anthropic.com](https://console.anthropic.com/) |
+| Gemini | [aistudio.google.com](https://aistudio.google.com/apikey) |
+| Kimi | The Moonshot AI platform console |
+
+## Which one
+
+There is no ranking that stays true for long, because all four release new models constantly. Choose on these instead.
+
+<AccordionGroup>
+  <Accordion title="You want image generation">
+    Connect ChatGPT or Gemini. Those are the two that provide an image model, and the editor will tell you no image model is available if you connect only Claude or Kimi.
+  </Accordion>
+  <Accordion title="You want long documents handled well">
+    Claude and Gemini both handle large amounts of context comfortably, which matters if you generate long articles or point the copilot at big files.
+  </Accordion>
+  <Accordion title="You want the cheapest running cost">
+    Every provider offers a range from small and cheap to large and expensive, and the small models are enough for meta descriptions and tag suggestions. The choice of provider matters less to your bill than which features you enable.
+  </Accordion>
+  <Accordion title="You already have an account">
+    Use it. The differences between these four matter far less than getting started, and switching later is one field on one settings tab.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  If you have no preference, connect ChatGPT first. It covers both text and images, so nothing in the plugin is unavailable while you decide whether you like it.
+</Tip>
+
+## Connecting more than one
+
+The model selector on **Generatify > Chatbot** lists the most capable model from each connected provider, plus **Auto**.
+
+Worth doing when you want to compare answers to the same question, or want a fallback during an outage. It does not save money, because you pay whichever one you use.
+
+## Controlling what you spend
+
+<Warning>
+  DaftPlug does not bill you for AI usage and cannot cap it. The provider's spending limit is the only ceiling that exists. Set one.
+</Warning>
+
+The features differ enormously in how much they cost to run.
+
+| Feature | Cost driver | Who triggers it |
+| --- | --- | --- |
+| Meta descriptions | One small request per post | You |
+| Tag and category suggestions | One small request | You |
+| Copilot conversations | Grows with conversation length | You |
+| Content generation | One large request per article | You |
+| Image generation | The most expensive item, per image | You |
+| Helpdesk conversation mode | One request per visitor message | Your visitors |
+
+The last row is the one to watch. Everything else is bounded by how often you personally use it. Helpdesk conversation mode is bounded by your traffic, so enable it on a busy site only after you have set a limit you are comfortable with.
+
+<Tip>
+  Start a new chat when you change subject in the copilot. Long conversations resend everything that came before on every message, so the cost of message twenty is much higher than the cost of message one.
+</Tip>
+
+## When a key stops working
+
+| Symptom | Usual cause |
+| --- | --- |
+| The field refuses the key on save | The format is wrong, often a truncated paste |
+| **No AI Model Available** in the selector | The connector toggle is off, or no key is saved |
+| The model is listed but requests fail | Out of credit, rate limited, or the key was revoked |
+| Requests fail only on long generations | Your host's PHP execution limit is shorter than the request |
+
+For the third row, check the provider's dashboard rather than the plugin: Generatify passes their error back and it will usually name the cause. For the fourth, see the [timeout filters](/generatify/settings/connectors#requests-that-take-a-long-time).
