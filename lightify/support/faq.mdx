@@ -1,0 +1,129 @@
+---
+title: "FAQ"
+description: "Questions that come up before and after installing Lightify."
+icon: "circle-question"
+---
+
+## Compatibility
+
+<AccordionGroup>
+  <Accordion title="Can I run Lightify alongside my host's cache?">
+    Yes, and you should. Lightify caches the HTML, your host caches at the edge, and the [integrations](/lightify/guides/integrations) keep them in step by purging both together. Kinsta, WP Engine, SiteGround, Cloudways, RunCloud, SpinupWP, GridPane, Rocket.net, and WordPress.com are all detected automatically.
+  </Accordion>
+
+  <Accordion title="Can I run it with another caching plugin?">
+    No. Two plugins writing `advanced-cache.php` will fight, and which one serves a given request becomes unpredictable. Pick one.
+  </Accordion>
+
+  <Accordion title="Does it work with Cloudflare?">
+    Yes. Install the official Cloudflare plugin and Lightify purges Cloudflare whenever it purges itself. Without that plugin it has no credentials, so you would purge Cloudflare manually.
+
+    Turn off Rocket Loader if you use it. It reorders script execution and fights with defer and delay.
+  </Accordion>
+
+  <Accordion title="Does it work with WooCommerce?">
+    Yes. Cart, checkout, and account pages are excluded automatically, stock changes purge the affected product pages, and multi-currency plugins are handled so visitors get the right currency from cache.
+  </Accordion>
+
+  <Accordion title="Does it work with Progressify?">
+    Yes. Progressify owns the service worker, so Lightify's browser cache section shows as handled by it. Nothing to configure.
+  </Accordion>
+
+  <Accordion title="Will it work on shared hosting?">
+    Yes, and it is where caching helps most. Two things to check: that `wp-config.php` is writable so `WP_CACHE` can be set, and that PHP execution limits are not too tight for preloading. Raise the [preload delay](/lightify/reference/hooks#lightify_preload_delay) if preloading strains the server.
+  </Accordion>
+</AccordionGroup>
+
+## Caching
+
+<AccordionGroup>
+  <Accordion title="How do I know caching is actually working?">
+    Check the cache status on the overview page. It should say `active`. See [confirming page caching](/lightify/getting-started/installation#confirm-page-caching-is-active).
+  </Accordion>
+
+  <Accordion title="Do I need to purge after publishing a post?">
+    No. Lightify purges automatically when content changes, including the pages that list the post, translations of it, and any page builder templates involved.
+
+    You do need to purge after changing plugin settings, since existing cached pages were built under the old configuration.
+  </Accordion>
+
+  <Accordion title="Can I cache pages for logged-in users?">
+    Yes, with one cached copy per role. Only enable it if pages are identical for everyone in a role. Anything per-person will leak between users.
+  </Accordion>
+
+  <Accordion title="Can I purge from a deploy script?">
+    Yes. `POST /purge-everything-and-preload` with an application password. See the [REST API](/lightify/reference/rest-api#authentication).
+  </Accordion>
+</AccordionGroup>
+
+## Optimizations
+
+<AccordionGroup>
+  <Accordion title="Which setting gives the biggest improvement?">
+    Page caching, which needs no configuration. After that, **Remove Unused CSS** is usually the largest single win, because most themes ship one stylesheet covering every page.
+
+    For interaction responsiveness, which is 30% of the score, **Delay JavaScript Execution** on third-party tags.
+  </Accordion>
+
+  <Accordion title="Something broke. Which setting did it?">
+    Turn off the last one you enabled, purge, and check. The usual suspects are Remove Unused CSS for visual problems, Defer or Delay JavaScript for broken interactivity, and Lazy Render Elements for anchor links.
+
+    Then use the exclusion list rather than leaving the feature off.
+  </Accordion>
+
+  <Accordion title="Why is my PageSpeed score not 100?">
+    Lightify controls what WordPress sends. It cannot fix a slow server, a third-party script that must run, or a theme that loads six web fonts. A lab test also simulates a throttled device, so a real-world-fast site scores lower there than its visitors experience.
+
+    Aim for good Core Web Vitals from real visitors rather than a lab number.
+  </Accordion>
+
+  <Accordion title="Should I use both prefetch features?">
+    You can. Smart Link Prefetch fetches links near the cursor; Speculative Loading uses the browser's own prediction and can prerender rather than only download. They complement each other.
+  </Accordion>
+</AccordionGroup>
+
+## The score
+
+<AccordionGroup>
+  <Accordion title="Where does the score come from?">
+    Real measurements from your visitors on your cached homepage, weighted the way Lighthouse weights them. It is field data, not a lab test, so it needs traffic before it means anything.
+  </Accordion>
+
+  <Accordion title="Why does it disagree with PageSpeed Insights?">
+    Different measurements, both valid. See [measuring performance](/lightify/guides/measuring-performance#why-this-disagrees-with-pagespeed-insights).
+  </Accordion>
+
+  <Accordion title="Can I get told when it changes?">
+    Yes. Turn on [score alerts](/lightify/settings/notifications) and Lightify emails you when the grade moves, in either direction.
+  </Accordion>
+</AccordionGroup>
+
+## Database cleanup
+
+<AccordionGroup>
+  <Accordion title="Is database cleanup safe?">
+    The deletions are permanent and there is no undo. Expired transients and spam comments are safe. Post revisions are your edit history, and trashed posts may be things someone meant to restore.
+
+    Back up before the first run, and look at what one manual pass removes before enabling a schedule.
+  </Accordion>
+
+  <Accordion title="Should I delete all post revisions?">
+    Consider capping them instead. `define('WP_POST_REVISIONS', 5);` in `wp-config.php` keeps the five most recent per post, so they never accumulate and you keep a usable history.
+  </Accordion>
+</AccordionGroup>
+
+## Licensing
+
+<AccordionGroup>
+  <Accordion title="Is Lightify sold on its own?">
+    Pro is part of the DaftPlug membership. One license covers Lightify and every other DaftPlug Pro plugin, and plans differ only in how many sites you can activate on.
+  </Accordion>
+
+  <Accordion title="What happens if the license lapses?">
+    Nothing is deleted. Pro optimizations stop applying and the free ones carry on. Purge afterwards so cached pages are rebuilt without them.
+  </Accordion>
+
+  <Accordion title="Do I need to do anything after activating a license?">
+    Purge everything. Several Pro optimizations default to on, and existing cached pages were built without them.
+  </Accordion>
+</AccordionGroup>

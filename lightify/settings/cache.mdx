@@ -1,0 +1,107 @@
+---
+title: "Cache"
+description: "Page cache, browser cache, and object cache."
+icon: "bolt"
+---
+
+**Lightify > Settings > Cache**
+
+## Page cache
+
+Page caching writes the finished HTML of a page to disk so the next visitor gets a file instead of a database query and a PHP render. It is the largest single improvement Lightify offers, and it needs no configuration to work.
+
+The settings here exist for the cases where one cached copy is not enough.
+
+<ParamField path="Separate Mobile Cache" type="toggle" default="off">
+  Keeps separate cached copies for mobile devices.
+
+  Only turn this on if your site actually serves different HTML to phones. A responsive theme, where the same HTML is styled differently by CSS, does not need it, and enabling it doubles your cache for no benefit.
+</ParamField>
+
+<ParamField path="Cache Logged In Users" type="toggle" default="off">
+  Caches pages for signed-in visitors, with a separate copy per WordPress role. Everyone with the same role shares a cached page.
+
+  This is what makes caching viable on membership sites and communities, where most traffic is logged in and would otherwise bypass the cache entirely.
+
+  <Warning>
+    Only enable this if pages are identical for everyone in a role. If your theme prints the user's name, their points balance, or anything else per-person, one member's page will be served to another. Exclude those pages, or leave this off.
+  </Warning>
+</ParamField>
+
+<ParamField path="Page Exclusions" type="textarea">
+  URLs or patterns that should never be cached, one per line. Match on any part of the URL.
+
+  ```text
+  /my-account
+  /checkout
+  /cart
+  ?add-to-cart=
+  ```
+
+  WooCommerce cart, checkout, and account pages are excluded automatically by the [WooCommerce integration](/lightify/guides/integrations), so you only need this for your own dynamic pages.
+</ParamField>
+
+### Purging
+
+Lightify purges automatically when content changes: publishing or editing a post clears that post and the pages that list it. The [integrations](/lightify/guides/integrations) extend that to page builder templates, ACF options pages, and WooCommerce stock changes.
+
+Manual purges live in the admin bar on any page.
+
+| Control | Effect |
+| --- | --- |
+| Purge current page | Rebuilds just the page you are viewing |
+| Purge cache and preload | Clears everything, then warms it again |
+| Purge pages and preload | Clears the page cache only |
+| Purge everything and preload | Clears all caches, including optimized assets |
+
+Use **purge everything** after any settings change, since existing cached pages were built under the old settings.
+
+### Preloading
+
+After a purge, preloading visits your pages in the background so the first real visitor gets a cached copy rather than paying to build it. This runs on a delay between requests so it does not overwhelm your server.
+
+## Browser cache
+
+Browser caching is handled by a service worker, which decides whether a request is answered from the visitor's own device or from the network.
+
+<ParamField path="Caching Strategy" type="select" default="NetworkFirst">
+  | Strategy | Behavior | Best for |
+  | --- | --- | --- |
+  | Network-First | Tries the network, caches the response, falls back to the cached copy on failure | Most sites |
+  | Stale While Revalidate | Serves the cache immediately, updates in the background | Speed over freshness |
+  | Cache-First | Serves the cache, only uses the network when nothing is cached | Rarely changing sites |
+  | Network-Only | Never caches | Pages that must never be stale |
+  | Cache-Only | Only ever serves the cache | Fixed content |
+</ParamField>
+
+<ParamField path="Cache Expiration Time" type="number" default="10">
+  Days before cached content expires in the browser. With Cache-First, this is the longest a visitor can be stuck with an old page, so lower it if you use that strategy.
+</ParamField>
+
+<Warning>
+  Cache-First and Cache-Only will serve stale pages to returning visitors after you publish changes. On a news site or a store with changing prices, do not use them.
+</Warning>
+
+<Note>
+  If Progressify is active on the same site, it owns the service worker and this section shows **Handled by Progressify** with the fields disabled. Two plugins registering a service worker on the same scope would fight, so only one does.
+</Note>
+
+## Object cache
+
+Object caching keeps database query results in memory, which speeds up the requests page caching cannot help: wp-admin, logged-in pages, and WooCommerce.
+
+This section is informational. Lightify detects what your server offers and tells you, but does not install anything.
+
+| What it reports | Meaning |
+| --- | --- |
+| Redis Server: Available | Redis is reachable and can be used |
+| Memcached Server: Available | Memcached is reachable and can be used |
+| Object Cache Drop-in: Not Installed | No `object-cache.php` is present |
+| Drop-in installed but not working | A drop-in exists but cannot reach its backend |
+| No persistent cache backend detected | Neither Redis nor Memcached is available |
+
+If a backend is available and no drop-in is installed, install a dedicated object cache plugin for it. If your host already provides object caching, the drop-in will show as handled by whichever plugin owns it, and there is nothing to do.
+
+<Note>
+  A drop-in that is installed but not working is worse than none at all, because WordPress will try to use it on every request. If you see that, fix the backend or remove the drop-in.
+</Note>

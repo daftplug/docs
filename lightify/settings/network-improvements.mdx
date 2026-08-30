@@ -1,0 +1,81 @@
+---
+title: "Network improvements"
+description: "Prefetching the next page, and resource hints for third-party origins."
+icon: "forward"
+---
+
+**Lightify > Settings > Network Improvements**
+
+Everything else on the settings screen makes the current page faster. This tab makes the *next* page faster, by fetching it before the visitor asks.
+
+## Prerender
+
+Two features do this, by different mechanisms. You can run both.
+
+<ParamField path="Smart Link Prefetch" type="toggle" default="on">
+  Prefetches links as the cursor approaches them on desktop, or as they enter the viewport on mobile. By the time the click lands, the page is often already downloaded.
+
+  On by default, and conservative: same-origin links only, no URLs with query strings, and a cap of 12 prefetches per page. The delay before prefetching, the cap, and the exclusion list are all [filterable](/lightify/reference/hooks#smart-link-prefetch).
+</ParamField>
+
+<ParamField path="Speculative Loading" type="toggle" default="on">
+  Pro. Uses the browser's Speculation Rules API to predict where the visitor is going and load it in advance. On by default with Pro.
+
+  This goes further than prefetching, because the browser can prerender the page rather than only downloading it, making navigation close to instant.
+</ParamField>
+
+<Warning>
+  Prefetching costs bandwidth for pages nobody visits, and it makes requests to your server that no one asked for. Both features skip URLs with query strings, which keeps them away from cart links and logout links, but check anything on your site that acts on a plain `GET`.
+</Warning>
+
+<Note>
+  Prefetch requests carry a `Sec-Purpose: prefetch` header. Some CDNs decline to serve them, and pages sent with `no-store` will not be prefetched at all. If prefetches are being refused, the fix is your caching headers rather than this setting.
+</Note>
+
+## Resource hints
+
+Resource hints tell the browser about things it will need before it discovers them. Three types, and using the wrong one is worse than using none.
+
+<ParamField path="Preconnect Resources" type="repeater">
+  Opens a connection to an origin early: DNS lookup, TCP handshake, and TLS negotiation, all before the first request.
+
+  For critical third-party origins you know you will need: a CDN, a font host, an API you call on load. Each entry takes an origin and a crossorigin mode of `none`, `anonymous`, or `use-credentials`.
+
+  <Warning>
+    Preconnect to three or four origins at most. Each one holds open a connection, and beyond a handful you are taking resources away from the requests that matter.
+  </Warning>
+</ParamField>
+
+<ParamField path="Preload Resources" type="repeater">
+  Downloads a resource immediately at high priority. For things the current page needs to render correctly: a hero image, a critical font, essential CSS or JavaScript.
+
+  Each entry takes a URL, an `as` type of `script`, `style`, `font`, `image`, or `fetch`, and a crossorigin mode.
+
+  <Warning>
+    Preloading something the page does not need early makes the page slower, because it competes with what does. Only preload what is required for the first paint.
+  </Warning>
+</ParamField>
+
+<ParamField path="Prefetch Resources" type="repeater">
+  Downloads at low priority for something you might need later, on the next page or after an interaction.
+
+  Each entry takes a URL, an `as` type of `script`, `style`, `font`, `image`, or `document`, and a crossorigin mode.
+</ParamField>
+
+### Choosing between them
+
+| You want to | Use |
+| --- | --- |
+| Warm up a connection you will use soon | Preconnect |
+| Fetch something this page needs now | Preload |
+| Fetch something a later page will need | Prefetch |
+
+<Note>
+  Fonts always need a crossorigin value, even when self-hosted. Set `anonymous` for a preloaded font, or the browser fetches it twice.
+</Note>
+
+## Before adding hints by hand
+
+Most sites need none of these, because Lightify already preloads fonts and critical images for you. Add a hint only when you can name the resource and explain why the browser is finding it too late.
+
+The way to find that out is the network waterfall in your browser's developer tools. Look for a resource that starts late and blocks something visible. That is a preload candidate. Everything else is guesswork that costs bandwidth.

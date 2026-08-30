@@ -1,0 +1,146 @@
+---
+title: "Asset optimizations"
+description: "Minification, unused CSS removal, deferring and delaying JavaScript, and fonts."
+icon: "file-code"
+---
+
+**Lightify > Settings > Asset Optimizations**
+
+This tab holds the settings most likely to make a large difference and most likely to break something. Enable them one at a time, purge, and test.
+
+## HTML optimizations
+
+<ParamField path="Minify HTML" type="toggle" default="off">
+  Strips whitespace and comments from the HTML output, and minifies inline CSS and JavaScript along with it.
+
+  Low risk. The rare exception is a theme relying on whitespace inside `<pre>` blocks or on HTML comments as markers.
+</ParamField>
+
+<ParamField path="Prevent Layout Shifts" type="toggle" default="off">
+  Keeps the page hidden until it is fully parsed, then reveals it at once. Removes the flash of unstyled content and the layout shifts it causes.
+
+  This trades LCP for CLS. Nothing is visible until the page is ready, so the largest paint happens later, but it happens in its final position. Try it and compare; whether it helps depends on your theme.
+</ParamField>
+
+<ParamField path="Lazy Render Elements" type="toggle" default="off">
+  Pro. Skips rendering blocks and elements until they are needed, reducing the work the browser does on first paint.
+
+  <Warning>
+    Test anchor links and long pages. An element that has not rendered cannot be scrolled to, and in-page navigation is the usual casualty.
+  </Warning>
+
+  Tune it with [`lightify_lazy_render_skip_count`](/lightify/reference/hooks#lazy-rendering), [`lightify_lazy_render_limit`](/lightify/reference/hooks#lazy-rendering), and [`lightify_lazy_render_exclude_keywords`](/lightify/reference/hooks#lazy-rendering).
+</ParamField>
+
+## CSS optimizations
+
+<ParamField path="Minify CSS" type="toggle" default="on">
+  Removes unnecessary characters from your stylesheets. On by default and safe on nearly every site.
+</ParamField>
+
+<ParamField path="Remove Unused CSS" type="toggle" default="off">
+  Pro. Loads only the CSS the initial view actually uses, and defers the rest until the visitor interacts.
+
+  This is usually the largest single improvement available, because most themes ship one stylesheet covering every page and every state.
+</ParamField>
+
+<ParamField path="CSS Inclusions" type="textarea">
+  Selectors or keywords to force into the generated CSS, one per line. This is your repair tool when removing unused CSS breaks something.
+
+  ```text
+  .mobile-menu
+  .modal
+  is-open
+  ```
+
+  The pattern to recognize: anything hidden until the visitor does something. Menus that open on click, modals, dropdowns, accordions, and tabs are all invisible when the page is analyzed, so their styles look unused.
+</ParamField>
+
+<ParamField path="Self-Host External CSS" type="toggle" default="on">
+  Pro. Downloads external stylesheets and serves them from your domain, removing a DNS lookup and a connection to a third party. On by default with Pro.
+</ParamField>
+
+## JavaScript optimizations
+
+The two JavaScript settings do different things and are often confused.
+
+| | Defer | Delay |
+| --- | --- | --- |
+| Runs the script | After HTML parsing | After the visitor interacts |
+| Risk | Moderate | Higher |
+| Right for | Your own scripts | Third-party tags |
+
+<ParamField path="Minify JavaScript" type="toggle" default="on">
+  Removes unnecessary characters. On by default.
+</ParamField>
+
+<ParamField path="Defer JavaScript" type="toggle" default="off">
+  Loads scripts without blocking HTML parsing, so the page renders while scripts download.
+
+  The first setting here with a real chance of breaking things. Scripts that expect to run in order, or expect jQuery to be ready at a specific moment, are the usual failures.
+</ParamField>
+
+<ParamField path="Exclusions" type="textarea">
+  Scripts to leave alone, one keyword per line. A fragment of the filename is enough.
+
+  ```text
+  jquery.min.js
+  slider
+  ```
+</ParamField>
+
+<ParamField path="Delay JavaScript Execution" type="toggle" default="off">
+  Pro. Holds scripts entirely until the visitor moves, scrolls, or taps.
+
+  The right tool for third-party tags. Analytics, chat widgets, ad scripts, and heatmaps all do work the visitor did not ask for, and delaying them until interaction removes that from your initial load completely.
+
+  <Warning>
+    Never delay a script that renders visible content. A delayed slider is an empty space until someone happens to move the mouse.
+  </Warning>
+</ParamField>
+
+<ParamField path="Exclusions" type="textarea">
+  Scripts that must not be delayed. Same format as the defer exclusions.
+</ParamField>
+
+<ParamField path="Self-Host External JavaScript" type="toggle" default="on">
+  Pro. Downloads external scripts and serves them locally. On by default with Pro.
+
+  <Note>
+    Do not self-host a script that is meant to update itself, such as a payment provider's SDK or a consent manager. Add those to the exclusions, or you will be serving a frozen copy.
+  </Note>
+</ParamField>
+
+## Font optimizations
+
+<ParamField path="Preload Fonts" type="toggle" default="on">
+  Tells the browser to fetch essential font files immediately rather than waiting to discover them in the CSS. On by default.
+</ParamField>
+
+<ParamField path="Use System Fonts First" type="toggle" default="on">
+  Pro. Shows a system font immediately and swaps to your custom font when it loads, so text is readable straight away instead of invisible.
+
+  The tradeoff is a visible swap when the real font arrives, which counts as layout shift if the two fonts have different metrics.
+</ParamField>
+
+<ParamField path="Self-Host External Fonts" type="toggle" default="on">
+  Pro. Downloads external fonts, most often Google Fonts, and serves them from your domain.
+
+  Faster, because it removes a third-party connection, and better for privacy, because visitors' browsers stop contacting the font provider. That second point matters for GDPR compliance in some jurisdictions.
+</ParamField>
+
+## When something breaks
+
+<Steps>
+  <Step title="Purge everything">
+    Cached pages were built with the old settings.
+  </Step>
+  <Step title="Identify the feature">
+    Turn off the last one you enabled and purge again.
+  </Step>
+  <Step title="Exclude, do not disable">
+    Add the specific file or selector to the relevant exclusion list. Losing one script from an optimization is much better than losing the optimization.
+  </Step>
+</Steps>
+
+For finer control than the settings screen offers, every exclusion list has a matching filter. See [asset filters](/lightify/reference/hooks#asset-optimizations).

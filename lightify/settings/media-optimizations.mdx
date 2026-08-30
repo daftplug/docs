@@ -1,0 +1,78 @@
+---
+title: "Media optimizations"
+description: "WebP conversion, lazy loading, image sizing, and YouTube previews."
+icon: "image"
+---
+
+**Lightify > Settings > Media Optimizations**
+
+Images are usually the largest thing on a page and the usual LCP element, which makes this tab the most direct route to a better score.
+
+## Image optimizations
+
+<ParamField path="Auto Image Optimization" type="toggle" default="on">
+  Pro. Converts the images pages actually use into WebP and swaps them in place, leaving your markup untouched.
+
+  It covers more than `img` tags: video posters, `picture` sources, image preloads, and CSS background images are all handled.
+
+  Conversion happens progressively as pages are rendered rather than in one pass over your media library, so a large site does not stall. Tune the rate with [`lightify_webp_images_per_page`](/lightify/reference/hooks#images) and the output quality with [`lightify_webp_quality`](/lightify/reference/hooks#images), which defaults to 82.
+</ParamField>
+
+<ParamField path="Lazy-Load Images" type="toggle" default="on">
+  Defers loading images until they are near the viewport. On by default.
+
+  The first couple of images are excluded automatically, because lazy-loading your hero image delays the exact thing LCP measures. Adjust that count with [`lightify_lazy_load_above_fold_count`](/lightify/reference/hooks#images).
+</ParamField>
+
+<ParamField path="Properly Size Images" type="toggle" default="on">
+  Makes images load at correct dimensions so the browser reserves the right space and content does not jump as they arrive. Directly improves CLS.
+</ParamField>
+
+<ParamField path="Preload Critical Images" type="toggle" default="on">
+  Pro. Finds the largest above-the-fold image, which is almost always the LCP element, and tells the browser to fetch it immediately instead of waiting to discover it.
+
+  LCP is 25% of the performance score, so this is one of the highest-value settings in the plugin.
+
+  Detection scans the first several images and ignores anything too small to be a hero. Both are filterable: [`lightify_lcp_scan_images`](/lightify/reference/hooks#images) and [`lightify_lcp_min_image_area`](/lightify/reference/hooks#images).
+</ParamField>
+
+<Warning>
+  Preloading and lazy loading fight each other. If your hero is both preloaded and lazy-loaded, the browser fetches it late anyway. Lightify avoids this for the first images on a page, but a hero injected by a page builder can slip past. If LCP is worse than you expect, check whether your hero has a `loading="lazy"` attribute.
+</Warning>
+
+## Video and iframe optimizations
+
+<ParamField path="Lazy-Load Videos" type="toggle" default="on">
+  Defers below-the-fold videos. On by default.
+</ParamField>
+
+<ParamField path="Lazy-Load Iframes" type="toggle" default="on">
+  Defers below-the-fold iframes. On by default, and worth keeping, because embedded content often loads an entire third-party page.
+</ParamField>
+
+<ParamField path="YouTube Video Previews" type="toggle" default="on">
+  Pro. Replaces a YouTube embed with its thumbnail, and loads the real player only when someone clicks.
+
+  A YouTube embed costs several hundred kilobytes and multiple third-party connections before anyone presses play. This removes all of it from your initial load. On a page with several embeds it is often the largest single improvement available.
+
+  <Note>
+    The player appears on click, so the first play takes slightly longer than with a normal embed. On any page where most visitors never press play, that is a good trade.
+  </Note>
+</ParamField>
+
+## Getting the most from this tab
+
+<AccordionGroup>
+  <Accordion title="Serve images at the size you display them">
+    Optimization cannot fix a 3000px image shown in a 600px slot. It will be smaller, but it is still the wrong image. Upload at a sensible size.
+  </Accordion>
+  <Accordion title="Know which element is your LCP">
+    Open PageSpeed Insights or your browser's performance panel and find out. Optimizing everything else while the real LCP element is untouched is how people conclude a plugin did nothing.
+  </Accordion>
+  <Accordion title="Purge after converting">
+    Cached pages built before WebP conversion still reference the originals.
+  </Accordion>
+  <Accordion title="Check WebP is actually being served">
+    Open your site, look at the network panel, and confirm the image responses are WebP. A CDN in front of your site can strip or override the swap.
+  </Accordion>
+</AccordionGroup>

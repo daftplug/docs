@@ -1,0 +1,106 @@
+---
+title: "Free and Pro"
+description: "Which optimizations the free version includes and which need a license."
+icon: "scale-balanced"
+---
+
+The free version is a complete caching plugin: page cache, browser cache, minification, deferred JavaScript, lazy loading, font preloading, link prefetching, WordPress cleanup, and the Core Web Vitals monitoring that tells you whether it worked.
+
+Pro adds the optimizations that require more machinery: rewriting CSS per page, delaying execution until interaction, converting images, and cleaning the database on a schedule.
+
+## Cache
+
+| Free | Pro |
+| --- | --- |
+| Page cache, all three serving levels | |
+| Separate mobile cache | |
+| Cache logged-in users by role | |
+| Page exclusions | |
+| Browser cache strategy and expiration | |
+| Object cache detection and advice | |
+
+Nothing on the Cache tab is gated.
+
+## Asset optimizations
+
+| Free | Pro |
+| --- | --- |
+| Minify HTML | Lazy render elements |
+| Minify CSS | Remove unused CSS, with inclusions |
+| Minify JavaScript | Self-host external CSS |
+| Defer JavaScript, with exclusions | Delay JavaScript execution, with exclusions |
+| Prevent layout shifts | Self-host external JavaScript |
+| Preload fonts | Use system fonts first |
+| | Self-host external fonts |
+
+## Media optimizations
+
+| Free | Pro |
+| --- | --- |
+| Lazy-load images | Auto image optimization to WebP |
+| Properly size images | Preload critical images |
+| Lazy-load videos | YouTube video previews |
+| Lazy-load iframes | |
+
+## Network improvements
+
+| Free | Pro |
+| --- | --- |
+| Smart link prefetch | Speculative loading |
+| Preconnect, prefetch, and preload resources | |
+
+Both prefetch features do the same job by different means. The free one prefetches links near the cursor or in the viewport; the Pro one uses the browser's Speculation Rules API to predict and prerender the next page.
+
+## Bloat removal
+
+| Free | Pro |
+| --- | --- |
+| Disable block editor CSS | Auto clean database, on a schedule |
+| Remove Dashicons | Post, comment, and table cleanup |
+| Disable emojis | Disable XML-RPC |
+| Disable jQuery Migrate | Disable RSS feed |
+| Disable oEmbeds | Throttle heartbeat |
+
+## Notifications
+
+Score alerts are free. Lightify emails you when your Core Web Vitals score changes significantly in either direction.
+
+## Elsewhere
+
+| Feature | Free | Pro |
+| --- | --- | --- |
+| Performance score and Core Web Vitals | Yes | Yes |
+| Optimized pages and assets reporting | Yes | Yes |
+| Cache purge and preload, admin bar and REST | Yes | Yes |
+| Third-party purge integrations | Yes | Yes |
+
+<Note>
+  The integrations that propagate purges to Cloudflare, Varnish, and managed hosts are free and have no settings. They detect what is present and hook in. See [integrations](/lightify/guides/integrations).
+</Note>
+
+## Which Pro features actually matter
+
+If you are deciding whether a license is worth it for performance rather than for the membership, these are the ones that move the number.
+
+<Steps>
+  <Step title="Remove Unused CSS">
+    Most themes ship far more CSS than any one page uses. This is usually the largest single improvement available, and it is the main reason to upgrade.
+  </Step>
+  <Step title="Delay JavaScript Execution">
+    The fix for third-party scripts. Analytics, chat widgets, and ad tags stop competing with your content for the main thread.
+  </Step>
+  <Step title="Auto Image Optimization">
+    WebP conversion of the images pages actually use, with the markup left intact.
+  </Step>
+  <Step title="Preload Critical Images">
+    Directly targets LCP, which is 25% of the score.
+  </Step>
+</Steps>
+
+<Note>
+  Pro is sold as the DaftPlug membership rather than as a single-plugin upgrade. One license covers Lightify and every other DaftPlug Pro plugin, and plans differ only in the number of site activations.
+</Note>
+
+<Card title="See pricing" icon="rocket" horizontal href="https://daftplug.com/pricing/?utm_source=documentation&utm_medium=mintlify-docs&utm_campaign=upgrade-to-pro">
+  Compare the plans on daftplug.com.
+</Card>

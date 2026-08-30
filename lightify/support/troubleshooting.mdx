@@ -1,0 +1,168 @@
+---
+title: "Troubleshooting"
+description: "Symptoms, causes, and which exclusion list fixes them."
+icon: "wrench"
+---
+
+Two rules cover most of what happens here.
+
+<Steps>
+  <Step title="Purge before you conclude anything">
+    A cached page built before your change is still being served. This explains more reports than every other cause combined.
+  </Step>
+  <Step title="Exclude rather than disable">
+    When one script or selector breaks under an optimization, add it to that feature's exclusion list. Losing one file is much better than losing the optimization site-wide.
+  </Step>
+</Steps>
+
+## Caching problems
+
+<AccordionGroup>
+  <Accordion title="Pages are not being cached at all">
+    Check the cache status first, on the overview page or through [`/cache-status`](/lightify/reference/rest-api#other-cache-routes).
+
+    | Status | Fix |
+    | --- | --- |
+    | `wpconfig` | Add `define('WP_CACHE', true);` to `wp-config.php` yourself |
+    | `dropin` | Make `wp-content` writable so `advanced-cache.php` can be created |
+
+    Managed hosts often make `wp-config.php` read-only deliberately. Add the constant by hand and Lightify picks it up on the next admin load.
+  </Accordion>
+
+  <Accordion title="Cache files exist but the header is missing">
+    On Apache without `mod_headers`, the `x-lightify-cache` header is silently skipped even though caching works. Check for files under `wp-content/cache/lightify/` before concluding anything is broken.
+  </Accordion>
+
+  <Accordion title="Changes do not appear on the front end">
+    In order: purge Lightify, then your CDN, then your host's cache. If you use Cloudflare without the official plugin, Lightify cannot purge it for you.
+
+    If it keeps happening only for you, it may be your browser's service worker cache. Unregister it under **Application > Service Workers**, or lower the [cache expiration](/lightify/settings/cache#browser-cache).
+  </Accordion>
+
+  <Accordion title="Logged-in users see each other's content">
+    Turn off [Cache Logged In Users](/lightify/settings/cache#page-cache) immediately, then purge.
+
+    That setting caches one copy per role, so it is only safe when pages are identical for everyone in a role. Any per-person content, a name, a balance, a personalized list, will leak between users. Exclude those pages before turning it back on.
+  </Accordion>
+
+  <Accordion title="Cart or checkout behaves oddly">
+    These are excluded automatically by the WooCommerce integration. If you see problems, something else is being cached that should not be. Add the specific paths to [page exclusions](/lightify/settings/cache#page-cache) and purge.
+  </Accordion>
+</AccordionGroup>
+
+## Layout and styling
+
+<AccordionGroup>
+  <Accordion title="The site looks unstyled or partly styled">
+    Almost always **Remove Unused CSS**. It analyzes the initial view, so anything hidden until interaction looks unused: menus that open on click, modals, dropdowns, accordions, tabs.
+
+    Add the selector to **CSS Inclusions** rather than disabling the feature:
+
+    ```text
+    .mobile-menu
+    .modal
+    is-open
+    ```
+
+    Then purge.
+  </Accordion>
+
+  <Accordion title="Content jumps around while loading">
+    Turn on [Properly Size Images](/lightify/settings/media-optimizations#image-optimizations), which fixes the usual cause. [Prevent Layout Shifts](/lightify/settings/asset-optimizations#html-optimizations) addresses the rest.
+
+    Ads, embeds, and cookie banners injected above existing content cause shifts no plugin setting can fix.
+  </Accordion>
+
+  <Accordion title="Block layouts lost their styling">
+    **Disable Block Editor CSS** removed the styles your content depends on. Turn it back off.
+  </Accordion>
+
+  <Accordion title="Icons are missing">
+    **Remove Dashicons** and your theme uses them on the front end. Turn it back off.
+  </Accordion>
+</AccordionGroup>
+
+## JavaScript
+
+<AccordionGroup>
+  <Accordion title="Sliders, tabs, or menus stopped working">
+    **Defer JavaScript** is the usual cause. Add a fragment of the script's filename to its exclusions:
+
+    ```text
+    slider
+    jquery.min.js
+    ```
+
+    If deferring is not the cause, check **Delay JavaScript Execution**, which holds scripts until interaction.
+  </Accordion>
+
+  <Accordion title="Something only appears after I move the mouse">
+    That is delayed JavaScript behaving exactly as designed. Anything that renders visible content should be excluded from delaying; delay is for third-party tags, not for your own interface.
+  </Accordion>
+
+  <Accordion title="Analytics stopped recording">
+    Delayed analytics only fires once someone interacts, so bounced visits go uncounted. Either accept that, or exclude the analytics script.
+  </Accordion>
+
+  <Accordion title="A payment or consent script broke">
+    Check **Self-Host External JavaScript**. Scripts meant to update themselves, payment SDKs and consent managers especially, must not be frozen to a local copy. Exclude them.
+  </Accordion>
+
+  <Accordion title="Anchor links scroll to the wrong place">
+    **Lazy Render Elements**. An element that has not rendered cannot be scrolled to. Raise `lightify_lazy_render_skip_count`, or add the container to the exclude keywords.
+  </Accordion>
+</AccordionGroup>
+
+## Images
+
+<AccordionGroup>
+  <Accordion title="LCP got worse after enabling optimizations">
+    Your hero image is probably being lazy-loaded. Lightify excludes the first couple of images automatically, but a hero injected by a page builder can slip past. Check whether it has `loading="lazy"`, and raise `lightify_lazy_load_above_fold_count` if so.
+  </Accordion>
+
+  <Accordion title="WebP is not being served">
+    Confirm in the network panel that responses are WebP. A CDN in front of your site can strip or override the swap. Also purge, since pages cached before conversion still reference the originals.
+  </Accordion>
+
+  <Accordion title="Images look worse than before">
+    Lower the compression by raising the quality:
+
+    ```php
+    add_filter('lightify_webp_quality', function () {
+        return 90;
+    });
+    ```
+
+    Then purge everything so images are reconverted.
+  </Accordion>
+</AccordionGroup>
+
+## Score and metrics
+
+<AccordionGroup>
+  <Accordion title="The score is empty or has not changed">
+    It is built from real visitor measurements on your cached homepage, so it needs traffic. A new install or a quiet site will show nothing for a while. That is correct, not broken.
+  </Accordion>
+
+  <Accordion title="PageSpeed Insights disagrees with Lightify">
+    Expected. One is a lab test on a throttled device, the other is what your visitors actually experienced. See [why they disagree](/lightify/guides/measuring-performance#why-this-disagrees-with-pagespeed-insights).
+  </Accordion>
+
+  <Accordion title="TTFB is still poor with caching active">
+    Page caching cannot help requests it does not serve: admin pages, logged-in pages, and anything excluded. Add an [object cache](/lightify/settings/cache#object-cache) for those. If uncached TTFB is still poor, the cause is your hosting rather than the plugin.
+  </Accordion>
+</AccordionGroup>
+
+## Conflicts worth knowing about
+
+| Conflicts with | Symptom | What to do |
+| --- | --- | --- |
+| Another caching plugin | Two drop-ins fighting, unpredictable serving | Run one page cache only |
+| Another minification plugin | Double-processed CSS or JavaScript | Disable one side |
+| Progressify | Nothing; handled automatically | Progressify owns the service worker |
+| A CDN with its own optimizer | Assets minified twice, sometimes wrongly | Turn off one, usually the CDN's |
+| Cloudflare Rocket Loader | Fights with defer and delay | Turn Rocket Loader off |
+
+<Card title="Still stuck" icon="life-ring" horizontal href="/lightify/support/get-help">
+  What to include when you contact support.
+</Card>

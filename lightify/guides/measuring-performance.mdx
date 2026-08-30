@@ -1,0 +1,95 @@
+---
+title: "Measuring performance"
+description: "How the score is calculated, what the metrics mean, and why it disagrees with PageSpeed Insights."
+icon: "gauge-high"
+---
+
+**Lightify > Overview**
+
+The overview page reports a performance score, your Core Web Vitals over time, and which pages and assets have been optimized.
+
+## Where the number comes from
+
+Lightify injects a small collector into the **cached copy of your homepage** and records what real visitors experienced. Those measurements are averaged into a score.
+
+Two consequences follow from that, and both matter.
+
+<Columns cols={2}>
+  <Card title="It reflects reality" icon="users">
+    Real devices, real networks, real distances from your server. Not a lab test on a simulated phone.
+  </Card>
+  <Card title="It needs traffic" icon="hourglass">
+    A quiet site takes time to collect enough samples. A new install shows nothing at first, and that is correct rather than broken.
+  </Card>
+</Columns>
+
+<Note>
+  The collector is injected into the cache file, not into the live render, so the first uncached visitor is never measured. The score describes the experience of people who got a cached page, which is what you are trying to optimize.
+</Note>
+
+## The metrics
+
+| Metric | Weight | Good | Poor | What it measures |
+| --- | --- | --- | --- | --- |
+| INP | 30% | Under 200ms | Over 500ms | How quickly the page responds to a tap or click |
+| LCP | 25% | Under 2.5s | Over 4s | When the largest visible element finishes rendering |
+| CLS | 25% | Under 0.1 | Over 0.25 | How much content moves around while loading |
+| FCP | 10% | Under 1.8s | Over 3s | When anything first appears |
+| TTFB | 10% | Under 800ms | Over 1.8s | How long your server takes to respond |
+
+The weighting follows Lighthouse, with INP standing in for total blocking time and TTFB for speed index.
+
+### What to do about each
+
+<AccordionGroup>
+  <Accordion title="INP is poor">
+    Too much JavaScript running on the main thread. [Delay JavaScript execution](/lightify/settings/asset-optimizations#javascript-optimizations) is the direct fix, especially for third-party tags. Deferring helps too.
+
+    This is 30% of your score and the metric most often ignored, because it only shows up when someone actually interacts.
+  </Accordion>
+  <Accordion title="LCP is poor">
+    Your largest above-the-fold element arrives late. Usually an image.
+
+    Turn on [preload critical images](/lightify/settings/media-optimizations#image-optimizations), make sure your hero is not lazy-loaded, and convert it to WebP. If your LCP element is text, the cause is usually a web font blocking render, so try [use system fonts first](/lightify/settings/asset-optimizations#font-optimizations).
+  </Accordion>
+  <Accordion title="CLS is poor">
+    Content moves as the page loads. [Properly size images](/lightify/settings/media-optimizations#image-optimizations) fixes the most common cause. [Prevent layout shifts](/lightify/settings/asset-optimizations#html-optimizations) addresses the rest by not showing anything until it is settled.
+
+    Also look for ads, embeds, and cookie banners injected above existing content, which no plugin setting can fix.
+  </Accordion>
+  <Accordion title="TTFB is poor">
+    Your server is slow to respond. Page caching is the main answer, so first confirm it is [actually active](/lightify/getting-started/installation#confirm-page-caching-is-active).
+
+    If it is active and TTFB is still poor, the cause is upstream of the plugin: shared hosting under load, a distant server, or a slow database on uncached requests. An [object cache](/lightify/settings/cache#object-cache) helps the requests page caching cannot.
+  </Accordion>
+</AccordionGroup>
+
+## Why this disagrees with PageSpeed Insights
+
+They measure different things, and both are right.
+
+| | Lightify | PageSpeed Insights lab score |
+| --- | --- | --- |
+| Source | Your real visitors | One simulated run |
+| Device | Whatever they used | A throttled mid-range phone |
+| Network | Theirs | Simulated slow 4G |
+| Page | Your cached homepage | The URL you enter |
+| Cache state | Always cached | Often the uncached first hit |
+
+A site can score 95 in Lightify and 60 in a Lighthouse lab test without either being wrong. Lighthouse deliberately simulates a slow device on a slow network; your visitors may be on fast phones near your server.
+
+<Tip>
+  Use both. Lightify tells you what your visitors experienced. Lighthouse tells you what a specific page does on a bad device, which is better for finding a specific problem to fix. If they disagree wildly, the lab test is usually showing you the uncached experience.
+</Tip>
+
+PageSpeed Insights also shows real-user data from the Chrome UX Report when your site has enough traffic. That is the number closest to Lightify's, and the two should broadly agree.
+
+## Optimized pages and assets
+
+The overview also lists what Lightify has processed: which pages are cached, and which CSS, JavaScript, image, and font files have been optimized.
+
+Use it to confirm work is actually happening. If a template you expected is missing, it is either excluded, never visited since the last purge, or not cacheable. Preloading after a purge fills the gaps.
+
+## Getting alerted
+
+Rather than checking this page, turn on [score alerts](/lightify/settings/notifications) and get an email when the grade changes in either direction.

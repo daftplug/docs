@@ -1,0 +1,121 @@
+---
+title: "Quickstart"
+description: "The order to enable optimizations in, and what to check after each one."
+icon: "list-check"
+---
+
+Performance plugins get a bad reputation because people enable everything at once, find the site broken, and cannot tell which switch did it. This page gives an order and a check after each step.
+
+<Warning>
+  Work on staging if you have one. If you do not, at least do this outside your busiest hours, and keep a second browser open to your front end.
+</Warning>
+
+## 0. Know how to undo
+
+Before changing anything, learn the two controls you will use constantly. Both are in the admin bar on any page.
+
+- **Purge everything** rebuilds all cached pages. Use it after every settings change.
+- **Purge current page** rebuilds just the page you are on. Use it when testing one template.
+
+A surprising share of "Lightify broke my site" turns out to be a cached copy from before a fix.
+
+## 1. Confirm caching works
+
+Follow [confirm page caching is active](/lightify/getting-started/installation#confirm-page-caching-is-active) first. Nothing else on this page matters as much as this one thing working, and it is the step most likely to need manual help.
+
+## 2. Look at the defaults
+
+Lightify already enabled the safe optimizations on activation. Load your front end and click around: the homepage, a post, an archive, and your most complex page, which is usually a shop or a contact page.
+
+If something is wrong now, it is one of the defaults. The likely culprits are minified CSS or JavaScript on a theme that ships broken syntax, or lazy loading on a slider.
+
+## 3. Add HTML optimizations
+
+Go to **Settings > Asset Optimizations > HTML Optimizations**.
+
+<Steps>
+  <Step title="Turn on Minify HTML">
+    Also minifies inline CSS and JavaScript. Purge, then reload your front end.
+  </Step>
+  <Step title="Consider Prevent Layout Shifts">
+    Hides the page until it is parsed, then reveals it at once. This removes the flash of unstyled content and improves CLS, at some cost to LCP because nothing shows until it is ready.
+
+    Try it. If your site feels slower to appear, turn it back off; the tradeoff is real and it depends on your theme.
+  </Step>
+</Steps>
+
+## 4. Defer JavaScript
+
+Still on **Asset Optimizations**, turn on **Defer JavaScript**, purge, and test carefully.
+
+<Warning>
+  This is the first setting with a real chance of breaking things. Sliders, tabs, menus, and anything relying on jQuery being ready at a specific moment are the usual casualties.
+</Warning>
+
+If something breaks, do not turn the feature off. Add the offending script to **Exclusions**, one keyword per line. A fragment of the filename is enough:
+
+```text
+slider
+jquery.min.js
+```
+
+## 5. Turn on the Pro optimizations, one at a time
+
+Each of these is worth real time, and each can break a site. Enable one, purge, test, then move on.
+
+<AccordionGroup>
+  <Accordion title="Remove Unused CSS">
+    The single biggest win on most themes, and the most likely to cause a visual problem. It loads only the CSS used on the initial view and defers the rest until interaction.
+
+    When something looks wrong, add a selector keyword to **CSS Inclusions** rather than disabling the feature. Menus that open on click, modals, and anything hidden until interaction are the usual cases.
+  </Accordion>
+  <Accordion title="Delay JavaScript Execution">
+    Holds scripts until the visitor interacts. Excellent for third-party tags: analytics, chat widgets, ad scripts.
+
+    Exclude anything that must run before interaction, especially anything that renders visible content.
+  </Accordion>
+  <Accordion title="Lazy Render Elements">
+    Skips rendering blocks until they are needed. Test long pages and anything with an anchor link, since an element that has not rendered cannot be scrolled to.
+  </Accordion>
+  <Accordion title="Auto Image Optimization">
+    Converts images actually used on pages to WebP and swaps them in place. On by default with Pro. Low risk, large payoff.
+  </Accordion>
+</AccordionGroup>
+
+## 6. Preload the critical image
+
+**Settings > Media Optimizations > Preload Critical Images** finds the largest above-the-fold image and tells the browser to fetch it immediately. That image is usually your LCP element, so this is the most direct lever you have on that metric.
+
+Make sure it is not also being lazy-loaded. Lightify excludes the first couple of images from lazy loading for exactly this reason, but a hero built by a page builder can slip through.
+
+## 7. Leave the database alone until you have a backup
+
+**Settings > Bloat Removal > Database Optimizations** deletes post revisions, auto drafts, trashed posts, spam and trashed comments, and expired transients.
+
+<Warning>
+  These deletions are permanent and there is no undo. Take a database backup before the first run, and do not enable the automatic schedule until you have seen what one manual pass removes.
+</Warning>
+
+## 8. Wait for the score
+
+The overview page's performance score comes from real visitors on your cached homepage, so it needs traffic before it says anything. Check back in a few days rather than refreshing after each change.
+
+For an immediate read, use a synthetic test such as PageSpeed Insights. It will disagree with Lightify's number, which is expected: one is a lab test on one device, the other is what your visitors actually experienced.
+
+## If something breaks
+
+<Steps>
+  <Step title="Purge everything">
+    Confirm you are not looking at a page cached before your change.
+  </Step>
+  <Step title="Turn off the last thing you changed">
+    Purge again. If it comes back, you have found it.
+  </Step>
+  <Step title="Use exclusions rather than disabling">
+    Defer, delay, remove unused CSS, and lazy load all take exclusion lists. One line for the offending file is better than losing the optimization site-wide.
+  </Step>
+</Steps>
+
+<Card title="Full troubleshooting" icon="wrench" horizontal href="/lightify/support/troubleshooting">
+  Symptoms, causes, and which exclusion list to use.
+</Card>

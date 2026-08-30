@@ -1,0 +1,142 @@
+---
+title: "Installation"
+description: "Requirements, installing the plugin, and getting page caching actually active."
+icon: "download"
+---
+
+## Requirements
+
+| Requirement | Minimum |
+| --- | --- |
+| WordPress | 5.0 |
+| PHP | 7.4 |
+| `wp-config.php` | Writable, for page caching |
+| `wp-content` | Writable, for the cache directory and drop-in |
+
+<Warning>
+  The writable requirements are not optional for page caching. Lightify has to add a `WP_CACHE` constant to `wp-config.php` and an `advanced-cache.php` drop-in to `wp-content`. If either write fails, everything else still works but pages are not cached, which is the largest single win the plugin offers.
+</Warning>
+
+## Install the free plugin
+
+<Steps>
+  <Step title="Search the plugin directory">
+    In WordPress, go to **Plugins > Add New** and search for `Lightify`.
+  </Step>
+  <Step title="Install and activate">
+    Select **Install Now**, then **Activate**. A **Lightify** item appears in the admin menu.
+  </Step>
+  <Step title="Check your site">
+    Lightify enables a set of safe defaults on activation, so look at your front end before changing anything. See [what is on by default](#what-is-on-by-default).
+  </Step>
+</Steps>
+
+## Install Pro from a ZIP
+
+Pro is a separate plugin rather than an unlock applied to the free one, so it is distributed as a ZIP.
+
+<Steps>
+  <Step title="Download the ZIP">
+    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Lightify Pro archive.
+  </Step>
+  <Step title="Upload it">
+    Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
+  </Step>
+  <Step title="Activate">
+    Select **Activate Plugin**. If the free version is installed and active, Lightify deactivates it for you.
+  </Step>
+</Steps>
+
+<Note>
+  Your settings survive the switch. Both versions read the same `lightify_settings` option.
+</Note>
+
+## Activate your license
+
+<Steps>
+  <Step title="Open the activation screen">
+    After activating Pro, WordPress shows an activation notice. You can also reach it from **Lightify > Account**.
+  </Step>
+  <Step title="Enter your license key">
+    Paste the key from your purchase confirmation email, then select **Activate License**.
+  </Step>
+  <Step title="Purge the cache">
+    Pro enables several optimizations by default. Purge everything from the admin bar so cached pages are rebuilt with them applied.
+  </Step>
+</Steps>
+
+<Note>
+  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Lightify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on.
+</Note>
+
+## Confirm page caching is active
+
+This is the one check worth doing after installing, because caching can fail silently.
+
+Lightify records its own status and repairs it on every admin page load, so a problem that was temporary fixes itself once the blocker is gone.
+
+| Status | Meaning | Fix |
+| --- | --- | --- |
+| `active` | `WP_CACHE` is set and the drop-in is installed | Nothing to do |
+| `wpconfig` | The drop-in is in place but `WP_CACHE` could not be written | Add the constant by hand, below |
+| `dropin` | `advanced-cache.php` could not be written | Make `wp-content` writable |
+
+To set the constant yourself, add this to `wp-config.php` **above** the line that says `That's all, stop editing`:
+
+```php
+define('WP_CACHE', true);
+```
+
+Or with WP-CLI:
+
+```bash
+wp config set WP_CACHE true --raw
+```
+
+<Tip>
+  Managed hosts often make `wp-config.php` read-only on purpose. That is not a bug to fight; just add the constant yourself, and Lightify picks it up on the next admin load.
+</Tip>
+
+Then confirm a page is actually being served from cache:
+
+```bash
+curl -sI https://example.com/ | grep -i x-lightify
+```
+
+<Note>
+  On Apache without `mod_headers` enabled, the header is silently skipped even though caching is working. If the header is missing, check for the cache files themselves under `wp-content/cache/lightify/` before concluding anything is wrong.
+</Note>
+
+## What is on by default
+
+Lightify ships with the optimizations that are safe on nearly every site already enabled.
+
+| On by default | Version |
+| --- | --- |
+| Minify CSS, minify JavaScript | Free |
+| Preload fonts | Free |
+| Lazy-load images, videos, and iframes | Free |
+| Properly size images | Free |
+| Smart link prefetch | Free |
+| Disable emojis, jQuery Migrate, oEmbeds | Free |
+| Self-host external CSS, JavaScript, and fonts | Pro |
+| Auto image optimization, preload critical images | Pro |
+| YouTube video previews | Pro |
+| Use system fonts first | Pro |
+| Speculative loading | Pro |
+
+Everything with a real chance of breaking a site is off until you turn it on: removing unused CSS, delaying JavaScript, lazy rendering, minifying HTML, preventing layout shifts, and the whole database cleanup section.
+
+## What the plugin creates
+
+| Item | Location |
+| --- | --- |
+| Cached pages | `wp-content/cache/lightify/` |
+| Drop-in | `wp-content/advanced-cache.php` |
+| Rewrite rules | `.htaccess`, on Apache |
+| Optimized assets and service worker | `wp-content/uploads/lightify/` |
+| Settings | `lightify_settings` option |
+
+<Card title="Set up in ten minutes" icon="list-check" horizontal href="/lightify/getting-started/quickstart">
+  The order to turn things on, and what to check after each.
+</Card>

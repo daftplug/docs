@@ -1,0 +1,62 @@
+---
+title: "Notifications"
+description: "Email alerts when your Core Web Vitals score changes grade."
+icon: "envelope"
+---
+
+**Lightify > Settings > Notifications**
+
+## Performance alerts
+
+<ParamField path="Score Alerts" type="toggle" default="off">
+  Emails you when your Core Web Vitals score moves between grades, in either direction.
+</ParamField>
+
+<ParamField path="Email Address" type="email">
+  Where alerts go. Defaults to your WordPress admin email.
+</ParamField>
+
+## When an alert fires
+
+Lightify grades your score into three bands, and an email is sent when the grade changes, not on every fluctuation.
+
+| Grade | Score |
+| --- | --- |
+| Good | 90 and above |
+| Average | 50 to 89 |
+| Poor | Below 50 |
+
+A site drifting from 92 to 91 sends nothing. A site dropping from 91 to 88 sends one email, because it crossed from good to average.
+
+<Note>
+  At least three visitor measurements are needed before any alert is considered. A quiet site, or one that has just installed Lightify, will not send alerts until it has collected enough real data.
+</Note>
+
+Alerts go both ways. You are told when performance degrades, and told again when it recovers, which is what makes the feature useful after a change rather than only as a warning.
+
+## Why this is worth turning on
+
+Performance decays quietly. Nobody notices the day a new plugin adds a render-blocking script, or the day a marketing tag starts loading a video player on every page. The score drops, and you find out weeks later.
+
+Because Lightify measures your actual visitors rather than running a synthetic test, the alert reflects something people genuinely experienced.
+
+<Tip>
+  Send alerts somewhere a person will read them. A shared inbox nobody opens is the usual reason an alert about a real regression goes unnoticed for a month.
+</Tip>
+
+## Customizing the email
+
+All four parts of the message are filterable, each receiving the old and new grades and scores:
+
+| Filter | Controls |
+| --- | --- |
+| `lightify_score_alerts_recipient` | Where it is sent |
+| `lightify_score_alerts_subject` | The subject line |
+| `lightify_score_alerts_body` | The body |
+| `lightify_score_alerts_headers` | The mail headers |
+
+Routing alerts into Slack, a ticketing system, or an on-call tool is a few lines. See [score alert filters](/lightify/reference/hooks#score-alerts).
+
+<Card title="How the score is calculated" icon="gauge-high" horizontal href="/lightify/guides/measuring-performance">
+  What the metrics mean and why this number disagrees with PageSpeed Insights.
+</Card>

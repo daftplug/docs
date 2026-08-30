@@ -1,0 +1,325 @@
+---
+title: "Hooks"
+description: "Every action and filter Lightify exposes, grouped by what it controls."
+icon: "code"
+---
+
+Lightify has a large hook surface, because performance work is site-specific and the settings screen cannot anticipate every theme. Where a setting takes an exclusion list, there is nearly always a filter that does the same job in code.
+
+Add these to your theme's `functions.php` or a site-specific plugin.
+
+## Cache and purging
+
+### lightify_is_cacheable
+
+The final say on whether a page is cached. Runs after Lightify's own checks.
+
+<ParamField path="$cacheable" type="bool" required />
+<ParamField path="$html" type="string" />
+
+```php
+add_filter('lightify_is_cacheable', function ($cacheable, $html) {
+    // Never cache a page showing a personalized greeting.
+    if (str_contains($html, 'data-personalized')) {
+        return false;
+    }
+
+    return $cacheable;
+}, 10, 2);
+```
+
+### lightify_cached_page_html
+
+Filters the HTML about to be written to the cache file. This is how Lightify's own features inject into cached pages, in priority order.
+
+<ParamField path="$html" type="string" required />
+
+<Warning>
+  This runs once per cache write, not per request, so anything you add here is served to every visitor of that page. Never inject anything user-specific.
+</Warning>
+
+### lightify_cache_only_html
+
+Like the above, but for content that should exist **only** in the cached copy and never in the live render. Lightify uses it to inject the web vitals collector, so the first uncached visitor is not measured.
+
+<ParamField path="$html" type="string" required />
+
+### lightify_cache_file_name
+
+Filters the generated cache file name, which is how cache variants are keyed.
+
+<ParamField path="$file_name" type="string" required />
+
+### lightify_cache_mobile
+
+Whether to write separate mobile rewrite rules.
+
+<ParamField path="$enabled" type="bool" default="false" />
+
+### lightify_htaccess_rules
+
+The rules Lightify writes to `.htaccess`.
+
+<ParamField path="$rules" type="string" required />
+
+### lightify_auto_purge_urls
+
+The URLs an automatic purge will clear, after a post is saved or similar.
+
+<ParamField path="$urls" type="array" required />
+
+```php
+add_filter('lightify_auto_purge_urls', function ($urls) {
+    // Editing anything should also clear the sitemap.
+    $urls[] = home_url('/sitemap.xml');
+
+    return $urls;
+});
+```
+
+### Purge actions
+
+Eight actions, one pair per purge type. Use `:before` to purge an external cache at the same time, `:after` to react once Lightify is done.
+
+| Action | Argument |
+| --- | --- |
+| `lightify_purge_url:before` / `:after` | `$url` |
+| `lightify_purge_urls:before` / `:after` | `$urls` |
+| `lightify_purge_pages:before` / `:after` | None |
+| `lightify_purge_everything:before` / `:after` | None |
+
+```php
+add_action('lightify_purge_urls:before', function ($urls) {
+    my_cdn_purge($urls);
+});
+```
+
+### lightify_preload_urls
+
+What preloading visits after a purge.
+
+<ParamField path="$urls" type="array" required />
+
+```php
+add_filter('lightify_preload_urls', function ($urls) {
+    // Warm the three templates that matter, not everything.
+    return [home_url('/'), home_url('/shop/'), home_url('/pricing/')];
+});
+```
+
+### lightify_preload_delay
+
+Seconds between preload requests. Raise it on constrained hosting.
+
+<ParamField path="$delay" type="float" default="0.5" />
+
+### lightify_serviceworker
+
+The generated service worker source, before it is written.
+
+<ParamField path="$serviceWorker" type="string" required />
+
+<Warning>
+  A syntax error here stops the service worker registering, which disables browser caching site-wide. Append rather than rewrite, and check the result in **Application > Service Workers**.
+</Warning>
+
+### lightify_offline_fallback_page
+
+The page served when a visitor is offline and the request is not cached.
+
+<ParamField path="$url" type="string" default="/404/" />
+
+## Asset optimizations
+
+Each exclusion list on the settings screen has a matching filter. Use the filter when the exclusions are conditional, or when you want them in version control rather than in the database.
+
+| Filter | Excludes from |
+| --- | --- |
+| `lightify_exclude_from_css_minify` | CSS minification |
+| `lightify_exclude_from_js_minify` | JavaScript minification |
+| `lightify_exclude_from_js_defer` | Deferring |
+| `lightify_exclude_from_js_delay` | Delaying |
+| `lightify_exclude_from_rucss` | Unused CSS removal |
+| `lightify_exclude_from_lazy_load` | Lazy loading |
+
+Each receives an array of keywords and returns one.
+
+```php
+add_filter('lightify_exclude_from_js_delay', function ($exclusions) {
+    $exclusions[] = 'consent-manager';
+
+    return $exclusions;
+});
+```
+
+### lightify_minified_css
+
+The minified CSS for one file, before it is written.
+
+<ParamField path="$minified_css" type="string" required />
+<ParamField path="$file_path" type="string" />
+
+### lightify_rucss_css
+
+The CSS produced by unused CSS removal.
+
+<ParamField path="$css" type="string" required />
+<ParamField path="$css_file_path" type="string" />
+
+### lightify_rucss_include_selectors
+
+Selectors forced into the generated CSS, the code equivalent of the **CSS Inclusions** field.
+
+<ParamField path="$selectors" type="array|string" required />
+<ParamField path="$html" type="string" />
+
+```php
+add_filter('lightify_rucss_include_selectors', function ($selectors, $html) {
+    // Keep modal styles on pages that can open one.
+    if (str_contains($html, 'js-open-modal')) {
+        $selectors[] = '.modal';
+    }
+
+    return $selectors;
+}, 10, 2);
+```
+
+### lightify_interaction_timeout
+
+Seconds before delayed JavaScript runs even without interaction.
+
+<ParamField path="$seconds" type="int" default="5" />
+
+### Lazy rendering
+
+| Filter | Default | Controls |
+| --- | --- | --- |
+| `lightify_lazy_render_skip_count` | `3` | Elements at the top left rendered normally |
+| `lightify_lazy_render_limit` | `30` | Maximum elements lazy rendered per page |
+| `lightify_lazy_render_exclude_keywords` | array | Elements never lazy rendered |
+| `lightify_lazy_render_intrinsic_height` | `$height, $tag, $attrs` | The placeholder height reserved for an element |
+
+Raise the skip count if content below the fold on a short page flickers in.
+
+### Self-hosting
+
+<ParamField path="lightify_selfhost_external_domains" type="array">
+  Which external domains are downloaded and served locally.
+</ParamField>
+
+<ParamField path="lightify_before_download_external_file" type="filter">
+  Filters `$content, $url_new, $extension` before an external file is saved. Use it to rewrite URLs inside a downloaded stylesheet.
+</ParamField>
+
+## Images
+
+| Filter | Default | Controls |
+| --- | --- | --- |
+| `lightify_webp_quality` | `82` | WebP output quality |
+| `lightify_webp_images_per_page` | `50` | Images converted per page render |
+| `lightify_lazy_load_above_fold_count` | `2` | Images excluded from lazy loading at the top |
+| `lightify_lcp_scan_images` | `10` | Images examined when finding the LCP candidate |
+| `lightify_lcp_min_image_area` | `50000` | Smallest area, in pixels, that can be the LCP element |
+| `lightify_responsive_image_sizes` | `$sizes, $image` | The generated `sizes` attribute |
+
+```php
+// Higher quality WebP on a photography site.
+add_filter('lightify_webp_quality', function () {
+    return 90;
+});
+
+// A full-width hero means more images are above the fold.
+add_filter('lightify_lazy_load_above_fold_count', function () {
+    return 4;
+});
+```
+
+## Smart link prefetch
+
+| Filter | Default | Controls |
+| --- | --- | --- |
+| `lightify_smart_link_prefetch_delay` | `90` | Milliseconds of hover before prefetching on desktop |
+| `lightify_smart_link_prefetch_mobile_delay` | `450` | Milliseconds before prefetching on mobile |
+| `lightify_smart_link_prefetch_max` | `12` | Maximum prefetches per page |
+| `lightify_smart_link_prefetch_exclusions` | array | URL patterns never prefetched |
+
+```php
+add_filter('lightify_smart_link_prefetch_exclusions', function ($exclusions) {
+    $exclusions[] = '/download/';
+
+    return $exclusions;
+});
+```
+
+<Warning>
+  Exclude any URL that acts on a plain `GET`. A prefetched link that deletes something, consumes a one-time token, or counts a download will fire without anyone clicking it.
+</Warning>
+
+## Score alerts
+
+Four filters shape the email, each receiving the old and new grade and score.
+
+| Filter | Controls |
+| --- | --- |
+| `lightify_score_alerts_recipient` | Where it is sent |
+| `lightify_score_alerts_subject` | The subject line |
+| `lightify_score_alerts_body` | The body |
+| `lightify_score_alerts_headers` | The mail headers |
+
+```php
+add_filter('lightify_score_alerts_subject', function ($subject, $oldGrade, $newGrade) {
+    return sprintf('[%s] Performance moved from %s to %s', get_bloginfo('name'), $oldGrade, $newGrade);
+}, 10, 3);
+```
+
+### lightify_web_vitals_updated
+
+Fires when new vitals are stored. Use it to forward measurements to your own monitoring.
+
+## Integrations
+
+| Filter | Default | Controls |
+| --- | --- | --- |
+| `lightify_varnish_enabled` | Detected from `X-Varnish` | Whether Varnish purging runs |
+| `lightify_varnish_server` | `https://127.0.0.1` | Where `PURGE` requests are sent |
+| `lightify_page_builder_template_post_types` | array | Post types treated as templates |
+
+## Utilities
+
+| Filter | Default | Controls |
+| --- | --- | --- |
+| `lightify_desktop_user_agent` | Lightify's own | User agent used for desktop preload requests |
+| `lightify_mobile_user_agent` | A Pixel 4 string | User agent used for mobile preload requests |
+| `lightify_admin_js_vars` | array | Variables passed to the admin JavaScript |
+
+## Settings and bootstrap
+
+### lightify_settings_update:before / :after
+
+Fire around the settings write, both receiving `$settings`.
+
+```php
+add_action('lightify_settings_update:after', function ($settings) {
+    if ($settings['removeUnusedCss'] === 'on') {
+        error_log('Lightify: unused CSS removal enabled.');
+    }
+});
+```
+
+### lightify_pro_loaded
+
+Fires once the Freemius SDK is initialized, before features are constructed.
+
+## Constants
+
+| Constant | Value |
+| --- | --- |
+| `LIGHTIFY_VERSION` | The plugin version string |
+| `LIGHTIFY_FILE` | Absolute path to `lightify.php` |
+| `LIGHTIFY_BASENAME` | Plugin basename |
+| `LIGHTIFY_DIR_PATH` | Absolute path to the plugin directory |
+| `LIGHTIFY_DIR_URL` | URL of the plugin directory |
+| `LIGHTIFY_UPLOAD_DIR` | Absolute path to the plugin's uploads directory |
+| `LIGHTIFY_UPLOAD_URL` | URL of the plugin's uploads directory |
+| `LIGHTIFY_CACHE_DIR` | Absolute path to the page cache directory |
+| `LIGHTIFY_CACHE_URL` | URL of the page cache directory |

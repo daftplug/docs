@@ -1,0 +1,140 @@
+---
+title: "REST API"
+description: "The lightify/v1 endpoints, their permissions, and what they do."
+icon: "server"
+---
+
+Lightify registers its endpoints under the `lightify/v1` namespace. They serve the admin screen, the admin bar, and the front-end vitals collector, so treat them as an internal API rather than a versioned public contract.
+
+```
+https://example.com/wp-json/lightify/v1/
+```
+
+The purge endpoints are the exception worth knowing about, because they are genuinely useful from a deploy script.
+
+## Endpoints
+
+| Endpoint | Method | Access |
+| --- | --- | --- |
+| `/settings` | PUT | `manage_options` |
+| `/cache-status` | POST | `manage_options` |
+| `/purge-current-page` | POST | `manage_options` |
+| `/purge-cache-and-preload` | POST | `manage_options` |
+| `/purge-pages-and-preload` | POST | `manage_options` |
+| `/purge-everything-and-preload` | POST | `manage_options` |
+| `/preload-cache` | POST | `manage_options` |
+| `/service-worker/generate` | POST | `manage_options` |
+| `/performance-score/fetch` | GET | `manage_options` |
+| `/web-vitals/report` | POST | Public |
+| `/action-items/fetch` | GET | `manage_options`, Pro only |
+| `/optimized-pages/fetch` | GET | `manage_options` |
+| `/optimized-assets/fetch` | GET | `manage_options` |
+
+## Cache
+
+### Purging
+
+Four endpoints, matching the admin bar menu.
+
+<ParamField path="POST /purge-current-page" type="endpoint">
+  Clears the cached copy of one page.
+</ParamField>
+
+<ParamField path="POST /purge-pages-and-preload" type="endpoint">
+  Clears the page cache and warms it again. Leaves optimized assets in place.
+</ParamField>
+
+<ParamField path="POST /purge-cache-and-preload" type="endpoint">
+  Clears the cache and preloads.
+</ParamField>
+
+<ParamField path="POST /purge-everything-and-preload" type="endpoint">
+  Clears everything, including optimized CSS, JavaScript, and images, then preloads. Use after changing optimization settings, since assets generated under the old settings are otherwise kept.
+</ParamField>
+
+```bash
+curl -X POST https://example.com/wp-json/lightify/v1/purge-everything-and-preload \
+  -H "X-WP-Nonce: $NONCE" \
+  --cookie "$COOKIE_JAR"
+```
+
+Each fires the matching [purge actions](/lightify/reference/hooks#purge-actions), so integrations propagate to Cloudflare, Varnish, and your host at the same time.
+
+<Tip>
+  Calling `purge-everything-and-preload` at the end of a deploy is the cleanest way to avoid serving stale pages after a release. Preloading immediately afterwards means your first real visitor still gets a cached page.
+</Tip>
+
+### Other cache routes
+
+<ParamField path="POST /preload-cache" type="endpoint">
+  Starts preloading without purging first. Fills gaps rather than rebuilding.
+</ParamField>
+
+<ParamField path="POST /cache-status" type="endpoint">
+  Reports whether page caching is actually active, returning `active`, `wpconfig`, or `dropin`. See [confirming page caching](/lightify/getting-started/installation#confirm-page-caching-is-active).
+</ParamField>
+
+<ParamField path="POST /service-worker/generate" type="endpoint">
+  Rebuilds the service worker from current settings. Use after changing the [`lightify_serviceworker`](/lightify/reference/hooks#lightify_serviceworker) filter.
+</ParamField>
+
+## Settings
+
+<ParamField path="PUT /settings" type="endpoint">
+  Merges the supplied values over the stored settings. Send only the keys you want to change.
+</ParamField>
+
+```bash
+curl -X PUT https://example.com/wp-json/lightify/v1/settings \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"settings": {"minifyHtml": "on"}}'
+```
+
+Fires [`lightify_settings_update:before`](/lightify/reference/hooks#lightify_settings_updatebefore-after) and `:after`.
+
+<Warning>
+  Changing an optimization setting does not rebuild existing cached pages. Follow a settings change with a purge, or visitors keep getting pages built under the old configuration.
+</Warning>
+
+There is no GET counterpart. Read settings in PHP with `get_option('lightify_settings')`.
+
+## Metrics
+
+<ParamField path="GET /performance-score/fetch" type="endpoint">
+  Returns the performance score and the Core Web Vitals behind it.
+</ParamField>
+
+<ParamField path="POST /web-vitals/report" type="endpoint">
+  Public. Receives measurements from the collector script in visitors' browsers.
+
+  This is the only public endpoint in the plugin, because the browsers reporting are anonymous. It is defended inside the handler rather than by a capability check: a token, an origin check, a per-IP rate limit, bounds on accepted values, and median aggregation over a ring buffer, so a flood of fabricated beacons cannot move the number much.
+</ParamField>
+
+<ParamField path="GET /action-items/fetch" type="endpoint">
+  Pro. Returns the specific recommendations shown on the overview page. Only registered with an active license.
+</ParamField>
+
+<ParamField path="GET /optimized-pages/fetch" type="endpoint">
+  Which pages have been cached and optimized.
+</ParamField>
+
+<ParamField path="GET /optimized-assets/fetch" type="endpoint">
+  Which CSS, JavaScript, image, and font files have been processed.
+</ParamField>
+
+## Authentication
+
+Every endpoint except `/web-vitals/report` requires `manage_options` and a valid `X-WP-Nonce` header.
+
+For a purge from a deploy script running outside a browser session, use an application password:
+
+```bash
+curl -X POST https://example.com/wp-json/lightify/v1/purge-everything-and-preload \
+  -u "deploy:xxxx xxxx xxxx xxxx xxxx xxxx"
+```
+
+<Note>
+  The application password's user needs `manage_options`, which is administrator-level access. Create a dedicated user for it rather than reusing your own account, and revoke the password when the pipeline changes hands.
+</Note>

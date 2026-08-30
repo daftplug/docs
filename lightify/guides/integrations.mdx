@@ -1,0 +1,122 @@
+---
+title: "Integrations"
+description: "How Lightify works with CDNs, managed hosts, page builders, and WooCommerce."
+icon: "puzzle-piece"
+---
+
+Lightify's integrations have no settings. Each one checks whether the thing it integrates with is present, and hooks in if it is. Nothing to enable, nothing to configure, and every one of them is free.
+
+They exist to solve one problem: **when Lightify purges its cache, every other cache in front of your site needs to purge too.** Otherwise you clear Lightify, the CDN keeps serving the old page, and it looks like the purge did nothing.
+
+## CDN and reverse proxy
+
+<AccordionGroup>
+  <Accordion title="Cloudflare">
+    Detected through the official Cloudflare plugin. When Lightify purges, Cloudflare's cache is purged for the same URLs.
+
+    If you use Cloudflare without the official plugin, Lightify has no credentials to purge with. Install it, or purge Cloudflare manually after content changes.
+  </Accordion>
+  <Accordion title="Varnish">
+    Detected from the `X-Varnish` response header, then purged with `PURGE` requests.
+
+    Two filters control it when detection is wrong or your Varnish is on another host:
+
+    ```php
+    add_filter('lightify_varnish_enabled', '__return_true');
+    add_filter('lightify_varnish_server', function () {
+        return 'https://10.0.0.5';
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Managed hosts
+
+Most managed WordPress hosts run their own server-level cache. Lightify detects and purges these:
+
+Kinsta, WP Engine, SiteGround, Cloudways with Breeze, RunCloud, SpinupWP, GridPane, Rocket.net, WordPress.com edge cache, and sites using Nginx Helper.
+
+Each is guarded and wrapped, so a host changing its API breaks that one integration rather than your purges.
+
+<Note>
+  Running Lightify's page cache alongside a host cache is normal and correct. Lightify caches the HTML, the host caches at the edge, and the integration keeps them in step. You do not need to disable one.
+</Note>
+
+## WooCommerce
+
+Two jobs.
+
+**Exclusions.** Cart, checkout, and account pages are excluded from caching automatically. You do not need to add them to your [page exclusions](/lightify/settings/cache#page-cache).
+
+**Stock purges.** When a product's stock changes, the pages showing that product are purged, so a sold-out item does not keep showing as available from a cached page.
+
+### Multi-currency
+
+Sites running Aelia, YITH, or Curcy set a currency cookie, which is already part of the cache key, so the correct variant is served without help.
+
+WCML keeps the currency in the session rather than a cookie, so Lightify sets one for it. Without that, everyone would be served whichever currency the page was first cached in.
+
+## Translation
+
+WPML, Polylang, TranslatePress, and Weglot are detected, and purging a post purges every translation of it. Editing the English version clears the French copy at the same time.
+
+## Page builders
+
+Saving a template purges the whole page cache, because a template change affects every page using it rather than only the post you edited.
+
+Elementor, Divi, Bricks, Oxygen, Beaver Builder, Breakdance, Brizy, and Gutenberg templates are covered. Elementor's CSS regeneration is hooked separately.
+
+Add your own template post types:
+
+```php
+add_filter('lightify_page_builder_template_post_types', function ($postTypes) {
+    $postTypes[] = 'my_custom_template';
+
+    return $postTypes;
+});
+```
+
+## Other plugins
+
+<AccordionGroup>
+  <Accordion title="ACF">
+    Saving an options page purges everything, since options pages can affect any template. Saving a normal post is left to the standard purge, which already handles it.
+  </Accordion>
+  <Accordion title="Pretty Links">
+    Redirect URLs are excluded from caching, so a cached page cannot serve a stale redirect.
+  </Accordion>
+  <Accordion title="BuddyBoss">
+    BuddyBoss's private-network mode blocks REST routes for logged-out visitors, which would break Lightify's own endpoints. The integration allows them through.
+
+    <Note>
+      The allowed list is maintained in the integration. A new Lightify REST route has to be added there or it will be blocked on BuddyBoss sites in private mode.
+    </Note>
+  </Accordion>
+  <Accordion title="Progressify">
+    If Progressify is active, it owns the service worker and Lightify's [browser cache](/lightify/settings/cache#browser-cache) section is disabled. Two service workers on the same scope would conflict.
+  </Accordion>
+</AccordionGroup>
+
+## Writing your own
+
+The purge actions are the hooks to use. Each fires before and after.
+
+```php
+add_action('lightify_purge_urls:before', function ($urls) {
+    my_cdn_purge($urls);
+});
+
+add_action('lightify_purge_everything:before', function () {
+    my_cdn_purge_all();
+});
+```
+
+Three filters cover the rest:
+
+| Filter | Use |
+| --- | --- |
+| `lightify_is_cacheable` | Refuse to cache a page |
+| `lightify_auto_purge_urls` | Add URLs to an automatic purge |
+| `lightify_preload_urls` | Change what preloading visits |
+
+See the [hooks reference](/lightify/reference/hooks#cache-and-purging) for signatures.

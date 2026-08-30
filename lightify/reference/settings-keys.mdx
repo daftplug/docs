@@ -1,0 +1,113 @@
+---
+title: "Settings keys"
+description: "Every option key, its default, and which version seeds it."
+icon: "key"
+---
+
+All of Lightify's settings live in a single WordPress option, `lightify_settings`, stored as an associative array.
+
+```php
+$settings = get_option('lightify_settings');
+echo $settings['browserCacheStrategy']; // NetworkFirst
+```
+
+Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
+
+<Warning>
+  Prefer the settings screen or the [`PUT /settings`](/lightify/reference/rest-api#settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
+</Warning>
+
+To change one value safely in code:
+
+```php
+$settings = get_option('lightify_settings', []);
+$settings['minifyHtml'] = 'on';
+update_option('lightify_settings', $settings);
+```
+
+<Note>
+  Changing a setting does not rebuild cached pages. Purge afterwards, or visitors keep receiving pages built under the old configuration.
+</Note>
+
+## When keys are seeded
+
+Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten.
+
+Several Pro keys default to `on`, so activating a license enables those optimizations immediately. Purge after activating.
+
+## Free settings
+
+| Key | Default |
+| --- | --- |
+| `scoreAlerts` | 'off' |
+| `scoreAlertsEmail` | Your WordPress admin email |
+| `separateMobileCache` | 'off' |
+| `cacheLoggedIn` | 'off' |
+| `pageCacheExclusions` | '' |
+| `browserCacheStrategy` | 'NetworkFirst' |
+| `browserCacheExpirationTime` | '10' |
+| `minifyHtml` | 'off' |
+| `preventLayoutShifts` | 'off' |
+| `minifyCss` | 'on' |
+| `minifyJs` | 'on' |
+| `deferJs` | 'off' |
+| `deferJsExclusions` | '' |
+| `preloadFonts` | 'on' |
+| `lazyLoadImages` | 'on' |
+| `properlySizeImages` | 'on' |
+| `lazyLoadVideos` | 'on' |
+| `lazyLoadIframes` | 'on' |
+| `smartLinkPrefetch` | 'on' |
+| `preconnectResources` | [] |
+| `prefetchResources` | [] |
+| `preloadResources` | [] |
+| `disableBlockEditorCss` | 'off' |
+| `disableDashicons` | 'off' |
+| `disableEmojis` | 'on' |
+| `disableJqueryMigrate` | 'on' |
+| `disableOembeds` | 'on' |
+
+## Pro settings
+
+These keys only exist on an install with an active license.
+
+| Key | Default |
+| --- | --- |
+| `lazyRenderElements` | 'off' |
+| `removeUnusedCss` | 'off' |
+| `removeUnusedCssInclusions` | '' |
+| `selfHostExternalCss` | 'on' |
+| `delayJs` | 'off' |
+| `delayJsExclusions` | '' |
+| `selfHostExternalJs` | 'on' |
+| `useSystemFontsFirst` | 'on' |
+| `selfHostExternalFonts` | 'on' |
+| `autoImageOptimization` | 'on' |
+| `preloadCriticalImages` | 'on' |
+| `youtubeVideoPreviews` | 'on' |
+| `speculativeLoading` | 'on' |
+| `autoCleanDatabase` | 'off' |
+| `autoCleanDatabaseSchedule` | 'weekly' |
+| `postCleanupDeleteRevisions` | 'off' |
+| `postCleanupDeleteAutoDrafts` | 'off' |
+| `postCleanupDeleteTrashed` | 'off' |
+| `commentCleanupDeleteSpam` | 'off' |
+| `commentCleanupDeleteTrashed` | 'off' |
+| `tableCleanupDeleteExpiredTransients` | 'off' |
+| `tableCleanupReorganize` | 'off' |
+| `disableXmlRpc` | 'off' |
+| `disableRssFeed` | 'off' |
+| `throttleHeartbeat` | 'off' |
+
+## Exclusion list format
+
+`pageCacheExclusions`, `deferJsExclusions`, `delayJsExclusions`, and `removeUnusedCssInclusions` are all newline-separated strings, not arrays.
+
+```php
+$settings = get_option('lightify_settings', []);
+$settings['deferJsExclusions'] = "jquery.min.js
+slider";
+update_option('lightify_settings', $settings);
+```
+
+Each has a matching filter that is usually the better choice in code, since it keeps the list in version control rather than in the database. See [asset optimizations](/lightify/reference/hooks#asset-optimizations).

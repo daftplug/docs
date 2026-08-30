@@ -1,0 +1,120 @@
+---
+title: "Bloat removal"
+description: "Database cleanup and switching off WordPress features you do not use."
+icon: "broom"
+---
+
+**Lightify > Settings > Bloat Removal**
+
+Two unrelated jobs share this tab: deleting accumulated rows from your database, and stopping WordPress loading things your site never uses.
+
+## Database optimizations
+
+<Warning>
+  Everything in this section permanently deletes data. There is no undo, and no confirmation beyond enabling the setting. Take a database backup before the first run.
+</Warning>
+
+<ParamField path="Auto Clean Database" type="toggle" default="off">
+  Pro. Runs the cleanups selected below on a schedule.
+</ParamField>
+
+<ParamField path="Clean Schedule" type="select" default="weekly">
+  `weekly` or `monthly`. Monthly is plenty for most sites. Weekly suits a busy site with heavy revision and spam volume.
+</ParamField>
+
+### What gets deleted
+
+<AccordionGroup>
+  <Accordion title="Post cleanup">
+    **Delete post revisions** removes old versions of posts. On a site with years of editing this is often the single largest source of database bloat, and it is also your edit history, so it is gone once deleted.
+
+    **Delete auto drafts** removes drafts WordPress created automatically and nobody published. Safe.
+
+    **Delete trashed posts** permanently removes what is in the trash. Check the trash first.
+  </Accordion>
+  <Accordion title="Comment cleanup">
+    **Delete spam comments** removes anything marked as spam. Safe, and usually the second largest source of bloat.
+
+    **Delete trashed comments** permanently removes trashed comments.
+  </Accordion>
+  <Accordion title="Table cleanup">
+    **Delete expired transients** removes temporary cached values that have already expired. The safest item on this tab; WordPress does not always clean these up on its own.
+
+    **Reorganize tables** defragments your database tables. Reclaims space and can speed up queries, but it locks tables while it runs, so it is the one item to schedule outside busy hours.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Rather than deleting every revision on a schedule, consider capping them instead. Adding `define('WP_POST_REVISIONS', 5);` to `wp-config.php` keeps the five most recent per post, so they never accumulate in the first place and you keep a usable history.
+</Tip>
+
+## WordPress bloat
+
+Each of these stops WordPress loading something on the front end. All are reversible, and none deletes anything.
+
+<ParamField path="Disable Block Editor CSS" type="toggle" default="off">
+  Removes the stylesheets the block editor and WooCommerce blocks add to the front end.
+
+  <Warning>
+    Only safe if your theme does not use block styles. If your content contains blocks that rely on core styling, they will lose their layout. Check a page with columns, galleries, or buttons after enabling.
+  </Warning>
+</ParamField>
+
+<ParamField path="Remove Dashicons" type="toggle" default="off">
+  Stops loading the admin icon font for visitors. Safe unless your theme uses Dashicons on the front end, which some do for social icons and menu carets.
+</ParamField>
+
+<ParamField path="Disable Emojis" type="toggle" default="on">
+  Removes the emoji script and styles. On by default. Emoji characters still display, because browsers render them natively; what is removed is WordPress's compatibility script for very old browsers.
+</ParamField>
+
+<ParamField path="Disable jQuery Migrate" type="toggle" default="on">
+  Removes the compatibility shim for jQuery code written against older versions. On by default.
+
+  <Note>
+    If an old plugin or theme breaks after enabling this, that plugin is using jQuery methods removed years ago. Turning it back on is a valid short-term fix, but the underlying code is the real problem.
+  </Note>
+</ParamField>
+
+<ParamField path="Disable oEmbeds" type="toggle" default="on">
+  Stops WordPress automatically turning pasted URLs into embeds, and removes the associated script. On by default.
+
+  Existing embeds in your content are unaffected. What stops is the automatic conversion of newly pasted URLs.
+</ParamField>
+
+<ParamField path="Disable XML-RPC" type="toggle" default="off">
+  Pro. Turns off the XML-RPC endpoint, which is a common target for brute-force and amplification attacks and is unused by most sites.
+
+  <Warning>
+    Some things still need it: the WordPress mobile app, Jetpack, and some remote publishing tools. If you use any of those, leave it on.
+  </Warning>
+</ParamField>
+
+<ParamField path="Disable RSS Feed" type="toggle" default="off">
+  Pro. Removes RSS and feed links.
+
+  <Warning>
+    Only do this if you are certain nobody consumes your feed. Feed readers, podcast directories, email digest services, and other sites syndicating your content all depend on it, and none of them will tell you when it disappears.
+  </Warning>
+</ParamField>
+
+<ParamField path="Throttle Heartbeat" type="toggle" default="off">
+  Pro. Limits the WordPress Heartbeat API to once every 60 seconds instead of its default frequency.
+
+  Heartbeat powers autosave, post locking, and live dashboard updates by polling your server continuously from every open admin tab. On shared hosting with several editors, that alone can be a meaningful share of your load.
+
+  <Note>
+    Throttling means autosave and post-lock warnings update less often. It does not disable them.
+  </Note>
+</ParamField>
+
+## What to enable
+
+For most sites the three defaults are correct and enough. Beyond those:
+
+- **Remove Dashicons** if your theme does not use them on the front end.
+- **Throttle Heartbeat** on any site with more than one person in the admin.
+- **Disable XML-RPC** unless you use the mobile app or Jetpack.
+- Leave **Disable RSS Feed** and **Disable Block Editor CSS** alone unless you have a specific reason.
+
+Each of these saves a request or two. Real gains come from [caching](/lightify/settings/cache) and [asset optimizations](/lightify/settings/asset-optimizations); this tab is tidying up afterwards.

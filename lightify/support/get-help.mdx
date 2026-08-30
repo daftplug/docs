@@ -1,0 +1,70 @@
+---
+title: "Get help"
+description: "How to reach support and what to send."
+icon: "life-ring"
+---
+
+<Columns cols={2}>
+  <Card title="Email support" icon="envelope" href="mailto:support@daftplug.com">
+    support@daftplug.com
+  </Card>
+  <Card title="Plugin support forum" icon="wordpress" href="https://wordpress.org/support/plugin/lightify/">
+    For the free version.
+  </Card>
+</Columns>
+
+## Before you write
+
+<Columns cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/lightify/support/troubleshooting">
+    Symptoms, causes, and which exclusion list fixes them.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/lightify/support/faq">
+    Compatibility, caching, and the score.
+  </Card>
+</Columns>
+
+Two checks answer most reports on their own:
+
+<Steps>
+  <Step title="Purge everything, then look again">
+    A page cached before your change is still being served. This is the single most common cause of a report.
+  </Step>
+  <Step title="Turn off the last setting you enabled">
+    Purge again. If the problem goes away, you have found it, and the fix is usually an exclusion rather than leaving the feature off.
+  </Step>
+</Steps>
+
+## What to include
+
+<Steps>
+  <Step title="The URL where it happens">
+    A specific page, not just your homepage. Say which template it uses if you know.
+  </Step>
+  <Step title="Which setting you last changed">
+    And whether turning it off resolves the problem.
+  </Step>
+  <Step title="Your cache status">
+    From the overview page: `active`, `wpconfig`, or `dropin`.
+  </Step>
+  <Step title="Your stack">
+    Host, whether you use a CDN, and any other caching or optimization plugin.
+  </Step>
+  <Step title="Your versions">
+    Lightify version, WordPress version, PHP version, and whether Pro is active.
+  </Step>
+</Steps>
+
+<Tip>
+  For a visual problem, a screenshot plus the browser console output is worth several paragraphs of description. Console errors usually name the script that a defer or delay setting broke.
+</Tip>
+
+## Reporting something that looks like a bug
+
+Narrow it first. Switching to a default theme and deactivating other plugins takes a few minutes and separates a Lightify bug from a conflict. Say which you tried and what changed.
+
+If the problem is a specific theme or plugin breaking under a specific optimization, that is the most useful report you can send, because it can often be fixed for everyone rather than excluded on your site alone.
+
+<Card title="Feature requests" icon="lightbulb" horizontal href="mailto:support@daftplug.com">
+  Send them to the same address. Say what you are trying to accomplish rather than the feature you have in mind.
+</Card>

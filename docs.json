@@ -13,8 +13,12 @@
       "anchors": [
         {
           "anchor": "Get All Pro Plugins",
-          "icon": "rocket",
-          "href": "https://daftplug.com/#pricing"
+          "icon": "crown",
+          "color": {
+            "light": "#b45309",
+            "dark": "#fbbf24"
+          },
+          "href": "https://daftplug.com/pricing/?utm_source=documentation&utm_medium=mintlify-docs&utm_campaign=upgrade-to-pro"
         }
       ]
     },
@@ -115,6 +119,55 @@
               "generatify/support/troubleshooting",
               "generatify/support/faq",
               "generatify/support/get-help"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Lightify",
+        "icon": "/images/lightify.png",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "lightify/getting-started/introduction",
+              "lightify/getting-started/installation",
+              "lightify/getting-started/quickstart",
+              "lightify/getting-started/free-vs-pro"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "lightify/settings/cache",
+              "lightify/settings/asset-optimizations",
+              "lightify/settings/media-optimizations",
+              "lightify/settings/network-improvements",
+              "lightify/settings/bloat-removal",
+              "lightify/settings/notifications"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "lightify/guides/measuring-performance",
+              "lightify/guides/integrations"
+            ]
+          },
+          {
+            "group": "Developer reference",
+            "pages": [
+              "lightify/reference/hooks",
+              "lightify/reference/rest-api",
+              "lightify/reference/settings-keys"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "lightify/support/troubleshooting",
+              "lightify/support/faq",
+              "lightify/support/get-help"
             ]
           }
         ]
