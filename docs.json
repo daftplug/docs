@@ -275,8 +275,8 @@
     ]
   },
   "logo": {
-    "light": "/images/logo.png",
-    "dark": "/images/logo.png"
+    "light": "/images/logo.svg",
+    "dark": "/images/logo.svg"
   },
   "navbar": {
     "links": [
