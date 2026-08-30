@@ -1,0 +1,103 @@
+---
+title: "Push notifications"
+description: "Subscription controls, automated notifications, and delivery settings."
+icon: "bell"
+---
+
+**Progressify > Settings > Push Notifications**
+
+Progressify sends push notifications from your own server using the Web Push protocol. There is no third-party notification service in the middle, no per-message fee, and no account to create. Subscriptions are stored in your database, in the `{prefix}progressify_push_notifications_subscribers` table.
+
+Notifications reach subscribers whether or not your site is open, on any browser that supports Web Push. That includes Chrome, Edge, and Firefox on desktop and Android, and Safari on iOS **only for apps the visitor has added to the home screen**.
+
+## Subscription controls
+
+How you ask for permission matters more than any other setting here. A browser shows its permission dialog once. If the visitor declines, you cannot ask again, and they would have to re-enable notifications in browser settings.
+
+<ParamField path="Notification Prompt" type="toggle" default="off">
+  Pro. A branded prompt shown before the browser's own dialog, explaining what the visitor is subscribing to. Because it appears first, a visitor who is not interested can dismiss it without ever spending the browser's one permission dialog.
+</ParamField>
+
+<ParamField path="Prompt Message" type="text">
+  The explanation shown in that prompt. Say what you will send and roughly how often. "Order updates and shipping alerts" earns more subscriptions than "stay updated".
+</ParamField>
+
+<ParamField path="Timeout" type="number" default="2">
+  Days before showing the prompt again to someone who dismissed it.
+</ParamField>
+
+<ParamField path="Notification Button" type="toggle" default="on">
+  A floating bell button that lets visitors subscribe when they choose to, and unsubscribe later. Lower conversion than a prompt, and no risk of annoying anyone.
+</ParamField>
+
+<ParamField path="Button Position" type="select" default="bottom-right">
+  `bottom-right`, `bottom-left`, `top-right`, or `top-left`. Check it does not land on your [share button](/progressify/settings/ui-components#user-actions) or a chat widget.
+</ParamField>
+
+<ParamField path="Button Behavior" type="select" default="shown">
+  `shown` keeps the button visible after subscribing so people can unsubscribe from your site. `hidden` removes it, leaving browser settings as the only way out.
+
+  Keep it shown. An easy unsubscribe is better than a permission block, because a blocked site cannot ask again even when the visitor changes their mind.
+</ParamField>
+
+<ParamField path="Logged In Users Only" type="toggle" default="off">
+  Shows subscription controls only to signed-in visitors. Fits membership sites and stores where notifications are tied to an account.
+</ParamField>
+
+## Automated notifications
+
+These fire on WordPress events with no work from you.
+
+<ParamField path="Welcome Notification" type="toggle" default="off">
+  Sends a message the moment someone subscribes. It confirms that notifications work and gives the visitor a reason to keep them on.
+</ParamField>
+
+### Content
+
+| Setting | Sends when | Version |
+| --- | --- | --- |
+| New Content | You publish a post, with its title, excerpt, and featured image. Choose which post types under **Post Types**. | Pro |
+| New Comment | A comment or reply is added to a thread the subscriber took part in. Requires native WordPress comments. | Pro |
+
+### WooCommerce
+
+| Setting | Sends when | Recipient | Version |
+| --- | --- | --- | --- |
+| Price Drop | A product's price falls | Subscribers | Pro |
+| Sale Price | A sale price is added to a product | Subscribers | Pro |
+| Back In Stock | A product returns to stock | Subscribers | Pro |
+| Order Status Update | An order changes status | Subscribers | Pro |
+| New Order | An order is placed | Admins | Pro |
+| Low Stock | A product runs low | Admins | Pro |
+
+The two admin notifications turn push into an operational tool rather than a marketing one. Subscribe on your own phone and you get order alerts without keeping the dashboard open.
+
+### BuddyPress
+
+Member mention, member reply, new direct message, friend request, and friend request accepted. All Pro.
+
+### FluentCommunity
+
+New post and new comment in a space, sent to that space's members. All Pro.
+
+## Server configuration
+
+<ParamField path="Time To Live (TTL)" type="number" default="2419200">
+  Seconds a push service keeps trying to deliver a message to a device that is currently unreachable. The default is four weeks.
+
+  Match this to how long the message stays true. A flash sale ending tonight should be a few hours, not four weeks, or it arrives after the sale is over. Set it to `0` for messages that only matter if the device is online right now.
+</ParamField>
+
+<ParamField path="Batch Size" type="number" default="1000">
+  How many notifications are sent per batch. Sending is chunked so that a large subscriber list does not exhaust PHP memory.
+
+  Lower it to 250 or 500 if sending fails or times out on shared hosting. Higher values need longer script execution time.
+</ParamField>
+
+## Sending a notification
+
+Composing and sending is done from **Progressify > Overview**, not from this tab.
+
+<Card title="Send a push notification" icon="paper-plane" horizontal href="/progressify/guides/sending-notifications">
+  The compose form, the subscriber list, and what to check when delivery fails.
+</Card>

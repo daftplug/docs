@@ -1,0 +1,61 @@
+---
+title: "Get help"
+description: "How to reach support and what to send."
+icon: "life-ring"
+---
+
+<Columns cols={2}>
+  <Card title="Email support" icon="envelope" href="mailto:support@daftplug.com">
+    support@daftplug.com
+  </Card>
+  <Card title="Plugin support forum" icon="wordpress" href="https://wordpress.org/support/plugin/progressify/">
+    For the free version.
+  </Card>
+</Columns>
+
+## Before you write
+
+Most questions are answered faster by the pages you already have.
+
+<Columns cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/progressify/support/troubleshooting">
+    The problems that come up most often.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/progressify/support/faq">
+    Platform support, licensing, and compatibility.
+  </Card>
+</Columns>
+
+## What to include
+
+A report with these five things is usually resolved in one reply. Without them, the first reply is a request for them.
+
+<Steps>
+  <Step title="The URL of the affected site">
+    Not a local site, if you can avoid it. Many PWA behaviors differ on `localhost`.
+  </Step>
+  <Step title="What you expected and what happened">
+    Including the exact wording of any error.
+  </Step>
+  <Step title="Where you saw it">
+    Browser, version, and operating system. PWA support varies enough that this often is the answer.
+  </Step>
+  <Step title="What the service worker panel shows">
+    Open developer tools, go to **Application > Service Workers**, and say whether one is registered and activated. Include any console errors.
+  </Step>
+  <Step title="Your versions">
+    Progressify version, WordPress version, PHP version, and whether Pro is active.
+  </Step>
+</Steps>
+
+<Tip>
+  If the problem is visual, a screenshot of the browser's **Application > Manifest** panel is worth more than a screenshot of the page. It shows what the browser actually read, rather than what you configured.
+</Tip>
+
+## Reporting something that looks like a bug
+
+Try to narrow it before reporting. Switching to a default theme and deactivating other plugins takes a few minutes and tells you whether the problem is Progressify or a conflict. Say which of those you tried, and what changed.
+
+<Card title="Feature requests" icon="lightbulb" horizontal href="mailto:support@daftplug.com">
+  Send them to the same address. Say what you are trying to accomplish rather than the feature you have in mind; there is often an existing way to do it.
+</Card>

@@ -23,7 +23,50 @@
         "tab": "Progressify",
         "icon": "/images/progressify.png",
         "groups": [
-
+          {
+            "group": "Getting started",
+            "pages": [
+              "progressify/getting-started/introduction",
+              "progressify/getting-started/installation",
+              "progressify/getting-started/quickstart",
+              "progressify/getting-started/free-vs-pro"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "progressify/settings/general",
+              "progressify/settings/web-app-manifest",
+              "progressify/settings/installation",
+              "progressify/settings/offline-usage",
+              "progressify/settings/ui-components",
+              "progressify/settings/app-capabilities",
+              "progressify/settings/push-notifications"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "progressify/guides/sending-notifications",
+              "progressify/guides/mobile-apps"
+            ]
+          },
+          {
+            "group": "Developer reference",
+            "pages": [
+              "progressify/reference/hooks",
+              "progressify/reference/rest-api",
+              "progressify/reference/settings-keys"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "progressify/support/troubleshooting",
+              "progressify/support/faq",
+              "progressify/support/get-help"
+            ]
+          }
         ]
       },
       {
@@ -112,8 +155,7 @@
             "group": "Support",
             "pages": [
               "generatify/support/faq",
-              "generatify/support/changelog",
-              "generatify/support/get-help"
+              "generatify/support/changelog"
             ]
           }
         ]
@@ -139,15 +181,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {

@@ -1,0 +1,40 @@
+---
+title: "General"
+description: "Choose which platforms Progressify applies to."
+icon: "gear"
+---
+
+**Progressify > Settings > General**
+
+This tab has a single job: deciding where the plugin's features are active. Everything Progressify adds to the front end respects this setting, not just the PWA itself.
+
+## Platform support
+
+<ParamField path="Support All Platforms" type="toggle" default="on">
+  When on, PWA and plugin features apply everywhere. Turn it off to restrict them to specific platform types.
+</ParamField>
+
+<ParamField path="Supported Platforms" type="multi-select" default="all three">
+  Only shown when **Support All Platforms** is off.
+
+  - **Mobile browsers** — visitors on a phone or tablet browser.
+  - **Desktop browsers** — visitors on a desktop browser.
+  - **Installed PWAs** — visitors who have already installed your app and are running it in its own window.
+</ParamField>
+
+## When to narrow the platforms
+
+Most sites should leave this on. Two cases justify narrowing it.
+
+<AccordionGroup>
+  <Accordion title="Mobile-only app experience">
+    Select **Mobile browsers** and **Installed PWAs**. Desktop visitors get your normal site with no install banner, no tab bar, and no app-like components, while phone users get the full treatment.
+  </Accordion>
+  <Accordion title="Components only inside the installed app">
+    Select **Installed PWAs** alone. Nothing changes for ordinary web visitors, and features like the navigation tab bar or pull-to-refresh appear only once someone has installed the app. This keeps your public site untouched while still giving installers an app-like interface.
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  Excluding a platform also excludes its install prompts, so visitors on that platform have no way to install the app. If you deselect mobile browsers, phone users will never see a prompt and can only install through their browser's own menu.
+</Warning>

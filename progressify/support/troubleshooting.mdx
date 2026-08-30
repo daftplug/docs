@@ -1,0 +1,85 @@
+---
+title: "Troubleshooting"
+description: "The problems that come up most often, and how to diagnose them."
+icon: "wrench"
+---
+
+Almost every Progressify problem traces back to one of three things: the site is not on HTTPS, the service worker did not register, or a cache is serving something old. Check those first.
+
+## Start here
+
+<Steps>
+  <Step title="Confirm HTTPS">
+    The address bar must show `https://` with a valid certificate. Without it browsers refuse to register a service worker, and every feature on this page stops working.
+  </Step>
+  <Step title="Check the service worker">
+    Open developer tools, go to **Application > Service Workers**, and confirm one is registered and shows as activated. If nothing is listed, that is your problem.
+  </Step>
+  <Step title="Check the manifest">
+    In the same panel, go to **Manifest**. It shows the values the browser actually read and flags anything invalid, including icons that failed to load.
+  </Step>
+  <Step title="Read the scorecard">
+    **Progressify > Overview** lists what is missing. With Pro it itemizes each failing check.
+  </Step>
+</Steps>
+
+## Common problems
+
+<AccordionGroup>
+  <Accordion title="No install prompt appears">
+    In order of likelihood: the app is already installed, the visitor dismissed a prompt within the [timeout window](/progressify/settings/installation#shared-settings), the site is not on HTTPS, the manifest lacks a name or a large enough icon, the visitor is on iOS where prompts do not exist, or you filled in [Related Applications](/progressify/settings/web-app-manifest#advanced-features) and the browser is promoting a native app instead.
+  </Accordion>
+
+  <Accordion title="The service worker will not register">
+    Check that `/wp-content/uploads/progressify/scripts/serviceworker.js` exists and that the uploads directory is writable. Saving the settings screen regenerates it. If you use the [`progressify_serviceworker`](/progressify/reference/hooks#progressify_serviceworker) filter, a JavaScript syntax error in your addition will stop the whole file registering, and the console will say so.
+
+    Security plugins and CDNs sometimes block or rewrite the service worker request. Load `https://example.com/?progressify_serviceworker=1` directly; you should get JavaScript, not HTML and not a 403.
+  </Accordion>
+
+  <Accordion title="Content changes do not appear on the front end">
+    A caching strategy is serving the cached copy. Unregister the service worker in **Application > Service Workers**, then reload. If editors keep hitting this, switch the [caching strategy](/progressify/settings/offline-usage#caching-strategy) to Network-First and lower the cache expiration time.
+
+    Remember there may be several caches involved: the service worker, a page cache plugin, and a CDN. Clear them from the outside in.
+  </Accordion>
+
+  <Accordion title="Push notifications are not delivered">
+    Confirm the subscriber list on **Progressify > Overview** is not empty, then see [why sends fail](/progressify/guides/sending-notifications#why-sends-fail). On iOS, Web Push only reaches apps added to the home screen on iOS 16.4 or later.
+  </Accordion>
+
+  <Accordion title="The app opens the browser instead of its own window">
+    The [display mode](/progressify/settings/web-app-manifest#display-mode) is not `standalone`, or the app was added through Safari's **Add to Home Screen** on an older iOS version. Reinstalling after correcting the display mode fixes it.
+  </Accordion>
+
+  <Accordion title="UI components do not appear">
+    Check [platform support](/progressify/settings/general) first; if it is narrowed, components will not load on the platform you are testing. Then check whether the component is Pro and your license is active. Some components are mobile-only by design, including the navigation tab bar.
+  </Accordion>
+
+  <Accordion title="Page transitions break the theme">
+    Smooth page transitions intercept navigation, which conflicts with themes and plugins that do their own. Turn on compatibility mode in [app capabilities](/progressify/settings/app-capabilities#navigation-flow), and turn the feature off if that does not resolve it.
+  </Accordion>
+
+  <Accordion title="Everything works locally but not on the live site">
+    Browsers exempt `localhost` from the HTTPS requirement, so a PWA can appear to work on a local site that would fail on a real domain. Test on a staging site with a real certificate.
+  </Accordion>
+</AccordionGroup>
+
+## Testing properly
+
+A stale service worker will make you chase problems that are already fixed.
+
+- Test in a private window or a fresh browser profile, so no earlier registration or dismissal is in play.
+- Use **Application > Storage > Clear site data** between attempts.
+- Android install prompts behave differently in the Chrome that ships with the device than in a desktop emulator. Test on a real phone before concluding something is broken.
+
+## Conflicts worth knowing about
+
+| Conflicts with | Symptom | What to do |
+| --- | --- | --- |
+| Another PWA plugin | Two service workers competing for the same scope | Run one PWA plugin only |
+| Aggressive page caching | Old HTML served under any strategy | Exclude the manifest and service worker URLs from the page cache |
+| Security plugins | Service worker request blocked or returns HTML | Allow `?progressify_serviceworker=1` and `?progressify_manifest=1` |
+| Themes with their own dark mode | Two toggles fighting over the palette | Use one, not both |
+
+<Card title="Still stuck" icon="life-ring" horizontal href="/progressify/support/get-help">
+  What to include when you contact support.
+</Card>

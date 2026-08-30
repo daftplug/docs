@@ -1,0 +1,76 @@
+---
+title: "Introduction"
+description: "What Progressify adds to WordPress and how the plugin is organized."
+icon: "rocket"
+---
+
+Progressify turns a WordPress site into a Progressive Web App. Visitors can install your site to their home screen, keep browsing when the connection drops, and receive push notifications, without you building or publishing a separate mobile app.
+
+The plugin generates the two files a browser needs to treat a website as an app, a [web app manifest](/progressify/settings/web-app-manifest) and a [service worker](/progressify/settings/offline-usage), then layers install prompts, offline behavior, app-like interface components, and push notifications on top of them.
+
+## What a PWA gives your visitors
+
+<Columns cols={2}>
+  <Card title="Installable" icon="download">
+    Your site gets an icon on the home screen or desktop and opens in its own window without browser chrome.
+  </Card>
+  <Card title="Works offline" icon="wifi-slash">
+    Pages the visitor already saw stay readable without a connection, and a fallback page covers the rest.
+  </Card>
+  <Card title="Re-engageable" icon="bell">
+    Push notifications reach subscribers even when your site is closed.
+  </Card>
+  <Card title="App-like" icon="mobile-screen">
+    Tab bars, pull-to-refresh, dark mode, page transitions, and haptic feedback behave the way native apps do.
+  </Card>
+</Columns>
+
+## How the plugin is organized
+
+Progressify adds a top-level **Progressify** menu in WordPress with two pages.
+
+<Steps>
+  <Step title="Overview">
+    Install and usage analytics, the PWA scorecard that tells you what is still missing, your push subscriber list, and the form for sending a notification.
+  </Step>
+  <Step title="Settings">
+    Seven tabs, each covering one area of the PWA. Every tab is documented in this section.
+  </Step>
+</Steps>
+
+The settings tabs map one to one onto the pages below.
+
+<Columns cols={2}>
+  <Card title="General" icon="gear" href="/progressify/settings/general">
+    Which platforms the plugin applies to.
+  </Card>
+  <Card title="Web app manifest" icon="file-lines" href="/progressify/settings/web-app-manifest">
+    App name, icon, display mode, colors, shortcuts.
+  </Card>
+  <Card title="Installation" icon="circle-plus" href="/progressify/settings/installation">
+    Prompts, install page, button, URL, and QR code.
+  </Card>
+  <Card title="Offline usage" icon="wifi-slash" href="/progressify/settings/offline-usage">
+    Caching strategy, fallback page, offline forms.
+  </Card>
+  <Card title="UI components" icon="shapes" href="/progressify/settings/ui-components">
+    Tab bar, dark mode, refresh gestures, loaders.
+  </Card>
+  <Card title="App capabilities" icon="star" href="/progressify/settings/app-capabilities">
+    Page transitions, file and share handlers, background sync.
+  </Card>
+  <Card title="Push notifications" icon="bell" href="/progressify/settings/push-notifications">
+    Subscription controls, automations, delivery settings.
+  </Card>
+  <Card title="Free and Pro" icon="scale-balanced" href="/progressify/getting-started/free-vs-pro">
+    Exactly which settings each version unlocks.
+  </Card>
+</Columns>
+
+## Before you start
+
+Progressify needs HTTPS. Browsers only register a service worker on a secure origin, so install prompts, offline caching, and push notifications will not work over plain HTTP. `localhost` is exempt, which is why the plugin behaves differently on a local development site than on a staging domain.
+
+<Card title="Install Progressify" icon="download" horizontal href="/progressify/getting-started/installation">
+  Requirements, installation, and activation.
+</Card>

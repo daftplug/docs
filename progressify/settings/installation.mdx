@@ -1,0 +1,91 @@
+---
+title: "Installation prompts"
+description: "The overlays, page, button, URL, and QR code that get your app installed."
+icon: "circle-plus"
+---
+
+**Progressify > Settings > Installation**
+
+Browsers will not install your app on their own. They wait for the site to ask. This tab controls every way Progressify can ask, from an unobtrusive banner to a shareable QR code.
+
+<Warning>
+  Enable one overlay, not all of them. Each one is a separate interruption, and a visitor who meets three install prompts in one session is more likely to leave than to install.
+</Warning>
+
+## Overlays
+
+Overlays appear automatically on the front end. Each has its own message, which you edit with the **Edit** link next to it.
+
+| Overlay | Where it appears | Version |
+| --- | --- | --- |
+| Banner | A bar at the top of the page | Free |
+| Snackbar | A small toast at the bottom | Pro |
+| Menu | Inside the site navigation menu | Pro |
+| Feed | Between items in a post feed | Pro |
+| Blog | Within single post content | Pro |
+| Checkout | On the WooCommerce checkout | Pro |
+
+The Feed and Blog overlays reach people already reading, which is a better moment to ask than a first page view. The Checkout overlay is worth enabling on stores, since order tracking is a concrete reason to install.
+
+## Shared settings
+
+<ParamField path="Text" type="string" default="Install Web App">
+  The title on every overlay and the label on the install button. Keep it short and concrete.
+</ParamField>
+
+<ParamField path="Timeout" type="number" default="2">
+  Days to wait before showing an overlay again after a visitor dismisses it. Raising this is the single cheapest way to reduce complaints about prompts.
+</ParamField>
+
+## Other ways to prompt
+
+### Installation page
+
+A dedicated page styled like an app store listing, with your icon, name, description, and screenshots. Progressify gives you its URL on this tab, ready to copy.
+
+Use it as a link target from email, social posts, or a "Get the app" item in your menu. It is also the only prompt that works for iOS visitors, because it can show them the **Share > Add to Home Screen** steps that Safari requires.
+
+### Installation button
+
+A button you can place anywhere with a shortcode.
+
+```text
+[progressify-install-button]
+```
+
+It triggers the browser install prompt when selected, and uses the **Text** value above as its label. It appears wherever shortcodes are processed, so posts, pages, and text widgets all work.
+
+<Note>
+  On a browser that cannot install, the button has nothing to trigger. Place it somewhere its absence does not break your layout.
+</Note>
+
+### Installation URL
+
+Your homepage with a parameter that fires the install prompt as soon as the visitor arrives. Copy it from this tab and use it in campaigns where you know the person is ready to install.
+
+### Installation QR code
+
+A QR code pointing at the same URL. Copy it, or use **Download Image** to save a PNG. This is the practical way to move someone from desktop or print to their phone, so it belongs on receipts, packaging, table cards, and event signage.
+
+## Why a prompt might not appear
+
+<AccordionGroup>
+  <Accordion title="The app is already installed">
+    Browsers suppress install prompts once the app is installed. Uninstall it, or test in a fresh profile.
+  </Accordion>
+  <Accordion title="The visitor dismissed it recently">
+    The **Timeout** setting is suppressing it. Clear site data to test again.
+  </Accordion>
+  <Accordion title="The site is not on HTTPS">
+    No service worker means no install prompt. See [installation requirements](/progressify/getting-started/installation#requirements).
+  </Accordion>
+  <Accordion title="The manifest is incomplete">
+    An app name and an icon of at least 512 by 512 pixels are required. Check **Application > Manifest** in developer tools.
+  </Accordion>
+  <Accordion title="The visitor is on iOS">
+    Safari does not implement the install prompt event. iOS users have to use **Share > Add to Home Screen**, which your [installation page](#installation-page) can walk them through.
+  </Accordion>
+  <Accordion title="A related application is listed">
+    If you filled in [Related Applications](/progressify/settings/web-app-manifest#advanced-features), the browser promotes the native app instead of the PWA. Clear that field to restore the web install prompt.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,92 @@
+---
+title: "Offline usage"
+description: "Caching strategy, expiration, the fallback page, and offline forms."
+icon: "wifi-slash"
+---
+
+**Progressify > Settings > Offline Usage**
+
+Progressify registers a service worker built on [Workbox](https://developer.chrome.com/docs/workbox) that sits between your site and the network. Every request goes through it, and the strategy you pick here decides whether it answers from the cache, from the network, or from both.
+
+The service worker is served from your home URL:
+
+```
+https://example.com/?progressify_serviceworker=1
+```
+
+## Offline cache
+
+### Caching strategy
+
+<ParamField path="Caching Strategy" type="select" default="NetworkFirst">
+  | Strategy | Behavior | Best for |
+  | --- | --- | --- |
+  | Network-First | Tries the network, caches the response, falls back to the last cached copy if the request fails. | Most sites. Content stays current and offline still works. |
+  | Stale While Revalidate | Serves the cached copy immediately, then fetches in the background to update it. | Sites where speed matters more than the content being seconds-fresh. |
+  | Cache-First | Serves the cached copy and only touches the network when nothing is cached. | Rarely changing sites. Fastest, and the most likely to show stale content. |
+  | Network-Only | Never caches. Every request goes to the network. | Pages that must never be stale. Disables offline browsing. |
+  | Cache-Only | Only ever serves the cache, never the network. | Fixed content that updates on your schedule, not the visitor's. |
+</ParamField>
+
+<Tip>
+  Leave it on Network-First unless you have a reason not to. It is the only strategy that is both current and offline-capable, and it degrades gracefully.
+</Tip>
+
+<Warning>
+  Cache-First and Cache-Only will serve old pages after you publish an edit, until the cache expires. If you run a news site, a store with changing prices, or anything with time-sensitive content, do not use them.
+</Warning>
+
+### Cache expiration time
+
+<ParamField path="Cache Expiration Time" type="number" default="10">
+  How many days cached content stays in the browser's storage.
+
+  With Stale While Revalidate the cache refreshes on its own, so the default is fine. With Cache-First, this value is the longest a visitor can be stuck with an old page, so lower it to one or two days.
+</ParamField>
+
+### Custom offline fallback page
+
+<ParamField path="Custom Offline Fallback Page" type="toggle" default="off">
+  Pro. Replaces Progressify's built-in offline page with one of your own, shown when a visitor requests a page that was never cached while they have no connection.
+
+  Enable it, then set **Offline Fallback Page** to the path of the page you want, such as `/offline`.
+</ParamField>
+
+A good fallback page is self-contained: it should not depend on images, fonts, or scripts that may not be cached. Say what happened, and give the visitor something to do, such as a list of sections they have already visited.
+
+## Offline capabilities
+
+<ParamField path="Offline Notification" type="toggle" default="off">
+  Pro. Shows a live indicator when the connection drops, and clears it when the connection returns. Without it, an offline visitor may not understand why things stopped working.
+</ParamField>
+
+<ParamField path="Offline Forms" type="toggle" default="off">
+  Pro. Lets visitors submit forms while offline, with their consent. The submission is stored locally and sent automatically once the connection returns.
+
+  Useful for comments, contact forms, and surveys. Do not rely on it for anything that must succeed or fail immediately, such as a payment, because the visitor will be told the submission was accepted before your server has seen it.
+</ParamField>
+
+## Related capabilities on other tabs
+
+<Columns cols={2}>
+  <Card title="Background sync" icon="rotate" href="/progressify/settings/app-capabilities#background-processing">
+    Replays failed requests once connectivity returns.
+  </Card>
+  <Card title="Persistent storage" icon="database" href="/progressify/settings/app-capabilities#data-safety">
+    Asks the browser not to evict your cache under storage pressure.
+  </Card>
+</Columns>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Edits do not appear on the front end">
+    A caching strategy is serving the old copy. Hard reload, or open developer tools, go to **Application > Service Workers**, and select **Unregister**, then reload. If it keeps happening for editors, switch to Network-First.
+  </Accordion>
+  <Accordion title="The service worker is missing">
+    The overview scorecard reports this. Saving the settings screen regenerates the file at `/wp-content/uploads/progressify/scripts/serviceworker.js`. If it does not reappear, check that the uploads directory is writable.
+  </Accordion>
+  <Accordion title="Offline pages show the fallback instead of the real page">
+    Only pages the visitor has already loaded are in the cache. A page they have never opened cannot be served offline, so the fallback is correct behavior.
+  </Accordion>
+</AccordionGroup>

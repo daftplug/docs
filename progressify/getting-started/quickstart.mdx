@@ -1,0 +1,101 @@
+---
+title: "Quickstart"
+description: "Take a fresh install to a working, installable PWA."
+icon: "list-check"
+---
+
+Progressify scores your setup on the **Overview** page and lists what is still missing. This page walks through those items in order. Budget about ten minutes.
+
+## 1. Confirm HTTPS
+
+Load your site and check that the address bar shows `https://`. If it does not, ask your host to issue a certificate before going further, because nothing else on this page will take effect without one.
+
+## 2. Name the app and give it an icon
+
+Go to **Progressify > Settings > Web App Manifest**.
+
+<ParamField path="App Icon" type="image" required>
+  A square PNG, at least 512 by 512 pixels. Progressify derives every other icon size, the maskable icon, and the splash screens from this one file. If your site already has a site icon, it is used as the default.
+</ParamField>
+
+<ParamField path="App Name" type="string" required>
+  The name shown under the home screen icon and on the install prompt. Defaults to your site title.
+</ParamField>
+
+<ParamField path="Short Name" type="string">
+  Used where space is tight. Keep it under 12 characters so it is not truncated on the home screen. Defaults to the first 30 characters of your site title.
+</ParamField>
+
+Save. Progressify generates the icon set and splash screens in the background. If the scorecard still reports missing assets afterwards, set a **Background Color** as well and save again.
+
+## 3. Choose how the app opens
+
+Still on the **Web App Manifest** tab, under **Display Settings**.
+
+<ParamField path="Display Mode" default="standalone">
+  `standalone` opens the app in its own window with no browser chrome, which is what most sites want. See [display modes](/progressify/settings/web-app-manifest#display-mode) for the alternatives.
+</ParamField>
+
+<ParamField path="Start Page Path" default="/">
+  The page the app opens on. Leave it at `/` unless you have a dedicated app landing page.
+</ParamField>
+
+<ParamField path="Theme Color" default="#000000">
+  Tints the title bar and the system UI around your app. Set it to your brand color.
+</ParamField>
+
+## 4. Turn on an install prompt
+
+Go to **Progressify > Settings > Installation**. A PWA that nobody is invited to install does not get installed.
+
+The **Banner** overlay is enabled by default and is the safest starting point. Enable one prompt, not all of them, or visitors get nagged from several directions at once.
+
+<Tip>
+  You also get an install page, an install URL, a QR code, and a `[progressify-install-button]` shortcode you can drop anywhere. See [installation prompts](/progressify/settings/installation).
+</Tip>
+
+## 5. Decide on push notifications
+
+Go to **Progressify > Settings > Push Notifications** and enable either the **Notification Button** (on by default) or the **Notification Prompt**.
+
+<Warning>
+  Ask for notification permission at a moment that makes sense. A browser only offers the permission dialog once. If a visitor declines it, you cannot ask again from your site, and they have to re-enable notifications from browser settings.
+</Warning>
+
+## 6. Test the install
+
+<Steps>
+  <Step title="Open your site in Chrome on Android, or Chrome or Edge on desktop">
+    Safari on iOS supports installation, but only through **Share > Add to Home Screen**. It does not fire the install prompt that other browsers use.
+  </Step>
+  <Step title="Look for the install affordance">
+    An install icon appears in the desktop address bar, or your configured banner appears on mobile.
+  </Step>
+  <Step title="Install it and open it">
+    The app should launch in its own window with your icon, name, and theme color.
+  </Step>
+  <Step title="Go offline and reload">
+    Turn off the connection and reload a page you already visited. It should still render, served from the cache.
+  </Step>
+</Steps>
+
+## Reading the scorecard
+
+The overview page scores your setup out of 100.
+
+| Score | Label |
+| --- | --- |
+| 100 | Excellent |
+| 50 to 99 | Good |
+| 25 to 49 | Average |
+| Below 25 | Bad |
+
+HTTPS, the app icon, the app name, the generated assets, and the service worker are worth 10 points each. Categories and the push prompt are worth 5 each. The remaining points come from enabling an install prompt and from registering companion mobile apps.
+
+<Note>
+  The itemized list of what is still missing is a Pro feature. The free version shows the score without the breakdown.
+</Note>
+
+<Card title="What Pro unlocks" icon="scale-balanced" horizontal href="/progressify/getting-started/free-vs-pro">
+  A field-by-field comparison of the two versions.
+</Card>

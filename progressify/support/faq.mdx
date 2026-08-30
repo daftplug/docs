@@ -1,0 +1,91 @@
+---
+title: "FAQ"
+description: "Questions that come up before and after installing Progressify."
+icon: "circle-question"
+---
+
+## About PWAs
+
+<AccordionGroup>
+  <Accordion title="What is a Progressive Web App?">
+    A website that a browser can install like an app. It gets a home screen icon, opens in its own window without browser chrome, works offline for pages already visited, and can receive push notifications. There is no app store, no download, and no separate codebase.
+  </Accordion>
+
+  <Accordion title="Will this replace a native app?">
+    For content sites, stores, publications, and most membership sites, yes. A PWA covers installation, offline reading, and notifications without store review or release cycles.
+
+    A native app is still the right answer when you need deep hardware access, background processing the browser will not allow, or presence in store search. Pro can also supply [native packages](/progressify/guides/mobile-apps) built from your PWA if you want both.
+  </Accordion>
+
+  <Accordion title="Does it work on iPhone?">
+    Partly. iOS supports installation, offline caching, and, since iOS 16.4, push notifications, but only for sites the visitor has added to the home screen through **Share > Add to Home Screen**. Safari does not implement the automatic install prompt, so iOS visitors need to be shown the steps. The [installation page](/progressify/settings/installation#installation-page) does that.
+  </Accordion>
+
+  <Accordion title="Do I need HTTPS?">
+    Yes, without exception on a live site. Browsers only register service workers on secure origins. `localhost` is exempt, which is why a local site can behave differently from a real one.
+  </Accordion>
+</AccordionGroup>
+
+## Setup
+
+<AccordionGroup>
+  <Accordion title="Will it change how my site looks?">
+    Not on its own. The manifest and service worker are invisible to visitors. Visible changes only appear when you enable them: the navigation tab bar, dark mode, page transitions, and the rest are all off by default. The two exceptions are the install banner and the page loader, both of which ship on.
+  </Accordion>
+
+  <Accordion title="Does it work with my theme?">
+    Progressify does not depend on a theme. The components that overlay your site, particularly [smooth page transitions](/progressify/settings/app-capabilities#navigation-flow) and [pull down refresh](/progressify/settings/ui-components#refresh-interactions), can conflict with themes that handle their own navigation or touch gestures. Test those two specifically.
+  </Accordion>
+
+  <Accordion title="Does it work with WooCommerce?">
+    Yes, and it adds store-specific features: a checkout install overlay, and push automations for price drops, sale prices, back-in-stock, order status changes, new orders, and low stock. The last two go to admins, which turns push into an operations tool.
+  </Accordion>
+
+  <Accordion title="Can I use it with a caching plugin?">
+    Yes. Exclude `?progressify_manifest=1` and `?progressify_serviceworker=1` from the page cache so both are served fresh, and remember that when content looks stale you now have two caches to clear.
+  </Accordion>
+
+  <Accordion title="Can I limit the features to mobile only?">
+    Yes. Use [platform support](/progressify/settings/general) to restrict everything to mobile browsers, or to installed apps only if you want your public site untouched.
+  </Accordion>
+</AccordionGroup>
+
+## Push notifications
+
+<AccordionGroup>
+  <Accordion title="Do I need a third-party notification service?">
+    No. Progressify sends over the Web Push protocol from your own server, storing subscriptions in your database. There is no account to create, no per-message cost, and no subscriber limit imposed by a vendor.
+  </Accordion>
+
+  <Accordion title="Can I send to a segment of subscribers?">
+    Not from the plugin. Manual sends go to every subscriber. Targeting comes from the [automations](/progressify/settings/push-notifications#automated-notifications), which fire per event and reach only the relevant people, such as the participants in a comment thread or the members of a community space.
+  </Accordion>
+
+  <Accordion title="What happens if someone blocks notifications?">
+    You cannot ask again. The browser only offers its permission dialog once, and after a block the visitor has to re-enable notifications in browser settings. This is why the [notification prompt](/progressify/settings/push-notifications#subscription-controls) shows your own message first, so an uninterested visitor can dismiss it without spending the browser dialog.
+  </Accordion>
+
+  <Accordion title="Are subscribers lost when I switch hosts?">
+    No, as long as the database moves with you and the domain stays the same. Subscriptions are stored in your own table. Changing domain invalidates them, because a Web Push subscription is bound to its origin.
+  </Accordion>
+</AccordionGroup>
+
+## Licensing
+
+<AccordionGroup>
+  <Accordion title="What does Pro add?">
+    Around forty additional settings, itemized in [free and Pro](/progressify/getting-started/free-vs-pro). The largest additions are the extra install overlays, the navigation tab bar, dark mode, offline forms, page transitions, and all of the push automations.
+  </Accordion>
+
+  <Accordion title="Is Progressify sold on its own?">
+    Pro is part of the DaftPlug membership. One license covers Progressify and every other DaftPlug Pro plugin, and the plans differ only in how many sites you can activate on.
+  </Accordion>
+
+  <Accordion title="What happens to my settings if the license lapses?">
+    Nothing is deleted. Pro settings stay in the database and Pro features stop applying. Reactivating a license restores them exactly as they were.
+  </Accordion>
+
+  <Accordion title="Can I move a license to a different site?">
+    Yes. Deactivate it on the old site to free the activation, then activate on the new one.
+  </Accordion>
+</AccordionGroup>

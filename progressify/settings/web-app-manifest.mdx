@@ -1,0 +1,119 @@
+---
+title: "Web app manifest"
+description: "The app's name, icon, display mode, colors, and shortcuts."
+icon: "file-lines"
+---
+
+**Progressify > Settings > Web App Manifest**
+
+The manifest is the JSON file a browser reads to decide whether your site can be installed and what the installed app should look like. Progressify generates it from this tab. Everything here ends up in that file, so changes take effect on the next install, and already-installed apps pick most of them up when the browser refreshes the manifest.
+
+## App identity
+
+<ParamField path="App Icon" type="image" required>
+  The source image for every icon Progressify produces: home screen icons at each required size, a maskable icon for Android's adaptive shapes, splash screens, and the install QR code. Use a square PNG of at least 512 by 512 pixels. Defaults to your WordPress site icon when one is set.
+</ParamField>
+
+<ParamField path="App Name" type="string" required>
+  The full name, shown on the install prompt and in app listings. Defaults to your site title.
+</ParamField>
+
+<ParamField path="Short Name" type="string">
+  A shorter name for places where the full one will not fit, most visibly the label under the home screen icon. Limited to 30 characters. Aim for 12 or fewer to avoid truncation on Android.
+</ParamField>
+
+<ParamField path="Description" type="string">
+  A short summary of what the app does. Appears on the [install page](/progressify/settings/installation#installation-page) and in some app listings. Defaults to your site tagline.
+</ParamField>
+
+<ParamField path="App Screenshots" type="images">
+  Pro. Up to five screenshots shown on richer install dialogs and on your install page. Progressify auto-generates one mobile and one desktop shot of your homepage, so this is only worth setting if you want to show specific screens.
+</ParamField>
+
+<ParamField path="Categories" type="multi-select">
+  Pro. Hints for catalogs and store listings. Choose no more than three from: books, business, education, entertainment, finance, fitness, food, games, government, health, kids, lifestyle, magazines, medical, music, navigation, news, personalization, photo, politics, productivity, security, shopping, social, sports, travel, utilities, weather.
+</ParamField>
+
+<ParamField path="Dynamic Manifest" type="toggle" default="off">
+  Pro. Makes each page individually installable by building the manifest from the page being viewed rather than from the settings on this tab. The homepage always uses the values above.
+
+  Leave this off unless you specifically want different app identities per page. Turning it on means a visitor who installs from a blog post gets an app named after that post.
+</ParamField>
+
+## Display settings
+
+<ParamField path="Start Page Path" type="string" default="/">
+  The path the app opens on when launched from the home screen. Use a root-relative path. Leave it at `/` unless you have a dedicated app landing page.
+</ParamField>
+
+### Display mode
+
+<ParamField path="Display Mode" type="select" default="standalone">
+  | Value | Behavior |
+  | --- | --- |
+  | `standalone` | Opens in its own window with no browser chrome. The usual choice. |
+  | `fullscreen` | Covers the entire screen, including the system status bar. Suited to games and media. |
+  | `minimal-ui` | Its own window, but keeps a minimal set of browser controls such as back and reload. |
+
+  Choose `minimal-ui` if your site has deep navigation and visitors will miss the back button. `standalone` relies on your own in-app navigation, so pair it with the [navigation tab bar](/progressify/settings/ui-components#navigation) or [swipe navigation](/progressify/settings/ui-components#navigation).
+</ParamField>
+
+<ParamField path="Orientation" type="select" default="portrait">
+  `portrait`, `landscape`, or `any`. This is a preference, not a guarantee, and some platforms ignore it.
+</ParamField>
+
+<ParamField path="Orientation Lock" type="toggle" default="off">
+  Pro. Actively prevents rotation rather than merely expressing a preference.
+</ParamField>
+
+## Appearance
+
+<ParamField path="Theme Color" type="color" default="#000000">
+  Tints the title bar of the installed app and the browser toolbar on mobile. Set it to your brand color.
+</ParamField>
+
+<ParamField path="Background Color" type="color" default="#ffffff">
+  The color shown on the splash screen while the app boots, before your CSS loads. Match it to your site's page background so the transition is invisible. Progressify also uses it when generating splash screens.
+</ParamField>
+
+<ParamField path="iOS Status Bar Style" type="select" default="default">
+  Pro. iOS only.
+
+  | Value | Result |
+  | --- | --- |
+  | `default` | White bar, black text |
+  | `light-content` | Black bar, white text |
+  | `black-translucent` | Transparent bar, white text, content extends underneath |
+
+  `black-translucent` needs your layout to account for the area behind the bar, or your header will sit under the clock.
+</ParamField>
+
+## Advanced features
+
+<ParamField path="App Shortcuts" type="repeater">
+  Pro. Tasks reachable from a long press on the app icon on Android, or a right click on the taskbar or dock icon on desktop. Each entry takes an icon, a name, and a path.
+
+  Good candidates are destinations people go to repeatedly and directly: an account page, a search page, a cart. Most platforms display no more than four.
+</ParamField>
+
+<ParamField path="Related Applications" type="repeater">
+  Pro. Lists native apps that correspond to this site, for the Play Store, the App Store, or Microsoft Store. Each entry is a platform and an app ID.
+
+  <Warning>
+    Listing a related application tells the browser to promote the native app **instead of** the PWA. Only fill this in if you actually want visitors sent to a store rather than installing the web app.
+  </Warning>
+</ParamField>
+
+<ParamField path="IARC Rating ID" type="string">
+  Pro. An International Age Rating Coalition certificate number, used by some catalogs to classify the app's age suitability. Leave empty unless you have one.
+</ParamField>
+
+## Checking the generated manifest
+
+Progressify serves the manifest from a query variable on your home URL rather than from a static file:
+
+```
+https://example.com/?progressify_manifest=1
+```
+
+Open it directly to see the JSON your settings produce. For the browser's own view, open developer tools and go to **Application > Manifest**. That panel shows which icons the browser actually resolved and flags anything it considers invalid, which is the fastest way to diagnose an install prompt that never appears.

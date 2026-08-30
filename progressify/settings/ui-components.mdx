@@ -1,0 +1,118 @@
+---
+title: "UI components"
+description: "Tab bar, dark mode, refresh gestures, loaders, and custom PWA styling."
+icon: "shapes"
+---
+
+**Progressify > Settings > UI Components**
+
+These are the visible parts of the app experience: the interface elements that make an installed site behave the way people expect an app to behave. All of them respect the [platform support](/progressify/settings/general) setting, so you can limit them to phones or to installed apps only.
+
+## Navigation
+
+<ParamField path="Navigation Tab Bar" type="toggle" default="off">
+  Pro. A fixed bar of tabs pinned to the bottom of the screen on mobile, the way most native apps navigate.
+
+  This matters most with the `standalone` [display mode](/progressify/settings/web-app-manifest#display-mode), which removes the browser's own back button. Without a tab bar or swipe navigation, visitors in a standalone app can get stranded.
+</ParamField>
+
+<ParamField path="Navigation Items" type="repeater">
+  The contents of the tab bar. Each item takes an icon, a label, and a URL. Keep it to four or five items; more than that and the labels stop being readable on a narrow screen.
+</ParamField>
+
+<ParamField path="Logged In Users Only" type="toggle" default="off">
+  Restricts the tab bar to signed-in visitors. Useful on membership sites where the tabs point at account-only destinations.
+</ParamField>
+
+<ParamField path="Swipe Navigation" type="toggle" default="off">
+  Adds swipe-from-edge gestures for back and forward. A lighter alternative to the tab bar, and worth enabling alongside it in standalone mode.
+</ParamField>
+
+<ParamField path="Scroll Progress Bar" type="toggle" default="off">
+  A thin bar showing how far through the page the visitor has scrolled. Best suited to long-form content.
+</ParamField>
+
+## Visual modes
+
+<ParamField path="Dark Mode" type="toggle" default="off">
+  Pro. Adds a control that switches your site to a dark palette.
+
+  Progressify derives the dark palette rather than reading one from your theme. If your theme already ships a dark mode, use that instead of this, or the two will fight.
+</ParamField>
+
+<ParamField path="Switch Button Type" type="select" default="floating-button">
+  `floating-button` places a control over the page. `menu-switch` puts it in your navigation menu, which is less intrusive but easier to miss.
+</ParamField>
+
+<ParamField path="OS Aware Dark Mode" type="toggle" default="off">
+  Follows the visitor's system theme automatically, so someone whose phone is set to dark gets dark on arrival without touching the switch. Turn this on whenever you turn on dark mode.
+</ParamField>
+
+<ParamField path="Battery Low Dark Mode" type="toggle" default="off">
+  Switches to dark automatically below 10% battery. Only affects devices whose browser exposes battery level.
+</ParamField>
+
+<ParamField path="Inactive Blur" type="toggle" default="off">
+  Blurs the page when the tab loses focus. A privacy gesture for sites showing personal information on shared screens. It also makes the app task switcher preview unreadable, so consider whether that helps or annoys your visitors.
+</ParamField>
+
+## Refresh interactions
+
+<ParamField path="Pull Down Refresh" type="toggle" default="off">
+  Pro. Drag down at the top of the page to reload, as in most mobile apps.
+
+  <Note>
+    Some themes and sliders bind their own touch handlers at the top of the page. If dragging does nothing, or triggers something else, that is usually the conflict.
+  </Note>
+</ParamField>
+
+<ParamField path="Shake Refresh" type="toggle" default="off">
+  Pro. Shaking the device reloads the page. Discoverable only by accident, so treat it as a bonus rather than a primary control, and avoid it on sites where an accidental reload loses work.
+</ParamField>
+
+## System feedback
+
+<ParamField path="Page Loader" type="toggle" default="on">
+  Shows an animation between page loads, which fills the gap that would otherwise look like a frozen app.
+</ParamField>
+
+<ParamField path="Page Loader Type" type="select" default="default">
+  | Type | Appearance |
+  | --- | --- |
+  | `default` | Progressify's standard loader |
+  | `skeleton` | Grey placeholder blocks in the shape of the page |
+  | `spinner` | A spinning indicator |
+  | `redirect` | A loader styled for navigation between pages |
+  | `percent` | A numeric percentage |
+  | `fade` | A simple cross-fade |
+
+  `skeleton` reads as fastest because it hints at the layout arriving. `percent` only makes sense if your pages are heavy enough for the number to move.
+</ParamField>
+
+<ParamField path="Toast Messages" type="toggle" default="off">
+  Pro. Small transient messages at the edge of the screen for confirmations and errors, replacing the browser's own alerts.
+</ParamField>
+
+## User actions
+
+<ParamField path="Share Button" type="toggle" default="off">
+  A floating button that opens the device's native share sheet through the Web Share API, so visitors share to whatever apps they actually use rather than to a fixed list of networks.
+</ParamField>
+
+<ParamField path="Button Position" type="select" default="bottom-right">
+  `bottom-right`, `bottom-left`, `top-right`, or `top-left`. Check it against your theme's own floating elements, such as a chat widget or a back-to-top button.
+</ParamField>
+
+## Custom CSS and JS
+
+<ParamField path="PWA Custom CSS" type="code">
+  Pro. CSS applied only when the site is running as an installed PWA. Use it for adjustments that should not affect ordinary web visitors, such as padding for a device notch or hiding a header that duplicates the app title bar.
+</ParamField>
+
+<ParamField path="PWA Custom JS" type="code">
+  Pro. JavaScript loaded under the same condition.
+</ParamField>
+
+<Warning>
+  These fields run on your front end with no validation. A syntax error in the JS field can break scripts on the page. Test on staging first.
+</Warning>

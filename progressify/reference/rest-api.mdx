@@ -1,0 +1,183 @@
+---
+title: "REST API"
+description: "The progressify/v1 endpoints, their permissions, and their parameters."
+icon: "server"
+---
+
+Progressify registers its endpoints under the `progressify/v1` namespace. They exist to serve the plugin's own admin screen and front-end scripts, so treat them as an internal API: they are documented here for debugging and integration, but they are not a versioned public contract and may change between releases.
+
+```
+https://example.com/wp-json/progressify/v1/
+```
+
+## Authentication
+
+Administrative endpoints require the `manage_options` capability and a valid `X-WP-Nonce` header. Public endpoints exist because visitors who are not logged in have to be able to subscribe to notifications and be counted in analytics.
+
+<Warning>
+  Do not request a nonce from `/nonce` while logged in and reuse it for an administrative call. A nonce minted for an anonymous request belongs to user 0 and will be rejected. That endpoint exists to give front-end scripts a fresh nonce on cached pages.
+</Warning>
+
+## Endpoints
+
+| Endpoint | Method | Access |
+| --- | --- | --- |
+| `/settings` | PUT | `manage_options` |
+| `/nonce` | GET | Public |
+| `/pwa-score/fetch` | GET | `manage_options` |
+| `/pwa-users/upsert` | PUT | Public |
+| `/pwa-users/fetch` | GET | `manage_options` |
+| `/pwa-assets/check` | POST | `manage_options` |
+| `/pwa-assets/save` | POST | `manage_options` |
+| `/service-worker/generate` | POST | `manage_options` |
+| `/push-subscription/add` | POST | Public |
+| `/push-subscription/update` | PUT | Public |
+| `/push-subscription/sync` | POST | Public |
+| `/push-subscription/remove` | DELETE | Public |
+| `/push-subscribers/fetch` | GET | `manage_options` |
+| `/push-subscribers/send` | POST | `manage_options` |
+
+## Settings
+
+### Update settings
+
+<ParamField path="PUT /settings" type="endpoint">
+  Merges the supplied values over the stored settings. Only send the keys you want to change; anything you omit keeps its current value.
+</ParamField>
+
+```bash
+curl -X PUT https://example.com/wp-json/progressify/v1/settings \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"settings": {"offlineCacheStrategy": "StaleWhileRevalidate"}}'
+```
+
+Fires [`progressify_settings_update:before`](/progressify/reference/hooks#progressify_settings_updatebefore) and `:after` around the write.
+
+<Note>
+  There is no GET counterpart. Read settings in PHP with `get_option('progressify_settings')`.
+</Note>
+
+## Metrics
+
+### Fetch the PWA score
+
+<ParamField path="GET /pwa-score/fetch" type="endpoint">
+  Returns the score shown on the overview page.
+</ParamField>
+
+```json
+{
+  "status": "success",
+  "data": {
+    "scoreResult": "Good",
+    "scorePercent": 75,
+    "actionItems": []
+  }
+}
+```
+
+`scoreResult` is `Excellent` at 100, `Good` from 50, `Average` from 25, and `Bad` below that. `actionItems` lists what is still missing and is only present with an active Pro license.
+
+### PWA users
+
+<ParamField path="PUT /pwa-users/upsert" type="endpoint">
+  Public. Records or updates the current visitor as a PWA user. Called automatically by the front-end script.
+</ParamField>
+
+<ParamField path="GET /pwa-users/fetch" type="endpoint">
+  Returns the install and usage analytics behind the overview page.
+</ParamField>
+
+## Generated files
+
+### Generate the service worker
+
+<ParamField path="POST /service-worker/generate" type="endpoint">
+  Rebuilds `/wp-content/uploads/progressify/scripts/serviceworker.js` from the current settings. Use this after changing the [`progressify_serviceworker`](/progressify/reference/hooks#progressify_serviceworker) filter, or when the scorecard reports the file is missing.
+</ParamField>
+
+### PWA assets
+
+<ParamField path="POST /pwa-assets/check" type="endpoint">
+  Reports whether the icon set and splash screens exist.
+</ParamField>
+
+<ParamField path="POST /pwa-assets/save" type="endpoint">
+  Regenerates them from the configured app icon and background color.
+</ParamField>
+
+## Push notifications
+
+### Subscriptions
+
+The four subscription endpoints are public because they are called by visitors' browsers.
+
+<ParamField path="POST /push-subscription/add" type="endpoint">
+  Stores a new Web Push subscription. Sends the welcome notification if that automation is enabled.
+</ParamField>
+
+<ParamField path="PUT /push-subscription/update" type="endpoint">
+  Updates an existing subscription, which browsers rotate periodically.
+</ParamField>
+
+<ParamField path="POST /push-subscription/sync" type="endpoint">
+  Re-binds an existing subscription to the currently logged-in user.
+</ParamField>
+
+<ParamField path="DELETE /push-subscription/remove" type="endpoint">
+  Deletes a subscription. Used when a visitor unsubscribes and when an admin removes a subscriber.
+</ParamField>
+
+### Fetch subscribers
+
+<ParamField path="GET /push-subscribers/fetch" type="endpoint">
+  Returns the paginated subscriber list shown on the overview page, with country, operating system, browser, and subscription date.
+</ParamField>
+
+### Send a notification
+
+<ParamField path="POST /push-subscribers/send" type="endpoint">
+  Sends a notification to every subscriber. Takes a single `notificationData` object.
+</ParamField>
+
+<Expandable title="notificationData fields">
+  <ResponseField name="notificationTitle" type="string">
+    The notification title.
+  </ResponseField>
+  <ResponseField name="notificationMessage" type="string">
+    The body text.
+  </ResponseField>
+  <ResponseField name="notificationImage" type="integer">
+    Attachment ID of a large image to display.
+  </ResponseField>
+  <ResponseField name="notificationUrl" type="string">
+    Where the notification opens when selected.
+  </ResponseField>
+  <ResponseField name="notificationPersistent" type="string">
+    `on` keeps the notification on screen until the visitor dismisses it.
+  </ResponseField>
+  <ResponseField name="notificationVibration" type="string">
+    `on` vibrates the device on arrival.
+  </ResponseField>
+  <ResponseField name="notificationActionButtons" type="array">
+    Pro. Up to two objects of `{ text, url }`, rendered as buttons on the notification.
+  </ResponseField>
+</Expandable>
+
+```bash
+curl -X POST https://example.com/wp-json/progressify/v1/push-subscribers/send \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{
+        "notificationData": {
+          "notificationTitle": "Spring sale is live",
+          "notificationMessage": "20% off everything until Sunday.",
+          "notificationUrl": "https://example.com/sale/"
+        }
+      }'
+```
+
+Delivery is chunked according to the **Batch Size** setting, and the response reports how many messages were sent and how many failed.

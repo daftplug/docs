@@ -1,0 +1,87 @@
+---
+title: "Installation"
+description: "Requirements, installing the plugin, and activating a Pro license."
+icon: "download"
+---
+
+## Requirements
+
+| Requirement | Minimum |
+| --- | --- |
+| WordPress | 5.0 |
+| PHP | 7.4 |
+| Connection | HTTPS with a valid certificate |
+
+<Warning>
+  HTTPS is not optional. Browsers refuse to register a service worker on an insecure origin, and without a service worker there are no install prompts, no offline caching, and no push notifications. The only exception browsers make is `localhost`.
+</Warning>
+
+## Install the free plugin
+
+<Steps>
+  <Step title="Search the plugin directory">
+    In WordPress, go to **Plugins > Add New** and search for `Progressify`.
+  </Step>
+  <Step title="Install and activate">
+    Select **Install Now**, then **Activate**. A **Progressify** item appears in the admin menu.
+  </Step>
+  <Step title="Open the overview">
+    Go to **Progressify > Overview**. The PWA scorecard lists whatever still needs your attention.
+  </Step>
+</Steps>
+
+## Install manually from a ZIP
+
+Use this route for the Pro version, which is distributed as a ZIP rather than through the plugin directory.
+
+<Steps>
+  <Step title="Download the ZIP">
+    Sign in at [daftplug.com](https://daftplug.com/) and download the Progressify Pro archive from your account.
+  </Step>
+  <Step title="Upload it">
+    Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
+  </Step>
+  <Step title="Replace the free version">
+    If the free version is already installed, WordPress asks whether to replace it. Choose to replace. Your settings are stored in the database and survive the swap.
+  </Step>
+  <Step title="Activate">
+    Select **Activate Plugin**.
+  </Step>
+</Steps>
+
+## Activate your license
+
+Pro features stay locked until the license is activated on the site.
+
+<Steps>
+  <Step title="Open the activation screen">
+    After activating Pro, WordPress shows an activation notice. You can also reach it from **Progressify > Account**.
+  </Step>
+  <Step title="Enter your license key">
+    Paste the key from your purchase confirmation email, then select **Activate License**.
+  </Step>
+  <Step title="Confirm">
+    Reload **Progressify > Settings**. Fields that previously carried a **Pro** badge are now editable.
+  </Step>
+</Steps>
+
+<Note>
+  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Progressify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on. Deactivating a site you no longer use frees that activation for another site.
+</Note>
+
+## What the plugin creates
+
+On activation Progressify writes a small number of files and one option.
+
+| Item | Location | Purpose |
+| --- | --- | --- |
+| Service worker | `/wp-content/uploads/progressify/scripts/serviceworker.js` | Caching, offline behavior, push handling |
+| PWA icons and splash screens | `/wp-content/uploads/progressify/pwa-icons/` | Generated from your app icon |
+| Settings | `progressify_settings` option | Every value on the settings screen |
+| Subscribers table | `{prefix}progressify_push_notifications_subscribers` | Push notification subscriptions |
+
+If the service worker or the icons are missing, the scorecard on the overview page flags it. Saving the settings screen regenerates both.
+
+<Card title="Set up your PWA" icon="list-check" horizontal href="/progressify/getting-started/quickstart">
+  Work through the scorecard in about ten minutes.
+</Card>

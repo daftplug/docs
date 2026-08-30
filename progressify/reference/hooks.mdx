@@ -1,0 +1,175 @@
+---
+title: "Hooks and shortcodes"
+description: "Every action, filter, and shortcode Progressify exposes."
+icon: "code"
+---
+
+Progressify exposes a deliberately small surface: two filters over the generated files, two actions around settings saves, one filter for the admin screen, one for the push HTTP client, and one action to hook plugin bootstrap.
+
+Add these to your theme's `functions.php` or a site-specific plugin.
+
+## Filters
+
+### progressify_manifest
+
+Filters the web app manifest before it is served, after Progressify has assembled it from your settings.
+
+<ParamField path="$manifest" type="array" required>
+  The manifest as an associative array, ready to be encoded as JSON.
+</ParamField>
+
+```php
+add_filter('progressify_manifest', function ($manifest) {
+    // Add a language the settings screen does not expose.
+    $manifest['lang'] = 'de-DE';
+    $manifest['dir'] = 'ltr';
+
+    return $manifest;
+});
+```
+
+Use it for manifest members Progressify has no field for, or to vary the manifest by context.
+
+```php
+add_filter('progressify_manifest', function ($manifest) {
+    if (is_user_logged_in()) {
+        $manifest['start_url'] = '/dashboard/';
+    }
+
+    return $manifest;
+});
+```
+
+### progressify_serviceworker
+
+Filters the generated service worker source before it is written. The value is JavaScript as a string, containing Workbox followed by Progressify's event listeners, routing rules, and cache cleanup.
+
+<ParamField path="$serviceWorker" type="string" required>
+  The complete service worker source.
+</ParamField>
+
+```php
+add_filter('progressify_serviceworker', function ($serviceWorker) {
+    $serviceWorker .= "
+        self.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'SKIP_WAITING') {
+            self.skipWaiting();
+          }
+        });
+    ";
+
+    return $serviceWorker;
+});
+```
+
+<Warning>
+  Append to this string rather than rewriting it, and check the result in **Application > Service Workers** in developer tools. A syntax error here means the service worker fails to register, which silently disables offline support, install prompts, and push notifications across the whole site.
+</Warning>
+
+Re-save the settings screen after changing this filter, since the file is generated rather than assembled per request.
+
+### progressify_admin_js_vars
+
+Filters the variables passed to the admin JavaScript, exposed on the page as `progressify_admin_js_vars`.
+
+<ParamField path="$vars" type="array" required>
+  Includes `siteName`, `homeUrl`, `upgradeUrl`, `pluginDirUrl`, `iconUrl`, `adminUrl`, and `hasActivePro`.
+</ParamField>
+
+```php
+add_filter('progressify_admin_js_vars', function ($vars) {
+    $vars['myCustomFlag'] = true;
+
+    return $vars;
+});
+```
+
+### progressify_webpush_client_options
+
+Filters the HTTP client options used when sending push notifications. Defaults to verifying against the CA bundle WordPress ships.
+
+<ParamField path="$options" type="array" required>
+  Guzzle client options. The default is `['verify' => ABSPATH . WPINC . '/certificates/ca-bundle.crt']`.
+</ParamField>
+
+```php
+add_filter('progressify_webpush_client_options', function ($options) {
+    $options['timeout'] = 30;
+
+    return $options;
+});
+```
+
+<Warning>
+  Do not disable certificate verification here. If pushes fail with a TLS error, the fix is your server's certificate store, not turning verification off.
+</Warning>
+
+## Actions
+
+### progressify_settings_update:before
+
+Fires before settings are written, with the merged settings that are about to be saved.
+
+<ParamField path="$settings" type="array" required>
+  The new settings merged over the current ones.
+</ParamField>
+
+### progressify_settings_update:after
+
+Fires immediately after the settings option is updated, with the same array.
+
+```php
+add_action('progressify_settings_update:after', function ($settings) {
+    if ($settings['offlineCacheStrategy'] === 'CacheFirst') {
+        error_log('Progressify switched to Cache-First caching.');
+    }
+});
+```
+
+Use the `:after` action to invalidate a server-side cache, notify a team channel, or mirror a setting into another system.
+
+### progressify_pro_loaded
+
+Fires once the Freemius SDK is initialized, before the plugin's own features are constructed. This is the earliest safe point to check licensing state.
+
+```php
+add_action('progressify_pro_loaded', function () {
+    if (function_exists('\DaftPlug\Progressify\progressify_pro')) {
+        // The SDK is ready.
+    }
+});
+```
+
+## Shortcodes
+
+### progressify-install-button
+
+Renders a button that triggers the browser install prompt. It uses the **Text** value from [installation settings](/progressify/settings/installation#shared-settings) as its label.
+
+```text
+[progressify-install-button]
+```
+
+Place it in a post, a page, or a block or widget that processes shortcodes. In a template, call it directly.
+
+```php
+echo do_shortcode('[progressify-install-button]');
+```
+
+<Note>
+  The button needs a browser that can install and a visitor who has not already installed. Where neither is true it has nothing to trigger, so do not build a layout that depends on it being visible.
+</Note>
+
+## Constants
+
+Defined during bootstrap and available to any code that loads after the plugin.
+
+| Constant | Value |
+| --- | --- |
+| `PROGRESSIFY_VERSION` | The plugin version string |
+| `PROGRESSIFY_FILE` | Absolute path to `progressify.php` |
+| `PROGRESSIFY_BASENAME` | Plugin basename, for use with plugin hooks |
+| `PROGRESSIFY_DIR_PATH` | Absolute path to the plugin directory |
+| `PROGRESSIFY_DIR_URL` | URL of the plugin directory |
+| `PROGRESSIFY_UPLOAD_DIR` | Absolute path to the plugin's uploads directory |
+| `PROGRESSIFY_UPLOAD_URL` | URL of the plugin's uploads directory |

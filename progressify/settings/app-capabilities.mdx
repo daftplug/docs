@@ -1,0 +1,99 @@
+---
+title: "App capabilities"
+description: "Page transitions, form autosave, system handlers, and background processing."
+icon: "star"
+---
+
+**Progressify > Settings > App Capabilities**
+
+This tab exposes browser APIs that a normal website cannot use but an installed app can. Support varies by browser and platform. Where a browser does not implement a capability, the setting has no effect rather than breaking the page.
+
+## Navigation flow
+
+<ParamField path="Smooth Page Transitions" type="toggle" default="off">
+  Pro. Loads pages with a fade instead of the white flash of a full page load, which is the single most noticeable difference between a website and an app.
+
+  Sub-options let you add a progress bar during the transition, choose the transition style, and enable a compatibility mode for themes that break under it.
+
+  <Warning>
+    This intercepts navigation, so it can conflict with themes and plugins that manage their own page loading or rely on scripts running on every full page load. If menus stop working or analytics stops recording page views, turn on compatibility mode, and if that does not help, turn the feature off.
+  </Warning>
+</ParamField>
+
+## Data safety
+
+<ParamField path="Autosave Forms" type="toggle" default="off">
+  Pro. Saves what a visitor has typed into a form before they submit it, and restores it if they reload the page or come back later. Valuable on long forms and on comment boxes.
+</ParamField>
+
+<ParamField path="Persist on Submit" type="toggle" default="off">
+  Keeps the saved values even after a successful submission. Leave this off for most forms, or the next visitor on a shared device sees the last person's answers.
+</ParamField>
+
+<ParamField path="Persistent Storage" type="toggle" default="off">
+  Asks the browser to mark your cached content as persistent so it is not evicted when the device runs low on space. The browser decides whether to grant the request, often based on whether the app is installed and how engaged the visitor is.
+</ParamField>
+
+<ParamField path="Content Indexing" type="toggle" default="off">
+  Pro. Registers cached, offline-capable pages in the browser's own index, so the browser can surface them when the visitor is offline. Chromium-based browsers on Android only.
+</ParamField>
+
+## System integration
+
+<ParamField path="URL Protocol Handler" type="toggle" default="off">
+  Registers your app to open a custom URL scheme, so a link like `web+example:something` launches your app and passes it the URL. Set both **Protocol** and **URL**.
+
+  Custom schemes must begin with `web+`. The **URL** field is the path in your app that receives the value.
+</ParamField>
+
+<ParamField path="File Handler" type="toggle" default="off">
+  Pro. Lets your app appear in the operating system's "Open with" list for chosen file types.
+
+  Set **File Action** to the path that handles an opened file, and pick the MIME types under **File Types**. Supported types cover images (`image/png`, `image/jpeg`, `image/gif`, `image/webp`), audio (`audio/mp3`, `audio/mp4`, `audio/ogg`, `audio/wav`), video (`video/mp4`, `video/webm`), and documents (`text/csv`, `application/xml`, `application/json`, `application/pdf`, `application/zip`).
+
+  Only claim a type you can actually do something with. Registering for PDFs and then showing an error is worse than not registering at all.
+</ParamField>
+
+<ParamField path="Web Share Target" type="toggle" default="off">
+  Makes your app a destination in the device share sheet, so a visitor can share a link or text from another app straight into yours.
+
+  Set **Share Action** to the path that receives the share, and **URL Query** to the query parameter the shared URL arrives in. A typical setup points the action at your search or submission page.
+</ParamField>
+
+## Device feedback
+
+<ParamField path="Vibrations" type="toggle" default="off">
+  Pro. Brief haptic feedback on taps, on devices that support it. Use sparingly; constant vibration reads as a fault rather than a feature.
+</ParamField>
+
+## Activity awareness
+
+<ParamField path="Idle Detection" type="toggle" default="off">
+  Detects when the visitor stops interacting, locks the screen, or switches away, and can prompt them to refresh when they return.
+</ParamField>
+
+<ParamField path="Threshold" type="number" default="10">
+  Minutes of inactivity before the visitor counts as idle.
+</ParamField>
+
+<ParamField path="Screen Wake Lock" type="toggle" default="off">
+  Pro. Stops the screen dimming or locking while your app is open. Right for recipes, sheet music, workout timers, and live event pages. Wrong for everything else, since it drains the battery.
+</ParamField>
+
+## Background processing
+
+<ParamField path="Background Sync" type="toggle" default="off">
+  Pro. Holds requests that failed because the device was offline and replays them once connectivity returns. This is what makes [offline forms](/progressify/settings/offline-usage#offline-capabilities) reliable.
+</ParamField>
+
+<ParamField path="Periodic Background Sync" type="toggle" default="off">
+  Pro. Lets the browser refresh your cached content on its own schedule while the app is closed, so an installed app opens with fresh content rather than yesterday's.
+
+  The browser decides how often this runs, based on how regularly the visitor opens the app. You cannot set the interval, and an app that is rarely opened may never be synced.
+</ParamField>
+
+## Browser support
+
+<Note>
+  File handlers, protocol handlers, content indexing, periodic background sync, and background sync are Chromium features. Safari and Firefox implement few of them. Enabling one costs nothing on a browser that lacks it, but do not build a workflow that depends on it.
+</Note>

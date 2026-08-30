@@ -1,0 +1,56 @@
+---
+title: "Android and iOS apps"
+description: "Getting native app packages built from your PWA and published to the stores."
+icon: "mobile"
+---
+
+<Info>
+  This is a Pro service rather than a plugin feature. The apps are built for you and delivered as installable packages.
+</Info>
+
+Progressify can supply native Android and iOS applications that wrap your PWA, so the same site you already configured can be published to Google Play and the App Store.
+
+## Requesting your apps
+
+<Steps>
+  <Step title="Finish your PWA setup first">
+    The apps are generated from your live configuration, so the app icon, name, theme color, and splash screens all come from your [web app manifest settings](/progressify/settings/web-app-manifest). Get the overview scorecard clean before requesting a build.
+  </Step>
+  <Step title="Email support">
+    Write to [support@daftplug.com](mailto:support@daftplug.com) with the email address used for your Pro purchase and the URL of the site the license is active on.
+  </Step>
+  <Step title="Receive the packages">
+    The Android and iOS apps are generated and sent to you.
+  </Step>
+</Steps>
+
+## After you publish
+
+Once your apps are live in the stores, tell the browser they exist.
+
+Go to **Progressify > Settings > Web App Manifest > Advanced Features** and fill in **Related Applications** with the platform and the store ID for each app.
+
+<Warning>
+  Adding a related application changes browser behavior on purpose: browsers stop offering to install the PWA and promote the native app instead. Only fill this in once your store listings are actually live, or visitors will be pointed at apps they cannot download while also losing the ability to install the web app.
+</Warning>
+
+## What the apps do and do not change
+
+<AccordionGroup>
+  <Accordion title="Content updates">
+    The apps load your live site, so publishing on WordPress updates the apps immediately. You only need to submit a new build when the app shell itself changes.
+  </Accordion>
+  <Accordion title="Push notifications">
+    Notifications keep working through the same subscriber list you already have. Nothing separate to configure.
+  </Accordion>
+  <Accordion title="Store review">
+    Both stores judge wrapped web apps on whether they offer more than a bookmark. A configured PWA with offline support, push notifications, and app-like navigation is a far stronger submission than a bare site, which is another reason to finish the setup first.
+  </Accordion>
+  <Accordion title="Developer accounts">
+    Publishing requires your own Google Play and Apple Developer accounts. Both charge their own fees, and both are held in your name, not DaftPlug's.
+  </Accordion>
+</AccordionGroup>
+
+## Do you need them at all?
+
+For many sites the PWA alone is enough, and it avoids store review, developer account fees, and release cycles entirely. Native packages are worth the overhead when you need to be findable in store search, when your audience expects to install from a store, or when a partner or client requires a store listing.

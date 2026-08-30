@@ -1,0 +1,85 @@
+---
+title: "Sending a push notification"
+description: "Compose and send from the overview page, and diagnose delivery problems."
+icon: "paper-plane"
+---
+
+Sending happens on **Progressify > Overview**, below the subscriber list. Configuration of who can subscribe and what fires automatically lives on the [push notifications settings tab](/progressify/settings/push-notifications).
+
+## The subscriber list
+
+Every subscription appears here with the country, operating system, browser, and date it was created. You can remove individual subscribers, which deletes the subscription rather than merely hiding it.
+
+The list is the fastest sanity check before a send. If it is empty, nothing you send will go anywhere, and the cause is almost always that no subscription control is enabled or that the site is not on HTTPS.
+
+## Composing
+
+Select **Send Push Notification** to open the compose form.
+
+<ParamField path="Notification Title" type="string" required>
+  Keep it under about 50 characters. Android and desktop both truncate longer titles, and the truncation lands mid-word.
+</ParamField>
+
+<ParamField path="Notification Message" type="string" required>
+  The body. Assume 120 characters are visible before it collapses.
+</ParamField>
+
+<ParamField path="Notification Image" type="attachment">
+  A large image shown when the notification is expanded. Supported on Android and desktop Chrome; iOS and most other platforms ignore it.
+</ParamField>
+
+<ParamField path="Notification URL" type="url">
+  Where the notification opens when selected. Send people to the specific page you are writing about, not the homepage.
+</ParamField>
+
+<ParamField path="Action Buttons" type="repeater">
+  Pro. Up to two buttons, each with its own text and URL. Use them for genuinely distinct choices, such as "View order" and "Track shipping".
+</ParamField>
+
+<ParamField path="Vibration" type="toggle">
+  Vibrates the device on arrival.
+</ParamField>
+
+<ParamField path="Persistent" type="toggle">
+  Keeps the notification on screen until the visitor acts on it, rather than letting it auto-dismiss. Reserve this for messages that genuinely need a response. Applied to routine updates it reads as spam.
+</ParamField>
+
+The **Preview** panel shows the notification as it will appear. Check it before sending, because there is no recall.
+
+## Sending
+
+<Warning>
+  A notification goes to every subscriber and cannot be undone or edited after sending. There is no segmentation and no test-send, so send to yourself first by subscribing on your own device and checking a real delivery before you write to the whole list.
+</Warning>
+
+Delivery is chunked according to the **Batch Size** setting. When the send completes, Progressify reports how many messages succeeded and how many failed.
+
+## Why sends fail
+
+<AccordionGroup>
+  <Accordion title="The request times out on a large list">
+    PHP is hitting its execution limit. Lower **Batch Size** on the [push notifications tab](/progressify/settings/push-notifications#server-configuration) to 250 or 500 and try again.
+  </Accordion>
+  <Accordion title="Memory exhausted">
+    Same cause, same fix. Batch size exists precisely to keep the peak memory of a send bounded.
+  </Accordion>
+  <Accordion title="A TLS or certificate error">
+    Your server cannot verify the push service's certificate. Progressify verifies against the CA bundle WordPress ships. Ask your host to update the system certificate store rather than disabling verification through [`progressify_webpush_client_options`](/progressify/reference/hooks#progressify_webpush_client_options).
+  </Accordion>
+  <Accordion title="Some subscribers always fail">
+    Subscriptions expire when a browser is uninstalled, when site data is cleared, or when the browser rotates the endpoint. Failed endpoints are expected on any list of age, and a steady small failure count is normal.
+  </Accordion>
+  <Accordion title="Nothing arrives on iOS">
+    iOS only delivers Web Push to sites the visitor has added to the home screen, and only on iOS 16.4 or later. An iPhone user browsing in Safari cannot subscribe.
+  </Accordion>
+</AccordionGroup>
+
+## Writing notifications people keep
+
+A push notification is the most interruptive channel you have. The unsubscribe cost of getting it wrong is permanent, because a visitor who blocks notifications cannot be asked again.
+
+- Send when something happened, not on a schedule.
+- Say the specific thing in the title. "Your order shipped" beats "Update from our store".
+- Set a [time to live](/progressify/settings/push-notifications#server-configuration) that matches how long the message stays true.
+- Link to the page the message is about.
+- Let [automations](/progressify/settings/push-notifications#automated-notifications) carry the routine traffic, and keep manual sends for things that genuinely warrant one.

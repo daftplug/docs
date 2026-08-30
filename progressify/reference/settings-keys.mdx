@@ -1,0 +1,150 @@
+---
+title: "Settings keys"
+description: "Every option key, its default, and which version seeds it."
+icon: "key"
+---
+
+All of Progressify's settings live in a single WordPress option, `progressify_settings`, stored as an associative array.
+
+```php
+$settings = get_option('progressify_settings');
+echo $settings['offlineCacheStrategy']; // NetworkFirst
+```
+
+Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
+
+<Warning>
+  Prefer the settings screen or the [`PUT /settings`](/progressify/reference/rest-api#update-settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
+</Warning>
+
+To change one value safely in code:
+
+```php
+$settings = get_option('progressify_settings', []);
+$settings['offlineCacheStrategy'] = 'StaleWhileRevalidate';
+update_option('progressify_settings', $settings);
+```
+
+## When keys are seeded
+
+Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten by this process.
+
+This means a free install has no `darkMode` key at all rather than a key set to `off`. Code that reads a Pro key on a free site should handle it being missing.
+
+## Free settings
+
+| Key | Default |
+| --- | --- |
+| `supportAllPlatforms` | 'on' |
+| `supportedPlatforms` | ['mobile-browsers', 'desktop-browsers', 'installed-pwas'] |
+| `appIcon` | Your WordPress site icon, if one is set |
+| `appName` | Your site title |
+| `shortName` | First 30 characters of your site title |
+| `description` | Your site tagline |
+| `startPagePath` | '/' |
+| `displayMode` | 'standalone' |
+| `orientation` | 'portrait' |
+| `themeColor` | '#000000' |
+| `backgroundColor` | '#ffffff' |
+| `installationPromptsText` | 'Install Web App' |
+| `installationPromptsTimeout` | 2 |
+| `installationPromptsOverlayBanner` | 'on' |
+| `installationPromptsOverlayBannerMessage` | 'Get our web app. It won\'t take up space on your device.' |
+| `offlineCacheStrategy` | 'NetworkFirst' |
+| `offlineCacheExpirationTime` | 10 |
+| `swipeNavigation` | 'off' |
+| `scrollProgressBar` | 'off' |
+| `pageLoader` | 'on' |
+| `pageLoaderType` | 'default' |
+| `inactiveBlur` | 'off' |
+| `shareButton` | 'off' |
+| `shareButtonPosition` | 'bottom-right' |
+| `persistentStorage` | 'off' |
+| `urlProtocolHandler` | 'off' |
+| `urlProtocolHandlerProtocol` | '' |
+| `urlProtocolHandlerUrl` | '' |
+| `webShareTarget` | 'off' |
+| `webShareTargetAction` | '' |
+| `webShareTargetUrlQuery` | '' |
+| `idleDetection` | 'off' |
+| `idleDetectionThreshold` | 10 |
+| `pushButton` | 'on' |
+| `pushButtonPosition` | 'bottom-right' |
+| `pushButtonBehavior` | 'shown' |
+| `pushControlsLoggedInOnly` | 'off' |
+| `pushTimeToLive` | 2419200 |
+| `pushBatchSize` | 1000 |
+
+## Pro settings
+
+These keys only exist on an install with an active license.
+
+| Key | Default |
+| --- | --- |
+| `dynamicManifest` | 'off' |
+| `appScreenshots` | '' |
+| `categories` | [] |
+| `orientationLock` | 'off' |
+| `iosStatusBarStyle` | 'default' |
+| `iarcRatingId` | '' |
+| `relatedApplications` | [] |
+| `appShortcuts` | [] |
+| `installationPromptsOverlaySnackbar` | 'off' |
+| `installationPromptsOverlaySnackbarMessage` | `'Installing uses no storage and offers a quick way back to our web app.'` |
+| `installationPromptsOverlayMenu` | 'off' |
+| `installationPromptsOverlayMenuMessage` | 'Find what you need faster by installing our web app!' |
+| `installationPromptsOverlayFeed` | 'off' |
+| `installationPromptsOverlayFeedMessage` | 'Keep reading, even when you\'re on the train!' |
+| `installationPromptsOverlayBlog` | 'off' |
+| `installationPromptsOverlayCheckout` | 'off' |
+| `installationPromptsOverlayCheckoutMessage` | `'Keep track of your orders. Our web app is fast, small and works offline.'` |
+| `offlineCacheCustomFallbackPage` | 'off' |
+| `offlineCacheCustomFallbackPagePath` | '' |
+| `offlineNotification` | 'off' |
+| `offlineForms` | 'off' |
+| `navigationTabBar` | 'off' |
+| `navigationTabBarLoggedInOnly` | 'off' |
+| `navigationItems` | [] |
+| `darkMode` | 'off' |
+| `darkModeType` | 'floating-button' |
+| `darkModeOsAware` | 'off' |
+| `darkModeBatteryLow` | 'off' |
+| `pullDownRefresh` | 'off' |
+| `shakeRefresh` | 'off' |
+| `toastMessages` | 'off' |
+| `pwaCustomCss` | '' |
+| `pwaCustomJs` | '' |
+| `smoothPageTransitions` | 'off' |
+| `smoothPageTransitionsProgressBar` | 'off' |
+| `smoothPageTransitionsTransition` | 'fade' |
+| `smoothPageTransitionsCompatibilityMode` | 'off' |
+| `autosaveForms` | 'off' |
+| `autosaveFormsPersistOnSubmit` | 'off' |
+| `fileHandler` | 'off' |
+| `fileHandlerAction` | '' |
+| `fileHandlerTypes` | [] |
+| `vibrations` | 'off' |
+| `screenWakeLock` | 'off' |
+| `backgroundSync` | 'off' |
+| `periodicBackgroundSync` | 'off' |
+| `contentIndexing` | 'off' |
+| `pushPrompt` | 'off' |
+| `pushPromptMessage` | `'Would you like to enable notifications to stay updated with important alerts and updates?'` |
+| `pushPromptTimeout` | 2 |
+| `pushAutomationWelcome` | 'off' |
+| `pushAutomationNewContent` | 'off' |
+| `pushAutomationNewContentPostTypes` | [] |
+| `pushAutomationNewComment` | 'off' |
+| `pushAutomationWooPriceDrop` | 'off' |
+| `pushAutomationWooSalePrice` | 'off' |
+| `pushAutomationWooBackInStock` | 'off' |
+| `pushAutomationWooOrderStatusUpdate` | 'off' |
+| `pushAutomationWooNewOrder` | 'off' |
+| `pushAutomationWooLowStock` | 'off' |
+| `pushAutomationBpMemberMention` | 'off' |
+| `pushAutomationBpMemberReply` | 'off' |
+| `pushAutomationBpNewMessage` | 'off' |
+| `pushAutomationBpFriendRequest` | 'off' |
+| `pushAutomationBpFriendAccepted` | 'off' |
+| `pushAutomationFcNewPost` | 'on' |
+| `pushAutomationFcNewComment` | 'on' |
