@@ -1,0 +1,103 @@
+---
+title: "How backups run"
+description: "The tick pipeline, what drives it, and why a job continues without you."
+icon: "gears"
+---
+
+Backing up a WordPress site takes longer than a web request is allowed to last. Every backup plugin has to solve that, and how it solves it determines whether backups work on cheap hosting.
+
+## Ticks
+
+Snapshotify does the work in **ticks**: short bursts of roughly twenty seconds, each saving its progress before ending.
+
+A backup moves through stages: initialize, dump the database, scan files, archive them, finalize. Each tick advances as far as it can within its budget and writes state to disk. The next tick picks up exactly there.
+
+<Note>
+  This is why a backup interrupted by a PHP timeout resumes rather than restarting, and why a very large site completes on hosting that would never allow one long request.
+</Note>
+
+Ticks are lock-guarded, so overlapping attempts cannot corrupt a job. Several things may try to advance the same backup at once, and only one does at a time.
+
+## Three things drive it
+
+Deliberate redundancy: hosts break these in different ways, so Snapshotify uses all three.
+
+<Steps>
+  <Step title="Loopback requests">
+    The site makes an HTTP request to itself to trigger the next tick, chaining until the job is done. Fast, and the primary mechanism.
+  </Step>
+  <Step title="A cron watchdog">
+    A WordPress cron event re-arms itself roughly every minute while a job is running, advancing anything that has stalled.
+  </Step>
+  <Step title="Inline ticks from the admin screen">
+    While the Backups page is open, its progress polling also advances the job.
+  </Step>
+</Steps>
+
+Scheduled backups on Pro add a fourth path: they drive the job to completion **inside the cron request itself**, within a fifteen-minute budget. That is what makes scheduled backups reliable on hosts where loopback requests do not work.
+
+## When loopback is blocked
+
+Many hosts, and nearly every local development environment, block a site from making HTTP requests to itself.
+
+The visible symptom is a backup that progresses only while the Backups page is open, then appears to stall when you navigate away.
+
+<Tip>
+  It is not broken. The cron watchdog still advances it, just more slowly, and it will finish. If you want it to go faster, leave the Backups page open.
+</Tip>
+
+<Warning>
+  Local environments using a self-signed certificate or a container that cannot resolve its own hostname are the common case. This is an environment limitation, not a plugin fault, and it does not occur on normal hosting.
+</Warning>
+
+## Why this shape
+
+Two alternatives, and why they are worse.
+
+| Approach | Problem |
+| --- | --- |
+| One long request | Fails on any host with an execution limit, which is most shared hosting. No resume: a timeout at 90% starts over. |
+| Background worker process | Requires control over the server that WordPress plugins do not have. |
+
+Ticks with saved state give resumability for free. Nothing is lost to an interruption beyond the seconds since the last save.
+
+## What this means for you
+
+<AccordionGroup>
+  <Accordion title="You can close the tab during a backup">
+    The job continues. Reopen the Backups page to see where it got to.
+  </Accordion>
+  <Accordion title="Do not close the tab during a restore">
+    Different situation. A restore replaces the site underneath itself, and you want to be watching. The plugin says so on screen.
+  </Accordion>
+  <Accordion title="A stalled job usually is not stuck">
+    If progress stops, the loopback chain has probably broken. Open the Backups page and leave it open; its polling advances the job.
+  </Accordion>
+  <Accordion title="Cancelling is immediate and clean">
+    The job stops and its working files are removed. No notification, since you already know.
+  </Accordion>
+</AccordionGroup>
+
+## Where the work happens
+
+Working files live in `wp-content/uploads/snapshotify/tmp/{id}/`, including the state file that makes resuming possible. They are removed when the job finishes or is cancelled.
+
+<Note>
+  Leftover directories in `tmp/` after a hard crash are safe to delete. They belong to jobs that will never resume.
+</Note>
+
+## Tuning it
+
+Developers can extend the completion budget for scheduled backups:
+
+```php
+add_filter('snapshotify_cron_drive_budget', function ($seconds) {
+    return 30 * MINUTE_IN_SECONDS;
+});
+```
+
+Worth doing on a large site whose scheduled backup does not finish inside the default fifteen minutes, and only if your host allows cron requests to run that long.
+
+<Card title="Hooks reference" icon="code" horizontal href="/snapshotify/reference/hooks">
+  Every filter and action, including the pipeline and storage ones.
+</Card>

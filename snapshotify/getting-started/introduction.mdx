@@ -1,0 +1,75 @@
+---
+title: "Introduction"
+description: "What Snapshotify backs up, how it restores, and how it moves a site."
+icon: "rocket"
+---
+
+Snapshotify makes complete backups of a WordPress site, restores them, and moves a site from one address to another. One archive covers all three, because a restore onto a different domain is a migration.
+
+<Frame>
+  <img src="https://daftplug.com/wp-content/uploads/snapshotify-admin-overview.png" alt="The Snapshotify backups page, listing existing backups with their contents, size, location, and date" />
+</Frame>
+
+## The three jobs
+
+<Columns cols={2}>
+  <Card title="Back up" icon="box-archive" href="/snapshotify/guides/creating-backups">
+    Files and database in one archive, with a manifest describing what is inside. Manual, or on a schedule.
+  </Card>
+  <Card title="Restore" icon="rotate-left" href="/snapshotify/guides/restoring">
+    Put a site back as it was, from a backup in your list or from an archive you upload.
+  </Card>
+  <Card title="Migrate" icon="right-left" href="/snapshotify/guides/migrating">
+    Restore onto a different domain and Snapshotify rewrites the URLs, including the escaped forms page builders store.
+  </Card>
+  <Card title="Store off-site" icon="cloud" href="/snapshotify/guides/cloud-storage">
+    Google Drive, OneDrive, or Dropbox. A backup on the same server as the site is not a backup.
+  </Card>
+</Columns>
+
+## How it runs
+
+Backing up a site takes longer than a web request is allowed to last. Snapshotify does the work in **ticks**: short bursts of about twenty seconds each, saving progress after every one.
+
+That means a backup continues whether or not you are watching, and a job interrupted by a timeout resumes where it stopped rather than starting over.
+
+<Card title="How backups run" icon="gears" horizontal href="/snapshotify/guides/how-it-works">
+  The tick pipeline, the three things that drive it, and why a job can finish after you close the tab.
+</Card>
+
+## What goes into an archive
+
+Every backup contains `database.sql` and `manifest.json`, plus the files you did not exclude.
+
+You choose scope with five exclusions: **core**, **media library**, **plugins**, **themes**, and **database**. A full-site backup excludes nothing. Excluding all five is refused, since there would be nothing to back up.
+
+Some things are never included, deliberately:
+
+| Never included | Why |
+| --- | --- |
+| `wp-config.php` | Holds database credentials and salts. A restore keeps the target's own. |
+| `.user.ini`, `php.ini`, `web.config` | Carry absolute server paths that break a different host. |
+| Object cache and other drop-ins | Bound to the host they were installed on. |
+| Caches, `node_modules`, `.git` | Regenerable or irrelevant, and often larger than the site. |
+| Other backup plugins' folders | Backing up your backups multiplies size for nothing. |
+
+<Note>
+  This is why a Snapshotify archive is often two to four times smaller than an equivalent from another plugin. Uncompressed formats that include caches and dev artifacts are bigger without holding more of your site.
+</Note>
+
+## Where the plugin lives
+
+Snapshotify adds a top-level **Snapshotify** menu with two pages.
+
+| Page | What it holds |
+| --- | --- |
+| Backups | The backup list, create and upload buttons, restore, download, delete, and the activity log |
+| Settings | Three tabs: General, Storage, Notifications |
+
+<Warning>
+  **Multisite is not supported and is refused outright.** This is deliberate rather than missing. On a network, the table enumeration would silently omit the network tables and every other subsite, producing an archive that looks successful until someone needs it. Refusing is safer than a backup you cannot rely on.
+</Warning>
+
+<Card title="Install Snapshotify" icon="download" horizontal href="/snapshotify/getting-started/installation">
+  Requirements, installation, and your first backup.
+</Card>

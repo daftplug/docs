@@ -1,0 +1,80 @@
+---
+title: "Settings keys"
+description: "Every option key, its default, and which version seeds it."
+icon: "key"
+---
+
+All of Snapshotify's settings live in a single WordPress option, `snapshotify_settings`, stored as an associative array.
+
+```php
+$settings = get_option('snapshotify_settings');
+echo $settings['keepLatestBackupsCount']; // 3
+```
+
+Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
+
+<Warning>
+  Prefer the settings screen or the [`PUT /settings`](/snapshotify/reference/rest-api#settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
+</Warning>
+
+To change one value safely in code:
+
+```php
+$settings = get_option('snapshotify_settings', []);
+$settings['keepLatestBackupsCount'] = '7';
+update_option('snapshotify_settings', $settings);
+```
+
+## When keys are seeded
+
+Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten.
+
+## Free settings
+
+| Key | Default |
+| --- | --- |
+| `emailNotifications` | 'off' |
+| `emailNotificationsRecipient` | Your WordPress admin email |
+| `emailNotificationsBackupCompleted` | 'on' |
+| `emailNotificationsBackupFailed` | 'on' |
+| `emailNotificationsRestoreCompleted` | 'on' |
+| `emailNotificationsRestoreFailed` | 'on' |
+
+## Pro settings
+
+These keys only exist on an install with an active license.
+
+| Key | Default |
+| --- | --- |
+| `scheduledBackups` | 'off' |
+| `scheduledBackupsFrequency` | 'weekly' |
+| `scheduledBackupsFullSite` | 'on' |
+| `scheduledBackupsExcludeCore` | 'on' |
+| `scheduledBackupsExcludeMediaLibrary` | 'off' |
+| `scheduledBackupsExcludePlugins` | 'off' |
+| `scheduledBackupsExcludeThemes` | 'off' |
+| `scheduledBackupsExcludeDatabase` | 'off' |
+| `autoRemoveBackups` | 'on' |
+| `keepLatestBackupsCount` | '3' |
+| `backupsLocation` | 'local' |
+
+## Notes on the defaults
+
+| Key | Worth knowing |
+| --- | --- |
+| `emailNotifications` | Off. The four event keys default to `on`, so enabling the parent switches all four on at once. |
+| `scheduledBackups` | Off. Turning it on without enabling notifications is the most common configuration mistake. |
+| `scheduledBackupsFullSite` | On, meaning exclude nothing. The five `scheduledBackupsExclude*` keys only apply when it is off. |
+| `scheduledBackupsExcludeCore` | On. Core is re-downloadable and the version is recorded in the manifest. |
+| `autoRemoveBackups` | On, keeping 3. Raise the count: three daily backups is only three days of history. |
+| `backupsLocation` | `local`. Connecting a cloud provider does not change this on its own; set it as well. |
+
+## Backup records
+
+The keys above are settings. Individual backups, their titles, contents, sizes, locations, and logs, live in a custom database table rather than in this option, and are reached through the [REST API](/snapshotify/reference/rest-api#backups) rather than by reading an option.
+
+## Exclusions in the API
+
+Scheduled exclusions are stored as the separate `scheduledBackupsExclude*` keys above. Manual backups take an `exclusions` array in the [create call](/snapshotify/reference/rest-api#backups) instead, using the keys `excludeCore`, `excludeMediaLibrary`, `excludePlugins`, `excludeThemes`, and `excludeDatabase`.
+
+An empty array means a full-site backup. All five is refused.

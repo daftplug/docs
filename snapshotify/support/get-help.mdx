@@ -1,0 +1,88 @@
+---
+title: "Get help"
+description: "How to reach support and what to send."
+icon: "life-ring"
+---
+
+<Columns cols={2}>
+  <Card title="Email support" icon="envelope" href="mailto:support@daftplug.com">
+    support@daftplug.com
+  </Card>
+  <Card title="Plugin support forum" icon="wordpress" href="https://wordpress.org/support/plugin/snapshotify/">
+    For the free version.
+  </Card>
+</Columns>
+
+<Warning>
+  If your site is currently down or mid-restore, say so in the first line. That changes how a request is triaged.
+</Warning>
+
+## Before you write
+
+<Columns cols={2}>
+  <Card title="Troubleshooting" icon="wrench" href="/snapshotify/support/troubleshooting">
+    Stalled jobs, failed restores, lockouts, and missing backups.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/snapshotify/support/faq">
+    Archive size, migrations, storage scopes, and licensing.
+  </Card>
+</Columns>
+
+Two things resolve most reports:
+
+<Steps>
+  <Step title="Read the backup's activity log">
+    It records each stage of the job and the reason anything failed. Almost every question about a specific backup is answered there.
+  </Step>
+  <Step title="If a job looks stalled, open the Backups page and leave it open">
+    Its polling advances the job. Most stalls are a blocked loopback request, not a broken job.
+  </Step>
+</Steps>
+
+## What to include
+
+<Steps>
+  <Step title="The activity log for the affected backup or restore">
+    Paste it. This is the single most useful thing you can send.
+  </Step>
+  <Step title="What you were doing">
+    Backup, restore, or migration. For a migration, both the source and destination addresses.
+  </Step>
+  <Step title="Where it stopped">
+    Which stage, and whether the site is currently up, in maintenance mode, or inaccessible.
+  </Step>
+  <Step title="Your hosting">
+    The host, and whether it is shared, VPS, or managed. Disk space available, if you can see it.
+  </Step>
+  <Step title="Your versions">
+    Snapshotify version, WordPress version, PHP version, and whether Pro is active.
+  </Step>
+</Steps>
+
+## If you are locked out after a restore
+
+Say so explicitly, and include which credentials you have tried.
+
+The usual cause is that the users table came from the backup, so the account you were using may not exist or may have a different password. The 30-minute re-login token covers this if you act quickly; after that, the backup's credentials are the only ones that exist.
+
+<Note>
+  If the site is in maintenance mode and you need it back immediately, delete the `.maintenance` file in your site root. It also expires by itself after 30 minutes.
+</Note>
+
+## Please do not send
+
+<Warning>
+  Do not email backup archives. They contain your entire database, including user accounts, password hashes, customer records, and orders. Support does not need one, and sending it by email puts it somewhere neither of us controls.
+</Warning>
+
+The activity log and a description are enough. If a specific archive genuinely has to be examined, support will arrange a secure way to do it.
+
+## Reporting something that looks like a bug
+
+Narrow it if you can. A backup that fails on one site and succeeds on another tells you it is environmental; the same failure everywhere points at the plugin.
+
+The most valuable report is one with the stage it failed at and the log line where it stopped, because that identifies the code path directly.
+
+<Card title="Feature requests" icon="lightbulb" horizontal href="mailto:support@daftplug.com">
+  Send them to the same address. Say what you are trying to accomplish rather than the feature you have in mind.
+</Card>

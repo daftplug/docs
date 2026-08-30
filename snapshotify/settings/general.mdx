@@ -1,0 +1,98 @@
+---
+title: "General"
+description: "Scheduled backups and retention."
+icon: "gear"
+---
+
+**Snapshotify > Settings > General**
+
+## Backup options
+
+<ParamField path="Scheduled Backups" type="toggle" default="off">
+  Pro. Runs backups automatically at the frequency you choose, without anyone remembering to click anything.
+</ParamField>
+
+<ParamField path="Frequency" type="select" default="weekly">
+  `daily`, `weekly`, or `monthly`.
+
+  Choose by how much work you would be willing to lose. A store taking orders every day should back up daily. A site that changes twice a year does not need a daily backup, and taking one just fills your disk.
+</ParamField>
+
+<ParamField path="Full-Site Backups" type="toggle" default="on">
+  Excludes nothing. This is the setting you want unless size is a genuine problem.
+
+  Turning it off reveals the five exclusion checkboxes below.
+</ParamField>
+
+<ParamField path="Exclusions" type="checkboxes">
+  Five independent choices: **WordPress Core**, **Media Library**, **Plugins**, **Themes**, and **Database**.
+
+  Core is a reasonable first exclusion, since WordPress core is re-downloadable and the manifest records the version. Media is the usual second one, because it is often most of the size and rarely changes.
+</ParamField>
+
+<Warning>
+  Excluding all five is refused. Every part of your site would be excluded, so there would be nothing to back up, and the scheduled run would be skipped. The settings screen tells you this rather than letting you save a schedule that does nothing.
+</Warning>
+
+### Choosing exclusions
+
+<AccordionGroup>
+  <Accordion title="Exclude core">
+    Safe. WordPress core is re-downloadable, and the version is recorded. What you lose is the ability to restore onto a completely empty server without installing WordPress first.
+  </Accordion>
+  <Accordion title="Exclude media library">
+    The usual way to make backups smaller. Reasonable **only if your media is backed up somewhere else**, or you could bear to lose it. Restoring a site without its images is not a restored site.
+  </Accordion>
+  <Accordion title="Exclude plugins or themes">
+    Both are re-installable, but your customizations are not. A modified child theme lives in `wp-content/themes` and nothing re-downloads that.
+  </Accordion>
+  <Accordion title="Exclude database">
+    Almost never right. The database holds your posts, pages, settings, users, and orders. A files-only backup is not a backup of your site's content.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  These exclusions apply to scheduled backups. Manual backups have their own exclusions in the create dialog, so you can schedule a lean weekly backup and still take a full one by hand.
+</Note>
+
+## Retention options
+
+<ParamField path="Auto-Remove Backups" type="toggle" default="on">
+  Pro. Deletes older backups so the newest few are kept, enforcing your retention policy without anyone tidying up.
+</ParamField>
+
+<ParamField path="Keep Latest Backups" type="number" default="3">
+  How many of the most recent backups to keep. Everything older is deleted.
+</ParamField>
+
+<Warning>
+  Deletion is permanent. Think of the count as how far back you can go: with daily backups, keeping three means three days of history. A problem you do not notice within three days is unrecoverable.
+</Warning>
+
+### Picking a number
+
+| Frequency | Keep | History |
+| --- | --- | --- |
+| Daily | 7 | A week |
+| Daily | 14 | Two weeks, if disk allows |
+| Weekly | 4 | A month |
+| Monthly | 6 | Half a year |
+
+<Tip>
+  Corruption and unwanted changes are often noticed late. A database problem introduced by a plugin update might not surface for a week, and if your only backups are newer than the problem, they all contain it. Keep more than feels necessary.
+</Tip>
+
+## Related settings
+
+<Columns cols={2}>
+  <Card title="Storage" icon="cloud" href="/snapshotify/settings/storage">
+    Where scheduled backups are stored.
+  </Card>
+  <Card title="Notifications" icon="envelope" href="/snapshotify/settings/notifications">
+    Being told when a scheduled backup fails.
+  </Card>
+</Columns>
+
+<Warning>
+  Turning on scheduling without turning on notifications is the most common mistake here. A schedule that has been failing silently for a month feels like protection and is not.
+</Warning>

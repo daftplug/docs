@@ -1,0 +1,123 @@
+---
+title: "Creating backups"
+description: "The Backups page, choosing scope, and what an archive actually contains."
+icon: "box-archive"
+---
+
+**Snapshotify > Backups**
+
+## The backup list
+
+Every backup shows its title, contents, size, location, and date. Contents appear as badges, so you can see at a glance whether a given archive has your database, your media, or your core files.
+
+Per backup you can restore it, download it, delete it, or open its activity log.
+
+<Tip>
+  The activity log is the first place to look when something is odd. It records each stage of the job and any warning that did not stop it, including the reason a cloud upload fell back to local.
+</Tip>
+
+## Creating one
+
+Select **Create Backup**.
+
+<ParamField path="Backup Title" type="string">
+  Name it for the reason you took it. "Before WooCommerce 9 update" tells you months later whether this is the one you want.
+</ParamField>
+
+<ParamField path="Full-Site Backup" type="toggle" default="on">
+  A preset meaning "exclude nothing". Turning it off reveals the five exclusion checkboxes.
+</ParamField>
+
+<ParamField path="Exclusions" type="checkboxes">
+  **WordPress Core**, **Media Library**, **Plugins**, **Themes**, **Database**. Independent, so combinations like "everything except media" are expressible.
+</ParamField>
+
+<ParamField path="Backup Location" type="select" default="local">
+  Local, or a connected cloud provider on Pro.
+</ParamField>
+
+<Warning>
+  Excluding all five is refused, and the submit button is disabled rather than failing after you click. There would be nothing left to back up.
+</Warning>
+
+## What an archive contains
+
+Always `database.sql` and `manifest.json`, plus whatever you did not exclude.
+
+The manifest records what is inside, the WordPress version, the site URL, and the table prefix. That is what makes a restore onto a different site possible: the restore reads the manifest rather than assuming.
+
+### Always excluded
+
+Some things never go in, regardless of your choices, and each has a reason.
+
+| Excluded | Why |
+| --- | --- |
+| `wp-config.php` | Database credentials and salts. A restore keeps the target's own file. |
+| `.user.ini`, `php.ini`, `.php.ini`, `web.config` | Absolute server paths inside them break a different host. |
+| `wordfence-waf.php`, `.maintenance` | Host and state specific. |
+| Drop-ins such as `object-cache.php` | Bound to the server they were configured for. |
+| Caches, `node_modules`, `.git`, `.svn` | Regenerable or irrelevant, and frequently larger than the site itself. |
+| Other backup plugins' directories | Backing up your backups multiplies size for nothing. |
+| `.log`, `.tmp`, `.swp` files | Noise. |
+| Elementor's generated CSS | Regenerable, and it embeds absolute URLs that would be wrong after a migration. |
+
+<Note>
+  `.user.ini` is the one worth understanding. Security plugins write an `auto_prepend_file` line into it containing an **absolute path on the source server**. Restore that onto a different host and every request fatals before WordPress boots, including wp-admin. Excluding it is what makes cross-host restores survivable.
+</Note>
+
+<Note>
+  This is why Snapshotify archives are often two to four times smaller than another plugin's for the same site. Uncompressed formats that include caches and development artifacts are bigger without holding more of your site.
+</Note>
+
+## Choosing scope
+
+For anything you might actually restore from, take a full site backup. The exclusions exist for size problems, and each one costs you something.
+
+| Excluding | Costs you |
+| --- | --- |
+| Core | Restoring onto an empty server without installing WordPress first |
+| Media | Your images. A site restored without them is not restored. |
+| Plugins | Any customization inside a plugin directory |
+| Themes | Your child theme, which nothing re-downloads |
+| Database | Your content, settings, users, and orders |
+
+<Warning>
+  Excluding the database is almost never right. It leaves you with a copy of the files and none of the site.
+</Warning>
+
+## While it runs
+
+Progress is shown live. **You can close the tab.** The job continues on its own, because the work is done in short ticks that save progress after each one.
+
+Cancelling stops the job and cleans up the working files. A cancelled job sends no notification, since you already know.
+
+<Card title="How backups run" icon="gears" horizontal href="/snapshotify/guides/how-it-works">
+  Why a job continues without the page open, and what to do when it stalls.
+</Card>
+
+## Uploading an archive
+
+**Upload Backup** takes a Snapshotify archive from elsewhere: another site, or a copy you downloaded before rebuilding a server. It is uploaded in chunks, so large archives work within normal request limits.
+
+Once uploaded it behaves like any other backup in the list, and restoring it onto a different domain is a [migration](/snapshotify/guides/migrating).
+
+<Note>
+  An archive whose manifest is incomplete still restores. Snapshotify falls back to what is actually present in the extracted tree rather than trusting the manifest alone, which is what stops an odd archive reporting success while restoring nothing.
+</Note>
+
+## Good practice
+
+<Steps>
+  <Step title="Back up before anything risky">
+    Updates, theme changes, migrations, and your own experiments. That is when a backup earns its existence.
+  </Step>
+  <Step title="Name backups for the reason, not the date">
+    The date is already in the row.
+  </Step>
+  <Step title="Get at least one copy off the server">
+    Download it, or connect [cloud storage](/snapshotify/guides/cloud-storage).
+  </Step>
+  <Step title="Restore one onto staging, once">
+    It is the only way to know your backups work. Almost nobody does this, which is why broken backups are discovered at the worst moment.
+  </Step>
+</Steps>

@@ -1,0 +1,76 @@
+---
+title: "Storage"
+description: "Where backups are kept, and connecting a cloud provider."
+icon: "cloud"
+---
+
+**Snapshotify > Settings > Storage**
+
+## Storage options
+
+<ParamField path="Backups Location" type="select" default="local">
+  Where automated backups are stored.
+
+  | Value | Where |
+  | --- | --- |
+  | `local` | `wp-content/uploads/snapshotify/` on your server |
+  | `google-drive` | Pro. A `Snapshotify/<your-site>` folder in your Drive |
+  | `onedrive` | Pro. `Apps/Snapshotify/<your-site>` in your OneDrive |
+  | `dropbox` | Pro. Your Dropbox app folder |
+</ParamField>
+
+<Warning>
+  Local storage protects you from your own mistakes and from a bad update. It does **not** protect you from anything that takes out the server: a disk failure, a hack that reaches the filesystem, a hosting account suspension, or an accidental deletion of the whole site.
+
+  If those matter to you, backups have to live somewhere else.
+</Warning>
+
+Manual backups choose their location in the create dialog, so you can send scheduled backups to the cloud and still take a quick local one before an experiment.
+
+## Connecting a provider
+
+Each provider card shows its connection state and, once connected, the account you signed in as and the folder backups go to.
+
+<Card title="Setting up cloud storage" icon="cloud-arrow-up" horizontal href="/snapshotify/guides/cloud-storage">
+  Connecting each provider, what access it gets, and what happens when an upload fails.
+</Card>
+
+## What the connection can see
+
+All three providers are connected with the narrowest scope that works.
+
+| Provider | Scope | What it means |
+| --- | --- | --- |
+| Google Drive | `drive.file` | Only files this app created. Your existing Drive is invisible to it. |
+| OneDrive | `Files.ReadWrite.AppFolder` | A dedicated app folder only. |
+| Dropbox | App folder | A dedicated app folder only. |
+
+<Note>
+  None of these can read files you uploaded yourself. That is a deliberate limit and not a limitation to work around: a backup plugin has no business reading the rest of your Drive.
+
+  It also means that if you move or delete a backup by hand in the provider's web interface, Snapshotify may no longer be able to see it.
+</Note>
+
+## When an upload fails
+
+An upload failure never fails the backup.
+
+If the archive cannot be uploaded, the backup completes as a **local** backup and the reason is recorded in that backup's activity log. You end up with a working backup in the wrong place, rather than no backup at all.
+
+<Tip>
+  This is worth knowing when reading your backup list: a row showing **Local** on a site configured for cloud storage is telling you an upload failed. Check that backup's log.
+</Tip>
+
+## Keeping the list honest
+
+Snapshotify periodically reconciles the list against what is actually in your cloud storage. A backup whose cloud copy has gone is demoted to local if a local copy still exists, or dropped from the list if not.
+
+If the provider's API is unreachable, nothing is changed. An outage never causes a backup to be removed from your list.
+
+## Local copies alongside cloud
+
+By default a local copy is kept after a successful upload. Developers can change this with the [`snapshotify_keep_local_copy`](/snapshotify/reference/hooks#snapshotify_keep_local_copy) filter, which is useful on a server where disk space is tight.
+
+<Warning>
+  Turning off local copies means a failed reconcile or a deleted cloud file leaves you with nothing. Only do it if disk space genuinely forces the choice.
+</Warning>

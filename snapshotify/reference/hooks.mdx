@@ -1,0 +1,147 @@
+---
+title: "Hooks"
+description: "Every action and filter Snapshotify exposes."
+icon: "code"
+---
+
+Snapshotify's hook surface is small and deliberate: the pipeline is safety-critical, so there are few places to change its behavior. Most of what is exposed is around notifications and cloud storage.
+
+Add these to your theme's `functions.php` or a site-specific plugin.
+
+## Notifications
+
+Four filters shape the email, each receiving the event name, the backup ID, and a context array. Because the event is passed in, one filter can route different outcomes differently.
+
+| Filter | Filters |
+| --- | --- |
+| `snapshotify_email_notifications_recipient` | Where the mail is sent |
+| `snapshotify_email_notifications_subject` | The subject line |
+| `snapshotify_email_notifications_body` | The body |
+| `snapshotify_email_notifications_headers` | The mail headers |
+
+<ParamField path="$value" type="mixed" required>
+  The recipient, subject, body, or headers being filtered.
+</ParamField>
+<ParamField path="$event" type="string">
+  Which event fired, such as a completed or failed backup or restore.
+</ParamField>
+<ParamField path="$backupId" type="int" />
+<ParamField path="$context" type="array" />
+
+```php
+// Send failures to the on-call address, successes to the log inbox.
+add_filter('snapshotify_email_notifications_recipient', function ($recipient, $event) {
+    return str_contains($event, 'failed') ? 'oncall@example.com' : $recipient;
+}, 10, 2);
+```
+
+```php
+// Put the site name in the subject, for someone watching several sites.
+add_filter('snapshotify_email_notifications_subject', function ($subject, $event) {
+    return '[' . get_bloginfo('name') . '] ' . $subject;
+}, 10, 2);
+```
+
+## Backup pipeline
+
+### snapshotify_keep_local_copy
+
+Whether to keep the local archive after a successful cloud upload.
+
+<ParamField path="$keep" type="bool" default="true" />
+
+```php
+// Disk is tight: keep only the cloud copy.
+add_filter('snapshotify_keep_local_copy', '__return_false');
+```
+
+<Warning>
+  With this off, a cloud file that is deleted or becomes unreachable leaves you with nothing. Only use it when disk space genuinely forces the choice.
+</Warning>
+
+### snapshotify_cron_drive_budget
+
+How long a scheduled backup may spend driving itself to completion inside the cron request.
+
+<ParamField path="$seconds" type="int" default="900">
+  Fifteen minutes.
+</ParamField>
+
+```php
+add_filter('snapshotify_cron_drive_budget', function ($seconds) {
+    return 30 * MINUTE_IN_SECONDS;
+});
+```
+
+Raise it for a large site whose scheduled backup does not finish in the default window. Only useful if your host allows cron requests to run that long.
+
+## Cloud storage
+
+These exist so you can run your own provider applications instead of DaftPlug's, which some agencies and security policies require.
+
+| Filter | Default |
+| --- | --- |
+| `snapshotify_googledrive_relay_url` | `https://daftplug.com/oauth/snapshotify/google-drive.php` |
+| `snapshotify_onedrive_relay_url` | `https://daftplug.com/oauth/snapshotify/onedrive.php` |
+| `snapshotify_dropbox_relay_url` | `https://daftplug.com/oauth/snapshotify/dropbox.php` |
+| `snapshotify_dropbox_client_id` | Snapshotify's Dropbox app key |
+
+```php
+add_filter('snapshotify_googledrive_relay_url', function ($url) {
+    return 'https://example.com/oauth/google-drive.php';
+});
+```
+
+<Note>
+  The relay is what holds the client secret. A secret shipped inside a plugin installed on thousands of sites is not a secret, so the token exchange happens server-side instead. Pointing these at your own relay means running your own Google Cloud, Azure, or Dropbox application and your own exchange endpoint.
+</Note>
+
+## Settings and bootstrap
+
+### snapshotify_settings_update:before / :after
+
+Fire around the settings write, both receiving `$settings`.
+
+```php
+add_action('snapshotify_settings_update:after', function ($settings) {
+    if (($settings['scheduledBackups'] ?? '') === 'off') {
+        error_log('Snapshotify scheduled backups were turned off.');
+    }
+});
+```
+
+### snapshotify_pro_loaded
+
+Fires once the Freemius SDK is initialized, before features are constructed.
+
+### snapshotify_admin_js_vars
+
+Filters the variables passed to the admin JavaScript.
+
+## Constants
+
+| Constant | Value |
+| --- | --- |
+| `SNAPSHOTIFY_VERSION` | The plugin version string |
+| `SNAPSHOTIFY_FILE` | Absolute path to `snapshotify.php` |
+| `SNAPSHOTIFY_BASENAME` | Plugin basename |
+| `SNAPSHOTIFY_DIR_PATH` | Absolute path to the plugin directory |
+| `SNAPSHOTIFY_DIR_URL` | URL of the plugin directory |
+| `SNAPSHOTIFY_UPLOAD_DIR` | Absolute path to the plugin's uploads directory |
+| `SNAPSHOTIFY_UPLOAD_URL` | URL of the plugin's uploads directory |
+
+## What is deliberately not filterable
+
+Worth stating, because their absence is a design decision rather than an oversight.
+
+<AccordionGroup>
+  <Accordion title="The exclusion lists">
+    What is never backed up or restored, `wp-config.php`, `.user.ini`, host mu-plugins, drop-ins, is fixed. Each entry is there because including it breaks a restore onto a different host, and a filter would let someone re-break it.
+  </Accordion>
+  <Accordion title="The URL rewriting pairs">
+    The variants generated during a migration, including the JSON-escaped forms page builders rely on, are not filterable. Getting this wrong produces a site that loads while pointing at the old domain, which is worse than a visible failure.
+  </Accordion>
+  <Accordion title="Multisite refusal">
+    There is no filter to allow multisite. The table enumeration would silently omit network tables and every subsite, so the archive would look successful and be useless.
+  </Accordion>
+</AccordionGroup>

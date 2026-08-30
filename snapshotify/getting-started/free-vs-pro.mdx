@@ -1,0 +1,63 @@
+---
+title: "Free and Pro"
+description: "Which features the free version includes and which need a license."
+icon: "scale-balanced"
+---
+
+The free version is a complete backup and restore tool. You can back up your whole site, restore it, migrate it to another domain, upload an archive from elsewhere, and get emailed when a job fails.
+
+Pro adds the parts that make it happen without you: scheduling, retention, and cloud storage.
+
+| Free | Pro |
+| --- | --- |
+| Manual backups, full site or with exclusions | Scheduled backups: daily, weekly, monthly |
+| Restore from your backup list | Per-schedule exclusions |
+| Restore from an uploaded archive | Auto-remove old backups by retention count |
+| Migration with URL rewriting | Google Drive storage |
+| Download and delete backups | OneDrive storage |
+| Per-backup activity log | Dropbox storage |
+| Email notifications | |
+
+## What Pro actually changes
+
+<Steps>
+  <Step title="Backups happen without you">
+    The single biggest difference. A manual backup protects you only if you remembered to take one before the thing that went wrong, and the moments you most need a backup are the ones where you were not expecting trouble.
+  </Step>
+  <Step title="They are stored somewhere else">
+    A backup on the same server as the site does not survive the failure that destroys the server. Free can download archives manually; Pro uploads them automatically.
+  </Step>
+  <Step title="Old ones clean themselves up">
+    Without retention, scheduled backups accumulate until the disk fills, and a full disk breaks the site you were protecting.
+  </Step>
+</Steps>
+
+<Note>
+  Scheduled backups on Pro also drive themselves to completion inside the cron request, which is what makes them reliable on hosts where the site cannot make requests to itself. See [how backups run](/snapshotify/guides/how-it-works).
+</Note>
+
+## What free is genuinely enough for
+
+<AccordionGroup>
+  <Accordion title="A one-off migration">
+    Moving a site to a new host or domain needs one backup and one restore. Free does the whole job, including the URL rewriting that makes page-builder content point at the new domain.
+  </Accordion>
+  <Accordion title="A site you rarely change">
+    If you edit twice a year, a manual backup before each edit is a real strategy rather than a compromise.
+  </Accordion>
+  <Accordion title="A host that already backs up">
+    If your host takes and keeps off-site backups you have tested, Snapshotify free covers the gap they usually leave: a backup you take yourself, immediately before you do something risky.
+  </Accordion>
+</AccordionGroup>
+
+## Where free is not enough
+
+If losing a week of work would matter, and nobody is going to remember to click a button every day, you need scheduling and off-site storage. That is the case Pro exists for.
+
+<Note>
+  Pro is sold as the DaftPlug membership rather than as a single-plugin upgrade. One license covers Snapshotify and every other DaftPlug Pro plugin, and plans differ only in the number of site activations.
+</Note>
+
+<Card title="See pricing" icon="rocket" horizontal href="https://daftplug.com/pricing/?utm_source=documentation&utm_medium=mintlify-docs&utm_campaign=upgrade-to-pro">
+  Compare the plans on daftplug.com.
+</Card>

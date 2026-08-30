@@ -1,0 +1,111 @@
+---
+title: "Quickstart"
+description: "Take your first backup, verify it, and set up the ones that run without you."
+icon: "list-check"
+---
+
+## 1. Take a backup now
+
+Go to **Snapshotify > Backups** and select **Create Backup**.
+
+<Steps>
+  <Step title="Give it a title">
+    Something you will recognize later. "Before plugin update" beats "Backup 3".
+  </Step>
+  <Step title="Leave Full-Site Backup on">
+    It excludes nothing, which is what you want for a first backup and for anything you might restore from.
+  </Step>
+  <Step title="Choose a location">
+    Local, or a connected cloud provider on Pro.
+  </Step>
+  <Step title="Start Backup">
+    Progress is shown as it runs. You can close the tab; the job continues.
+  </Step>
+</Steps>
+
+<Tip>
+  Take a backup before anything risky: a plugin update, a theme change, a migration, or your own experiment. That is the moment a backup earns its existence, and it is the moment people skip it.
+</Tip>
+
+## 2. Verify it
+
+An unverified backup is a hope, not a backup.
+
+<Steps>
+  <Step title="Check the row">
+    It should show a size, a date, its contents, and its location. A size of zero or a missing contents badge means something went wrong.
+  </Step>
+  <Step title="Read the activity log">
+    Select the log for that backup. It records each stage, and any warning that did not stop the job.
+  </Step>
+  <Step title="Download it">
+    Confirm the archive downloads and opens as a ZIP. Inside you should see `database.sql`, `manifest.json`, and your files.
+  </Step>
+</Steps>
+
+<Warning>
+  The only complete verification is a restore. If a working backup genuinely matters to you, restore one onto a staging site once and confirm the result. Everyone intends to do this and almost nobody does, which is why people discover a broken backup at the worst possible moment.
+</Warning>
+
+## 3. Get it off the server
+
+A backup stored on the same server as the site does not survive the failure that destroys the server. It protects you from your own mistakes, not from your host.
+
+<Columns cols={2}>
+  <Card title="Download it" icon="download">
+    Free. Manual, but it works, and the archive is a plain ZIP.
+  </Card>
+  <Card title="Connect cloud storage" icon="cloud" href="/snapshotify/guides/cloud-storage">
+    Pro. Google Drive, OneDrive, or Dropbox, automatically.
+  </Card>
+</Columns>
+
+## 4. Put it on a schedule
+
+Manual backups depend on you remembering at the right moment. Scheduling is Pro, and it is most of the reason to have Pro.
+
+Go to **Settings > General**.
+
+<Steps>
+  <Step title="Turn on Scheduled Backups">
+    Choose daily, weekly, or monthly.
+  </Step>
+  <Step title="Match the frequency to how often you would mind losing work">
+    A store taking daily orders should back up daily. A brochure site that changes twice a year does not need daily backups.
+  </Step>
+  <Step title="Set exclusions if you need them">
+    Leave Full-Site on unless size is a real problem. Excluding the media library is the usual first choice, since media rarely changes and is often most of the size.
+  </Step>
+</Steps>
+
+## 5. Set retention
+
+Also on **Settings > General**. **Auto-Remove Backups** keeps the most recent few and deletes the rest, defaulting to three.
+
+<Warning>
+  Retention deletes permanently. Set the count to a number of *periods* you would want to go back through: three daily backups is three days of history, which is not long if you do not notice a problem immediately.
+</Warning>
+
+## 6. Turn on notifications
+
+**Settings > Notifications**. Off by default.
+
+A scheduled backup that quietly fails every week is worse than no schedule, because you believe you are covered. Enable notifications and, at minimum, keep **backup failed** on.
+
+<Tip>
+  Send them to an address a person reads. A backup failure notice in an unmonitored inbox is the same as no notice.
+</Tip>
+
+## A reasonable setup
+
+For most sites:
+
+| Setting | Value |
+| --- | --- |
+| Scheduled backups | Weekly, or daily for a store |
+| Scope | Full site |
+| Location | A cloud provider |
+| Keep latest | 5 or more |
+| Notifications | On, at least for failures |
+
+Plus a manual backup before anything you would not want to undo by hand.

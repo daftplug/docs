@@ -1,0 +1,106 @@
+---
+title: "Installation"
+description: "Requirements, installing the plugin, and what it needs from your server."
+icon: "download"
+---
+
+## Requirements
+
+| Requirement | Minimum |
+| --- | --- |
+| WordPress | 6.2 |
+| PHP | 7.4 |
+| Installation type | Single site. Multisite is refused. |
+| Disk space | Free space at least the size of your site, twice during a restore |
+
+<Warning>
+  **Multisite is not supported.** Snapshotify refuses to back up or restore a network install rather than producing an archive that silently omits the network tables and every subsite. There is no setting to override this.
+</Warning>
+
+## Install the free plugin
+
+<Steps>
+  <Step title="Search the plugin directory">
+    In WordPress, go to **Plugins > Add New** and search for `Snapshotify`.
+  </Step>
+  <Step title="Install and activate">
+    Select **Install Now**, then **Activate**. A **Snapshotify** item appears in the admin menu.
+  </Step>
+  <Step title="Take a backup">
+    Go to **Snapshotify > Backups** and select **Create Backup**. Do this before you need it.
+  </Step>
+</Steps>
+
+## Install Pro from a ZIP
+
+Pro is a separate plugin rather than an unlock applied to the free one, so it is distributed as a ZIP.
+
+<Steps>
+  <Step title="Download the ZIP">
+    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Snapshotify Pro archive.
+  </Step>
+  <Step title="Upload it">
+    Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
+  </Step>
+  <Step title="Activate">
+    Select **Activate Plugin**. If the free version is installed and active, Snapshotify deactivates it for you.
+  </Step>
+</Steps>
+
+<Note>
+  Your settings and your existing backups survive the switch. Both versions read the same `snapshotify_settings` option and the same backup list.
+</Note>
+
+## Activate your license
+
+<Steps>
+  <Step title="Open the activation screen">
+    After activating Pro, WordPress shows an activation notice. You can also reach it from **Snapshotify > Account**.
+  </Step>
+  <Step title="Enter your license key">
+    Paste the key from your purchase confirmation email, then select **Activate License**.
+  </Step>
+  <Step title="Set up scheduling and cloud storage">
+    The two things Pro adds that you should configure straight away. See [general settings](/snapshotify/settings/general) and [cloud storage](/snapshotify/guides/cloud-storage).
+  </Step>
+</Steps>
+
+<Note>
+  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Snapshotify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on.
+</Note>
+
+## What your server needs
+
+Backups are long jobs, and hosts differ in how they let long jobs run. Snapshotify is built to work on constrained hosting, but two things are worth checking.
+
+<AccordionGroup>
+  <Accordion title="Writable uploads directory">
+    Archives and working files go in `wp-content/uploads/snapshotify/`. If that cannot be created, nothing works.
+  </Accordion>
+  <Accordion title="Free disk space">
+    A backup needs room for the archive. A **restore needs roughly twice the archive size**, because the archive is extracted before it is applied. Snapshotify checks free space before a restore begins, at the last point where stopping leaves your site untouched.
+  </Accordion>
+</AccordionGroup>
+
+### If your host blocks loopback requests
+
+Snapshotify drives long jobs partly through HTTP requests the site makes to itself. Some hosts, and most local development environments, block those.
+
+This is handled rather than fatal. A cron watchdog and inline ticks from the admin screen both continue the job, and scheduled backups on Pro additionally drive to completion inside the cron request itself. See [how backups run](/snapshotify/guides/how-it-works).
+
+<Note>
+  The practical symptom of blocked loopback is a backup that progresses only while the Backups page is open. It still finishes; it just needs the page or cron to push it along.
+</Note>
+
+## What the plugin creates
+
+| Item | Location |
+| --- | --- |
+| Archives | `wp-content/uploads/snapshotify/` |
+| Working files during a job | `wp-content/uploads/snapshotify/tmp/{id}/` |
+| Backup list | A custom database table |
+| Settings | `snapshotify_settings` option |
+
+<Card title="Take your first backup" icon="list-check" horizontal href="/snapshotify/getting-started/quickstart">
+  What to choose, and how to verify it worked.
+</Card>

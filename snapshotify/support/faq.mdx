@@ -1,0 +1,129 @@
+---
+title: "FAQ"
+description: "Questions that come up before and after installing Snapshotify."
+icon: "circle-question"
+---
+
+## Backups
+
+<AccordionGroup>
+  <Accordion title="Can I close the tab while a backup runs?">
+    Yes. The work is done in short ticks that save progress, so the job continues without the page open. Reopen the Backups page to see where it got to.
+
+    A **restore** is different: stay on the page for that one.
+  </Accordion>
+
+  <Accordion title="Why is my archive smaller than my other backup plugin's?">
+    Because it holds less that you do not need. Caches, `node_modules`, `.git`, log files, other backup plugins' folders, and regenerable Elementor CSS are all excluded, and the archive is compressed.
+
+    Two to four times smaller than an uncompressed format is expected and is not data loss.
+  </Accordion>
+
+  <Accordion title="Is wp-config.php backed up?">
+    No, deliberately. It holds your database credentials and salts, and a restore keeps the target site's own file. That is exactly what makes restoring onto a different server or database work.
+  </Accordion>
+
+  <Accordion title="How often should I back up?">
+    By how much work you would be willing to lose. A store taking orders daily should back up daily; a site that changes twice a year does not need it.
+
+    Whatever the schedule, take a manual backup before anything risky.
+  </Accordion>
+
+  <Accordion title="How many should I keep?">
+    More than feels necessary. Problems are often noticed late, and if every backup you hold is newer than the problem, they all contain it. Three daily backups is three days of history.
+  </Accordion>
+
+  <Accordion title="Does it work on shared hosting?">
+    Yes, and that is what the tick design is for. Work happens in short bursts that save progress, so no single request has to survive long enough to back up the whole site.
+  </Accordion>
+</AccordionGroup>
+
+## Restores and migrations
+
+<AccordionGroup>
+  <Accordion title="Can I restore onto a different domain?">
+    Yes, and that is a migration. Snapshotify detects the address changed and rewrites URLs throughout the database, including the JSON-escaped form every major page builder stores.
+  </Accordion>
+
+  <Accordion title="Can I restore onto a site with a different table prefix?">
+    Yes. Table names are rewritten during the import, and the prefix that lives inside the data, in role definitions and user capabilities, is repaired straight afterwards. Without that second step nobody could sign into wp-admin.
+  </Accordion>
+
+  <Accordion title="Will I be logged out after a restore?">
+    Possibly. The users table is replaced, so your session may no longer be valid. Snapshotify issues a re-login token valid for 30 minutes; after that, use the credentials from the backup.
+  </Accordion>
+
+  <Accordion title="Can I undo a restore?">
+    No. Take a backup of the current state first. That backup is the only route back.
+  </Accordion>
+
+  <Accordion title="Why did my security plugin get deactivated during a migration?">
+    Only login-URL changers and SSL forcers, and only on a migration. A login-URL changer moves `wp-login.php` to a slug stored in the source database, so after moving, nobody could find the login page. An SSL forcer loops if the destination is not on HTTPS yet.
+
+    A same-site restore never does this.
+  </Accordion>
+
+  <Accordion title="Do I need the same WordPress version to restore?">
+    No. Core is included in a full-site backup and restored in two phases specifically so that a cross-version restore does not fatal partway through.
+  </Accordion>
+</AccordionGroup>
+
+## Storage
+
+<AccordionGroup>
+  <Accordion title="Can Snapshotify see the rest of my Google Drive?">
+    No. It uses a scope limited to files the app itself created, so your existing Drive is invisible to it. OneDrive and Dropbox use a dedicated app folder for the same reason.
+
+    The consequence is that a backup you move by hand in the provider's interface becomes invisible to the plugin.
+  </Accordion>
+
+  <Accordion title="What happens if an upload fails?">
+    The backup completes as a local backup and the reason is written to its activity log. You get a working backup in the wrong place rather than none.
+
+    A row showing **Local** on a cloud-configured site is telling you an upload failed.
+  </Accordion>
+
+  <Accordion title="Are local copies kept after uploading?">
+    Yes by default, so you have two. Developers can turn that off with a filter when disk space is tight, accepting that a lost cloud file then leaves nothing.
+  </Accordion>
+
+  <Accordion title="Can I use my own Google or Azure app?">
+    Yes. The relay URLs are filterable, which is what you would change to run your own applications and your own token exchange.
+  </Accordion>
+</AccordionGroup>
+
+## Compatibility
+
+<AccordionGroup>
+  <Accordion title="Does it support multisite?">
+    No, and it refuses rather than trying. The table enumeration would use the current blog's prefix and silently omit the network tables and every other subsite, producing an archive that looks fine and is not.
+  </Accordion>
+
+  <Accordion title="Can I run it alongside another backup plugin?">
+    Yes, though there is little reason to. Snapshotify skips other backup plugins' directories, so you will not end up backing up your backups.
+  </Accordion>
+
+  <Accordion title="Does it work with WooCommerce?">
+    Yes. Orders, products, and customers are in the database, which is in the backup. Take backups often enough that the gap does not cost you orders.
+  </Accordion>
+
+  <Accordion title="What about a caching plugin?">
+    Caches are excluded from backups, since they regenerate. After a restore, clear your cache so the old pages are not served.
+  </Accordion>
+</AccordionGroup>
+
+## Licensing
+
+<AccordionGroup>
+  <Accordion title="Is Snapshotify sold on its own?">
+    Pro is part of the DaftPlug membership. One license covers Snapshotify and every other DaftPlug Pro plugin, and plans differ only in how many sites you can activate on.
+  </Accordion>
+
+  <Accordion title="What happens to my backups if the license lapses?">
+    Nothing is deleted. Existing backups stay in the list and can still be restored and downloaded. What stops is scheduling, retention, and cloud uploads.
+  </Accordion>
+
+  <Accordion title="Do I need Pro to migrate a site?">
+    No. Backup, upload, restore, and the URL rewriting are all free. Pro is for backups that happen without you.
+  </Accordion>
+</AccordionGroup>

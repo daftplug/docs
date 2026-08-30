@@ -1,0 +1,75 @@
+---
+title: "Notifications"
+description: "Email when a backup or restore finishes or fails."
+icon: "envelope"
+---
+
+**Snapshotify > Settings > Notifications**
+
+<ParamField path="Email Notifications" type="toggle" default="off">
+  Sends an email each time a backup or restore finishes or fails, including scheduled runs that nobody is watching.
+</ParamField>
+
+<ParamField path="Email Address" type="email">
+  Where notifications are sent. Defaults to the site administrator address.
+</ParamField>
+
+<ParamField path="Notify Me About" type="checkboxes">
+  Four events, all on when notifications are enabled:
+
+  - Backup completed
+  - Backup failed
+  - Restore completed
+  - Restore failed
+
+  Cancelled jobs never send an email, because you cancelled them and already know.
+</ParamField>
+
+## Why this matters more than it looks
+
+A backup schedule that has been failing silently for a month feels exactly like a backup schedule that works. You find out the difference when you need to restore.
+
+<Warning>
+  If you turn on [scheduled backups](/snapshotify/settings/general#backup-options), turn on notifications too. At minimum keep **backup failed** enabled.
+</Warning>
+
+## Which to keep
+
+<AccordionGroup>
+  <Accordion title="Backup failed">
+    Always. This is the alert the feature exists for.
+  </Accordion>
+
+  <Accordion title="Backup completed">
+    Useful at first, so you can confirm the schedule works. Many people turn it off after a few weeks once they trust it, and that is reasonable, as long as failures are still reported.
+
+    The argument for keeping it: a success email that stops arriving tells you the schedule stopped running entirely, which a failure alert cannot, because a job that never starts never fails.
+  </Accordion>
+
+  <Accordion title="Restore completed and failed">
+    Keep both. Restores are rare, usually urgent, and often started by someone who then closes the tab. An email is how you find out how it went.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Send these to an address a person actually reads. A backup failure notice in an unmonitored inbox is the same as no notice at all.
+</Tip>
+
+## Customizing the mail
+
+All four parts of the message are filterable, each receiving the event, the backup ID, and a context array:
+
+| Filter | Controls |
+| --- | --- |
+| `snapshotify_email_notifications_recipient` | Where it is sent |
+| `snapshotify_email_notifications_subject` | The subject line |
+| `snapshotify_email_notifications_body` | The body |
+| `snapshotify_email_notifications_headers` | The mail headers |
+
+Routing failures into Slack, a ticketing system, or an on-call tool is a few lines. Since the filters receive the event name, you can route failures somewhere noisy and successes somewhere quiet.
+
+See [notification filters](/snapshotify/reference/hooks#notifications) for signatures and an example.
+
+<Note>
+  Mail is configured outside Snapshotify and fails silently more often than anything else on a WordPress site. If notifications never arrive, test whether the site can send mail at all before looking at these settings.
+</Note>

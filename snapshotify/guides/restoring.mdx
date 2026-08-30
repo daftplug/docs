@@ -1,0 +1,119 @@
+---
+title: "Restoring a backup"
+description: "What a restore does, in what order, and what to expect while it runs."
+icon: "rotate-left"
+---
+
+Restoring replaces your site with the contents of a backup. It is the operation everything else exists for, and the one worth understanding before you need it in a hurry.
+
+## Starting a restore
+
+From **Snapshotify > Backups**, choose a backup and select restore. To restore an archive from elsewhere, use **Upload Backup** first, then restore it like any other.
+
+<Warning>
+  **Do not close the tab during a restore.** The plugin tells you this on screen for a reason. A backup can safely continue in the background; a restore is replacing the site underneath itself, and you want to be watching.
+</Warning>
+
+## What happens, in order
+
+<Steps>
+  <Step title="Prepare">
+    The archive is extracted and checked, including a free-space check against the total uncompressed size.
+
+    This is the **last non-destructive step**. If anything fails here, your site is untouched.
+  </Step>
+  <Step title="Restore the database">
+    Tables are imported. If the backup came from a site with a different table prefix, names are rewritten as they land.
+  </Step>
+  <Step title="Repair prefixed keys">
+    Some values contain the prefix inside the data rather than in a table name: role definitions and user capabilities. These are rewritten too.
+  </Step>
+  <Step title="Migrate URLs">
+    Only when the backup came from a different address. See [migrating](/snapshotify/guides/migrating).
+  </Step>
+  <Step title="Restore files">
+    Uploads, plugins, themes, other content, then core. Core is restored last and in two phases.
+  </Step>
+  <Step title="Finalize">
+    Maintenance mode is lifted and the site comes back.
+  </Step>
+</Steps>
+
+From the database step onward the site is in **maintenance mode**, so visitors get a maintenance page rather than a half-restored site.
+
+<Note>
+  Maintenance mode has a safety valve. If a restore crashes hard between enabling it and finishing, the flag expires by itself after 30 minutes rather than pinning the site offline until someone deletes a file over FTP.
+</Note>
+
+## Why the prefix repair matters
+
+Skip this and you get a site that loads but that nobody can administer.
+
+WordPress stores role definitions and user capabilities in keys built from the table prefix. Renaming tables alone leaves those keys pointing at a prefix that no longer exists, so WordPress finds no roles and no capabilities for anyone. The result is total lockout from wp-admin, needing database surgery to fix.
+
+Snapshotify rewrites them immediately after the import, before anything else runs.
+
+## Why core is restored last, and in two phases
+
+Each tick of a restore is a separate HTTP request that has to boot WordPress. That constrains the order.
+
+Core files are restored after everything else, and in two phases: the `wp-admin` and `wp-includes` trees first, then all root PHP entry points in a single uninterrupted pass.
+
+<Note>
+  If a new `wp-settings.php` landed while `wp-includes` still held the old version, the next request would boot a mismatched WordPress and fatal mid-restore. This is invisible when restoring the same version, where the bytes are identical, and breaks every cross-version restore. The two-phase order is what prevents it.
+</Note>
+
+Core restore also **merges** rather than wiping. Wiping `wp-includes` mid-restore would leave the next request with no WordPress to boot.
+
+## What is not restored
+
+The same things that were never backed up, plus a few that are deliberately skipped on the way in.
+
+| Not restored | Why |
+| --- | --- |
+| `wp-config.php` | The target keeps its own credentials. This is what makes restoring onto a different database work. |
+| `.htaccess` | Server specific. |
+| `.user.ini`, `php.ini`, `web.config` | Absolute paths from the source host. |
+| Host-injected mu-plugins | Bluehost, GoDaddy, WP Engine, and similar. They load automatically and cannot be deactivated from wp-admin, so restoring one from a different host leaves you stuck with it. |
+| Drop-ins such as `object-cache.php` | Bound to the source server. |
+
+## Signing back in
+
+A restore replaces the users table, so your current session may no longer be valid: the account you were logged in as might not exist in the backup, or might have a different password.
+
+Snapshotify issues a short-lived re-login token, valid for 30 minutes, so you land back in wp-admin rather than at a login screen with credentials that no longer apply.
+
+<Warning>
+  After that window, sign in with the credentials **from the backup**, not the ones you were using before. If the backup is old, that may be an old password.
+</Warning>
+
+## Before you restore
+
+<Steps>
+  <Step title="Back up the current state first">
+    A restore is not reversible. If the backup turns out to be wrong, the only way back is a backup of what you just replaced.
+  </Step>
+  <Step title="Check free space">
+    A restore needs roughly twice the archive size, because it extracts before it applies. Snapshotify checks, but knowing in advance saves a failed attempt.
+  </Step>
+  <Step title="Know which credentials you will need">
+    Those from the backup, if the re-login window passes.
+  </Step>
+  <Step title="Pick a quiet moment">
+    The site is in maintenance mode while it runs.
+  </Step>
+</Steps>
+
+## If a restore fails
+
+Where it failed determines what to do.
+
+| Failed during | State | What to do |
+| --- | --- | --- |
+| Prepare | Untouched | Fix the cause, usually disk space, and retry |
+| Database or later | Partially restored | Retry the same restore. Steps are resumable and repeating them is safe. |
+| Stuck in maintenance mode | Site offline | Wait for the 30-minute expiry, or delete `.maintenance` in your site root |
+
+<Card title="Troubleshooting" icon="wrench" horizontal href="/snapshotify/support/troubleshooting">
+  Stalled jobs, failed restores, and lockouts.
+</Card>

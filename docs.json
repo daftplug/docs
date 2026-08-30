@@ -222,6 +222,55 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Snapshotify",
+        "icon": "/images/snapshotify.png",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "snapshotify/getting-started/introduction",
+              "snapshotify/getting-started/installation",
+              "snapshotify/getting-started/quickstart",
+              "snapshotify/getting-started/free-vs-pro"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "snapshotify/settings/general",
+              "snapshotify/settings/storage",
+              "snapshotify/settings/notifications"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "snapshotify/guides/creating-backups",
+              "snapshotify/guides/restoring",
+              "snapshotify/guides/migrating",
+              "snapshotify/guides/cloud-storage",
+              "snapshotify/guides/how-it-works"
+            ]
+          },
+          {
+            "group": "Developer reference",
+            "pages": [
+              "snapshotify/reference/hooks",
+              "snapshotify/reference/rest-api",
+              "snapshotify/reference/settings-keys"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "snapshotify/support/troubleshooting",
+              "snapshotify/support/faq",
+              "snapshotify/support/get-help"
+            ]
+          }
+        ]
       }
     ]
   },

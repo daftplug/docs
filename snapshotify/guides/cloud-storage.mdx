@@ -1,0 +1,108 @@
+---
+title: "Cloud storage"
+description: "Connecting Google Drive, OneDrive, or Dropbox, and what happens when uploads fail."
+icon: "cloud"
+---
+
+<Info>
+  Cloud storage is a Pro feature. Free can download archives manually, which is the same protection with more steps.
+</Info>
+
+A backup stored on the same server as the site does not survive the failure that destroys the server. Cloud storage is what turns a backup into an actual safety net.
+
+## Connecting a provider
+
+Go to **Snapshotify > Settings > Storage**. Each provider has a card showing whether it is connected.
+
+<Steps>
+  <Step title="Select connect on the provider you want">
+    You are sent to that provider's own consent screen.
+  </Step>
+  <Step title="Sign in and approve">
+    Read what is being requested. It should be an app folder only.
+  </Step>
+  <Step title="You are returned to the settings screen">
+    The card now shows the account you signed in as and the folder backups go to.
+  </Step>
+  <Step title="Set Backups Location">
+    Connecting a provider does not start using it. Choose it under **Backups Location** as well.
+  </Step>
+</Steps>
+
+## What each provider gets
+
+All three use the narrowest access that works.
+
+| Provider | Access | Folder |
+| --- | --- | --- |
+| Google Drive | Only files this app creates | `Snapshotify/<your-site>` |
+| OneDrive | A dedicated app folder | `Apps/Snapshotify/<your-site>` |
+| Dropbox | A dedicated app folder | Its own app folder |
+
+<Note>
+  None of them can read files you uploaded yourself. Your existing Drive, OneDrive, or Dropbox is invisible to the plugin, which is how it should be: a backup plugin has no business reading the rest of your storage.
+
+  The consequence is that a backup you move or rename by hand in the provider's web interface may stop being visible to Snapshotify.
+</Note>
+
+## How uploads work
+
+Archives are uploaded in chunks rather than in one request, so a large backup does not depend on a single long-lived connection. An interrupted upload resumes from where it stopped.
+
+## When an upload fails
+
+<Warning>
+  An upload failure never fails the backup. The archive completes as a **local** backup and the reason is written to that backup's activity log.
+</Warning>
+
+You end up with a working backup in the wrong place rather than no backup at all. This is the right trade, but it means a silent failure looks like success in the list unless you read the location.
+
+<Tip>
+  A row showing **Local** on a site configured for cloud storage is telling you the upload failed. Open that backup's activity log for the reason.
+</Tip>
+
+## Keeping the list honest
+
+Snapshotify periodically checks the list against what is actually in your cloud storage.
+
+- A backup whose cloud copy is gone is demoted to local, if a local copy still exists.
+- If neither copy exists, the row is dropped.
+- **If the provider's API is unreachable, nothing changes.** An outage never removes backups from your list.
+
+## Local copies
+
+By default a local copy is kept after a successful upload, so you have two. Developers can change that with [`snapshotify_keep_local_copy`](/snapshotify/reference/hooks#snapshotify_keep_local_copy).
+
+<Warning>
+  Turning off local copies is reasonable when disk space is genuinely tight, and risky otherwise: a deleted cloud file then leaves you with nothing.
+</Warning>
+
+## Choosing a provider
+
+There is little to separate them for this purpose. Pick the one you already use, since you are more likely to notice a storage quota problem in an account you look at.
+
+<AccordionGroup>
+  <Accordion title="Watch your quota">
+    Backups are large and accumulate. A full Drive means uploads start failing, and by the fallback behavior above those failures are quiet. Set [retention](/snapshotify/settings/general#retention-options) so old backups are removed.
+  </Accordion>
+  <Accordion title="Do not reorganize the folder by hand">
+    The app can only see what it created. Moving archives elsewhere in your storage makes them invisible to the plugin, and the reconcile will treat them as gone.
+  </Accordion>
+  <Accordion title="One account, several sites">
+    Each site gets its own folder named after its host, so several sites can share one account without colliding.
+  </Accordion>
+</AccordionGroup>
+
+## Disconnecting
+
+Each connected card offers a disconnect. That revokes Snapshotify's access; it does not delete archives already uploaded.
+
+<Note>
+  After disconnecting, set **Backups Location** back to local or to another provider. A location pointing at a disconnected provider means every backup falls back to local.
+</Note>
+
+## How the connection is built
+
+Snapshotify sends you directly to the provider's consent screen. The token exchange happens through a small relay on daftplug.com, which is what holds the client secrets, since a secret shipped inside a plugin on thousands of sites is not a secret.
+
+Developers can point the relays elsewhere with the [OAuth filters](/snapshotify/reference/hooks#cloud-storage), which is what you would use to run your own Google Cloud or Azure app instead of DaftPlug's.

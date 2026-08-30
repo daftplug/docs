@@ -1,0 +1,132 @@
+---
+title: "Migrating a site"
+description: "Moving a site to a new domain or host, and what changes on the way."
+icon: "right-left"
+---
+
+A migration is a restore onto a different address. There is no separate migration mode: back up the old site, restore onto the new one, and Snapshotify detects that the address changed and rewrites accordingly.
+
+## The process
+
+<Steps>
+  <Step title="Back up the source site">
+    A full-site backup. This is not the moment to save space with exclusions.
+  </Step>
+  <Step title="Download the archive">
+    Or leave it in cloud storage, where the destination can reach it.
+  </Step>
+  <Step title="Prepare the destination">
+    A working WordPress install with Snapshotify active. It does not need to be empty; the restore replaces what is there.
+  </Step>
+  <Step title="Upload the archive">
+    **Snapshotify > Backups > Upload Backup**. It uploads in chunks, so large archives work within normal request limits.
+  </Step>
+  <Step title="Restore it">
+    Snapshotify compares the manifest's site URL against the destination and runs the migration steps when they differ.
+  </Step>
+  <Step title="Check the result">
+    Front end, wp-admin, media, and permalinks. See [after the move](#after-the-move).
+  </Step>
+</Steps>
+
+## What gets rewritten
+
+The old URL has to be replaced with the new one everywhere it appears, and it appears in more forms than people expect.
+
+A single literal replacement is not enough. The same address is stored:
+
+- Plainly, as `https://old.example.com`
+- **JSON-escaped**, as `https:\/\/old.example.com`
+- Percent-encoded
+- Protocol-relative, as `//old.example.com`
+- Under both `http` and `https`
+- With and without `www`
+
+Snapshotify builds roughly twenty variants of each address and applies the longest match first, so a specific form is never partly replaced by a general one.
+
+<Warning>
+  The JSON-escaped form is the one that matters most. **Every major page builder** stores its content as JSON: Elementor, Divi, WPBakery, and Gutenberg block attributes. Miss that variant and the site loads while every page-builder link and image still points at the old domain, which looks like a successful migration until someone clicks something.
+</Warning>
+
+File paths are rewritten too, since the old server's directory layout is stored in the database in places.
+
+## What is deliberately not carried over
+
+A migration is where restoring the wrong file breaks a site, so some things are skipped on the way in.
+
+<AccordionGroup>
+  <Accordion title="Server configuration files">
+    `wp-config.php`, `.htaccess`, `.user.ini`, `php.ini`, `web.config`.
+
+    `.user.ini` is the dangerous one. Security plugins write an `auto_prepend_file` line containing an absolute path on the **source** server. Restore it onto a different host and every request fatals before WordPress boots, wp-admin included, with no way in.
+  </Accordion>
+
+  <Accordion title="Host-injected mu-plugins">
+    Bluehost and Endurance, GoDaddy, WP Engine, WordPress.com's `wpcomsh`, and similar.
+
+    These load automatically and cannot be deactivated from wp-admin. Carrying one from your old host to a new one leaves you with a plugin you cannot remove that expects an environment you are no longer on.
+  </Accordion>
+
+  <Accordion title="Login-URL changing plugins">
+    Plugins like WPS Hide Login move `wp-login.php` to a slug stored in the source database. After migration, the login page is at an address you may not know, on a site you cannot sign into to find out.
+
+    These are deactivated during a migration.
+  </Accordion>
+
+  <Accordion title="SSL-forcing plugins">
+    If the destination is not on HTTPS yet, a plugin forcing SSL sends the site into a redirect loop. Deactivated when the target is not secure.
+  </Accordion>
+
+  <Accordion title="Elementor's generated CSS">
+    Regenerable, and it embeds absolute URLs. Cached CSS and related meta are cleared so Elementor rebuilds against the new domain.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  The plugin deactivations happen **only on a migration**, detected by the address having changed. A same-site restore, the disaster-recovery case, never switches off your own security plugins. That distinction is deliberate.
+</Note>
+
+## Permalinks
+
+`.htaccess` is never restored, since it is server specific. If the destination is Apache without `mod_rewrite`, pretty permalinks would 404 everywhere, so permalinks are reset to plain. Otherwise the rewrite rules are refreshed in place.
+
+<Tip>
+  If your permalinks come back as plain and your new host does support rewriting, just re-save **Settings > Permalinks** on the destination.
+</Tip>
+
+## Different table prefixes
+
+Handled. Table names are rewritten during the import, and the prefix that lives *inside* the data, in role definitions and user capabilities, is repaired immediately afterwards.
+
+Without that second step you would get a site that loads but where no user has any capability, locking everyone out of wp-admin.
+
+## After the move
+
+<Steps>
+  <Step title="Check the front end">
+    Especially pages built with a page builder, which is where a missed URL variant shows up first.
+  </Step>
+  <Step title="Check media">
+    Images loading means the uploads path and URL rewriting both worked.
+  </Step>
+  <Step title="Re-save permalinks">
+    Under **Settings > Permalinks**, if they came back plain.
+  </Step>
+  <Step title="Sign in with the source site's credentials">
+    The users table came from the old site. Your destination's old accounts are gone.
+  </Step>
+  <Step title="Reconnect what is site-bound">
+    Search Console verification, payment gateway webhooks, and anything else keyed to the old domain.
+  </Step>
+  <Step title="Take a fresh backup">
+    Of the migrated site, on its new home.
+  </Step>
+</Steps>
+
+<Note>
+  Freemius API caches are cleared during a migration so licensed plugins revalidate against the new domain. Stored accounts are deliberately left alone, since removing them would silently deactivate every Freemius plugin on a site you may intend to keep running.
+</Note>
+
+## Migrating to a different domain you keep
+
+If both sites stay online, remember the source site is unchanged. Nothing about a migration modifies the origin, so you can migrate to staging, test, and migrate again without risk to the live site.

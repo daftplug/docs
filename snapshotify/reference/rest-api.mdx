@@ -1,0 +1,135 @@
+---
+title: "REST API"
+description: "The snapshotify/v1 endpoints, their permissions, and what they do."
+icon: "server"
+---
+
+Snapshotify registers its endpoints under the `snapshotify/v1` namespace. They serve the plugin's own admin screen, so treat them as an internal API rather than a versioned public contract.
+
+```
+https://example.com/wp-json/snapshotify/v1/
+```
+
+## Endpoints
+
+| Endpoint | Method | Access |
+| --- | --- | --- |
+| `/settings` | PUT | `manage_options` |
+| `/backup/fetch` | GET | `manage_options` |
+| `/backup/create` | POST | `manage_options` |
+| `/backup/progress` | GET | `manage_options` |
+| `/backup/cancel` | POST | `manage_options` |
+| `/backup/logs` | GET | `manage_options` |
+| `/backup/remove` | DELETE | `manage_options` |
+| `/backup/download` | GET | `manage_options` |
+| `/backup/upload/init` | POST | `manage_options` |
+| `/backup/upload/chunk` | POST | `manage_options` |
+| `/restore/start` | POST | `manage_options` |
+| `/restore/relogin` | POST | Token-gated |
+
+## Backups
+
+<ParamField path="GET /backup/fetch" type="endpoint">
+  The paginated backup list: title, contents, size, location, date, and kind. Kind distinguishes manual, automatic, and uploaded backups.
+</ParamField>
+
+<ParamField path="POST /backup/create" type="endpoint">
+  Starts a backup. Takes a title, an exclusions array, and a location.
+
+  Returns immediately with an ID. The job runs in ticks and is not finished when this responds.
+</ParamField>
+
+```bash
+curl -X POST https://example.com/wp-json/snapshotify/v1/backup/create \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"title": "Before deploy", "exclusions": [], "location": "local"}'
+```
+
+An empty `exclusions` array means a full-site backup. Excluding all five categories is refused with a `nothing_to_backup` error.
+
+<ParamField path="GET /backup/progress" type="endpoint">
+  Progress for a running job. Polling this also **advances the job**, which is one of the three things that drive the pipeline. See [how backups run](/snapshotify/guides/how-it-works).
+</ParamField>
+
+<ParamField path="POST /backup/cancel" type="endpoint">
+  Stops a running job and removes its working files. Cancelled jobs never send a notification.
+</ParamField>
+
+<ParamField path="GET /backup/logs" type="endpoint">
+  The activity log for one backup: each stage, and any warning that did not stop the job. This is where a cloud upload's fallback reason is recorded.
+</ParamField>
+
+<ParamField path="DELETE /backup/remove" type="endpoint">
+  Deletes a backup and its archive, including the cloud copy where there is one. Permanent.
+</ParamField>
+
+<ParamField path="GET /backup/download" type="endpoint">
+  Downloads an archive, served in chunks so large files do not depend on one long response.
+</ParamField>
+
+## Uploading an archive
+
+Two endpoints, because a backup archive is usually far larger than a single request allows.
+
+<ParamField path="POST /backup/upload/init" type="endpoint">
+  Starts an upload session and returns a handle.
+</ParamField>
+
+<ParamField path="POST /backup/upload/chunk" type="endpoint">
+  Sends one chunk. Repeat until the archive is complete, then it appears in the backup list like any other.
+</ParamField>
+
+## Restore
+
+<ParamField path="POST /restore/start" type="endpoint">
+  Begins a restore from a backup ID.
+
+  <Warning>
+    This is destructive and there is no undo. From the database step onward the site is in maintenance mode and is being replaced. Take a backup of the current state before calling it.
+  </Warning>
+</ParamField>
+
+<ParamField path="POST /restore/relogin" type="endpoint">
+  Exchanges a short-lived token for a session, so you land back in wp-admin after the users table has been replaced.
+
+  This is the one endpoint without a capability check, and it cannot have one: the user it authenticates may not have existed a moment earlier. It is gated on a single-use token valid for 30 minutes instead.
+</ParamField>
+
+## Settings
+
+<ParamField path="PUT /settings" type="endpoint">
+  Merges the supplied values over the stored settings. Send only the keys you want to change.
+</ParamField>
+
+```bash
+curl -X PUT https://example.com/wp-json/snapshotify/v1/settings \
+  -H "X-WP-Nonce: $NONCE" \
+  -H "Content-Type: application/json" \
+  --cookie "$COOKIE_JAR" \
+  -d '{"settings": {"keepLatestBackupsCount": "7"}}'
+```
+
+Fires [`snapshotify_settings_update:before`](/snapshotify/reference/hooks#snapshotify_settings_updatebefore-after) and `:after`.
+
+There is no GET counterpart. Read settings in PHP with `get_option('snapshotify_settings')`.
+
+## Backing up from a deploy script
+
+The usual reason to touch this API: take a backup before a release.
+
+```bash
+curl -X POST https://example.com/wp-json/snapshotify/v1/backup/create \
+  -u "deploy:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Pre-deploy '"$(date -I)"'", "exclusions": [], "location": "google-drive"}'
+```
+
+<Warning>
+  This returns as soon as the job starts, not when it finishes. If your deploy must wait for a completed backup, poll `/backup/progress` until it reports completion, and remember that polling also drives the job forward.
+</Warning>
+
+<Note>
+  Application passwords need a user with `manage_options`, which is administrator-level access. Create a dedicated user for automation rather than reusing your own account.
+</Note>

@@ -1,0 +1,157 @@
+---
+title: "Troubleshooting"
+description: "Stalled jobs, failed restores, lockouts, and backups that are not where you expect."
+icon: "wrench"
+---
+
+## Backups
+
+<AccordionGroup>
+  <Accordion title="A backup seems stuck and progress has stopped">
+    Usually the loopback chain has broken, which is common on hosts and local environments that block a site from making requests to itself.
+
+    Open **Snapshotify > Backups** and leave the page open. Its progress polling advances the job. The cron watchdog also picks it up within a minute or so, just more slowly.
+
+    It is not stuck; it has lost its fastest driver. See [how backups run](/snapshotify/guides/how-it-works).
+  </Accordion>
+
+  <Accordion title="A backup failed partway">
+    Open that backup's activity log. It records each stage and the reason it stopped.
+
+    The usual causes are disk space, a memory limit on a very large site, or a file the process cannot read. Retry after fixing the cause; jobs are resumable and restarting is safe.
+  </Accordion>
+
+  <Accordion title="The archive is smaller than expected">
+    Probably correct. Snapshotify never includes caches, `node_modules`, `.git`, other backup plugins' folders, log files, or regenerable Elementor CSS. An archive two to four times smaller than another plugin's for the same site is normal.
+
+    Confirm by checking the contents badges on the row. If a category you wanted is missing, the exclusions were set rather than the backup being incomplete.
+  </Accordion>
+
+  <Accordion title="Scheduled backups are not running">
+    WordPress cron only fires when someone visits the site. On a very quiet site, a scheduled backup can be late or skipped.
+
+    Check that scheduling is on, that not every category is excluded (which causes the run to be skipped deliberately), and consider a real system cron hitting `wp-cron.php` if the site gets little traffic.
+
+    Turn on [notifications](/snapshotify/settings/notifications) so you find out about this from an email rather than by discovering an empty list.
+  </Accordion>
+
+  <Accordion title="Nothing to back up">
+    All five categories are excluded, so there would be nothing in the archive. Uncheck at least one, or turn Full-Site Backup back on.
+  </Accordion>
+
+  <Accordion title="Disk fills up">
+    Backups accumulate. Turn on [auto-remove](/snapshotify/settings/general#retention-options) and set a retention count. If you also use cloud storage and space is tight, `snapshotify_keep_local_copy` can stop local copies being kept, at the cost of having only one copy.
+  </Accordion>
+</AccordionGroup>
+
+## Cloud storage
+
+<AccordionGroup>
+  <Accordion title="A backup shows Local when I configured cloud storage">
+    The upload failed and the backup fell back to local, deliberately: a working backup in the wrong place beats no backup.
+
+    Open that backup's activity log for the reason. Usually a full quota, an expired connection, or a provider outage.
+  </Accordion>
+
+  <Accordion title="Backups disappeared from the list">
+    The reconcile found the cloud copies gone and dropped the rows. That happens if the archives were deleted or moved by hand in the provider's web interface.
+
+    The app can only see files it created, so moving an archive elsewhere in your Drive makes it invisible to Snapshotify.
+
+    An API outage never removes rows, so this is not caused by a temporary failure.
+  </Accordion>
+
+  <Accordion title="The connection stopped working">
+    Reconnect on **Settings > Storage**. Access can be revoked from the provider's side, and a changed password sometimes invalidates it.
+  </Accordion>
+
+  <Accordion title="I cannot find my backups in Drive">
+    Google Drive uses `Snapshotify/<your-site>`, OneDrive uses `Apps/Snapshotify/<your-site>`, and Dropbox uses its app folder. Each site gets its own folder named after its host.
+  </Accordion>
+</AccordionGroup>
+
+## Restores
+
+<AccordionGroup>
+  <Accordion title="The restore failed">
+    Where it failed determines the state.
+
+    | Failed during | State | Action |
+    | --- | --- | --- |
+    | Prepare | Untouched | Fix the cause, usually free space, and retry |
+    | Database or later | Partially restored | Retry the same restore; steps are resumable |
+  </Accordion>
+
+  <Accordion title="The site is stuck in maintenance mode">
+    The flag expires by itself after 30 minutes, so waiting works.
+
+    To clear it immediately, delete the `.maintenance` file in your site root over FTP or your host's file manager.
+  </Accordion>
+
+  <Accordion title="I cannot sign in after a restore">
+    A restore replaces the users table, so use the credentials **from the backup**, not the ones you had before. If the backup is old, that may be an old password.
+
+    Snapshotify issues a 30-minute re-login token to avoid this, but once it expires the backup's credentials are the only ones that exist.
+
+    If you have no working credentials, reset the password through the database or use WP-CLI.
+  </Accordion>
+
+  <Accordion title="Locked out of wp-admin entirely after a restore">
+    Usually a cross-prefix restore that did not complete its repair step. WordPress stores capabilities in keys built from the table prefix, and if those still name the old prefix nobody has any capability.
+
+    Re-running the restore fixes it, since the repair runs immediately after the import.
+  </Accordion>
+
+  <Accordion title="Not enough disk space">
+    A restore needs roughly twice the archive size, since it extracts before applying. The check runs at the last non-destructive step, so a failure here leaves your site untouched.
+  </Accordion>
+</AccordionGroup>
+
+## After a migration
+
+<AccordionGroup>
+  <Accordion title="Pages built with a page builder still point at the old domain">
+    Should not happen: the JSON-escaped URL form that Elementor, Divi, WPBakery, and Gutenberg store is rewritten along with the plain form.
+
+    If you see it, check whether the content stores the address in an unusual encoding, and report it with an example. This is worth fixing centrally rather than by hand.
+  </Accordion>
+
+  <Accordion title="Permalinks return 404 everywhere">
+    `.htaccess` is never restored, since it is server specific. Re-save **Settings > Permalinks** on the destination to regenerate the rules.
+  </Accordion>
+
+  <Accordion title="A security plugin was switched off">
+    Deliberate, and only during a migration. Login-URL changers move `wp-login.php` to a slug stored in the source database, which would leave nobody able to find the login page on the new domain. SSL forcers loop when the target is not yet on HTTPS.
+
+    Reconfigure and re-enable them once the new site is settled. A same-site restore never does this.
+  </Accordion>
+
+  <Accordion title="Images are missing">
+    Check the media library was in the backup, then check the uploads path. If the source used a relocated uploads directory, the manifest records it and the restore honors it.
+  </Accordion>
+</AccordionGroup>
+
+## Multisite
+
+<Warning>
+  Multisite is refused at every entry point, and there is no override. On a network, the table enumeration would use the current blog's prefix and silently omit the network tables and every other subsite. The archive would look successful and be useless.
+</Warning>
+
+## Notifications
+
+<AccordionGroup>
+  <Accordion title="No emails arrive">
+    Mail is configured outside Snapshotify. Test whether the site can send mail at all before looking at these settings.
+  </Accordion>
+  <Accordion title="No email for a cancelled job">
+    By design. You cancelled it, so you already know.
+  </Accordion>
+</AccordionGroup>
+
+## Leftover files
+
+Directories under `wp-content/uploads/snapshotify/tmp/` belong to jobs that were interrupted. They are removed when a job finishes or is cancelled, and anything left after a hard crash is safe to delete.
+
+<Card title="Still stuck" icon="life-ring" horizontal href="/snapshotify/support/get-help">
+  What to include when you contact support.
+</Card>
