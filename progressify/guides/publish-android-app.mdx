@@ -1,0 +1,66 @@
+---
+title: "Publish your Android app"
+description: "Follow these steps to get your Progressive Web App (PWA) onto the Google Play Store."
+icon: "android"
+---
+
+There are a few steps to take before your PWA is ready to be published. All the files you need to complete these steps are contained in the `.zip` file you downloaded from the email we sent you.
+
+<Steps>
+  <Step title="Deploy the assetlinks.json file">
+    Your zip file contains assetlinks.json. This is a digital asset links file that proves ownership of your PWA.
+
+    To properly deploy this file, upload it to your server at `https://your-domain.com/.well-known/assetlinks.json`.
+
+    <Warning>
+      Digital asset links are required for your PWA on Android. If you’re seeing a browser address bar in your app on Android, or if your app is crashing on launch, it means your assetlinks.json file is missing, inaccessible, or incorrect.
+    </Warning>
+  </Step>
+  <Step title="Upload your app to the Google Play Store">
+    Next, you’ll upload your app package to the Google Play Console:
+
+    1. Log into the [Google Play console](https://accounts.google.com/ServiceLogin?service=androiddeveloper&passive=true&continue=https%3A%2F%2Fplay.google.com%2Fconsole%2Fdeveloper%2F) with your developer account.
+    2. You can follow the guidelines on the Google play console to create your app.
+
+       <Warning>
+         Be aware that PWAs on Android cannot currently target children as their audience. To avoid issues with your store listing, set the age rating to `13+` and specify `Target Audience: Older Users`.
+       </Warning>
+    3. Your zip file contains an .aab (Android App Bundle) file which can be submitted directly to the Play Store through the Google Play Console.
+  </Step>
+  <Step title="Update your asset links file for production">
+    This step is required for running the production version of your app. If you skip this step, your app will crash or a browser address bar will appear inside your app.
+
+    1. Once you’ve uploaded your .aab file, Google Play re-signs your app. Because of this, you’ll need to update your asset links file.
+    2. Go to the Google Play Console and select your app release:
+
+       <Frame>
+         <img src="/images/progressify/mobile-apps/select-app-release.png" alt="Google Play Console" />
+       </Frame>
+    3. Click `Setup` and then `App integrity` in the sidebar. Navigate to the `App signing` tab and copy your SHA-256 fingerprint:
+
+       <Frame>
+         <img src="/images/progressify/mobile-apps/app-integrity.png" alt="SHA-256 fingerprint" />
+       </Frame>
+    4. Then, paste the fingerprint into your assetlinks.json file:
+
+       ```json assetlinks.json
+       [
+         {
+             "relation": ...,
+             "target": {
+                 "namespace": ...,
+                 "package_name": ...,
+                 "sha256_cert_fingerprints": [
+                     "...",
+                     "PASTE YOUR NEW SHA-256 FINGERPRINT HERE"
+                 ]
+             }
+         }
+       ]
+       ```
+    5. Once your updated assetlinks.json file is deployed to your server, the address bar will disappear from your app.
+  </Step>
+  <Step title="Save your signing key">
+    Your zip file contains `signing.keystore` and `signing-key-info.txt`. `signing.keystore` is the Android key store file containing the signing key. signing-key-info.txt is a text file containing your signing key information, such as the key password, store password, and key alias. You will probably never need to update your app in Google Play Store but keep both of these files in a safe place in case you'll need to deploy future versions of your app.
+  </Step>
+</Steps>

@@ -52,7 +52,9 @@
             "group": "Guides",
             "pages": [
               "progressify/guides/sending-notifications",
-              "progressify/guides/mobile-apps"
+              "progressify/guides/mobile-apps",
+              "progressify/guides/publish-android-app",
+              "progressify/guides/publish-ios-app"
             ]
           },
           {
