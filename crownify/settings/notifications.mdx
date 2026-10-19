@@ -4,18 +4,18 @@ description: "Email alerts, with thresholds so nothing floods your inbox."
 icon: "envelope"
 ---
 
-**Rankify > Settings > Notifications**
+**Crownify > Settings > Notifications**
 
-Rankify can tell you when something needs attention, without you having to remember to look. Everything here is off until you turn it on, and each alert has a threshold or an interval behind it. Nothing mails on a single event, and nothing repeats while the situation is unchanged.
+Crownify can tell you when something needs attention, without you having to remember to look. Everything here is off until you turn it on, and each alert has a threshold or an interval behind it. Nothing mails on a single event, and nothing repeats while the situation is unchanged.
 
 <ParamField path="Send to" type="email">
   Leave blank to use the site administrator address.
 
-  Mail goes out through this site, not through DaftPlug. Everything Rankify sends is built from data the site already holds, and no request leaves your server to produce it.
+  Mail goes out through this site, not through DaftPlug. Everything Crownify sends is built from data the site already holds, and no request leaves your server to produce it.
 </ParamField>
 
 <Warning>
-  Send a test before relying on any of this. Mail is configured outside Rankify and fails silently more often than anything else on a WordPress site, so it is worth proving once.
+  Send a test before relying on any of this. Mail is configured outside Crownify and fails silently more often than anything else on a WordPress site, so it is worth proving once.
 </Warning>
 
 ## The alerts
@@ -71,6 +71,6 @@ Rankify can tell you when something needs attention, without you having to remem
 
 ## Routing alerts elsewhere
 
-Rankify does not expose its own filters for the message contents, so the recipient field is the supported way to change where mail goes.
+Crownify does not expose its own filters for the message contents, so the recipient field is the supported way to change where mail goes.
 
-To get alerts into Slack or a ticketing system, point the recipient at an address that forwards there. Most of those tools provide an inbound email address for exactly this. Alternatively, WordPress's own `wp_mail` filter sees these messages like any other, so a site-level mail integration picks them up without Rankify needing to know about it.
+To get alerts into Slack or a ticketing system, point the recipient at an address that forwards there. Most of those tools provide an inbound email address for exactly this. Alternatively, WordPress's own `wp_mail` filter sees these messages like any other, so a site-level mail integration picks them up without Crownify needing to know about it.

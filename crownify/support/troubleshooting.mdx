@@ -8,7 +8,7 @@ Two checks resolve most reports.
 
 <Steps>
   <Step title="Is the site blocking search engines?">
-    **Settings > Reading**, the **Discourage search engines** box. If ticked, nothing else matters. Rankify raises this at the top of its own settings screen too.
+    **Settings > Reading**, the **Discourage search engines** box. If ticked, nothing else matters. Crownify raises this at the top of its own settings screen too.
   </Step>
   <Step title="Is another SEO plugin active?">
     Two plugins writing the same tags produces duplicates, and search engines pick between them unpredictably. Deactivate one.
@@ -21,7 +21,7 @@ Two checks resolve most reports.
   <Accordion title="Pages are not appearing in Google">
     Work through it in order:
 
-    1. Check the noindex setting for that content type on the [Content Types tab](/rankify/settings/content-types).
+    1. Check the noindex setting for that content type on the [Content Types tab](/crownify/settings/content-types).
     2. Check `robots.txt` is not blocking the path.
     3. Confirm the page is in your sitemap at `/sitemap.xml`.
     4. Confirm the sitemap is submitted in Search Console.
@@ -39,7 +39,7 @@ Two checks resolve most reports.
   <Accordion title="The sitemap is empty or returns a 404">
     Check permalinks first. Under **Settings > Permalinks**, anything other than Plain works; on Plain the sitemap URL cannot be served.
 
-    Then check that at least one post type is selected under [what goes in the sitemap](/rankify/settings/sitemaps#what-goes-in-the-sitemap), and that those types are not all noindexed.
+    Then check that at least one post type is selected under [what goes in the sitemap](/crownify/settings/sitemaps#what-goes-in-the-sitemap), and that those types are not all noindexed.
   </Accordion>
 
   <Accordion title="robots.txt changes have no effect">
@@ -57,11 +57,11 @@ Two checks resolve most reports.
   </Accordion>
 
   <Accordion title="My title is duplicated, or two titles appear">
-    Another SEO plugin, or a theme, is also outputting a title tag. View source and count. If it is your theme, use [`rankify_filter_document_title`](/rankify/reference/hooks#rankify_filter_document_title) to decide which one wins.
+    Another SEO plugin, or a theme, is also outputting a title tag. View source and count. If it is your theme, use [`rankify_filter_document_title`](/crownify/reference/hooks#rankify_filter_document_title) to decide which one wins.
   </Accordion>
 
   <Accordion title="Titles from my old SEO plugin are showing">
-    That is deliberate. Rankify reads what the old plugin stored and uses it wherever you have not set your own value. Editing the field in Rankify overrides it permanently. See [switching to Rankify](/rankify/guides/migrating).
+    That is deliberate. Crownify reads what the old plugin stored and uses it wherever you have not set your own value. Editing the field in Crownify overrides it permanently. See [switching to Crownify](/crownify/guides/migrating).
 
     To stop it entirely, turn off the reuse setting.
   </Accordion>
@@ -79,7 +79,7 @@ Two checks resolve most reports.
   </Accordion>
 
   <Accordion title="Two schema graphs on one page">
-    Your theme, page builder, or another plugin is also outputting JSON-LD. Search for `application/ld+json` in the page source. Turn off whichever you do not want, or use [`rankify_output_schema`](/rankify/reference/hooks#output-switches) to disable Rankify's on specific templates.
+    Your theme, page builder, or another plugin is also outputting JSON-LD. Search for `application/ld+json` in the page source. Turn off whichever you do not want, or use [`rankify_output_schema`](/crownify/reference/hooks#output-switches) to disable Crownify's on specific templates.
   </Accordion>
 
   <Accordion title="Rich results are not showing despite valid markup">
@@ -95,7 +95,7 @@ Two checks resolve most reports.
   </Accordion>
 
   <Accordion title="No image appears at all">
-    The page has no featured image and no [fallback share image](/rankify/settings/social#default-share-image) is set. Set one, at least 1200 by 630 pixels.
+    The page has no featured image and no [fallback share image](/crownify/settings/social#default-share-image) is set. Set one, at least 1200 by 630 pixels.
   </Accordion>
 </AccordionGroup>
 
@@ -105,7 +105,7 @@ Two checks resolve most reports.
   <Accordion title="A redirect is not firing">
     Rules only run on requests that would otherwise return a 404. If the URL resolves to a real page, the rule is skipped by design, so a redirect can never hide live content.
 
-    Also check the [Redirect Manager](/rankify/settings/redirects#redirects) toggle is on, since turning it off keeps your rules but stops applying them.
+    Also check the [Redirect Manager](/crownify/settings/redirects#redirects) toggle is on, since turning it off keeps your rules but stops applying them.
   </Accordion>
 
   <Accordion title="The 404 log is full of URLs I do not recognize">
@@ -121,11 +121,11 @@ Two checks resolve most reports.
 
 <AccordionGroup>
   <Accordion title="The AI crawler log is empty">
-    Either nothing has crawled you yet, which is normal on a new or small site, or crawlers are blocked. Check that AI crawlers are allowed on the [AI & GEO tab](/rankify/settings/ai-geo) and that `robots.txt` does not block them.
+    Either nothing has crawled you yet, which is normal on a new or small site, or crawlers are blocked. Check that AI crawlers are allowed on the [AI & GEO tab](/crownify/settings/ai-geo) and that `robots.txt` does not block them.
   </Accordion>
 
   <Accordion title="Crawlers are reading but no AI referrals">
-    Your pages are reachable but not being quoted. That is a content structure problem rather than a configuration one. Check the [retrieval score](/rankify/guides/answer-engines#the-retrieval-score) on the pages you expected to be cited.
+    Your pages are reachable but not being quoted. That is a content structure problem rather than a configuration one. Check the [retrieval score](/crownify/guides/answer-engines#the-retrieval-score) on the pages you expected to be cited.
   </Accordion>
 
   <Accordion title="llms.txt returns a 404">
@@ -141,7 +141,7 @@ Two checks resolve most reports.
 
 <AccordionGroup>
   <Accordion title="No emails arrive">
-    Send a test from the [Notifications tab](/rankify/settings/notifications). Mail on WordPress is configured outside Rankify and fails silently more often than anything else on a site. If the test does not arrive, the problem is your site's mail configuration, not the plugin.
+    Send a test from the [Notifications tab](/crownify/settings/notifications). Mail on WordPress is configured outside Crownify and fails silently more often than anything else on a site. If the test does not arrive, the problem is your site's mail configuration, not the plugin.
   </Accordion>
 
   <Accordion title="Too many 404 emails">
@@ -156,9 +156,9 @@ Two checks resolve most reports.
 | Another SEO plugin | Duplicate titles, descriptions, schema | Run one only |
 | Themes with built-in SEO | Duplicate meta tags | Disable the theme's, or use the output filters |
 | Themes with breadcrumbs | Two trails, two BreadcrumbList blocks | Turn off one |
-| Another redirect plugin | Rules in two places, unpredictable order | Import into Rankify and disable the other |
+| Another redirect plugin | Rules in two places, unpredictable order | Import into Crownify and disable the other |
 | A caching plugin | Tag changes not visible | Purge the cache after editing SEO fields |
 
-<Card title="Still stuck" icon="life-ring" horizontal href="/rankify/support/get-help">
+<Card title="Still stuck" icon="life-ring" horizontal href="/crownify/support/get-help">
   What to include when you contact support.
 </Card>

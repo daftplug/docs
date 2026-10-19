@@ -1,12 +1,14 @@
 ---
 title: "Hooks"
-description: "Every action and filter Rankify exposes, grouped by what it controls."
+description: "Every action and filter Crownify exposes, grouped by what it controls."
 icon: "code"
 ---
 
 Add these to your theme's `functions.php` or a site-specific plugin.
 
 Several filters receive a `$context` object describing what is being rendered, so one filter can behave differently on a post, an archive, and the homepage.
+
+Hook names (`rankify_*`), constants (`RANKIFY_*`), and the plugin file `rankify.php` keep the rankify name for backward compatibility.
 
 ## Meta output
 
@@ -70,7 +72,7 @@ Resolves a template variable, which is how you add your own.
 
 ### rankify_filter_document_title
 
-Whether Rankify takes over WordPress's own title output. Return `false` to leave the theme's title alone.
+Whether Crownify takes over WordPress's own title output. Return `false` to leave the theme's title alone.
 
 ### Output switches
 
@@ -205,7 +207,7 @@ Action. Fires after URLs are submitted to IndexNow.
 
 ```php
 add_action('rankify_slug_change_redirect', function ($from, $to) {
-    error_log(sprintf('Rankify redirected %s to %s', $from, $to));
+    error_log(sprintf('Crownify redirected %s to %s', $from, $to));
 }, 10, 2);
 ```
 
@@ -214,7 +216,7 @@ add_action('rankify_slug_change_redirect', function ($from, $to) {
 | Hook | Type | Controls |
 | --- | --- | --- |
 | `rankify_user_can_edit_meta` | filter | Whether a user may edit SEO fields |
-| `rankify_admin_column_post_types` | filter | Which list tables get Rankify columns |
+| `rankify_admin_column_post_types` | filter | Which list tables get Crownify columns |
 | `rankify_admin_js_vars` | filter | Variables passed to the admin JavaScript |
 | `rankify_page_cache_active` | filter | Whether a page cache is considered active |
 | `rankify_save_post_meta` | action | Fires when per-post SEO meta is saved |

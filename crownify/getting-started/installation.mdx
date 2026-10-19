@@ -20,13 +20,13 @@ icon: "download"
 
 <Steps>
   <Step title="Search the plugin directory">
-    In WordPress, go to **Plugins > Add New** and search for `Rankify`.
+    In WordPress, go to **Plugins > Add New** and search for `Crownify`.
   </Step>
   <Step title="Install and activate">
     Select **Install Now**, then **Activate**.
   </Step>
   <Step title="Run the setup wizard">
-    Rankify opens a short wizard on first activation. It takes a couple of minutes and is described [below](#the-setup-wizard).
+    Crownify opens a short wizard on first activation. It takes a couple of minutes and is described [below](#the-setup-wizard).
   </Step>
 </Steps>
 
@@ -36,25 +36,25 @@ Pro is a separate plugin rather than an unlock applied to the free one, so it is
 
 <Steps>
   <Step title="Download the ZIP">
-    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Rankify Pro archive.
+    Sign in at [daftplug.com/account](https://daftplug.com/account/) and download the Crownify Pro archive.
   </Step>
   <Step title="Upload it">
     Go to **Plugins > Add New > Upload Plugin**, choose the ZIP, and select **Install Now**.
   </Step>
   <Step title="Activate">
-    Select **Activate Plugin**. If the free version is installed and active, Rankify deactivates it for you.
+    Select **Activate Plugin**. If the free version is installed and active, Crownify deactivates it for you.
   </Step>
 </Steps>
 
 <Note>
-  Your settings survive the switch. Both versions read the same `rankify_settings` option.
+  Your settings survive the switch. Both versions read the same `rankify_settings` option, which keeps the rankify name for backward compatibility.
 </Note>
 
 ## Activate your license
 
 <Steps>
   <Step title="Open the activation screen">
-    After activating Pro, WordPress shows an activation notice. You can also reach it from **Rankify > Account**.
+    After activating Pro, WordPress shows an activation notice. You can also reach it from **Crownify > Account**.
   </Step>
   <Step title="Enter your license key">
     Paste the key from your purchase confirmation email, then select **Activate License**.
@@ -62,12 +62,12 @@ Pro is a separate plugin rather than an unlock applied to the free one, so it is
 </Steps>
 
 <Note>
-  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Rankify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on.
+  DaftPlug is sold as one membership rather than as separate plugins. The same license key activates Crownify and every other DaftPlug Pro plugin. Plans differ only in how many sites you can activate on.
 </Note>
 
 ## Before anything else
 
-Two site-wide conditions override everything Rankify does. Both are raised at the top of the settings screen rather than buried in a tab, because nothing else works while either is true.
+Two site-wide conditions override everything Crownify does. Both are raised at the top of the settings screen rather than buried in a tab, because nothing else works while either is true.
 
 <AccordionGroup>
   <Accordion title="This site is blocking search engines">
@@ -78,7 +78,7 @@ Two site-wide conditions override everything Rankify does. Both are raised at th
   <Accordion title="Another SEO plugin is active">
     Two plugins writing the same tags means duplicate titles and descriptions, and search engines pick between them unpredictably. Deactivate the other one.
 
-    You do not need to export anything first. See [switching to Rankify](/rankify/guides/migrating).
+    You do not need to export anything first. See [switching to Crownify](/crownify/guides/migrating).
   </Accordion>
 </AccordionGroup>
 
@@ -88,13 +88,13 @@ The wizard covers the settings that cannot be guessed. Everything else already h
 
 <Steps>
   <Step title="Welcome">
-    Confirms Rankify is active and flags the site if it is hidden from search engines.
+    Confirms Crownify is active and flags the site if it is hidden from search engines.
   </Step>
   <Step title="Who publishes this site">
-    Whether the site represents an organization or a person, and the name to use. This becomes the root of your [schema graph](/rankify/settings/schema), and everything else attaches to it.
+    Whether the site represents an organization or a person, and the name to use. This becomes the root of your [schema graph](/crownify/settings/schema), and everything else attaches to it.
   </Step>
   <Step title="Existing data">
-    If another SEO plugin's data is present, Rankify tells you it will be used as a fallback. Nothing is imported and nothing is overwritten.
+    If another SEO plugin's data is present, Crownify tells you it will be used as a fallback. Nothing is imported and nothing is overwritten.
   </Step>
   <Step title="What gets indexed">
     Anything that should stay out of search results. Sensible defaults are already applied; this is for the pages specific to your site.
@@ -111,7 +111,7 @@ You can skip it and configure everything from the settings screen instead. The o
 
 ## What works immediately
 
-Rankify enables the correct defaults on activation, so a fresh install is already doing the important things.
+Crownify enables the correct defaults on activation, so a fresh install is already doing the important things.
 
 | On by default | Version |
 | --- | --- |
@@ -135,13 +135,13 @@ What is off until you ask for it: breadcrumbs, media pages, email notifications,
 
 <Steps>
   <Step title="Submit your sitemap">
-    Add `https://example.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools. Rankify generates it, but nobody is told it exists until you say so.
+    Add `https://example.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools. Crownify generates it, but nobody is told it exists until you say so.
   </Step>
   <Step title="Set a fallback share image">
-    Under [Social](/rankify/settings/social). Without one, a shared page with no featured image renders as a bare text link.
+    Under [Social](/crownify/settings/social). Without one, a shared page with no featured image renders as a bare text link.
   </Step>
   <Step title="Add your organization logo">
-    Under [Schema](/rankify/settings/schema). Google needs at least 112 by 112 pixels for organization rich results.
+    Under [Schema](/crownify/settings/schema). Google needs at least 112 by 112 pixels for organization rich results.
   </Step>
   <Step title="Check the overview checklist">
     It lists what is still missing, in the order worth fixing.
