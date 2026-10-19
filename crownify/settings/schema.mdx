@@ -4,7 +4,7 @@ description: "JSON-LD structured data and the identity everything attaches to."
 icon: "diagram-project"
 ---
 
-**Rankify > Settings > Schema**
+**Crownify > Settings > Schema**
 
 Structured data describes your content in a format search engines and AI assistants read directly, rather than inferring from your HTML. It is what makes rich results possible, and it is one of the clearest signals an answer engine has about what a page actually is.
 
@@ -13,7 +13,7 @@ Structured data describes your content in a format search engines and AI assista
 <ParamField path="Schema Markup" type="toggle" default="on">
   Outputs JSON-LD for the site, posts, pages, and authors.
 
-  Rankify emits a **single connected graph** rather than separate blocks. That is what Google recommends, and it is what AI crawlers parse most reliably, because the relationships between entities are explicit instead of implied.
+  Crownify emits a **single connected graph** rather than separate blocks. That is what Google recommends, and it is what AI crawlers parse most reliably, because the relationships between entities are explicit instead of implied.
 </ParamField>
 
 <ParamField path="This Site Represents" type="select" default="organization">
@@ -45,7 +45,7 @@ Structured data describes your content in a format search engines and AI assista
 </ParamField>
 
 <Note>
-  Your [social profiles](/rankify/settings/social#social-profiles) become `sameAs` links on this entity. That is how search engines and AI assistants confirm that your site and your accounts are the same organization, so filling them in strengthens everything else here.
+  Your [social profiles](/crownify/settings/social#social-profiles) become `sameAs` links on this entity. That is how search engines and AI assistants confirm that your site and your accounts are the same organization, so filling them in strengthens everything else here.
 </Note>
 
 ## Why the graph matters for AI
@@ -69,7 +69,7 @@ That is the difference between being a page that mentions a topic and being a so
 </Steps>
 
 <Warning>
-  If another plugin also outputs schema, you will have two graphs describing the same page, and search engines may pick the wrong one or ignore both. Many themes and page builders emit their own; check the page source before assuming Rankify's is the only one.
+  If another plugin also outputs schema, you will have two graphs describing the same page, and search engines may pick the wrong one or ignore both. Many themes and page builders emit their own; check the page source before assuming Crownify's is the only one.
 </Warning>
 
 ## Getting rich results

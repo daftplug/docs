@@ -4,7 +4,7 @@ description: "Per-type indexing, templates, and which archives exist at all."
 icon: "file-lines"
 ---
 
-**Rankify > Settings > Content Types**
+**Crownify > Settings > Content Types**
 
 Every post type, taxonomy, and special page on your site gets a row here. This is where you decide what search engines are allowed to index, and what should not exist as a URL in the first place.
 
@@ -15,7 +15,7 @@ Every post type, taxonomy, and special page on your site gets a row here. This i
 </ParamField>
 
 <ParamField path="Title Template" type="template">
-  Overrides the [global title template](/rankify/settings/general#titles-and-meta) for this type.
+  Overrides the [global title template](/crownify/settings/general#titles-and-meta) for this type.
 </ParamField>
 
 <ParamField path="Description Template" type="template">
@@ -23,7 +23,7 @@ Every post type, taxonomy, and special page on your site gets a row here. This i
 </ParamField>
 
 <ParamField path="Schema Article Type" type="select">
-  Which article type this content is marked up as in your [schema graph](/rankify/settings/schema).
+  Which article type this content is marked up as in your [schema graph](/crownify/settings/schema).
 </ParamField>
 
 <ParamField path="Disable these pages entirely" type="toggle">
@@ -31,7 +31,7 @@ Every post type, taxonomy, and special page on your site gets a row here. This i
 </ParamField>
 
 <Warning>
-  Noindex and disable are different things. Noindex keeps the page working and asks search engines to ignore it. Disabling removes the URL. Never disable something people have bookmarked or linked to without adding a [redirect](/rankify/settings/redirects) first.
+  Noindex and disable are different things. Noindex keeps the page working and asks search engines to ignore it. Disabling removes the URL. Never disable something people have bookmarked or linked to without adding a [redirect](/crownify/settings/redirects) first.
 </Warning>
 
 ## The groups
@@ -90,6 +90,6 @@ Category and tag archives, plus any custom taxonomy.
 
 ## How this connects to the sitemap
 
-A type set to noindex, or disabled, is left out of your [XML sitemap](/rankify/settings/sitemaps) automatically. You do not have to keep two lists in step.
+A type set to noindex, or disabled, is left out of your [XML sitemap](/crownify/settings/sitemaps) automatically. You do not have to keep two lists in step.
 
 That matters because listing a page in your sitemap while telling search engines not to index it is a contradictory signal, and it is one of the most common configuration mistakes in SEO plugins.

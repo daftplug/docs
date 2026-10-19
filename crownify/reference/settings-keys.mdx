@@ -4,7 +4,7 @@ description: "Every option key, its default, and which version seeds it."
 icon: "key"
 ---
 
-All of Rankify's settings live in a single WordPress option, `rankify_settings`, stored as an associative array.
+All of Crownify's settings live in a single WordPress option, `rankify_settings`, stored as an associative array. The option keeps the rankify name for backward compatibility.
 
 ```php
 $settings = get_option('rankify_settings');
@@ -14,7 +14,7 @@ echo $settings['metaTitleSeparator']; // -
 Toggles are the strings `on` and `off`, not booleans. A key that has never been seeded is absent from the array, and absent counts as off.
 
 <Warning>
-  Prefer the settings screen or the [`PUT /settings`](/rankify/reference/rest-api#settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
+  Prefer the settings screen or the [`PUT /settings`](/crownify/reference/rest-api#settings) endpoint over writing the option directly. Both merge your values over the stored ones and fire the update hooks; a direct `update_option` with a partial array silently discards every setting you left out.
 </Warning>
 
 To change one value safely in code:
@@ -105,9 +105,9 @@ These keys only exist on an install with an active license.
 
 ## Per-post values
 
-The keys above are site-wide. Per-post SEO values, the title, description, canonical, robots directives, social overrides, and schema type, live in post meta rather than in this option, and are edited in the Rankify panel in the editor.
+The keys above are site-wide. Per-post SEO values, the title, description, canonical, robots directives, social overrides, and schema type, live in post meta rather than in this option, and are edited in the Crownify panel in the editor.
 
-Values another SEO plugin stored are read as a fallback wherever a post has no Rankify value of its own. See [switching to Rankify](/rankify/guides/migrating).
+Values another SEO plugin stored are read as a fallback wherever a post has no Crownify value of its own. See [switching to Crownify](/crownify/guides/migrating).
 
 ## Notable defaults
 

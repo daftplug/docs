@@ -175,52 +175,52 @@
         ]
       },
       {
-        "tab": "Rankify",
-        "icon": "/images/rankify.png",
+        "tab": "Crownify",
+        "icon": "/images/crownify.png",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
-              "rankify/getting-started/introduction",
-              "rankify/getting-started/installation",
-              "rankify/getting-started/quickstart",
-              "rankify/getting-started/free-vs-pro"
+              "crownify/getting-started/introduction",
+              "crownify/getting-started/installation",
+              "crownify/getting-started/quickstart",
+              "crownify/getting-started/free-vs-pro"
             ]
           },
           {
             "group": "Settings",
             "pages": [
-              "rankify/settings/general",
-              "rankify/settings/content-types",
-              "rankify/settings/sitemaps",
-              "rankify/settings/schema",
-              "rankify/settings/redirects",
-              "rankify/settings/social",
-              "rankify/settings/ai-geo",
-              "rankify/settings/notifications"
+              "crownify/settings/general",
+              "crownify/settings/content-types",
+              "crownify/settings/sitemaps",
+              "crownify/settings/schema",
+              "crownify/settings/redirects",
+              "crownify/settings/social",
+              "crownify/settings/ai-geo",
+              "crownify/settings/notifications"
             ]
           },
           {
             "group": "Guides",
             "pages": [
-              "rankify/guides/answer-engines",
-              "rankify/guides/migrating"
+              "crownify/guides/answer-engines",
+              "crownify/guides/migrating"
             ]
           },
           {
             "group": "Developer reference",
             "pages": [
-              "rankify/reference/hooks",
-              "rankify/reference/rest-api",
-              "rankify/reference/settings-keys"
+              "crownify/reference/hooks",
+              "crownify/reference/rest-api",
+              "crownify/reference/settings-keys"
             ]
           },
           {
             "group": "Support",
             "pages": [
-              "rankify/support/troubleshooting",
-              "rankify/support/faq",
-              "rankify/support/get-help"
+              "crownify/support/troubleshooting",
+              "crownify/support/faq",
+              "crownify/support/get-help"
             ]
           }
         ]
@@ -276,6 +276,16 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/rankify",
+      "destination": "/crownify/getting-started/introduction"
+    },
+    {
+      "source": "/rankify/:slug*",
+      "destination": "/crownify/:slug*"
+    }
+  ],
   "logo": {
     "light": "/images/logo.svg",
     "dark": "/images/logo.svg"

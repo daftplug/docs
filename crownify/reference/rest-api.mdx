@@ -4,7 +4,7 @@ description: "The rankify/v1 endpoints, their permissions, and what they do."
 icon: "server"
 ---
 
-Rankify registers its endpoints under the `rankify/v1` namespace. They serve the plugin's own admin screens and editor panel, so treat them as an internal API rather than a versioned public contract.
+Crownify registers its endpoints under the `rankify/v1` namespace. They serve the plugin's own admin screens and editor panel, so treat them as an internal API rather than a versioned public contract. The namespace keeps the rankify name for backward compatibility.
 
 ```
 https://example.com/wp-json/rankify/v1/
@@ -52,14 +52,14 @@ curl -X PUT https://example.com/wp-json/rankify/v1/settings \
   -d '{"settings": {"breadcrumbs": "on"}}'
 ```
 
-Fires [`rankify_settings_update:before`](/rankify/reference/hooks#rankify_settings_updatebefore-after) and `:after`.
+Fires [`rankify_settings_update:before`](/crownify/reference/hooks#rankify_settings_updatebefore-after) and `:after`.
 
 <ParamField path="POST /setup/complete" type="endpoint">
   Marks the setup wizard as finished and stores the answers.
 </ParamField>
 
 <ParamField path="GET /legacy-seo" type="endpoint">
-  Reports which other SEO plugins left data on the site and how many posts each covers. Backs the wizard's existing-data step. See [switching to Rankify](/rankify/guides/migrating).
+  Reports which other SEO plugins left data on the site and how many posts each covers. Backs the wizard's existing-data step. See [switching to Crownify](/crownify/guides/migrating).
 </ParamField>
 
 ## Redirects
@@ -84,7 +84,7 @@ Fires [`rankify_settings_update:before`](/rankify/reference/hooks#rankify_settin
   Exports your rules. Useful for moving a rule set between staging and production.
 </ParamField>
 
-Creating or deleting a rule fires [`rankify_redirects_changed`](/rankify/reference/hooks#redirects-and-links).
+Creating or deleting a rule fires [`rankify_redirects_changed`](/crownify/reference/hooks#redirects-and-links).
 
 ## 404 monitor
 
@@ -117,7 +117,7 @@ Creating or deleting a rule fires [`rankify_redirects_changed`](/rankify/referen
 <ParamField path="POST /geo/indexnow" type="endpoint">
   Pro. Submits URLs to IndexNow, reaching Bing, Yandex, and Seznam. Also used by the test submission button.
 
-  Fires [`rankify_indexnow_submitted`](/rankify/reference/hooks#rankify_indexnow_submitted).
+  Fires [`rankify_indexnow_submitted`](/crownify/reference/hooks#rankify_indexnow_submitted).
 </ParamField>
 
 ## Content analysis
@@ -134,7 +134,7 @@ curl "https://example.com/wp-json/rankify/v1/retrieval-score?postId=42" \
   --cookie "$COOKIE_JAR"
 ```
 
-The five signals are passage size, self-contained sections, question headings, answer-first opening, and lists and tables. See [answer engine optimization](/rankify/guides/answer-engines#the-retrieval-score).
+The five signals are passage size, self-contained sections, question headings, answer-first opening, and lists and tables. See [answer engine optimization](/crownify/guides/answer-engines#the-retrieval-score).
 
 <ParamField path="GET /link-suggestions" type="endpoint">
   Pro. Related pages worth linking to from the post being edited.
