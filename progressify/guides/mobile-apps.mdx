@@ -10,6 +10,8 @@ icon: "mobile"
 
 Progressify can supply native Android and iOS applications that wrap your PWA, so the same site you already configured can be published to Google Play and the App Store.
 
+You publish them on your own accounts. Google Play charges a US$25 one-time registration fee, and the Apple Developer Program is 99 USD per year. Building the iOS package requires a Mac with Xcode. Android is submitted from Google Play Console in a browser. The Android zip includes `assetlinks.json`, which you host on your site, and `signing.keystore` plus `signing-key-info.txt`, which you keep.
+
 ## Requesting your apps
 
 <Steps>
@@ -20,7 +22,9 @@ Progressify can supply native Android and iOS applications that wrap your PWA, s
     Write to [support@daftplug.com](mailto:support@daftplug.com) with the email address used for your Pro purchase and the URL of the site the license is active on.
   </Step>
   <Step title="Receive the packages">
-    The Android and iOS apps are generated and sent to you.
+    The Android and iOS apps are generated and sent to you as zip files.
+
+    The Android zip contains an `.aab` file for Google Play Console, `assetlinks.json`, `signing.keystore`, and `signing-key-info.txt`. The iOS zip is a Swift project. On a Mac, run `pod install` in the `src` directory and open the `.xcworkspace` file in Xcode. Opening the `.xcodeproj` file makes the build fail.
 
     To publish them, follow [Publish your Android app](/progressify/guides/publish-android-app) and [Publish your iOS app](/progressify/guides/publish-ios-app).
   </Step>
@@ -49,10 +53,64 @@ Go to **Progressify > Settings > Web App Manifest > Advanced Features** and fill
     Both stores judge wrapped web apps on whether they offer more than a bookmark. A configured PWA with offline support, push notifications, and app-like navigation is a far stronger submission than a bare site, which is another reason to finish the setup first.
   </Accordion>
   <Accordion title="Developer accounts">
-    Publishing requires your own Google Play and Apple Developer accounts. Both charge their own fees, and both are held in your name, not DaftPlug's.
+    Publishing requires your own Google Play and Apple Developer accounts, held in your name, not DaftPlug's. Google Play charges a US$25 one-time registration fee, and the Apple Developer Program is 99 USD per year.
   </Accordion>
 </AccordionGroup>
 
 ## Do you need them at all?
 
 For many sites the PWA alone is enough, and it avoids store review, developer account fees, and release cycles entirely. Native packages are worth the overhead when you need to be findable in store search, when your audience expects to install from a store, or when a partner or client requires a store listing.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What do I get?">
+    Installable Android and iOS packages that wrap your live PWA. This is a Pro service. DaftPlug builds the packages when you email [support@daftplug.com](mailto:support@daftplug.com). The plugin has no app generator.
+
+    The icon, name, theme color, and splash screens come from your [web app manifest settings](/progressify/settings/web-app-manifest). Finish that setup and clear the overview scorecard before you ask.
+
+    The Android zip contains an `.aab` file for Google Play Console, plus `assetlinks.json`, `signing.keystore`, and `signing-key-info.txt`. The iOS zip is a Swift project. Unzip it, run `pod install` in the `src` directory, and open the `.xcworkspace` file in Xcode. Opening the `.xcodeproj` file makes the build fail.
+  </Accordion>
+
+  <Accordion title="Which accounts do I need?">
+    Your own [Google Play developer account](https://support.google.com/googleplay/android-developer/answer/6112435) and your own [Apple Developer Program](https://developer.apple.com/programs/) membership, both held in your name, not DaftPlug's. Google Play charges a US$25 one-time registration fee. The Apple Developer Program is 99 USD per membership year. During enrollment the price is shown in local currency and can vary by region. Nonprofits, accredited educational institutions, and government entities can [request a fee waiver](https://developer.apple.com/programs/enroll/).
+
+    An organization enrolling with Apple needs a [D-U-N-S Number](https://developer.apple.com/help/account/membership/D-U-N-S/) so Apple can verify the legal entity. Individuals do not need one. Government organizations are exempt.
+  </Accordion>
+
+  <Accordion title="Do I need a Mac?">
+    For iOS, yes. The [iOS publishing guide](/progressify/guides/publish-ios-app) uses Xcode and Keychain Access, and [Xcode runs on a Mac](https://developer.apple.com/support/xcode/).
+
+    You can publish the Android package from a browser on any computer. Upload the `.aab` in Google Play Console, and upload `assetlinks.json` to your site.
+  </Accordion>
+
+  <Accordion title="Do I need to change my website?">
+    For Android, yes. Upload `assetlinks.json` from the zip to `https://your-domain.com/.well-known/assetlinks.json`. That Digital Asset Links file proves the app and the site belong to you.
+
+    After you upload the `.aab`, Google Play re-signs the app. Add the SHA-256 fingerprint from **Setup > App integrity > App signing** to `assetlinks.json`, then deploy the file again. The [Android publishing guide](/progressify/guides/publish-android-app) shows where to paste it. If the file is missing, inaccessible, or wrong, the app shows a browser address bar, or it can crash on launch.
+
+    iOS publishing stays in Xcode and App Store Connect.
+  </Accordion>
+
+  <Accordion title="How do I keep the app up to date?">
+    The apps load your live site, so publishing on WordPress updates them immediately. You only need a new build when the app shell changes, such as the icon, name, theme color, or splash screens. Those are taken from your web app manifest when the package is built.
+
+    Keep `signing.keystore` and `signing-key-info.txt`. The keystore holds the signing key. The text file holds the key password, store password, and key alias. Keep both in case you deploy a later version of the Android package.
+  </Accordion>
+
+  <Accordion title="When should I fill in Related Applications?">
+    Fill in a store only after that store listing is live. Go to **Progressify > Settings > Web App Manifest > Advanced Features** and add **Related Applications** with the platform and the store ID for each live app.
+
+    Browsers then stop offering to install the PWA and promote the native app instead. If you add a listing before it is live, visitors are sent to an app they cannot download, and they also lose the web install prompt.
+  </Accordion>
+
+  <Accordion title="Is the app a bare website in a wrapper?">
+    The packages load your PWA. Both stores review that kind of app on whether it offers more than a bookmark. Apple's [App Store Review Guideline 4.2](https://developer.apple.com/app-store/review/guidelines/) asks for features, content, and UI beyond a repackaged website. Google Play expects a stable, engaging app, and its [spam policy](https://support.google.com/googleplay/android-developer/answer/9899034) disallows an app whose primary purpose is a webview of a website without permission from the site owner. Offline support, push notifications, and app-like navigation help. Approval is still the store's decision.
+
+    On Android, [Chrome's Trusted Web Activity guidance](https://web.dev/articles/using-a-pwa-in-your-android-app) says Play Families policies can be incompatible with this kind of app when it is designed primarily for children under 13. Declare the target age groups that match your app under **Policy > App content > Target audience and content**. The groups are Ages 5 and under, Ages 6-8, Ages 9-12, Ages 13-15, Ages 16-17, and Ages 18 and over. Google notes that Ages 13-15 and Ages 16-17 may count as children in some locales. Content ratings come from the content rating questionnaire in Play Console.
+  </Accordion>
+
+  <Accordion title="Do I need a native app at all?">
+    Often, no. The PWA alone avoids store review, developer account fees, and release cycles. Native packages are worth that overhead when you need to be found in store search, when your audience expects to install from a store, or when a partner or client requires a listing.
+  </Accordion>
+</AccordionGroup>
