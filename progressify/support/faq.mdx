@@ -54,11 +54,11 @@ icon: "circle-question"
 
 <AccordionGroup>
   <Accordion title="Do I need a third-party notification service?">
-    No. Progressify sends over the Web Push protocol from your own server, storing subscriptions in your database. There is no account to create, no per-message cost, and no subscriber limit imposed by a vendor.
+    No. Progressify sends over the Web Push protocol from your own server, storing subscriptions in your database. There is no account to create and no per-message cost. A vendor does not cap how many people can subscribe. A manual send is separate: the free version reaches your 20 most recent subscribers whose endpoints are on an allowlisted push service, and Pro reaches all subscribers matching the chosen audience.
   </Accordion>
 
   <Accordion title="Can I send to a segment of subscribers?">
-    Not from the plugin. Manual sends go to every subscriber. Targeting comes from the [automations](/progressify/settings/push-notifications#automated-notifications), which fire per event and reach only the relevant people, such as the participants in a comment thread or the members of a community space.
+    Yes, with Pro. Pro lets you choose the audience (everyone, logged-in users, logged-out visitors, or a WordPress role), narrow it by device, operating system, or country, and schedule it for later. Pro sends to all subscribers matching the chosen audience. The free version sends manual notifications to your 20 most recent subscribers whose endpoints are on an allowlisted push service. [Automations](/progressify/settings/push-notifications#automated-notifications) also target per event.
   </Accordion>
 
   <Accordion title="What happens if someone blocks notifications?">

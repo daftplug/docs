@@ -139,7 +139,7 @@ The four subscription endpoints are public because they are called by visitors' 
 ### Send a notification
 
 <ParamField path="POST /push-subscribers/send" type="endpoint">
-  Sends a notification to every subscriber. Takes a single `notificationData` object.
+  Sends a notification. Takes a single `notificationData` object. The free version ignores the audience fields and sends manual notifications to your 20 most recent subscribers whose endpoints are on an allowlisted push service. Pro sends to all subscribers matching the chosen audience, and can schedule delivery, which then runs in the background.
 </ParamField>
 
 <Expandable title="notificationData fields">
@@ -164,6 +164,27 @@ The four subscription endpoints are public because they are called by visitors' 
   <ResponseField name="notificationActionButtons" type="array">
     Pro. Up to two objects of `{ text, url }`, rendered as buttons on the notification.
   </ResponseField>
+  <ResponseField name="notificationAudience" type="string">
+    Pro. `everyone`, `logged_in`, `logged_out`, or `role`. Defaults to `everyone`. `role` also requires `notificationRole`. On Pro, `everyone` is all subscribers before the device, operating system, and country filters. The free version ignores this field.
+  </ResponseField>
+  <ResponseField name="notificationRole" type="string">
+    Pro. WordPress role slug. Required when `notificationAudience` is `role`, and it must be a role that exists on the site.
+  </ResponseField>
+  <ResponseField name="notificationDevice" type="string">
+    Pro. `Smartphone`, `Tablet`, or `Desktop`. Omit it to include every device.
+  </ResponseField>
+  <ResponseField name="notificationOs" type="string">
+    Pro. `Android`, `iOS`, `Windows`, `Mac`, `Linux`, or `Chrome OS`. The server also accepts `Ubuntu` and `FreeBSD`. Omit it to include every operating system.
+  </ResponseField>
+  <ResponseField name="notificationCountry" type="string">
+    Pro. Free text, up to 100 characters. Omit it to include every country.
+  </ResponseField>
+  <ResponseField name="notificationSchedule" type="string">
+    Pro. `now` or `later`. Defaults to `now`.
+  </ResponseField>
+  <ResponseField name="notificationScheduleAt" type="string">
+    Pro. Date and time when `notificationSchedule` is `later`, interpreted in the site timezone. It has to be in the future.
+  </ResponseField>
 </Expandable>
 
 ```bash
@@ -180,4 +201,4 @@ curl -X POST https://example.com/wp-json/progressify/v1/push-subscribers/send \
       }'
 ```
 
-Delivery is chunked according to the **Batch Size** setting, and the response reports how many messages were sent and how many failed.
+Delivery is chunked according to the **Batch Size** setting. With Pro, delivery runs in the background, and the sent and failed counts show under the subscriber list.
