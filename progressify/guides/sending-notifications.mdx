@@ -44,15 +44,45 @@ Select **Send Push Notification** to open the compose form.
   Keeps the notification on screen until the visitor acts on it, rather than letting it auto-dismiss. Reserve this for messages that genuinely need a response. Applied to routine updates it reads as spam.
 </ParamField>
 
+<ParamField path="Audience" type="select" default="Everyone">
+  Pro. Everyone, logged-in users, logged-out visitors, or a WordPress role.
+</ParamField>
+
+<ParamField path="Role" type="select">
+  Pro. Shown when Audience is a WordPress role. Pick one of the roles registered on the site.
+</ParamField>
+
+<ParamField path="Device" type="select" default="Any device">
+  Pro. Smartphone, tablet, or desktop. Leave this on Any device to skip the filter.
+</ParamField>
+
+<ParamField path="Operating system" type="select" default="Any operating system">
+  Pro. Android, iOS, Windows, Mac, Linux, or Chrome OS. Leave this on Any operating system to skip the filter.
+</ParamField>
+
+<ParamField path="Country" type="string">
+  Pro. Free text, up to 100 characters. Leave it blank to include every country.
+</ParamField>
+
+<ParamField path="When to send" type="select" default="Send now">
+  Pro. Send now, or schedule for later.
+</ParamField>
+
+<ParamField path="Date and time" type="string">
+  Pro. Shown when the notification is scheduled. Interpreted in the site timezone, and it has to be in the future. Delivery then runs in the background.
+</ParamField>
+
+These Pro filters combine. Audience, device, operating system, and country all apply together when you set more than one.
+
 The **Preview** panel shows the notification as it will appear. Check it before sending, because there is no recall.
 
 ## Sending
 
 <Warning>
-  A notification goes to every subscriber and cannot be undone or edited after sending. There is no segmentation and no test-send, so send to yourself first by subscribing on your own device and checking a real delivery before you write to the whole list.
+  A notification cannot be undone or edited after sending. There is no test-send, so send to yourself first by subscribing on your own device and checking a real delivery before you write to the whole list. The free version sends every manual notification to everyone. Pro can narrow the audience and schedule the notification for later.
 </Warning>
 
-Delivery is chunked according to the **Batch Size** setting. When the send completes, Progressify reports how many messages succeeded and how many failed.
+Delivery is chunked according to the **Batch Size** setting. With Pro, that delivery runs in the background, and the sent and failed counts show under the subscriber list.
 
 ## Why sends fail
 
