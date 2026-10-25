@@ -45,7 +45,7 @@ Select **Send Push Notification** to open the compose form.
 </ParamField>
 
 <ParamField path="Audience" type="select" default="Everyone">
-  Pro. Everyone, logged-in users, logged-out visitors, or a WordPress role.
+  Pro. Everyone, logged-in users, logged-out visitors, or a WordPress role. On Pro, Everyone means all subscribers before the filters below. The free version ignores these fields.
 </ParamField>
 
 <ParamField path="Role" type="select">
@@ -79,7 +79,7 @@ The **Preview** panel shows the notification as it will appear. Check it before 
 ## Sending
 
 <Warning>
-  A notification cannot be undone or edited after sending. There is no test-send, so send to yourself first by subscribing on your own device and checking a real delivery before you write to the whole list. The free version sends every manual notification to everyone. Pro can narrow the audience and schedule the notification for later.
+  A notification cannot be undone or edited after sending. There is no test-send, so send to yourself first by subscribing on your own device and checking a real delivery before you send more widely. The free version sends manual notifications to your 20 most recent subscribers whose endpoints are on an allowlisted push service. Pro sends to all subscribers matching the chosen audience, and can schedule the notification for later.
 </Warning>
 
 Delivery is chunked according to the **Batch Size** setting. With Pro, that delivery runs in the background, and the sent and failed counts show under the subscriber list.

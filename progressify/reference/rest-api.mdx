@@ -139,7 +139,7 @@ The four subscription endpoints are public because they are called by visitors' 
 ### Send a notification
 
 <ParamField path="POST /push-subscribers/send" type="endpoint">
-  Sends a notification. Takes a single `notificationData` object. The free version sends to every subscriber. Pro can narrow the audience and schedule delivery, which then runs in the background.
+  Sends a notification. Takes a single `notificationData` object. The free version ignores the audience fields and sends manual notifications to your 20 most recent subscribers whose endpoints are on an allowlisted push service. Pro sends to all subscribers matching the chosen audience, and can schedule delivery, which then runs in the background.
 </ParamField>
 
 <Expandable title="notificationData fields">
@@ -165,7 +165,7 @@ The four subscription endpoints are public because they are called by visitors' 
     Pro. Up to two objects of `{ text, url }`, rendered as buttons on the notification.
   </ResponseField>
   <ResponseField name="notificationAudience" type="string">
-    Pro. `everyone`, `logged_in`, `logged_out`, or `role`. Defaults to `everyone`. `role` also requires `notificationRole`.
+    Pro. `everyone`, `logged_in`, `logged_out`, or `role`. Defaults to `everyone`. `role` also requires `notificationRole`. On Pro, `everyone` is all subscribers before the device, operating system, and country filters. The free version ignores this field.
   </ResponseField>
   <ResponseField name="notificationRole" type="string">
     Pro. WordPress role slug. Required when `notificationAudience` is `role`, and it must be a role that exists on the site.
