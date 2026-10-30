@@ -21,7 +21,7 @@ To change one value safely in code:
 
 ```php
 $settings = get_option('progressify_settings', []);
-$settings['offlineCacheStrategy'] = 'StaleWhileRevalidate';
+$settings['offlineCacheExpirationTime'] = 7;
 update_option('progressify_settings', $settings);
 ```
 
@@ -30,6 +30,8 @@ update_option('progressify_settings', $settings);
 Free defaults are written on activation. Pro defaults are added when a licensed install first loads, and again after an update for any key that did not exist before. Your existing values are never overwritten by this process.
 
 This means a free install has no `darkMode` key at all rather than a key set to `off`. Code that reads a Pro key on a free site should handle it being missing.
+
+A free install still stores `displayMode`, `orientation`, `offlineCacheStrategy`, and `pageLoaderType`, but it only outputs one value for each: `standalone`, `portrait`, `NetworkFirst`, and `default`. The other values are Pro.
 
 ## Free settings
 
