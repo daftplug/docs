@@ -22,11 +22,13 @@ https://example.com/?progressify_serviceworker=1
   | Strategy | Behavior | Best for |
   | --- | --- | --- |
   | Network-First | Tries the network, caches the response, falls back to the last cached copy if the request fails. | Most sites. Content stays current and offline still works. |
-  | Stale While Revalidate | Serves the cached copy immediately, then fetches in the background to update it. | Sites where speed matters more than the content being seconds-fresh. |
-  | Cache-First | Serves the cached copy and only touches the network when nothing is cached. | Rarely changing sites. Fastest, and the most likely to show stale content. |
-  | Network-Only | Never caches. Every request goes to the network. | Pages that must never be stale. Disables offline browsing. |
-  | Cache-Only | Only ever serves the cache, never the network. | Fixed content that updates on your schedule, not the visitor's. |
+  | Stale While Revalidate | Pro. Serves the cached copy immediately, then fetches in the background to update it. | Sites where speed matters more than the content being seconds-fresh. |
+  | Cache-First | Pro. Serves the cached copy and only touches the network when nothing is cached. | Rarely changing sites. Fastest, and the most likely to show stale content. |
+  | Network-Only | Pro. Never caches. Every request goes to the network. | Pages that must never be stale. Disables offline browsing. |
+  | Cache-Only | Pro. Only ever serves the cache, never the network. | Fixed content that updates on your schedule, not the visitor's. |
 </ParamField>
+
+Free always uses Network-First. Stale While Revalidate, Cache-First, Network-Only, and Cache-Only are Pro.
 
 <Tip>
   Leave it on Network-First unless you have a reason not to. It is the only strategy that is both current and offline-capable, and it degrades gracefully.
