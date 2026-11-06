@@ -51,15 +51,17 @@ The manifest is the JSON file a browser reads to decide whether your site can be
 <ParamField path="Display Mode" type="select" default="standalone">
   | Value | Behavior |
   | --- | --- |
-  | `standalone` | Opens in its own window with no browser chrome. The usual choice. |
-  | `fullscreen` | Covers the entire screen, including the system status bar. Suited to games and media. |
-  | `minimal-ui` | Its own window, but keeps a minimal set of browser controls such as back and reload. |
+  | `standalone` | Opens in its own window with no browser chrome. The usual choice, and the only value a free install writes into the manifest. |
+  | `fullscreen` | Pro. Covers the entire screen, including the system status bar. Suited to games and media. |
+  | `minimal-ui` | Pro. Its own window, but keeps a minimal set of browser controls such as back and reload. |
+
+  Free always outputs `standalone`. Choosing `fullscreen` or `minimal-ui` is Pro.
 
   Choose `minimal-ui` if your site has deep navigation and visitors will miss the back button. `standalone` relies on your own in-app navigation, so pair it with the [navigation tab bar](/progressify/settings/ui-components#navigation) or [swipe navigation](/progressify/settings/ui-components#navigation).
 </ParamField>
 
 <ParamField path="Orientation" type="select" default="portrait">
-  `portrait`, `landscape`, or `any`. This is a preference, not a guarantee, and some platforms ignore it.
+  `portrait`, `landscape`, or `any`. This is a preference, not a guarantee, and some platforms ignore it. Free always outputs `portrait`. `landscape` and `any` are Pro.
 </ParamField>
 
 <ParamField path="Orientation Lock" type="toggle" default="off">
